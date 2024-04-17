@@ -1,0 +1,26 @@
+.auth-container {
+  min-height: 200px;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+}
+
+.auth-card {
+  background-color: #6c6c6c30;
+  border: 2px solid #fff;
+  border-radius: 40px;
+  box-shadow: 5px 5px 5px 5px rgb(123, 123, 123);
+}
+
+.auth-text-primary {
+  color: #fff;
+}
+
+.auth-text-secondary {
+  color: #222;
+}
+
+.auth-input {
+  border-radius: 50px;
+  border: 2px solid #222;
+  box-shadow: 2px 2px rgba(211, 211, 211, 0.708);
+}

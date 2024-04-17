@@ -1,10 +1,33 @@
-<div class="card">
-    <p-menubar [model]="items">
-        <ng-template pTemplate="start">
-            <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
-        </ng-template>
-        <ng-template pTemplate="end">
-            <input type="text" pInputText placeholder="Search" class="w-full" />
-        </ng-template>
-    </p-menubar>
+<div class="card" style="color: #fff">
+  <p-menubar
+    [model]="items"
+    [style]="{
+      'background-color': '#000',
+      'border-color': '#222',
+      color: '#fff'
+    }"
+    
+  >
+    <ng-template pTemplate="start">
+      <a routerLink="/">
+        <img
+          src="https://primefaces.org/cdn/primeng/images/primeng.svg"
+          height="40"
+          class="mr-2"
+        />
+      </a>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <p-button
+        label="Iniciar Sesion"
+        routerLink="/auth/login"
+        [style]="{
+          'background-color': '#222',
+          'border-color': '#fff',
+          color: '#abaaaa'
+        }"
+        severity="secondary"
+      ></p-button>
+    </ng-template>
+  </p-menubar>
 </div>

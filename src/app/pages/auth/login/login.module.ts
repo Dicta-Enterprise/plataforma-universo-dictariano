@@ -4,14 +4,21 @@ import { CommonModule } from '@angular/common';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 
-
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
   declarations: [
+    //Componentes
     LoginComponent
   ],
   imports: [
+    //Modulos
     CommonModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    CheckboxModule,
+    InputTextModule,
+    ButtonModule
   ]
 })
 export class LoginModule { }
