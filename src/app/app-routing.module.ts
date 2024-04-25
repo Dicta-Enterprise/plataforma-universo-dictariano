@@ -11,6 +11,18 @@ const routes: Routes = [
     loadChildren:()=>import('./pages/auth/auth.module').then(m=>m.AuthModule)
   },
   {
+    path: 'panel',
+    loadChildren:()=>import('./pages/panels/panels.module').then(m=>m.PanelsModule)
+  },
+  {
+    path:'courses',
+    loadChildren:()=>import('./pages/courses/courses.module').then(m=>m.CoursesModule)
+  },
+  {
+    path:'about',
+    loadChildren:()=>import('./pages/about/about.module').then(m=>m.AboutModule)
+  },
+  {
     path:'**',
     redirectTo: ''
   }
