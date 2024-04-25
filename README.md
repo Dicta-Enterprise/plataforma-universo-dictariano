@@ -1,27 +1,19 @@
 # FrontMagmentUniversodicta
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.4.
+Este proyecto esta generado en la version 16.1.4 de angular [Angular CLI](https://github.com/angular/angular-cli)
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Descargar [NodeJs](https://nodejs.org/en/download/current) en su version 20.12.2
+Descargar [Angular CLI](https://github.com/angular/angular-cli) en su version 16.1.4
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Despues de clonar el proyecto del repositorio ejecutar `npm install` para descargar todas las dependencias necesarias
 
-## Build
+Ejecutar `ng serve` para levantar el proyecto en `http://localhost:4200/`. Tener en cuenta que la aplicacion recargara sola.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Comandos basicos
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+`ng generate component nombre_componente`: Sirve para crear un nuevo componenente de angular
+`ng generate module nombre_module`: Sirve para crear un nuevo modulo de Angular
+`ng generate service`: Sirve para generar un nuevo servicio de Angular
