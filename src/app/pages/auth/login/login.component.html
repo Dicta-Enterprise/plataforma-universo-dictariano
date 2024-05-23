@@ -1,71 +1,80 @@
 <div
-  class="flex justify-content-center align-items-center align-content-center flex-wrap auth-container"
+  class="bg-black-alpha-90 lg:mx-8 lg:px-4 my-4 md:px-6 lg:px-8"
+
 >
-  <div class="p-4 w-full lg:w-6 auth-card">
-    <div style="padding: 40px">
-      <div class="text-center mb-5 auth-logo">
-        <img
-          src="https://academia.dictacolombia.com/wp-content/uploads/2022/11/Logo-350x100-1.svg"
-          alt="Image"
-          height="50"
-          class="mb-3"
-        />
-        <div class="text-white text-3xl font-medium mb-3">Bienvenido</div>
-        <span class="text-600 font-medium line-height-3"
-          >No tienes una cuenta?</span
-        >
+  <div class="bg-black-alpha-90 mx-8 my-4 shadow-2 border-round px-6 py-6">
+    <div class="text-center mb-5">
+      <img
+        src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
+        alt="Image"
+        height="50"
+        class="mb-3"
+      />
+      <div class="text-900 text-white text-3xl font-medium mb-3">
+        Bienvenido a tu Plataforma Dictariana
+      </div>
+      <span class="text-600 font-medium line-height-3"
+        >No tienes una cuenta?</span
+      >
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+        >Crea una ahora!</a
+      >
+    </div>
+
+    <div>
+      <label for="email1" class="block text-white-alpha-60 font-medium mb-2"
+        >Email</label
+      >
+      <input
+        id="email1"
+        type="text"
+        placeholder="Ingresa tu Email"
+        pInputText
+        class="w-full mb-3"
+      />
+
+      <label for="password1" class="block text-white-alpha-60 font-medium mb-2"
+        >Contraseña</label
+      >
+      <input
+        id="password1"
+        type="password"
+        placeholder="Ingresa tu Contraseña"
+        pInputText
+        class="w-full mb-3"
+      />
+
+      <div class="flex align-items-center justify-content-between mb-6">
+        <div class="flex align-items-center">
+          <p-checkbox
+            id="rememberme"
+            [binary]="true"
+            styleClass="mr-2"
+          ></p-checkbox>
+          <label for="rememberme1">Recuerdame</label>
+        </div>
         <a
-          class="font-medium text-white no-underline ml-2 text-blue-500 cursor-pointer"
-          >Creala Hoy!</a
+          class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer"
+          >Olvidaste la Contraseña?</a
         >
       </div>
 
-      <div>
-        <label for="email1" class="block text-white font-medium mb-2"
-          >Email</label
-        >
-        <input
-          id="email1"
-          type="email"
-          placeholder="email@example.com"
-          pInputText
-          class="w-full mb-3 auth-input"
-        />
+      <button
+        pButton
+        pRipple
+        label="Sign In"
+        icon="pi pi-user"
+        class="w-full mb-4"
+      ></button>
 
-        <label for="password1" class="block text-white font-medium mb-2"
-          >Password</label
-        >
-        <input
-          id="password1"
-          type="password"
-          placeholder="Password"
-          pInputText
-          class="w-full mb-3 auth-input"
-        />
+      <span
+        class="text-white-alpha-90 font-normal text-center mt-4 justify-content-center align-content-center flex bg-black-alpha-90 text-sm"
+        >OR</span
+      >
 
-        <div class="flex align-items-center justify-content-between mb-6">
-          <div class="flex align-items-center">
-            <p-checkbox
-              id="rememberme"
-              [binary]="true"
-              styleClass="mr-2"
-            ></p-checkbox>
-            <label for="rememberme1">Remember me</label>
-          </div>
-          <a
-            class="font-medium text-white no-underline ml-2 text-blue-500 text-right cursor-pointer"
-            >Olvido la contraseña?</a
-          >
-        </div>
-
-        <button
-          pButton
-          pRipple
-          label="Sign In"
-          icon="pi pi-user"
-          class="w-full"
-          style="background: #222; border: 2px solid #fff"
-        ></button>
+      <div class="mt-6 text-center text-600">
+        Ya tienes una cuenta??
+        <a tabindex="0" class="font-medium text-blue-500">Inicia Sesion</a>
       </div>
     </div>
   </div>
