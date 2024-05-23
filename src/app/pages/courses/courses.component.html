@@ -1,0 +1,30 @@
+<div class="bg-black-alpha-90 px-4 py-8 md:px-6 lg:px-4 lg:ml-6 text-white" >
+  <div class="flex flex-wrap bg-black-alpha-90 text-white">
+    <p-card
+      header="{{ course.name }}"
+      [style]="{ width: '300px', background: '#222', color: '#fff' }"
+      class="mx-6 lg:mx-2 mb-6  "
+      *ngFor="let course of courses "
+    >
+      <ng-template pTemplate="header">
+        <img
+          alt="Card"
+          src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+        />
+      </ng-template>
+      <p class="text-500">
+        {{ course.description }}
+      </p>
+      <ng-template pTemplate="footer">
+        <div class="flex gap-3 mt-1">
+          <p-button
+            label="Ver curso"
+            class="w-full"
+            styleClass="w-full"
+            icon="pi pi-arrow-right"
+          />
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

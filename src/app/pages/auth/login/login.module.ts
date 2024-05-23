@@ -7,6 +7,8 @@ import { LoginComponent } from './login.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+
+import{DividerModule} from'primeng/divider';
 @NgModule({
   declarations: [
     //Componentes
@@ -18,7 +20,8 @@ import { ButtonModule } from 'primeng/button';
     LoginRoutingModule,
     CheckboxModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    DividerModule
   ]
 })
 export class LoginModule { }

@@ -13,20 +13,20 @@ export class NavBarComponent implements OnInit {
     this.items = [
       {
         label: 'Home',
-        icon: 'pi pi-fw pi-file',
+        icon: 'pi pi-fw pi-home',
         styleClass: 'custom-menu-item',
         routerLink: '/',
       },
 
       {
         label: 'Cursos',
-        icon: 'pi pi-fw pi-file',
+        icon: 'pi pi-fw pi-book',
         styleClass: 'custom-menu-item',
         routerLink: '/courses',
       },
       {
         label: 'Nosotros',
-        icon: 'pi pi-fw pi-file',
+        icon: 'pi pi-fw pi-users',
         styleClass: 'custom-menu-item',
         routerLink: '/about',
       },
