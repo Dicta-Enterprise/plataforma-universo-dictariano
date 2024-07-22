@@ -1,1 +1,11 @@
-<p>admin works!</p>
+<div class="min-h-screen flex surface-ground">
+  <app-sidebar></app-sidebar>
+
+  <div class="min-h-screen flex flex-column relative flex-auto">
+    <app-topbar></app-topbar>
+
+    <div class="p-5 flex flex-column flex-auto bg-black-alpha-90">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

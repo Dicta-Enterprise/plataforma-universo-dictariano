@@ -5,7 +5,18 @@ import { AdminComponent } from './admin.component';
 const routes: Routes = [
   {
     path: '',
-    component: AdminComponent
+    component: AdminComponent,
+    children:[
+      {
+        path:'',
+        loadChildren:()=>import('./plataforma/plataforma.module').then(m=>m.PlataformaModule)
+      },
+      {
+        path:'cursos',
+        loadChildren:()=>import('./cursos/cursos.module').then(m=>m.CursosModule)
+      },
+
+    ]
   }
 ];
 
