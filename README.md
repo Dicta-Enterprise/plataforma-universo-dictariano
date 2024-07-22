@@ -17,3 +17,6 @@ Ejecutar `ng serve` para levantar el proyecto en `http://localhost:4200/`. Tener
 `ng generate component nombre_componente`: Sirve para crear un nuevo componenente de angular
 `ng generate module nombre_module`: Sirve para crear un nuevo modulo de Angular
 `ng generate service`: Sirve para generar un nuevo servicio de Angular
+
+## Actualizacion master
+20/07/2024
