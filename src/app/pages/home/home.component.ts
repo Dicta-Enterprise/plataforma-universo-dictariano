@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  prueba:string = 'Ingresando nuevos cambios para el merge';
+
 }
