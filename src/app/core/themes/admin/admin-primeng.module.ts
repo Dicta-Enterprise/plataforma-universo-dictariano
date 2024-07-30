@@ -8,9 +8,10 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
-  exports:[StyleClassModule, ButtonModule, TableModule, DropdownModule, CalendarModule, InputTextModule, InputTextareaModule]
+  exports:[StyleClassModule, ButtonModule, TableModule, DropdownModule, CalendarModule, InputTextModule, InputTextareaModule, FileUploadModule]
 })
 export class AdminPrimengModule { }
