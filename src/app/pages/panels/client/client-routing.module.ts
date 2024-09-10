@@ -5,16 +5,29 @@ import { ClientComponent } from './client.component';
 const routes: Routes = [
   {
     path: '',
-    component: ClientComponent
+    component: ClientComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./my-courses/courses.module').then((m) => m.CoursesModule),
+      },
+      {
+        path: 'mi-perfil',
+        loadChildren: () =>
+          import('./miperfil/miperfil.module').then((m) => m.MiperfilModule),
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./my-courses/courses.module').then((m) => m.CoursesModule),
+      },
+    ],
   },
-  {
-    path:'cursos',
-    loadChildren:()=>import('./cursos/cursos.module').then(m=>m.CursosModule)
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ClientRoutingModule { }
+export class ClientRoutingModule {}

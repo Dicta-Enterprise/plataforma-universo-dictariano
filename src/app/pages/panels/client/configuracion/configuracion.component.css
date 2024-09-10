@@ -1,0 +1,85 @@
+.header {
+    background-color: #f4f4f4;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    height: 100vh;
+    padding: 20px;
+}
+
+.menu-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.menu-item:hover {
+    background-color: #ddd;
+}
+
+.menu-icon {
+    cursor: pointer;
+}
+
+.theme-switcher {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.theme-switcher .pi {
+    font-size: 1.5em;
+    margin-left: 10px;
+}
+
+.settings-container {
+    padding: 20px;
+}
+
+.settings-info {
+    margin-top: 20px;
+}
+
+.settings-info p {
+    margin: 10px 0;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.app-container {
+    display: flex;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.surface-section{
+    color: black;
+}
+.content{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 300px;
+    display: flex;
+}
+.datos-contacto{margin-left: 75px;}
+.pForm{margin-top: 25px;}
+.p-field{display: flex; flex-direction: column;}
+.p-field input{margin-top: 15px;border-radius: 10px;}
+.subtitulo{display: flex; margin-top: 25px;margin-left: 25px;}
+.subtitulo h3{margin-left: 25px;}
+.subtitulo img{width: 70px;}

@@ -1,6 +1,5 @@
-import { ICourse } from '../../interfaces/courses/ICourse.interface';
 
-export const CCOURSE_CONSTANT: ICourse[] = [
+export const CCOURSE_CONSTANT: any[] = [
   {
     id: 'course001',
     name: 'Introducción a la Seguridad Digital',
