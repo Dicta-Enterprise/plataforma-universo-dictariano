@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ListarCursosRoutingModule } from './listar-cursos-routing.module';
 import { ListarCursosComponent } from './listar-cursos.component';
+import { AdminPrimengModule } from 'src/app/core/themes/admin/admin-primeng.module';
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { ListarCursosComponent } from './listar-cursos.component';
   ],
   imports: [
     CommonModule,
-    ListarCursosRoutingModule
+    ListarCursosRoutingModule,
+    AdminPrimengModule,
+    
   ]
 })
 export class ListarCursosModule { }
