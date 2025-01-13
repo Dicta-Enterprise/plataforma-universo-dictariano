@@ -1,0 +1,65 @@
+<div
+  id="app-sidebar-3"
+  class="bg-gray-900 h-screen hidden absolute lg:block flex-shrink-0 fixed lg:sticky left-0 top-0 z-1 border-right-1 border-gray-800 select-none"
+  style="width: 280px"
+>
+  <div class="flex flex-column h-full">
+    <div class="overflow-y-auto">
+      <ul class="list-none p-3 m-0" *ngFor="let menu of menus">
+        <li>
+          <span class="block p-3 text-gray-600">{{ menu.nombre }}</span>
+        </li>
+
+        <li
+          *ngFor="let item of menu.items"
+          [routerLink]="[item.ruta]"
+          routerLinkActive="router-link-active"
+        >
+          <a
+            pRipple
+            class="flex align-items-center cursor-pointer p-3 border-round hover:bg-gray-800 text-gray-300 hover:text-white transition-duration-150 transition-colors"
+            pStyleClass="@next"
+            enterClass="hidden"
+            enterActiveClass="slidedown"
+            leaveToClass="hidden"
+            leaveActiveClass="slideup"
+          >
+            <i class="pi pi-chart-line mr-2"></i>
+            <span class="font-medium">{{ item.nombre }}</span>
+            <i
+              *ngIf="item.items.length > 0"
+              class="pi pi-chevron-down ml-auto"
+            ></i>
+          </a>
+          <ul
+            class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out"
+          >
+            <li *ngFor="let itemcito of item.items">
+              <a
+                pRipple
+                class="flex align-items-center cursor-pointer p-3 border-round hover:bg-gray-800 text-gray-300 hover:text-white transition-duration-150 transition-colors"
+              >
+                <i class="pi pi-chart-line mr-2"></i>
+                <span class="font-medium">{{ itemcito.nombre }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="mt-auto">
+      <hr class="mb-3 mx-3 border-top-1 border-none border-gray-800" />
+      <a
+        pRipple
+        class="m-3 flex align-items-center cursor-pointer p-3 border-round hover:bg-gray-800 text-gray-300 hover:text-white transition-duration-150 transition-colorss"
+      >
+        <img
+          src="assets/images/blocks/avatars/circle/avatar-f-1.png"
+          class="mr-2"
+          style="width: 28px; height: 28px"
+        />
+        <span class="font-medium">Harry Ore</span>
+      </a>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/auth/auth.module').then((m) => m.AuthModule),
   },
-
   {
     path: 'courses',
     loadChildren: () =>
@@ -22,6 +21,16 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () =>
       import('./pages/about/about.module').then((m) => m.AboutModule),
+  },
+  {
+    path: 'perfil',
+    loadChildren: () =>
+      import('./pages/perfil/perfil.module').then((m) => m.PerfilModule),
+  },
+  {
+    path: 'managment',
+    loadChildren: () =>
+      import('./pages/managment/managment.module').then((m) => m.ManagmentModule),
   },
   {
     path: '**',
