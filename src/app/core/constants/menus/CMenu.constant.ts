@@ -1,55 +1,28 @@
 import { IMenuReponsesDto } from '../../interfaces/interfaces';
+export interface IMenu {
+  idMenu: number;
+  idPadre: number;
+  items: IItems[];
+  nombre: string;
+}
 
-export const MENU_CONSTANT: IMenuReponsesDto[] = [
-  {
-    id: '1',
-    nombre: 'PLATAFORMA',
-    icono: 'pi pi-chevron-down',
-    color: 'primary',
-    subMenu: [
-      {
-        id: '1.1',
-        nombre: 'Usuarios',
-        ruta: '/admin/usuarios',
-        icono: 'pi pi-chevron-right',
-        color: 'primary',
-      },
-      {
-        id: '1.2',
-        nombre: 'Roles',
-        ruta: '/admin/roles',
-        icono: 'pi pi-chevron-right',
-        color: 'primary',
-      },
-      {
-        id: '1.3',
-        nombre: 'Permisos',
-        ruta: '/admin/permisos',
-        icono: 'pi pi-chevron-right',
-        color: 'primary',
-      },
-    ],
-  },
-  {
-    id: '2',
-    nombre: 'CURSOS',
-    icono: 'pi pi-chevron-down',
-    color: 'primary',
-    subMenu: [
-      {
-        id: '2.1',
-        nombre: 'Cursos',
-        ruta: '/admin/cursos',
-        icono: 'pi pi-chevron-right',
-        color: 'primary',
-      },
-      {
-        id: '2.2',
-        nombre: 'Categorias',
-        ruta: '/admin/categorias',
-        icono: 'pi pi-chevron-right',
-        color: 'primary',
-      },
-    ],
-  },
+export interface IItems {
+  padre: IPadre;
+  idMenu: number;
+  nombre: string;
+  ruta?: string;
+  idPadre: number;
+  icono: string;
+  items?: IItems[];
+}
+
+export interface IPadre {
+  idMenu: number;
+  nombre: string;
+  idPadre: number;
+  ruta?: string; // Hacer opcional si no siempre está presente
+  icono?: string; // Agregado en caso de que esté presente en algunos objetos
+}
+export const MENU_CONSTANT: IMenu[] = [
+
 ];
