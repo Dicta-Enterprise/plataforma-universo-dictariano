@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { C_MENU_MANAGMENT } from 'src/app/core/constants/constants';
-import { Menu } from 'src/app/shared/class/Menu.class';
+import { C_MENU_MANAGMENT_I } from 'src/app/core/constants/menus/CMenuManagmentI.constant';
+import { IMenu } from 'src/app/core/interfaces/interfaces';
 
 @Component({
   selector: 'app-managment',
@@ -10,6 +10,7 @@ import { Menu } from 'src/app/shared/class/Menu.class';
 export class ManagmentComponent {
 
 
-  menus:Menu[] = C_MENU_MANAGMENT;
+   menus:IMenu[] = C_MENU_MANAGMENT_I;
+  
 
 }

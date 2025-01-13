@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { StyleClassModule } from 'primeng/styleclass';
 import { ButtonModule } from 'primeng/button';
@@ -11,6 +10,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
+import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
 @NgModule({
 
   exports: [
@@ -23,7 +24,9 @@ import { TagModule } from 'primeng/tag';
     InputTextareaModule,
     FileUploadModule,
     MultiSelectModule,
-    TagModule
+    TagModule,
+    ToastModule,
+    DialogModule
   ],
 })
 export class ManagmentPrimengModule {}

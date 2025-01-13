@@ -1,64 +1,166 @@
 <div
-  id="app-sidebar-3"
-  class="bg-gray-900 h-screen hidden absolute lg:block flex-shrink-0 fixed lg:sticky left-0 top-0 z-1 border-right-1 border-gray-800 select-none"
-  style="width: 280px"
+  id="app-sidebar-11"
+  [ngClass]="active ? 'bg-white' : 'bg-gray-900'"
+  class="h-screen hidden absolute lg:block flex-shrink-0 fixed lg:sticky left-0 top-0 z-1 border-right-1 surface-border select-none"
+  style="width: 300px"
 >
   <div class="flex flex-column h-full">
-    <div class="overflow-y-auto">
-      <ul class="list-none p-3 m-0" *ngFor="let menu of menus">
-        <li>
-          <span class="block p-3 text-gray-600">{{ menu.nombre }}</span>
-        </li>
 
-        <li
-          *ngFor="let item of menu.items"
-          [routerLink]="[item.ruta]"
-          routerLinkActive="router-link-active"
-        >
-          <a
+    <div class="overflow-y-auto">
+      <ul class="list-none p-3 m-0" *ngFor="let item of menus">
+        <li>
+          <div
             pRipple
-            class="flex align-items-center cursor-pointer p-3 border-round hover:bg-gray-800 text-gray-300 hover:text-white transition-duration-150 transition-colors"
+            class="p-3 flex align-items-center justify-content-between text-600 cursor-pointer"
             pStyleClass="@next"
             enterClass="hidden"
             enterActiveClass="slidedown"
             leaveToClass="hidden"
             leaveActiveClass="slideup"
           >
-            <i class="pi pi-chart-line mr-2"></i>
-            <span class="font-medium">{{ item.nombre }}</span>
+            <span
+              class="font-bold"
+              [ngClass]="
+                active ? 'text-black-alpha-80 ' : 'text-white-alpha-80'
+              "
+              >{{ item.nombre }}</span
+            >
             <i
-              *ngIf="item.items.length > 0"
-              class="pi pi-chevron-down ml-auto"
+              class="pi pi-chevron-down"
+              [ngClass]="active ? 'text-black-alpha-80' : 'text-white-alpha-80'"
             ></i>
-          </a>
-          <ul
-            class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out"
-          >
-            <li *ngFor="let itemcito of item.items">
+          </div>
+          <ul class="list-none p-0 m-0 overflow-hidden">
+            <li [routerLink]="subitem.ruta" *ngFor="let subitem of item.items">
               <a
                 pRipple
-                class="flex align-items-center cursor-pointer p-3 border-round hover:bg-gray-800 text-gray-300 hover:text-white transition-duration-150 transition-colors"
+                class="flex align-items-center cursor-pointer p-3 text-700 border-2 border-transparent hover:border-300 hover:bg-indigo-500 hover:text-0 transition-duration-150 transition-colors"
+                style="border-radius: 12px"
+                *ngIf="subitem.items"
+                [pStyleClass]="subitem.items ? '@next' : ''"
+                [enterClass]="subitem.items ? 'hidden' : ''"
+                [enterActiveClass]="subitem.items ? 'slidedown' : ''"
+                [leaveToClass]="subitem.items ? 'hidden' : ''"
+                [leaveActiveClass]="subitem.items ? 'slideup' : ''"
               >
-                <i class="pi pi-chart-line mr-2"></i>
-                <span class="font-medium">{{ itemcito.nombre }}</span>
+                <i class="{{ subitem.icono }} mr-2 text-cyan-500"></i>
+
+                <span
+                  class="font-medium"
+                  [ngClass]="
+                    active ? 'text-black-alpha-80' : 'text-white-alpha-80'
+                  "
+                  >{{ subitem.nombre }}</span
+                >
+                <i
+                  class="pi pi-chevron-down ml-auto"
+                  [ngClass]="
+                    active ? 'text-black-alpha-80' : 'text-white-alpha-80'
+                  "
+                  *ngIf="subitem.items"
+                ></i>
               </a>
+              <a
+                *ngIf="!subitem.items"
+                pRipple
+                class="flex align-items-center cursor-pointer p-3 text-700 border-2 border-transparent hover:border-300 hover:bg-indigo-500 hover:text-0 transition-duration-150 transition-colors"
+                style="border-radius: 12px"
+              >
+                <i class="{{ subitem.icono }} mr-2 text-cyan-500"></i>
+                <span
+                  class="font-medium"
+                  [ngClass]="
+                    active ? 'text-black-alpha-80' : 'text-white-alpha-80'
+                  "
+                  >{{ subitem.nombre }}</span
+                >
+                <i class="pi pi-chevron-down ml-auto" *ngIf="subitem.items"></i>
+              </a>
+
+              <ul
+                class="list-none py-0 pl-3 pr-0 m-0 hidden overflow-y-hidden transition-all transition-duration-400 transition-ease-in-out"
+                *ngIf="subitem.items"
+              >
+                <li
+                  *ngFor="let subSubItem of subitem.items"
+                  [routerLink]="subSubItem.ruta"
+                >
+                  <a
+                    pRipple
+                    class="flex align-items-center cursor-pointer p-3 text-700 border-2 border-transparent hover:border-300 transition-duration-150 transition-colors"
+                    style="border-radius: 12px"
+                  >
+                    <i class="pi pi-chart-line mr-2 text-purple-500"></i>
+                    <span
+                      class="font-medium"
+                      [ngClass]="
+                        active ? 'text-black-alpha-80' : 'text-white-alpha-80'
+                      "
+                      >{{ subSubItem.nombre }}</span
+                    >
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
       </ul>
     </div>
-    <div class="mt-auto">
-      <hr class="mb-3 mx-3 border-top-1 border-none border-gray-800" />
+
+    <div
+      class="mt-auto border-top-1 surface-border p-3 flex justify-content-between"
+    >
+      <a
+        (click)="toggleTheme()"
+        pRipple
+        class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle"
+        [ngClass]="
+          active
+            ? 'bg-white text-black-alpha-80 border-black-alpha-80 hover:bg-black-alpha-80 hover:text-white'
+            : 'bg-blue-900 text-white-alpha-80 border-white hover:bg-white hover:text-black-alpha-80'
+        "
+        style="width: 40px; height: 40px"
+      >
+        <i class="pi  text-xl"
+        [ngClass]="active ? 'pi-moon' : 'pi-sun'"
+        ></i>
+      </a>
       <a
         pRipple
-        class="m-3 flex align-items-center cursor-pointer p-3 border-round hover:bg-gray-800 text-gray-300 hover:text-white transition-duration-150 transition-colorss"
+        class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle"
+        [ngClass]="
+          active
+            ? 'bg-white text-black-alpha-80 border-black-alpha-80 hover:bg-black-alpha-80 hover:text-white'
+            : 'bg-blue-900 text-white-alpha-80 border-white hover:bg-white hover:text-black-alpha-80'
+        "
+        style="width: 40px; height: 40px"
       >
-        <img
-          src="assets/images/blocks/avatars/circle/avatar-f-1.png"
-          class="mr-2"
-          style="width: 28px; height: 28px"
-        />
-        <span class="font-medium">Harry Ore</span>
+        <i class="pi pi-star text-xl"></i>
+      </a>
+      <a
+        pRipple
+        class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle"
+        [ngClass]="
+          active
+            ? 'bg-white text-black-alpha-80 border-black-alpha-80 hover:bg-black-alpha-80 hover:text-white'
+            : 'bg-blue-900 text-white-alpha-80 border-white hover:bg-white hover:text-black-alpha-80'
+        "
+        style="width: 40px; height: 40px"
+      >
+        <i class="pi pi-cog text-xl"></i>
+      </a>
+      <a
+        pRipple
+        class="cursor-pointer inline-flex align-items-center justify-content-center border-2 border-pink-600 hover:bg-pink-600 text-600 transition-colors transition-duration-150 border-circle"
+        [ngClass]="
+          active
+            ? 'bg-white text-black-alpha-80 border-black-alpha-80 hover:bg-black-alpha-80 hover:text-white'
+            : 'bg-blue-900 text-white-alpha-80 border-white hover:bg-white hover:text-black-alpha-80'
+        "
+        style="width: 40px; height: 40px"
+
+      >
+        <i class="pi pi-sign-out text-xl"></i>
       </a>
     </div>
   </div>

@@ -1,0 +1,19 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img,
+svg {
+  width: 100px; /* Cambia el tamaño aquí */
+  height: 100px;
+  animation: rotate 1s linear infinite;
+}
+
+/* Animación de rotación */
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
