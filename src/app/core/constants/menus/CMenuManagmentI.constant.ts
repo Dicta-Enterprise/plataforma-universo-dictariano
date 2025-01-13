@@ -25,8 +25,8 @@ export const C_MENU_MANAGMENT_I: IMenu[] = [
           idPadre: 0,
         },
         idMenu: 2,
-        nombre: 'Categorias',
-        ruta: '/managment/categorias',
+        nombre: 'Galaxias',
+        ruta: '/managment/galaxias',
         idPadre: 0,
         icono: 'pi pi-exclamation-triangle',
       },
@@ -37,8 +37,8 @@ export const C_MENU_MANAGMENT_I: IMenu[] = [
           idPadre: 0,
         },
         idMenu: 3,
-        nombre: 'Subcategorias',
-        ruta: '/managment/subcategorias',
+        nombre: 'Planetas',
+        ruta: '/managment/planetas',
         idPadre: 0,
         icono: 'pi pi-exclamation-triangle',
       },
@@ -50,7 +50,6 @@ export const C_MENU_MANAGMENT_I: IMenu[] = [
     nombre: 'USUARIOS',
     idPadre: 0,
     items: [
-
       {
         padre: {
           idMenu: 2,
