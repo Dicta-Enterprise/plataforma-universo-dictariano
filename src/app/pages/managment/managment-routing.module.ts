@@ -18,15 +18,25 @@ const routes: Routes = [
           import('./categoria/categoria.module').then((m) => m.CategoriaModule),
       },
       {
-        path:'galaxias',
+        path: 'galaxias',
         loadChildren: () =>
           import('./galaxias/galaxias.module').then((m) => m.GalaxiasModule),
       },
       {
-        path:'planetas',
+        path: 'planetas',
         loadChildren: () =>
           import('./planetas/planetas.module').then((m) => m.PlanetasModule),
-      }
+      },
+      {
+        path: 'idiomas',
+        loadChildren: () =>
+          import('./idiomas/idiomas.module').then((m) => m.IdiomasModule),
+      },
+      {
+        path: 'profesor',
+        loadChildren: () =>
+          import('./profesor/profesor.module').then((m) => m.ProfesorModule),
+      },
     ],
   },
 ];
