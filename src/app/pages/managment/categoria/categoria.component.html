@@ -1,1 +1,176 @@
-<p>categoria works!</p>
+
+<p-toast></p-toast>
+<app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
+
+<div class="px-2 md:px-4 lg:px-2 lg:py-2">
+  <div class="flex justify-content-between align-items-center flex-wrap mb-3">
+    <div class="text-4xl font-bold text-500">CATEGORIAS</div>
+    <button
+      pButton
+      type="button"
+      class="p-button-secondary ml-3 p-button-outlined w-auto"
+      pRipple
+      (click)="showNuevaCategoria()"
+      label="Nueva Categoria"
+      icon="pi pi-plus"
+    ></button>
+  </div>
+
+  <!-- <div class="surface-card p-4 mt-4 shadow-2 border-round p-fluid">
+    <form
+      class="border-round p-fluid"
+      [formGroup]="buscarCursoForm"
+      (ngSubmit)="buscarCurso()"
+    >
+      <div class="grid formgrid p-fluid justify-content-between">
+        <div class="field col-12 md:col-3">
+          <div class="flex align-items-center">
+            <span class="p-float-label col-12">
+              <app-custom-agencias-dropdown
+                formControlName="origen"
+                [label]="'Lugar Origen'"
+                [state]="'Origen'"
+              ></app-custom-agencias-dropdown> 
+            </span>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="flex align-items-center">
+            <span class="p-float-label col-12">
+             <app-custom-agencias-dropdown
+                formControlName="destino"
+                [label]="'Lugar Destino'"
+                [state]="'Destino'"
+              ></app-custom-agencias-dropdown> 
+            </span>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="flex align-items-center">
+            <span class="p-float-label col-12">
+            <p-selectButton
+                [options]="optionsFilter"
+                formControlName="estado"
+                optionLabel="label"
+                optionValue="value"
+              >
+              </p-selectButton> 
+            </span>
+          </div>
+        </div>
+
+        <div class="field col-12 md:col-3">
+          <div class="flex align-items-center">
+            <button
+              pButton
+              type="submit"
+              class="bg-gray-900 border-blue-900"
+              pRipple
+              label="Buscar"
+              icon="pi pi-search"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div> -->
+
+  <div class="grid formgrid p-fluid mt-4">
+    <p-table
+      #dt2
+      [value]="categorias"
+      dataKey="id"
+      [paginator]="true"
+      [rows]="20"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[20, 30, 40]"
+      [loading]="isLoading"
+      class="w-full"
+      [tableStyle]="{ 'min-width': '50rem', 'font-size': '15px' }"
+      currentPageReportTemplate="Mostrando {last} Trayectorias de  {totalRecords}"
+      [globalFilterFields]="[
+        'nombre',
+        'origen.descripcion',
+        'destino.descripcion',
+        'totalOficinas'
+      ]"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex justify-content-between">
+          <button
+            pButton
+            label="Limpiar"
+            class="p-button-outlined w-10rem"
+            icon="pi pi-filter-slash"
+            (click)="clear(dt2)"
+          ></button>
+          <span class="p-input-icon-left ml-auto w-20rem">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
+              placeholder="Buscar..."
+            />
+          </span>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nombre</th>
+          <th>Fecha Creacion</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Cantidad Alumnos</th>
+          <th>Precio</th>
+          <th>Duracion</th>
+          <th>Categoria</th>
+          <th>Profesor</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-categoria let-columns="columns">
+        <tr class="categoriar-pointer hover:bg-blue-900 hover:text-white">
+          <td>{{ categoria.nombre }}</td>
+          <td>{{ categoria.origen.nombreAgencia }}</td>
+          <td>{{ categoria.destino.nombreAgencia }}</td>
+          <td>
+            <!-- <p-tag
+              [appTagActivoState]="categoria.estado"
+              class="text-white"
+              [styleClass]="'text-white'"
+            ></p-tag> -->
+          </td>
+
+          <td>{{ categoria.totalTiempoAcumulado }}</td>
+          <td>{{ categoria.totalOficinas }}</td>
+          <td>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-secondary mr-2"
+              (click)="editarCategoria(categoria)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-danger"
+              (click)="eliminarCategoria(categoria)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<app-nueva-categoria
+[isNuevaCategoria]="isNuevaCategoria"
+[categoria]="categoria"
+(onHideEmit)="showNuevaCategoria($event)"
+></app-nueva-categoria>

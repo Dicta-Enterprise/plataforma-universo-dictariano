@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Subscription } from 'rxjs';
+import { CursoManagment } from 'src/app/core/class/managment/managment';
 
 @Component({
   selector: 'app-cursos',
@@ -13,8 +14,8 @@ export class CursosComponent  implements OnInit, OnDestroy{
   private subscription: Subscription = new Subscription();
   isLoading: boolean = false;
   isNuevoCurso: boolean = false;
-  cursos: any[] = [];//TODO: TIPAR
-  curso: any = {};//TODO: TIPAR
+  cursos: CursoManagment[] = [];
+  curso: CursoManagment = new CursoManagment();
 
 
 

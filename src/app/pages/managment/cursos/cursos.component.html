@@ -10,12 +10,12 @@
       class="p-button-secondary ml-3 p-button-outlined w-auto"
       pRipple
       (click)="showNuevoCurso()"
-      label="Nueva Trayectoria"
+      label="Nuevo Curso"
       icon="pi pi-plus"
     ></button>
   </div>
 
-  <div class="surface-card p-4 mt-4 shadow-2 border-round p-fluid">
+  <!-- <div class="surface-card p-4 mt-4 shadow-2 border-round p-fluid">
     <form
       class="border-round p-fluid"
       [formGroup]="buscarCursoForm"
@@ -25,11 +25,11 @@
         <div class="field col-12 md:col-3">
           <div class="flex align-items-center">
             <span class="p-float-label col-12">
-              <!-- <app-custom-agencias-dropdown
+              <app-custom-agencias-dropdown
                 formControlName="origen"
                 [label]="'Lugar Origen'"
                 [state]="'Origen'"
-              ></app-custom-agencias-dropdown> -->
+              ></app-custom-agencias-dropdown> 
             </span>
           </div>
         </div>
@@ -37,11 +37,11 @@
         <div class="field col-12 md:col-3">
           <div class="flex align-items-center">
             <span class="p-float-label col-12">
-              <!-- <app-custom-agencias-dropdown
+             <app-custom-agencias-dropdown
                 formControlName="destino"
                 [label]="'Lugar Destino'"
                 [state]="'Destino'"
-              ></app-custom-agencias-dropdown> -->
+              ></app-custom-agencias-dropdown> 
             </span>
           </div>
         </div>
@@ -49,13 +49,13 @@
         <div class="field col-12 md:col-3">
           <div class="flex align-items-center">
             <span class="p-float-label col-12">
-              <!-- <p-selectButton
+            <p-selectButton
                 [options]="optionsFilter"
                 formControlName="estado"
                 optionLabel="label"
                 optionValue="value"
               >
-              </p-selectButton> -->
+              </p-selectButton> 
             </span>
           </div>
         </div>
@@ -74,7 +74,7 @@
         </div>
       </div>
     </form>
-  </div>
+  </div> -->
 
   <div class="grid formgrid p-fluid mt-4">
     <p-table
@@ -131,35 +131,35 @@
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-trayectoria let-columns="columns">
+      <ng-template pTemplate="body" let-curso let-columns="columns">
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
-          <td>{{ trayectoria.nombre }}</td>
-          <td>{{ trayectoria.origen.nombreAgencia }}</td>
-          <td>{{ trayectoria.destino.nombreAgencia }}</td>
+          <td>{{ curso.nombre }}</td>
+          <td>{{ curso.origen.nombreAgencia }}</td>
+          <td>{{ curso.destino.nombreAgencia }}</td>
           <td>
             <!-- <p-tag
-              [appTagActivoState]="trayectoria.estado"
+              [appTagActivoState]="curso.estado"
               class="text-white"
               [styleClass]="'text-white'"
             ></p-tag> -->
           </td>
 
-          <td>{{ trayectoria.totalTiempoAcumulado }}</td>
-          <td>{{ trayectoria.totalOficinas }}</td>
+          <td>{{ curso.totalTiempoAcumulado }}</td>
+          <td>{{ curso.totalOficinas }}</td>
           <td>
             <button
               pButton
               pRipple
               icon="pi pi-pencil"
               class="p-button-rounded p-button-secondary mr-2"
-              (click)="editarCurso(trayectoria)"
+              (click)="editarCurso(curso)"
             ></button>
             <button
               pButton
               pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-danger"
-              (click)="eliminarCurso(trayectoria)"
+              (click)="eliminarCurso(curso)"
             ></button>
           </td>
         </tr>
