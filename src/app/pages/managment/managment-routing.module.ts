@@ -12,6 +12,21 @@ const routes: Routes = [
         loadChildren: () =>
           import('./cursos/cursos.module').then((m) => m.CursosModule),
       },
+      {
+        path: 'categoria',
+        loadChildren: () =>
+          import('./categoria/categoria.module').then((m) => m.CategoriaModule),
+      },
+      {
+        path:'galaxias',
+        loadChildren: () =>
+          import('./galaxias/galaxias.module').then((m) => m.GalaxiasModule),
+      },
+      {
+        path:'planetas',
+        loadChildren: () =>
+          import('./planetas/planetas.module').then((m) => m.PlanetasModule),
+      }
     ],
   },
 ];

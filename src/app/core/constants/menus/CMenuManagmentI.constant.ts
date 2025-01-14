@@ -42,6 +42,18 @@ export const C_MENU_MANAGMENT_I: IMenu[] = [
         idPadre: 0,
         icono: 'pi pi-exclamation-triangle',
       },
+      {
+        padre: {
+          idMenu: 1,
+          nombre: 'MANTENEDORES',
+          idPadre: 0,
+        },
+        idMenu: 4,
+        nombre: 'Categorias',
+        ruta: '/managment/categoria',
+        idPadre: 0,
+        icono: 'pi pi-exclamation-triangle',
+      },
     ],
   },
 
