@@ -1,4 +1,5 @@
 import { ActivosState } from "src/app/shared/enums";
+import { CategoriaManagment, ProfesorManagment } from "../managment";
 
 export class CursoManagment {
   id: string;
@@ -9,12 +10,12 @@ export class CursoManagment {
   fechaFinalizacion: string;
   cantidadAlumnos: string;
   precio: string;
-  profesor: string;
+  profesor: ProfesorManagment;
   estado: ActivosState;
   imagen: string;
   video: string;
   duracion: string;
-  categoria: string;
+  categoria: CategoriaManagment;
   idioma: string;
 
   constructor(cursoManagment: Partial<CursoManagment> = {}) {
@@ -26,12 +27,12 @@ export class CursoManagment {
     this.fechaFinalizacion = cursoManagment.fechaFinalizacion || '';
     this.cantidadAlumnos = cursoManagment.cantidadAlumnos || '';
     this.precio = cursoManagment.precio || '';
-    this.profesor = cursoManagment.profesor || '';
+    this.profesor = cursoManagment.profesor || new ProfesorManagment();
     this.estado = cursoManagment.estado || ActivosState.ACTIVO;
     this.imagen = cursoManagment.imagen || '';
     this.video = cursoManagment.video || '';
     this.duracion = cursoManagment.duracion || '';
-    this.categoria = cursoManagment.categoria || '';
+    this.categoria = cursoManagment.categoria || new CategoriaManagment();
     this.idioma = cursoManagment.idioma || '';
   }
 
