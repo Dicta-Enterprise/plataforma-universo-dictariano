@@ -1,0 +1,88 @@
+<p-toast></p-toast>
+<app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
+
+<p-dialog
+  [(visible)]="isNuevaLanding"
+  (onShow)="onShow()"
+  (onHide)="onHide()"
+  appendTo="body"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '52vw' }"
+  header="NUEVA LANDING"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column gap-2">
+      <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
+        NUEVA LANDING
+      </h1>
+      <span class="text-600 text-base"
+        >Crea todas las Landings que desees</span
+      >
+    </div>
+  </ng-template>
+
+  <form
+    class="flex flex-column gap-3 mt-4"
+    [formGroup]="landingForm"
+    (ngSubmit)="crearLanding()"
+  >
+    <div class="grid formgrid p-fluid">
+      <div class="field mb-4 col-12 md:col-3">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <input
+              pInputText
+              id="nombre"
+              autocomplete="off"
+              formControlName="nombre"
+            />
+            <label class="ml-2" htmlFor="nombre">Nombre</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-4 col-12 md:col-3">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <input
+              pInputText
+              id="imagen"
+              autocomplete="off"
+              formControlName="imagen"
+            />
+            <label class="ml-2" htmlFor="imagen">Imagen</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-4 col-12 md:col-6">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <p-calendar
+              appendTo="body"
+              [showIcon]="true"
+              [showTime]="true"
+              [showSeconds]="true"
+              formControlName="fechaCreacion"
+            ></p-calendar>
+            <label for="fechaCreacion" class="ml-2">Fecha Creación</label>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      [label]="
+        landing.id == '' ? 'Guardar Trayectoria' : 'Actualizar Trayectoria'
+      "
+      (click)="crearLanding()"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+

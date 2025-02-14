@@ -6,11 +6,11 @@ import { NuevoCursoModule } from './nuevo-curso/nuevo-curso.module';
 import { NuevoIdiomaModule } from './nuevo-idioma/nuevo-idioma.module';
 import { NuevoPlanetaModule } from './nuevo-planeta/nuevo-planeta.module';
 import { NuevoProfesorModule } from './nuevo-profesor/nuevo-profesor.module';
+import { NuevaLandingModule } from './nueva-landing/nueva-landing.module';
 
 
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     NuevaCategoriaModule,
@@ -18,7 +18,8 @@ import { NuevoProfesorModule } from './nuevo-profesor/nuevo-profesor.module';
     NuevoCursoModule,
     NuevoIdiomaModule,
     NuevoPlanetaModule,
-    NuevoProfesorModule
+    NuevoProfesorModule,
+    NuevaLandingModule
   ],
   exports: [
     NuevaCategoriaModule,
@@ -26,7 +27,8 @@ import { NuevoProfesorModule } from './nuevo-profesor/nuevo-profesor.module';
     NuevoCursoModule,
     NuevoIdiomaModule,
     NuevoPlanetaModule,
-    NuevoProfesorModule
+    NuevoProfesorModule,
+    NuevaLandingModule
   ]
 })
 export class SharedMantenedoresModule { }
