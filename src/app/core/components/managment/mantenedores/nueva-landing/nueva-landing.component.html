@@ -18,9 +18,7 @@
       <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
         NUEVA LANDING
       </h1>
-      <span class="text-600 text-base"
-        >Crea todas las Landings que desees</span
-      >
+      <span class="text-600 text-base">Crea todas las Landings que desees</span>
     </div>
   </ng-template>
 
@@ -30,21 +28,21 @@
     (ngSubmit)="crearLanding()"
   >
     <div class="grid formgrid p-fluid">
-      <div class="field mb-4 col-12 md:col-3">
+      <div class="field mb-4 col-12 md:col-6">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
             <input
               pInputText
-              id="nombre"
+              id="titulo"
               autocomplete="off"
-              formControlName="nombre"
+              formControlName="titulo"
             />
-            <label class="ml-2" htmlFor="nombre">Nombre</label>
+            <label class="ml-2" htmlFor="titulo">Título</label>
           </span>
         </div>
       </div>
 
-      <div class="field mb-4 col-12 md:col-3">
+      <div class="field mb-4 col-12 md:col-6">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
             <input
@@ -61,14 +59,55 @@
       <div class="field mb-4 col-12 md:col-6">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
-            <p-calendar
-              appendTo="body"
-              [showIcon]="true"
-              [showTime]="true"
-              [showSeconds]="true"
-              formControlName="fechaCreacion"
-            ></p-calendar>
-            <label for="fechaCreacion" class="ml-2">Fecha Creación</label>
+            <input
+              pInputText
+              id="descripcion"
+              autocomplete="off"
+              formControlName="descripcion"
+            />
+            <label class="ml-2" htmlFor="descripcion">Descripción</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-4 col-12 md:col-6">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <input
+              pInputText
+              id="contenido"
+              autocomplete="off"
+              formControlName="contenido"
+            />
+            <label class="ml-2" htmlFor="contenido">Contenido</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-4 col-12 md:col-6">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <p-dropdown
+              id="planeta"
+              formControlName="planeta"
+              optionLabel="nombre"
+              placeholder="Selecciona un planeta"
+            ></p-dropdown>
+            <label class="ml-2" htmlFor="planeta">Planeta</label>
+          </span>
+        </div>
+      </div>
+
+      <div class="field mb-4 col-12 md:col-6">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <input
+              pInputText
+              id="color"
+              autocomplete="off"
+              formControlName="color"
+            />
+            <label class="ml-2" htmlFor="color">Color</label>
           </span>
         </div>
       </div>
@@ -85,4 +124,3 @@
     ></p-button>
   </ng-template>
 </p-dialog>
-

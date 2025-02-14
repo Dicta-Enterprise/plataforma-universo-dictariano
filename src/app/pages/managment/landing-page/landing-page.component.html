@@ -28,7 +28,7 @@
       class="w-full"
       [tableStyle]="{ 'min-width': '50rem', 'font-size': '15px' }"
       currentPageReportTemplate="Mostrando {last} Landings de {totalRecords}"
-      [globalFilterFields]="['titulo', 'planetaId', 'estado']"
+      [globalFilterFields]="['titulo', 'descripcion','contenido', 'planeta','estado']"
     >
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between">
@@ -54,17 +54,20 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Título</th>
-          <th>Estado</th>
+          <th>Descripción</th>
+          <th>Contenido</th>
           <th>Planeta</th>
-          <th>Acciones</th>
+          <th>Estado</th>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-landing>
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ landing.titulo }}</td>
+          <td>{{ landing.descripcion }}</td>
+          <td>{{ landing.contenido }}</td>
+          <td>{{ landing.planeta }}</td>
           <td>{{ landing.estado }}</td>
-          <td>{{ landing.planetaId }}</td>
           <td>
             <button
               pButton

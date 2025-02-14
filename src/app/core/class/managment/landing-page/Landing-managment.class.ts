@@ -1,4 +1,5 @@
 import { ActivosState } from "src/app/shared/enums";
+import { PlanetaManagment } from "../managment";
 
 export class LandingPageManagment {
     id: string;
@@ -6,7 +7,7 @@ export class LandingPageManagment {
     descripcion: string;
     contenido: string[];
     estado: ActivosState;
-    planetaId: string;
+    planeta: PlanetaManagment;
     imagenUrl: string;
     color: string;
 
@@ -16,7 +17,7 @@ export class LandingPageManagment {
         this.descripcion = landingPage.descripcion || '';
         this.contenido = landingPage.contenido || [];
         this.estado = landingPage.estado || ActivosState.ACTIVO;
-        this.planetaId = landingPage.planetaId || '';
+        this.planeta = landingPage.planeta || new PlanetaManagment();;
         this.imagenUrl = landingPage.imagenUrl || '';
         this.color = landingPage.color || '';
     }
@@ -28,7 +29,7 @@ export class LandingPageManagment {
             descripcion: landingManagment.descripcion,
             contenido: landingManagment.contenido,
             estado: landingManagment.estado,
-            planetaId: landingManagment.planetaId,
+            planeta: landingManagment.planetaId,
             imagenUrl: landingManagment.imagenUrl,
             color: landingManagment.color,
         });
@@ -41,7 +42,7 @@ export class LandingPageManagment {
             descripcion: landingManagment.descripcion,
             contenido: landingManagment.contenido,
             estado: landingManagment.estado,
-            planetaId: landingManagment.planetaId,
+            planetaId: landingManagment.planeta,
             imagenUrl: landingManagment.imagenUrl,
             color: landingManagment.color,
         };
