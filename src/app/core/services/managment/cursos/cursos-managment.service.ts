@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import { map, Observable } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
 
 @Injectable({
@@ -11,11 +12,17 @@ export class CursosManagmentService {
 
   constructor(private httpClient: HttpClient) {}
 
-  listarCursosService$() {}
+  listarCursosService$(): Observable<CursoManagment[]>  {
+    return this.httpClient.get<any[]>(`${this.base_url}cursos`).pipe(
+      map(response => response.map(curso => CursoManagment.fromJson(curso)))
+    );
+  }
 
   obtenerCursoService$(id: number) {}
 
-  crearCursoService$(Curso: CursoManagment) {}
+  crearCursoService$(curso: CursoManagment): Observable<CursoManagment> {
+    return this.httpClient.post<CursoManagment>(`${this.base_url}cursos`, curso);
+  }
 
   editarCursoService$(Curso: CursoManagment) {}
 

@@ -127,25 +127,31 @@
           <th>Precio</th>
           <th>Duracion</th>
           <th>Categoria</th>
-          <th>Profesor</th>
+          <th>Planeta</th>
           <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-curso let-columns="columns">
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ curso.nombre }}</td>
-          <td>{{ curso.origen.nombreAgencia }}</td>
-          <td>{{ curso.destino.nombreAgencia }}</td>
-          <td>
-            <!-- <p-tag
+          <td>{{ curso.fechaCreacion | date: "dd-MM-yyyy" }}</td>
+          <td>{{ curso.fechaInicio | date: "dd-MM-yyyy" }}</td>
+          <td>{{ curso.fechaFinalizacion | date: "dd-MM-yyyy" }}</td>
+          <!-- <td>
+            <p-tag
               [appTagActivoState]="curso.estado"
               class="text-white"
               [styleClass]="'text-white'"
-            ></p-tag> -->
-          </td>
+            ></p-tag>
+          </td>  -->
 
-          <td>{{ curso.totalTiempoAcumulado }}</td>
-          <td>{{ curso.totalOficinas }}</td>
+          <!-- <td>{{ curso.totalTiempoAcumulado }}</td>
+          <td>{{ curso.totalOficinas }}</td> -->
+          <td>{{ curso.cantidadAlumnos }}</td>
+          <td>{{ curso.precio | currency: 'USD' }}</td>
+          <td>{{ curso.duracion }}</td>
+          <td>{{ curso.categoriaNombre }}</td>
+          <td>{{ curso.planetaNombre }}</td>
           <td>
             <button
               pButton
@@ -168,8 +174,9 @@
   </div>
 </div>
 
-<!-- <app-nueva-trayectoria
-  [isNewTrajectory]="isNewTrajectory"
-  [trayectoria]="trayectoria"
-  (onHideEmit)="showNuevaTrayectoria($event)"
-></app-nueva-trayectoria> -->
+<app-nuevo-curso
+  [isNuevoCurso]="isNuevoCurso"
+  [curso]="curso"
+  (onHideEmit)="showNuevoCurso($event)"
+></app-nuevo-curso>
+
