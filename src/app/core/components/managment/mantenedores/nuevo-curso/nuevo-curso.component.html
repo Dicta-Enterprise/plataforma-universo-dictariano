@@ -1,1 +1,196 @@
-<p>nuevo-curso works!</p>
+<p-toast></p-toast>
+<app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
+
+<p-dialog
+  [(visible)]="isNuevoCurso"
+  (onShow)="onShow()"
+  (onHide)="onHide()"
+  appendTo="body"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '52vw' }"
+  header="NUEVO CURSO"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column gap-2">
+      <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
+        NUEVO CURSO
+      </h1>
+      <span class="text-600 text-base"
+        >Crea todas las Cursos que desees</span
+      >
+    </div>
+  </ng-template>
+
+  <form
+    class="flex flex-column gap-3 mt-4"
+    [formGroup]="cursoForm"
+    (ngSubmit)="crearCurso()"
+  >
+    <div class="grid formgrid p-fluid">
+      <!-- Nombre -->
+      <div class="field mb-4 col-12">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <input
+              pInputText
+              id="nombre"
+              autocomplete="off"
+              formControlName="nombre"
+            />
+            <label class="ml-2" htmlFor="nombre">Nombre del Curso</label>
+          </span>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="field mb-4 col-12">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <textarea
+              pInputTextarea
+              id="descripcion"
+              autocomplete="off"
+              formControlName="descripcion"
+              rows="3"
+            ></textarea>
+            <label class="ml-2" htmlFor="descripcion">Descripción</label>
+          </span>
+        </div>
+      </div>
+      
+      <div class="grid formgrid gap-2 col-12">
+      
+        <!-- Fecha Inicio -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <p-calendar appendTo="body" [showIcon]="true" formControlName="fechaInicio"></p-calendar>
+              <label class="ml-2" htmlFor="fechaInicio">Fecha de Inicio</label>
+            </span>
+          </div>
+        </div>
+
+        <!-- Fecha Finalización -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <p-calendar appendTo="body" [showIcon]="true" formControlName="fechaFinalizacion"></p-calendar>
+              <label class="ml-2" htmlFor="fechaFinalizacion">Fecha de Finalización</label>
+            </span>
+          </div>
+        </div>
+
+        <!-- Categoría -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <p-dropdown 
+                [options]="categorias" 
+                optionLabel="nombre" 
+                optionValue="id" 
+                formControlName="categoriaId"
+                placeholder="Seleccione una Categoría"></p-dropdown>
+              <label class="ml-2" htmlFor="categoriaId">Categoría</label>
+            </span>
+          </div>
+        </div>
+
+        <!-- Planeta -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <p-dropdown 
+                [options]="planetas" 
+                optionLabel="nombre" 
+                optionValue="id" 
+                formControlName="planetaId"
+                placeholder="Seleccione un Planeta"></p-dropdown>
+              <label class="ml-2" htmlFor="planetaId">Planeta</label>
+            </span>
+          </div>
+        </div>
+
+        <!-- Imagen -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <input 
+                pInputText id="imagen" 
+                autocomplete="off" 
+                formControlName="imagen" />
+              <label class="ml-2" htmlFor="imagen">URL de Imagen</label>
+            </span>
+          </div>
+        </div>
+
+        <!-- Video -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <input 
+                pInputText id="video" 
+                autocomplete="off" 
+                formControlName="video" />
+              <label class="ml-2" htmlFor="video">URL de Video</label>
+            </span>
+          </div>
+        </div>       
+      </div>
+
+      <div class="grid formgrid gap-3 col-12">
+        <!-- Precio -->
+        <div class="field mb-4 col-3">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <input 
+                pInputText type="number" 
+                id="precio" 
+                formControlName="precio" />
+              <label class="ml-2" htmlFor="precio">Precio</label>
+            </span>
+          </div>
+        </div>
+         
+        <!-- Duración -->
+        <div class="field mb-4 col-3">
+          <div class="mb-3 flex align-items-center">
+             <span class="p-float-label col-12">
+              <input 
+                pInputText type="number" 
+                id="duracion" 
+                formControlName="duracion" />
+              <label class="ml-2" htmlFor="duracion">Duración (Horas)</label>
+            </span>
+          </div>
+        </div>
+ 
+        <!-- Cantidad de Alumnos -->
+        <div class="field mb-4 col-3">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <input 
+                pInputText type="number" 
+                id="cantidadAlumnos" 
+                formControlName="cantidadAlumnos" />
+              <label class="ml-2" htmlFor="cantidadAlumnos">Cantidad de Alumnos</label>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      [label]="
+        curso.id == '' ? 'Guardar Trayectoria' : 'Actualizar Trayectoria'
+      "
+      (click)="crearCurso()"
+    ></p-button>
+  </ng-template>
+</p-dialog>
+

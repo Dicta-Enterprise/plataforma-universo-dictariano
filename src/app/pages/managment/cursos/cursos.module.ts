@@ -6,6 +6,9 @@ import { ManagmentPrimengModule } from 'src/app/core/themes/managment/managment-
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { HttpClientModule } from '@angular/common/http';
+import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { NuevoCursoModule } from "../../../core/components/managment/mantenedores/nuevo-curso/nuevo-curso.module";
 
 
 
@@ -18,10 +21,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     CursosRoutingModule,
     ManagmentPrimengModule,
     SharedSpinnerModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    HttpClientModule,
+    NuevoCursoModule
+],
   providers:[
-    MessageService, ConfirmationService
+    MessageService, ConfirmationService, CursosManagmentService
   ]
 })
 export class CursosModule { }
