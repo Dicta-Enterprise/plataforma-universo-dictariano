@@ -6,6 +6,7 @@ import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-s
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { LandingPageManagmentService } from '../../../../services/managment/landing-page/landing-managment.service';
 
 
 
@@ -25,7 +26,8 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   providers: [
     MessageService,
     ConfirmationService,
-    AlertService
+    AlertService,
+    LandingPageManagmentService
   ]
 })
 export class NuevaLandingModule { }

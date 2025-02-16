@@ -7,9 +7,9 @@ export class LandingPageManagment {
     descripcion: string;
     contenido: string[];
     estado: ActivosState;
-    planeta: PlanetaManagment;
-    imagenUrl: string;
-    color: string;
+    planetaId: PlanetaManagment;
+    imagenUrl: string | null;
+    color: string | null;
 
     constructor(landingPage: Partial<LandingPageManagment> = {}) {
         this.id = landingPage.id || '';
@@ -17,9 +17,9 @@ export class LandingPageManagment {
         this.descripcion = landingPage.descripcion || '';
         this.contenido = landingPage.contenido || [];
         this.estado = landingPage.estado || ActivosState.ACTIVO;
-        this.planeta = landingPage.planeta || new PlanetaManagment();;
-        this.imagenUrl = landingPage.imagenUrl || '';
-        this.color = landingPage.color || '';
+        this.planetaId = landingPage.planetaId || new PlanetaManagment();
+        this.imagenUrl = landingPage.imagenUrl || null; 
+        this.color = landingPage.color || null; 
     }
 
     static fromJson(landingManagment: any): LandingPageManagment {
@@ -29,9 +29,9 @@ export class LandingPageManagment {
             descripcion: landingManagment.descripcion,
             contenido: landingManagment.contenido,
             estado: landingManagment.estado,
-            planeta: landingManagment.planetaId,
-            imagenUrl: landingManagment.imagenUrl,
-            color: landingManagment.color,
+            planetaId: landingManagment.planetaId,
+            imagenUrl: landingManagment.imagenUrl ?? null, 
+            color: landingManagment.color ?? null, 
         });
     }
 
@@ -42,8 +42,8 @@ export class LandingPageManagment {
             descripcion: landingManagment.descripcion,
             contenido: landingManagment.contenido,
             estado: landingManagment.estado,
-            planetaId: landingManagment.planeta,
-            imagenUrl: landingManagment.imagenUrl,
+            planetaId: landingManagment.planetaId,
+            imagenUrl: landingManagment.imagenUrl, 
             color: landingManagment.color,
         };
     }

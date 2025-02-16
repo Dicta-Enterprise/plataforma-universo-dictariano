@@ -84,7 +84,7 @@ export const C_MENU_MANAGMENT_I: IMenu[] = [
           nombre: 'MANTENEDORES',
           idPadre: 0,
         },
-        idMenu: 1,
+        idMenu: 7,
         nombre: 'Landing Page',
         ruta: '/managment/landing',
         idPadre: 0,

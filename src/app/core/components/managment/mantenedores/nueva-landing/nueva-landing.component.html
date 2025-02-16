@@ -9,26 +9,29 @@
   [modal]="true"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
   [style]="{ width: '52vw' }"
-  header="NUEVA LANDING"
+  header="NUEVA LANDING PAGE"
   [draggable]="false"
   [resizable]="false"
 >
   <ng-template pTemplate="header">
     <div class="flex flex-column gap-2">
       <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
-        NUEVA LANDING
+        NUEVA LANDING PAGE
       </h1>
-      <span class="text-600 text-base">Crea todas las Landings que desees</span>
+      <span class="text-600 text-base"
+        >Crea una nueva landing page con su contenido</span
+      >
     </div>
   </ng-template>
 
   <form
     class="flex flex-column gap-3 mt-4"
     [formGroup]="landingForm"
-    (ngSubmit)="crearLanding()"
+    (ngSubmit)="crearLandingPage()"
   >
     <div class="grid formgrid p-fluid">
-      <div class="field mb-4 col-12 md:col-6">
+      <!-- Título -->
+      <div class="field mb-4 col-12">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
             <input
@@ -42,73 +45,83 @@
         </div>
       </div>
 
-      <div class="field mb-4 col-12 md:col-6">
+      <!-- Descripción -->
+      <div class="field mb-4 col-12">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
-            <input
-              pInputText
-              id="imagen"
-              autocomplete="off"
-              formControlName="imagen"
-            />
-            <label class="ml-2" htmlFor="imagen">Imagen</label>
-          </span>
-        </div>
-      </div>
-
-      <div class="field mb-4 col-12 md:col-6">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <input
-              pInputText
+            <textarea
+              pInputTextarea
               id="descripcion"
               autocomplete="off"
               formControlName="descripcion"
-            />
+              rows="3"
+            ></textarea>
             <label class="ml-2" htmlFor="descripcion">Descripción</label>
           </span>
         </div>
       </div>
 
-      <div class="field mb-4 col-12 md:col-6">
+      <!-- Contenido -->
+      <div class="field mb-4 col-12">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
-            <input
-              pInputText
+            <textarea
+              pInputTextarea
               id="contenido"
               autocomplete="off"
               formControlName="contenido"
-            />
-            <label class="ml-2" htmlFor="contenido">Contenido</label>
+              rows="3"
+            ></textarea>
+            <label class="ml-2" htmlFor="contenido">Contenido (separado por comas)</label>
           </span>
         </div>
       </div>
 
-      <div class="field mb-4 col-12 md:col-6">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <p-dropdown
-              id="planeta"
-              formControlName="planeta"
-              optionLabel="nombre"
-              placeholder="Selecciona un planeta"
-            ></p-dropdown>
-            <label class="ml-2" htmlFor="planeta">Planeta</label>
-          </span>
+      <div class="grid formgrid gap-2 col-12">
+        <!-- Planeta -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <p-dropdown
+                [options]="planetas"
+                optionLabel="nombre"
+                optionValue="id"
+                formControlName="planetaId"
+                placeholder="Seleccione un Planeta"
+              ></p-dropdown>
+              <label class="ml-2" htmlFor="planetaId">Planeta</label>
+            </span>
+          </div>
         </div>
-      </div>
 
-      <div class="field mb-4 col-12 md:col-6">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <input
-              pInputText
-              id="color"
-              autocomplete="off"
-              formControlName="color"
-            />
-            <label class="ml-2" htmlFor="color">Color</label>
-          </span>
+        <!-- Imagen URL -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <input
+                pInputText
+                id="imagenUrl"
+                autocomplete="off"
+                formControlName="imagenUrl"
+              />
+              <label class="ml-2" htmlFor="imagenUrl">URL de Imagen</label>
+            </span>
+          </div>
+        </div>
+
+        <!-- Color -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <input
+                pInputText
+                id="color"
+                autocomplete="off"
+                formControlName="color"
+              />
+              <label class="ml-2" htmlFor="color">Color</label>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -117,10 +130,8 @@
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      [label]="
-        landing.id == '' ? 'Guardar Trayectoria' : 'Actualizar Trayectoria'
-      "
-      (click)="crearLanding()"
+      [label]="landing.id == '' ? 'Guardar Landing Page' : 'Actualizar Landing Page'"
+      (click)="crearLandingPage()"
     ></p-button>
   </ng-template>
 </p-dialog>
