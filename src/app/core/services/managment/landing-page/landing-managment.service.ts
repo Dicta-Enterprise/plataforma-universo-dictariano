@@ -12,21 +12,54 @@ export class LandingPageManagmentService {
 
   constructor(private httpClient: HttpClient) {}
 
-  listarLandingService$(): Observable<LandingPageManagment[]>  {
-    return this.httpClient.get<any[]>(`${this.base_url}landing`).pipe(
-      map(response => response.map(landing => LandingPageManagment.fromJson(landing)))
+  listarLandingService$(): Observable<LandingPageManagment[]> {
+    return this.httpClient.get<any>(`${this.base_url}landing-page`).pipe(
+      map(response => {
+        if (response && Array.isArray(response.data)) {
+          return response.data.map((landing: any) => LandingPageManagment.fromJson(landing));
+        } else {
+          return [];
+        }
+      })
     );
   }
 
-  obtenerLandingService$(id: number) {}
-
+  obtenerLandingService$(id: string): Observable<LandingPageManagment> {
+    return this.httpClient.get<any>(`${this.base_url}landing-page/${id}`).pipe(
+      map(response => {
+        if (response && response.data) {
+          return LandingPageManagment.fromJson(response.data);
+        } else {
+          throw new Error('Landing no encontrada');
+        }
+      })
+    );
+  }
+  
   crearLandingService$(landing: LandingPageManagment): Observable<LandingPageManagment> {
-    return this.httpClient.post<LandingPageManagment>(`${this.base_url}landing`, landing);
+    return this.httpClient.post<LandingPageManagment>(`${this.base_url}landing-page`, landing);
   }
 
-  editarLandingService$(landing: LandingPageManagment) {}
+  editarLandingService$(landing: LandingPageManagment): Observable<LandingPageManagment> {
+    return this.httpClient.patch<LandingPageManagment>(`${this.base_url}landing-page/${landing.id}`, landing);
+  }
 
-  eliminarLandingService$(id: number) {}
-
-  listarDropdownLandingService$() {}
+  eliminarLandingService$(id: string): Observable<any> {
+    return this.httpClient.delete<any>(`${this.base_url}landing-page/${id}`);
+  }
+  
+  /*listarDropdownLandingService$(): Observable<any[]> {
+    return this.httpClient.get<any>(`${this.base_url}landing-page`).pipe(
+      map(response => {
+        if (response && Array.isArray(response.data)) {
+          return response.data.map((landing: any) => ({
+            label: landing.titulo, // Por ejemplo, mostrar el título en el dropdown
+            value: landing.id      // Valor que se usará cuando se seleccione
+          }));
+        } else {
+          return [];
+        }
+      })
+    );
+  }  */
 }

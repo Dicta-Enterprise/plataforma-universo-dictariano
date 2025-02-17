@@ -5,8 +5,8 @@ export const createNuevaLandingForm = (formBuilder: FormBuilder): FormGroup => {
         titulo: [''],
         descripcion: [''],
         contenido: [[]], 
-        planetaId: [''], 
         estado: ['ACTIVO'],
+        planetaId: [''], 
         imagenUrl: [null], 
         color: [null] 
     });

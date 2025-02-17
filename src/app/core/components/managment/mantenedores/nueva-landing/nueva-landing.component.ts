@@ -37,22 +37,33 @@ export class NuevaLandingComponent {
     this.onHideEmit.emit(false);
   }
 
+  // CREAR 
   crearLandingPage() {
     if (this.landingForm.invalid) {
       this.alertService.showWarn('Ups..', 'Formulario incompleto');
       return;
     }
-    
+
     const landing: LandingPageManagment = this.landingForm.value;
-    this.guardarLanding(landing);
+    if (this.landing?.id) {
+      this.actualizarLanding(landing);
+    } else {
+      this.guardarLanding(landing);
+    }
   }
 
+  // GUARDAR
   guardarLanding(landing: LandingPageManagment) {
+    const contenido = typeof this.landingForm.value.contenido === 'string'
+      ? this.landingForm.value.contenido.split(',').map((item: string) => item.trim())
+      : [];
+
     const landingData = {
       ...this.landingForm.value,
-      planetaId: String(this.landingForm.value.planetaId)
+      planetaId: String(this.landingForm.value.planetaId),
+      contenido
     };
-    
+
     console.log('Datos enviados:', landingData);
 
     this.landingService.crearLandingService$(landing).subscribe({
@@ -67,7 +78,38 @@ export class NuevaLandingComponent {
     });
   }
 
+  onContenidoChange(event: Event) {
+    const inputElement = event.target as HTMLTextAreaElement;
+    if (inputElement) {
+      const contenidoArray = inputElement.value.split(',').map(item => item.trim());
+      this.landingForm.get('contenido')?.setValue(contenidoArray);
+    }
+  }
+  
+  // ACTUALIZAR
   actualizarLanding(landing: LandingPageManagment) {
+    const contenido = typeof this.landingForm.value.contenido === 'string'
+      ? this.landingForm.value.contenido.split(',').map((item: string) => item.trim())
+      : [];
+  
+    const landingData = {
+      ...this.landingForm.value,
+      planetaId: String(this.landingForm.value.planetaId),
+      contenido
+    };
+  
+    console.log('Datos enviados para actualizar:', landingData);
+  
+    this.landingService.editarLandingService$(landing).subscribe({
+      next: (res) => {
+        this.alertService.showSuccess('Landing actualizada', 'La landing page se ha actualizado correctamente');
+        this.onHide();
+      },
+      error: (err) => {
+        console.error('Error del servidor:', err.error);
+        this.alertService.showError('Error', 'Ha ocurrido un error al actualizar la landing page');
+      }
+    });
   }
 
   ngOnDestroy(): void {

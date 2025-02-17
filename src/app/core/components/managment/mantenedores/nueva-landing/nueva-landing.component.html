@@ -71,6 +71,7 @@
               autocomplete="off"
               formControlName="contenido"
               rows="3"
+              (input)="onContenidoChange($event)"
             ></textarea>
             <label class="ml-2" htmlFor="contenido">Contenido (separado por comas)</label>
           </span>

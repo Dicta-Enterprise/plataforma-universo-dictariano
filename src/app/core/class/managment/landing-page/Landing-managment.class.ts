@@ -7,7 +7,7 @@ export class LandingPageManagment {
     descripcion: string;
     contenido: string[];
     estado: ActivosState;
-    planetaId: PlanetaManagment;
+    planetaId: string;
     imagenUrl: string | null;
     color: string | null;
 
@@ -17,9 +17,9 @@ export class LandingPageManagment {
         this.descripcion = landingPage.descripcion || '';
         this.contenido = landingPage.contenido || [];
         this.estado = landingPage.estado || ActivosState.ACTIVO;
-        this.planetaId = landingPage.planetaId || new PlanetaManagment();
-        this.imagenUrl = landingPage.imagenUrl || null; 
-        this.color = landingPage.color || null; 
+        this.planetaId = landingPage.planetaId || '';
+        this.imagenUrl = landingPage.imagenUrl || null;
+        this.color = landingPage.color || null;
     }
 
     static fromJson(landingManagment: any): LandingPageManagment {
@@ -30,8 +30,8 @@ export class LandingPageManagment {
             contenido: landingManagment.contenido,
             estado: landingManagment.estado,
             planetaId: landingManagment.planetaId,
-            imagenUrl: landingManagment.imagenUrl ?? null, 
-            color: landingManagment.color ?? null, 
+            imagenUrl: landingManagment.imagenUrl ?? null,
+            color: landingManagment.color ?? null,
         });
     }
 
@@ -43,8 +43,8 @@ export class LandingPageManagment {
             contenido: landingManagment.contenido,
             estado: landingManagment.estado,
             planetaId: landingManagment.planetaId,
-            imagenUrl: landingManagment.imagenUrl, 
-            color: landingManagment.color,
+            imagenUrl: landingManagment.imagenUrl ?? null,
+            color: landingManagment.color ?? null,
         };
     }
 }

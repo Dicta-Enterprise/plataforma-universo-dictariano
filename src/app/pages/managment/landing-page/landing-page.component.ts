@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Table } from 'primeng/table';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { LandingPageManagmentService } from 'src/app/core/services/managment/lan
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.css']
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit, OnDestroy{
 
   private subscription: Subscription = new Subscription();
   isLoading: boolean = false;
@@ -19,6 +19,7 @@ export class LandingPageComponent {
   landing: LandingPageManagment = new LandingPageManagment();
 
   buscarlandingForm:FormGroup
+
 
   planetas = [
     { id: '6792877e2942e670016454de', nombre: 'Luminara' },
@@ -33,35 +34,72 @@ export class LandingPageComponent {
   ) { }
 
   ngOnInit(): void { 
-    //this.listarLanding();
+    this.listarLanding();
   }
 
-  /*listarLanding(){
+  listarLanding() {
     this.isLoading = true;
     this.subscription.add(
       this.landingService.listarLandingService$().subscribe({
         next: (data) => {
-          this.landings = data.map(curso =>({
-            ...this.landing,
+          this.landings = data.map(landing => ({
+            ...landing,
             planetaNombre: this.getNombrePlanetaPorId(landing.planetaId)
-          }))
+          }));
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error al obtener Landing Page:', error);
+          this.isLoading = false;
         }
       })
-    )
-  }*/
+    );
+  }
 
+  getNombrePlanetaPorId(id: string): string {
+    const planeta = this.planetas.find(plan => plan.id === id);
+    return planeta ? planeta.nombre : 'Planeta no encontrado';
+  }
+  
   showNuevaLanding(event?: boolean) {
-    if (event != undefined) {
+    if(event != undefined){
       this.isNuevaLanding = event;
-      return;
+      this.listarLanding();
+      return
     }
-
     this.isNuevaLanding = !this.isNuevaLanding;
   }
 
-  editarLanding(landing: LandingPageManagment) { }
-
-  eliminarLanding(landing: LandingPageManagment) { }
+  editarLanding(landing: LandingPageManagment) {
+    this.isNuevaLanding = true;  
+    this.landingService.obtenerLandingService$(landing.id).subscribe({
+      next: (data) => {
+        this.landing = data;
+      },
+      error: (error) => {
+        console.error('Error al obtener la landing:', error);
+      }
+    });
+  }
+  
+  eliminarLanding(landing: LandingPageManagment) {
+    if (confirm('¿Estás seguro de que deseas eliminar esta landing?')) {
+      this.isLoading = true; // Para mostrar el indicador de carga mientras se realiza la eliminación
+      this.landingService.eliminarLandingService$(landing.id).subscribe({
+        next: () => {
+          this.landings = this.landings.filter(l => l.id !== landing.id);
+          this.isLoading = false;
+          //this.alertService.showSuccess('Eliminación exitosa', 'La landing page ha sido eliminada correctamente');
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error('Error al eliminar la landing:', err);
+          //this.alertService.showError('Error', 'Ha ocurrido un error al eliminar la landing page');
+        }
+      });
+    }
+  }
+  
 
   clear(table: Table) {
     table.clear();

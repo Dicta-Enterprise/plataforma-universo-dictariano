@@ -28,7 +28,11 @@
       class="w-full"
       [tableStyle]="{ 'min-width': '50rem', 'font-size': '15px' }"
       currentPageReportTemplate="Mostrando {last} Landings de {totalRecords}"
-      [globalFilterFields]="['titulo', 'descripcion','contenido', 'planeta','estado']"
+      [globalFilterFields]="[
+      'titulo',
+      'descripcion',
+      'contenido',
+      'planetaNombre']"
     >
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between">
@@ -57,7 +61,6 @@
           <th>Descripción</th>
           <th>Contenido</th>
           <th>Planeta</th>
-          <th>Estado</th>
         </tr>
       </ng-template>
 
@@ -66,8 +69,7 @@
           <td>{{ landing.titulo }}</td>
           <td>{{ landing.descripcion }}</td>
           <td>{{ landing.contenido }}</td>
-          <td>{{ landing.planeta }}</td>
-          <td>{{ landing.estado }}</td>
+          <td>{{ landing.planetaNombre }}</td>
           <td>
             <button
               pButton
