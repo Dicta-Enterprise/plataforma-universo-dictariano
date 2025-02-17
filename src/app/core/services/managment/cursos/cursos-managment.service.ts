@@ -24,9 +24,13 @@ export class CursosManagmentService {
     return this.httpClient.post<CursoManagment>(`${this.base_url}cursos`, curso);
   }
 
-  editarCursoService$(Curso: CursoManagment) {}
+  editarCursoService$(curso: CursoManagment): Observable<CursoManagment> {
+    return this.httpClient.put<CursoManagment>(`${this.base_url}cursos/${curso.id}`, curso);
+  }
 
-  eliminarCursoService$(id: number) {}
+  eliminarCursoService$(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.base_url}cursos/${id}`);
+  }
 
   listarDropdownCursosService$() {}
 }

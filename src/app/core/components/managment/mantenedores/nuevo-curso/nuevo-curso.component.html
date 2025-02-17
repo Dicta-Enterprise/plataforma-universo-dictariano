@@ -43,6 +43,9 @@
             <label class="ml-2" htmlFor="nombre">Nombre del Curso</label>
           </span>
         </div>
+        <small class="p-error" *ngIf="cursoForm.get('nombre')?.hasError('required') && cursoForm.get('nombre')?.touched">
+          El nombre es obligatorio.
+        </small>
       </div>
 
       <!-- Descripción -->
@@ -59,6 +62,9 @@
             <label class="ml-2" htmlFor="descripcion">Descripción</label>
           </span>
         </div>
+        <small class="p-error" *ngIf="cursoForm.get('descripcion')?.hasError('required') && cursoForm.get('descripcion')?.touched">
+          La descripción es obligatoria.
+        </small>
       </div>
       
       <div class="grid formgrid gap-2 col-12">
@@ -71,6 +77,9 @@
               <label class="ml-2" htmlFor="fechaInicio">Fecha de Inicio</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('fechaInicio')?.hasError('required') && cursoForm.get('fechaInicio')?.touched">
+            La fecha de inicio es obligatoria.
+          </small>
         </div>
 
         <!-- Fecha Finalización -->
@@ -81,6 +90,9 @@
               <label class="ml-2" htmlFor="fechaFinalizacion">Fecha de Finalización</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('fechaFinalizacion')?.hasError('required') && cursoForm.get('fechaFinalizacion')?.touched">
+            La fecha de finalización es obligatoria.
+          </small>
         </div>
 
         <!-- Categoría -->
@@ -96,6 +108,9 @@
               <label class="ml-2" htmlFor="categoriaId">Categoría</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('categoriaId')?.hasError('required') && cursoForm.get('categoriaId')?.touched">
+            Selecciona una categoría.
+          </small>
         </div>
 
         <!-- Planeta -->
@@ -111,6 +126,9 @@
               <label class="ml-2" htmlFor="planetaId">Planeta</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('planetaId')?.hasError('required') && cursoForm.get('planetaId')?.touched">
+            Selecciona un planeta.
+          </small>
         </div>
 
         <!-- Imagen -->
@@ -124,6 +142,9 @@
               <label class="ml-2" htmlFor="imagen">URL de Imagen</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('imagen')?.hasError('required') && cursoForm.get('imagen')?.touched">
+            La URL de la imagen es obligatoria.
+          </small>
         </div>
 
         <!-- Video -->
@@ -137,6 +158,9 @@
               <label class="ml-2" htmlFor="video">URL de Video</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('video')?.hasError('required') && cursoForm.get('video')?.touched">
+            La URL del video es obligatoria.
+          </small>
         </div>       
       </div>
 
@@ -152,6 +176,9 @@
               <label class="ml-2" htmlFor="precio">Precio</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('precio')?.hasError('required') && cursoForm.get('precio')?.touched">
+            El precio es obligatorio.
+          </small>
         </div>
          
         <!-- Duración -->
@@ -165,6 +192,9 @@
               <label class="ml-2" htmlFor="duracion">Duración (Horas)</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('duracion')?.hasError('required') && cursoForm.get('duracion')?.touched">
+            La duración es obligatoria.
+          </small>
         </div>
  
         <!-- Cantidad de Alumnos -->
@@ -178,6 +208,9 @@
               <label class="ml-2" htmlFor="cantidadAlumnos">Cantidad de Alumnos</label>
             </span>
           </div>
+          <small class="p-error" *ngIf="cursoForm.get('cantidadAlumnos')?.hasError('required') && cursoForm.get('cantidadAlumnos')?.touched">
+            La cantidad de alumnos es obligatoria.
+          </small>
         </div>
       </div>
     </div>
@@ -187,7 +220,7 @@
     <p-button
       icon="pi pi-check"
       [label]="
-        curso.id == '' ? 'Guardar Trayectoria' : 'Actualizar Trayectoria'
+        curso.id == '' ? 'Guardar Curso' : 'Actualizar Curso'
       "
       (click)="crearCurso()"
     ></p-button>

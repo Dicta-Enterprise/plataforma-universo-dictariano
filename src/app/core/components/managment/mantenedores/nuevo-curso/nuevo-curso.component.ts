@@ -36,7 +36,9 @@ export class NuevoCursoComponent {
 
   ngOnInit(): void {}
 
-  onShow() {}
+  onShow() {
+    this.cursoForm.reset();
+  }
 
   onHide() {
     this.onHideEmit.emit(false);
@@ -48,6 +50,7 @@ export class NuevoCursoComponent {
       return;
     }
   
+    this.cursoForm.value.estado = 'ACTIVO';
     const curso: CursoManagment = this.cursoForm.value;
     this.guardarCurso(curso);
   }
@@ -69,7 +72,17 @@ export class NuevoCursoComponent {
       },
       error: (err) => {
         console.error('Error del servidor:', err.error);
-        this.alertService.showError('Error', 'Ha ocurrido un error al crear el curso');
+        if (err.status === 409) {
+          this.alertService.showError('Conflicto', err.error.message);
+        } else if (err.status === 400 && err.error.data) {
+          this.alertService.showError('Error', err.error.message);
+        } else if (err.status === 400 && Array.isArray(err.error.message)) {
+          err.error.message.forEach((msg: string) => {
+            this.alertService.showError('Error de Validación', msg);
+          });
+        } else {
+          this.alertService.showError('Error', 'Ha ocurrido un error al crear el curso');
+        }
       }
     });
   }
