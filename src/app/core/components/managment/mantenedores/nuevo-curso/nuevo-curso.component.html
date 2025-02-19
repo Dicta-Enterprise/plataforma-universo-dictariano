@@ -16,18 +16,17 @@
   <ng-template pTemplate="header">
     <div class="flex flex-column gap-2">
       <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
-        NUEVO CURSO
+        {{ curso.id ? 'Actualizar Curso' : 'Nuevo Curso' }}
       </h1>
-      <span class="text-600 text-base"
-        >Crea todas las Cursos que desees</span
-      >
+      <span class="text-600 text-base">
+        {{ curso.id ? 'Actualizacion del Curso : [ '+ curso.nombre + ' ]' : 'Crea todas las Cursos que desees' }}
+      </span>
     </div>
   </ng-template>
 
   <form
     class="flex flex-column gap-3 mt-4"
     [formGroup]="cursoForm"
-    (ngSubmit)="crearCurso()"
   >
     <div class="grid formgrid p-fluid">
       <!-- Nombre -->
@@ -219,10 +218,8 @@
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      [label]="
-        curso.id == '' ? 'Guardar Curso' : 'Actualizar Curso'
-      "
-      (click)="crearCurso()"
+      [label]="curso.id ? 'Actualizar Curso' : 'Crear Curso'"
+      (click)="curso.id ? actualizarCurso() : crearCurso()"
     ></p-button>
   </ng-template>
 </p-dialog>

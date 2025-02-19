@@ -30,40 +30,58 @@ export class NuevoCursoComponent {
     { id: '6792d8bd005fc1e6836977f3', nombre: 'Planeta 4' }
   ];
 
-  cursoForm: FormGroup = createNuevoCursoForm(this.fb);
+  cursoForm: FormGroup = createNuevoCursoForm(this.fb); 
 
   constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService) {}
 
   ngOnInit(): void {}
 
   onShow() {
-    this.cursoForm.reset();
+    if (this.curso.id) {
+      this.cursoForm.patchValue({
+        ...this.curso,
+        fechaInicio: new Date(this.curso.fechaInicio),
+        fechaFinalizacion: new Date(this.curso.fechaFinalizacion),
+        profesorId: null,
+        idiomaId: null,
+      });
+    }
   }
 
   onHide() {
+    this.curso = new CursoManagment();
+    this.cursoForm.reset();
     this.onHideEmit.emit(false);
   }
 
-  crearCurso() {
+  actualizarCurso() {
+
     if (this.cursoForm.invalid) {
       this.alertService.showWarn('Ups..', 'Formulario incompleto');
       return;
     }
-  
-    this.cursoForm.value.estado = 'ACTIVO';
-    const curso: CursoManagment = this.cursoForm.value;
-    this.guardarCurso(curso);
+
+    const curso: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
+
+    this.cursoService.editarCursoService$(this.curso.id, curso).subscribe({
+      next: (res) => {
+        this.alertService.showSuccess('Curso actualizado', 'El curso se ha actualizado correctamente');
+        this.onHide();
+      },
+      error: (err) => {
+       this.errores(err);
+      }
+    });
   }
 
-  guardarCurso(curso: CursoManagment) {
+  crearCurso() {
 
-    const cursoData = {
-      ...this.cursoForm.value,
-      categoriaId: String(this.cursoForm.value.categoriaId),
-      planetaId: String(this.cursoForm.value.planetaId)
-    };
-  
-    console.log('Datos enviados:', cursoData);
+    if (this.cursoForm.invalid) {
+      this.alertService.showWarn('Ups..', 'Formulario incompleto');
+      return;
+    }
+
+    const curso: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
 
     this.cursoService.crearCursoService$(curso).subscribe({
       next: (res) => {
@@ -71,23 +89,40 @@ export class NuevoCursoComponent {
         this.onHide();
       },
       error: (err) => {
-        console.error('Error del servidor:', err.error);
-        if (err.status === 409) {
-          this.alertService.showError('Conflicto', err.error.message);
-        } else if (err.status === 400 && err.error.data) {
-          this.alertService.showError('Error', err.error.message);
-        } else if (err.status === 400 && Array.isArray(err.error.message)) {
-          err.error.message.forEach((msg: string) => {
-            this.alertService.showError('Error de Validación', msg);
-          });
-        } else {
-          this.alertService.showError('Error', 'Ha ocurrido un error al crear el curso');
-        }
+        this.errores(err);
       }
     });
+
+    // this.cursoService.crearCursoService$(curso).subscribe({
+    //   next: (success) => {
+    //     if(success){
+    //       this.alertService.showSuccess('Curso creado', 'El curso se ha creado correctamente');
+    //       this.onHide();
+    //     }else{
+    //       this.alertService.showError('Error', 'No se pudo crear el curso');
+    //     }
+    //   },
+    //   error: (err) => {
+    //     this.errores(err);
+    //   }
+    // });
   }
 
-  actualizarCurso(curso: CursoManagment) {}
+  private errores(err: any) {
+
+    console.error('Error del servidor:', err.error);
+    if (err.status === 409) {
+      this.alertService.showError('Conflicto', err.error.message);
+    } else if (err.status === 400 && err.error.data) {
+      this.alertService.showError('Error', err.error.message);
+    } else if (err.status === 400 && Array.isArray(err.error.message)) {
+      err.error.message.forEach((msg: string) => {
+        this.alertService.showError('Error de Validación', msg);
+      });
+    } else {
+      this.alertService.showError('Error', 'Ha ocurrido un error');
+    }
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

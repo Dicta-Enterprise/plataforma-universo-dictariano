@@ -88,7 +88,10 @@ export class CursosComponent  implements OnInit, OnDestroy{
   
   buscarCurso(){}
 
-  editarCurso(curso:any){}
+  editarCurso(curso:any){
+    this.showNuevoCurso(true);
+    this.curso = {... curso};
+  }
 
 
   confirmarEliminacion(curso:any){
@@ -98,6 +101,8 @@ export class CursosComponent  implements OnInit, OnDestroy{
       message: `¿Seguro que quieres eliminar el curso "${curso.nombre}"?`,
       header: 'Confirmar eliminación',
       icon: 'pi pi-trash',
+      rejectButtonStyleClass: 'p-button-danger',
+      acceptButtonStyleClass: 'p-button-success',
       accept: () => {
         this.eliminarCurso();
       },

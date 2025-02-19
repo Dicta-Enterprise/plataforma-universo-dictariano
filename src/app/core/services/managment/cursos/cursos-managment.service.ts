@@ -13,8 +13,8 @@ export class CursosManagmentService {
   constructor(private httpClient: HttpClient) {}
 
   listarCursosService$(): Observable<CursoManagment[]>  {
-    return this.httpClient.get<any[]>(`${this.base_url}cursos`).pipe(
-      map(response => response.map(curso => CursoManagment.fromJson(curso)))
+    return this.httpClient.get<{data: any[]}>(`${this.base_url}cursos`).pipe(
+      map(response => response.data.map(curso => CursoManagment.fromJson(curso)))
     );
   }
 
@@ -24,8 +24,18 @@ export class CursosManagmentService {
     return this.httpClient.post<CursoManagment>(`${this.base_url}cursos`, curso);
   }
 
-  editarCursoService$(curso: CursoManagment): Observable<CursoManagment> {
-    return this.httpClient.put<CursoManagment>(`${this.base_url}cursos/${curso.id}`, curso);
+  // crearCursoService$(curso: CursoManagment): Observable<boolean> {
+  //   return this.httpClient.post<{status: number; message: string; data: CursoManagment}>(`${this.base_url}cursos`, curso).pipe(
+  //     map((res)=>{
+  //       if(res.status === 200 || res.status === 201) return true;
+  //       return false;
+  //     }),
+  //     catchError(()=> of(false))
+  //   );
+  // }
+
+  editarCursoService$(id:string, curso: Partial<CursoManagment>): Observable<CursoManagment> {
+    return this.httpClient.put<CursoManagment>(`${this.base_url}cursos/${id}`, curso);
   }
 
   eliminarCursoService$(id: string): Observable<void> {

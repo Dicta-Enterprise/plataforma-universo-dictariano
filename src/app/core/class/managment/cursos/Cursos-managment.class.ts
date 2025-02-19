@@ -21,23 +21,23 @@ export class CursoManagment {
   planetaId: string; 
 
   constructor(cursoManagment: Partial<CursoManagment> = {}) {
-    this.id = cursoManagment.id || '';
-    this.nombre = cursoManagment.nombre || '';
-    this.descripcion = cursoManagment.descripcion || '';
-    this.fechaCreacion = cursoManagment.fechaCreacion || '';
-    this.fechaActualizacion = cursoManagment.fechaActualizacion || '';
-    this.fechaInicio = cursoManagment.fechaInicio || '';
-    this.fechaFinalizacion = cursoManagment.fechaFinalizacion || '';
-    this.cantidadAlumnos = cursoManagment.cantidadAlumnos || '';
-    this.precio = cursoManagment.precio || '';
-    this.profesorId = cursoManagment.profesorId || '';
-    this.estado = cursoManagment.estado || ActivosState.ACTIVO;
-    this.imagen = cursoManagment.imagen || '';
-    this.video = cursoManagment.video || '';
-    this.duracion = cursoManagment.duracion || '';
-    this.categoriaId = cursoManagment.categoriaId || '';
-    this.idiomaId = cursoManagment.idiomaId || null;
-    this.planetaId = cursoManagment.planetaId || '';
+    this.id = cursoManagment.id ?? '';
+    this.nombre = cursoManagment.nombre ?? '';
+    this.descripcion = cursoManagment.descripcion ?? '';
+    this.fechaCreacion = cursoManagment.fechaCreacion ?? '';
+    this.fechaActualizacion = cursoManagment.fechaActualizacion ?? '';
+    this.fechaInicio = cursoManagment.fechaInicio ?? '';
+    this.fechaFinalizacion = cursoManagment.fechaFinalizacion ?? '';
+    this.cantidadAlumnos = cursoManagment.cantidadAlumnos ?? '';
+    this.precio = cursoManagment.precio ?? '';
+    this.profesorId = cursoManagment.profesorId ?? '';
+    this.estado = cursoManagment.estado ?? ActivosState.ACTIVO;
+    this.imagen = cursoManagment.imagen ?? '';
+    this.video = cursoManagment.video ?? '';
+    this.duracion = cursoManagment.duracion ?? '';
+    this.categoriaId = cursoManagment.categoriaId ?? '';
+    this.idiomaId = cursoManagment.idiomaId ?? null;
+    this.planetaId = cursoManagment.planetaId ?? '';
   }
 
   static fromJson(cursoManagment: any): CursoManagment {
