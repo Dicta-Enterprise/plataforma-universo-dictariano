@@ -1,4 +1,6 @@
 <p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
 <app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
 
 <div class="px-2 md:px-4 lg:px-2 lg:py-2">
@@ -61,10 +63,11 @@
           <th>Descripción</th>
           <th>Contenido</th>
           <th>Planeta</th>
+          <th></th>
         </tr>
       </ng-template>
 
-      <ng-template pTemplate="body" let-landing>
+      <ng-template pTemplate="body" let-landing >
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ landing.titulo }}</td>
           <td>{{ landing.descripcion }}</td>
@@ -83,7 +86,7 @@
               pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-danger"
-              (click)="eliminarLanding(landing)"
+              (click)="confirmarEliminacion(landing)"
             ></button>
           </td>
         </tr>
@@ -94,6 +97,6 @@
 
 <app-nueva-landing
   [isNuevaLanding]="isNuevaLanding"
-  [landing]="landing"
+  [landingId]="landing.id"
   (onHideEmit)="showNuevaLanding($event)"
 ></app-nueva-landing> 

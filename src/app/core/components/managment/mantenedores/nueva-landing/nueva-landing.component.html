@@ -131,8 +131,8 @@
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      [label]="landing.id == '' ? 'Guardar Landing Page' : 'Actualizar Landing Page'"
-      (click)="crearLandingPage()"
-    ></p-button>
+      [label]="landingId == '' ? 'Guardar Landing Page' : 'Actualizar Landing Page'"
+      (click)="landingId == '' ? crearLandingPage() : actualizarLanding()"
+      ></p-button>
   </ng-template>
 </p-dialog>
