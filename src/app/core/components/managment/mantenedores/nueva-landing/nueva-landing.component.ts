@@ -13,7 +13,6 @@ import { ActivosState } from 'src/app/shared/enums';
   styleUrls: ['./nueva-landing.component.css']
 })
 export class NuevaLandingComponent {
-
   private subscription: Subscription = new Subscription();
   isLoading: boolean = false;
   @Input() isNuevaLanding: boolean = false;
@@ -45,29 +44,20 @@ export class NuevaLandingComponent {
   onShow() {
     console.log('ID recibido en nueva-landing:', this.landingId);
 
-    if (this.landingId) {
-      this.landingService.obtenerLandingService$(this.landingId).subscribe({
-        next: (data) => {
-          this.landing = data;
+    this.landingForm.reset();
+    if (!this.landingId) return;
 
-          this.landingForm.patchValue({
-            titulo: this.landing.titulo,
-            descripcion: this.landing.descripcion,
-            contenido: this.landing.contenido?.join(', ') || '',
-            planetaId: this.landing.planetaId,
-            imagenUrl: this.landing.imagenUrl,
-            color: this.landing.color
-          });
-
-          console.log('Formulario actualizado para edición:', this.landingForm.value);
-        },
-        error: (error) => {
-          console.error('Error al obtener la landing:', error);
-        }
-      });
-    } else {
-      this.landingForm.reset();
-    }
+    this.landingService.obtenerLandingService$(this.landingId).subscribe({
+      next: (data) => {
+        this.landing = data;
+        this.landingForm.patchValue({
+          ...data,
+          contenido: data.contenido?.join(', ') || ''
+        });
+        console.log('Formulario actualizado para edición:', this.landingForm.value);
+      },
+      error: (error) => console.error('Error al obtener la landing:', error)
+    });
   }
 
   onHide() {
@@ -81,28 +71,13 @@ export class NuevaLandingComponent {
       return;
     }
 
-    const landing: LandingPageManagment = {
+    const landingData: LandingPageManagment = {
       ...this.landingForm.value,
+      planetaId: String(this.landingForm.value.planetaId),
+      contenido: this.formatContenido(this.landingForm.value.contenido),
+      imagenUrl: this.landingForm.value.imagenUrl?.trim() || null,
+      color: this.landingForm.value.color?.trim() || null,
       estado: 'ACTIVO'
-    };
-
-    this.guardarLanding(landing);
-  }
-
-  // GUARDAR
-  guardarLanding(landing: LandingPageManagment) {
-    const contenido = landing.contenido
-      ? (Array.isArray(landing.contenido)
-        ? landing.contenido.map(item => String(item).trim())
-        : String(landing.contenido).split(',').map(item => item.trim()))
-      : [];
-
-    const landingData = {
-      ...landing,
-      planetaId: String(landing.planetaId),
-      contenido,
-      imagenUrl: landing.imagenUrl?.trim() || null,
-      color: landing.color?.trim() || null
     };
 
     console.log('Datos enviados:', landingData);
@@ -117,49 +92,30 @@ export class NuevaLandingComponent {
     });
   }
 
-  onContenidoChange(event: Event) {
-    const inputElement = event.target as HTMLTextAreaElement;
-    if (inputElement) {
-      const contenidoArray = inputElement.value.split(',').map(item => item.trim());
-      this.landingForm.get('contenido')?.setValue(contenidoArray);
-    }
-  }
-
   // ACTUALIZAR
   actualizarLanding() {
     if (this.landingForm.invalid) {
-      this.alertService.showWarn('Ups..', 'Formulario incompleto');
-      return;
+      return this.alertService.showWarn('Ups..', 'Formulario incompleto');
     }
 
     this.isLoading = true;
-
     let landingData: Partial<LandingPageManagment> = { ...this.landingForm.value };
-
     delete landingData.id;
 
-    if (landingData.contenido) {
-      landingData.contenido = Array.isArray(landingData.contenido)
-        ? landingData.contenido.map(item => String(item).trim())
-        : String(landingData.contenido).split(',').map(item => item.trim());
-    }
-
-    if (landingData.titulo === this.landing.titulo) {
-      delete landingData.titulo;
-    }
+    landingData.contenido = this.formatContenido(landingData.contenido);
     landingData.color = landingData.color?.trim() || null;
     landingData.imagenUrl = landingData.imagenUrl?.trim() || null;
     landingData.estado = landingData.estado ?? this.landing.estado ?? ActivosState.ACTIVO;
 
-    landingData = Object.fromEntries(
-      Object.entries(landingData).filter(([key, value]) => key === 'estado' || value !== undefined)
-    );
+    if (landingData.titulo === this.landing.titulo) {
+      delete landingData.titulo;
+    }
 
     console.log('Datos enviados para actualizar:', landingData);
 
     this.landingService.editarLandingService$(this.landingId, landingData).subscribe({
       next: (response) => {
-        if (response === true) { 
+        if (response === true) {
           this.alertService.showSuccess('Landing actualizada', 'La landing page se ha actualizado correctamente');
           this.onHide();
         } else {
@@ -170,6 +126,12 @@ export class NuevaLandingComponent {
         this.isLoading = false;
       }
     });
+  }
+
+  private formatContenido(contenido: any): string[] {
+    return contenido
+      ? String(contenido).split(',').map(item => item.trim())
+      : [];
   }
 
   ngOnDestroy(): void {

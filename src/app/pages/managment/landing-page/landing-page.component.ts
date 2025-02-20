@@ -83,8 +83,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   editarLanding(landing: LandingPageManagment) {
-    this.isNuevaLanding = true;
-    this.landing = landing;
+    this.showNuevaLanding(true);
+    this.landing = {...landing}
   }
 
   confirmarEliminacion(landing: LandingPageManagment) {
