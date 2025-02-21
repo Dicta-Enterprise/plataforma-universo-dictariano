@@ -15,8 +15,10 @@ export class NuevoCursoComponent {
   private subscription: Subscription = new Subscription();
   isLoading: boolean = false;
   @Input() isNuevoCurso: boolean = false;
-  @Input() curso: CursoManagment = new CursoManagment();
+  @Input() cursoId: string = '';
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  curso = new CursoManagment();
 
   categorias = [
     { id: '6708179439154cb23c3150ca', nombre: 'Padres' },
@@ -37,19 +39,35 @@ export class NuevoCursoComponent {
   ngOnInit(): void {}
 
   onShow() {
-    if (this.curso.id) {
-      this.cursoForm.patchValue({
-        ...this.curso,
-        fechaInicio: new Date(this.curso.fechaInicio),
-        fechaFinalizacion: new Date(this.curso.fechaFinalizacion),
-        profesorId: null,
-        idiomaId: null,
-      });
+    this.cursoForm.reset();
+    if (this.cursoId) {
+      this.isLoading = true;
+      this.subscription.add(
+        this.cursoService.obtenerCursoService$(this.cursoId).subscribe({
+          next: (curso) => {
+            this.curso = curso;
+            this.cursoForm.patchValue({
+              ...curso,
+              fechaInicio: new Date(curso.fechaInicio),
+              fechaFinalizacion: new Date(curso.fechaFinalizacion),
+              profesorId: curso.profesorId || null,
+              idiomaId: curso.idiomaId || null,
+            });
+            this.isLoading = false;
+          },
+          error: (err) => {
+            this.alertService.showError('Error', 'No se pudo obtener el curso');
+            console.error('Error obteniendo curso:', err);
+            this.isLoading = false;
+          }
+        })
+      );
     }
   }
 
   onHide() {
     this.curso = new CursoManagment();
+    this.cursoId = '';
     this.cursoForm.reset();
     this.onHideEmit.emit(false);
   }
@@ -61,9 +79,13 @@ export class NuevoCursoComponent {
       return;
     }
 
-    const curso: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
+    let cursoActualizar: Partial<CursoManagment> ={ ...this.cursoForm.value, estado: 'ACTIVO'}
 
-    this.cursoService.editarCursoService$(this.curso.id, curso).subscribe({
+    if(cursoActualizar.nombre === this.curso.nombre){
+      delete cursoActualizar.nombre;
+    }
+
+    this.cursoService.editarCursoService$(this.cursoId, cursoActualizar).subscribe({
       next: (res) => {
         this.alertService.showSuccess('Curso actualizado', 'El curso se ha actualizado correctamente');
         this.onHide();
@@ -81,9 +103,9 @@ export class NuevoCursoComponent {
       return;
     }
 
-    const curso: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
+    const cursoCrear: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
 
-    this.cursoService.crearCursoService$(curso).subscribe({
+    this.cursoService.crearCursoService$(cursoCrear).subscribe({
       next: (res) => {
         this.alertService.showSuccess('Curso creado', 'El curso se ha creado correctamente');
         this.onHide();

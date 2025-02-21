@@ -18,7 +18,11 @@ export class CursosManagmentService {
     );
   }
 
-  obtenerCursoService$(id: number) {}
+  obtenerCursoService$(id: string): Observable<CursoManagment> {
+    return this.httpClient.get<{data: any}>(`${this.base_url}cursos/${id}`).pipe(
+      map(response => response.data)
+    );
+  }
 
   crearCursoService$(curso: CursoManagment): Observable<CursoManagment> {
     return this.httpClient.post<CursoManagment>(`${this.base_url}cursos`, curso);
