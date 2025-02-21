@@ -43,7 +43,7 @@ export class NuevaLandingComponent {
 
   onShow() {
     console.log('ID recibido en nueva-landing:', this.landingId);
-
+    
     this.landingForm.reset();
     if (!this.landingId) return;
 
@@ -52,7 +52,8 @@ export class NuevaLandingComponent {
         this.landing = data;
         this.landingForm.patchValue({
           ...data,
-          contenido: data.contenido?.join(', ') || ''
+          //contenido: data.contenido?.join(', ') || ''
+          contenido: data.contenido || []
         });
         console.log('Formulario actualizado para edición:', this.landingForm.value);
       },
@@ -64,12 +65,8 @@ export class NuevaLandingComponent {
     this.onHideEmit.emit(false);
   }
 
-  // CREAR 
   crearLandingPage() {
-    if (this.landingForm.invalid) {
-      this.alertService.showWarn('Ups..', 'Formulario incompleto');
-      return;
-    }
+    if (this.isFormInvalid()) return;
 
     const landingData: LandingPageManagment = {
       ...this.landingForm.value,
@@ -92,16 +89,11 @@ export class NuevaLandingComponent {
     });
   }
 
-  // ACTUALIZAR
   actualizarLanding() {
-    if (this.landingForm.invalid) {
-      return this.alertService.showWarn('Ups..', 'Formulario incompleto');
-    }
+    if (this.isFormInvalid()) return;
 
     this.isLoading = true;
-    let landingData: Partial<LandingPageManagment> = { ...this.landingForm.value };
-    delete landingData.id;
-
+    const { id, ...landingData } = this.landingForm.value;
     landingData.contenido = this.formatContenido(landingData.contenido);
     landingData.color = landingData.color?.trim() || null;
     landingData.imagenUrl = landingData.imagenUrl?.trim() || null;
@@ -129,11 +121,23 @@ export class NuevaLandingComponent {
   }
 
   private formatContenido(contenido: any): string[] {
-    return contenido
-      ? String(contenido).split(',').map(item => item.trim())
-      : [];
+    return Array.isArray(contenido) ? contenido.map(item => item.trim()) : [];
   }
 
+  private isFormInvalid(): boolean {
+    if (this.landingForm.invalid) {
+      this.alertService.showWarn('Ups..', 'Formulario incompleto');
+      return true;
+    }
+    return false;
+  }
+
+  updateContenido() {
+    this.landingForm.patchValue({
+      contenido: this.landingForm.value.contenido.map((item: string) => item.trim())
+    });
+  }
+  
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

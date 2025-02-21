@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LandingPageManagmentService } from '../../../../services/managment/landing-page/landing-managment.service';
+import { ChipsModule } from 'primeng/chips';
 
 
 
@@ -18,7 +19,8 @@ import { LandingPageManagmentService } from '../../../../services/managment/land
     CommonModule,
     ManagmentPrimengModule,
     SharedSpinnerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChipsModule
   ],
   exports: [
     NuevaLandingComponent
