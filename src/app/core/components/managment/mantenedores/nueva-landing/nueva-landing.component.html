@@ -16,11 +16,11 @@
   <ng-template pTemplate="header">
     <div class="flex flex-column gap-2">
       <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
-        NUEVA LANDING PAGE
+        {{ landingId ? 'ACTUALIZAR LANDING PAGE' : 'NUEVA LANDING PAGE' }}
       </h1>
-      <span class="text-600 text-base"
-        >Crea una nueva landing page con su contenido</span
-      >
+      <span class="text-600 text-base">
+        {{ landingId ? 'Actualizando Landing Page' : 'Crea todas las Landing Page que desees' }}
+      </span>
     </div>
   </ng-template>
 
@@ -69,21 +69,7 @@
 
       <!-- Contenido -->
       <div class="field mb-4 col-12">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <p-chips
-              formControlName="contenido"
-              separator=";"
-              (onAdd)="updateContenido()"
-              (onRemove)="updateContenido()"
-              placeholder="Escribe un párrafo y presiona Enter"
-            ></p-chips>
-            <label class="ml-2" htmlFor="contenido">Contenido</label>
-          </span>
-        </div>
-        <small class="p-error" *ngIf="landingForm.get('contenido')?.invalid && landingForm.get('contenido')?.touched">
-          Este campo es obligatorio
-        </small>
+        <app-chip-editor [contenidoControl]="contenidoControl"></app-chip-editor>
       </div>
 
       <div class="grid formgrid gap-2 col-12">
@@ -147,6 +133,6 @@
       icon="pi pi-check"
       [label]="landingId == '' ? 'Guardar Landing Page' : 'Actualizar Landing Page'"
       (click)="landingId == '' ? crearLandingPage() : actualizarLanding()"
-      ></p-button>
+    ></p-button>
   </ng-template>
 </p-dialog>

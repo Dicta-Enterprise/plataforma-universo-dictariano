@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
 import { createNuevaLandingForm } from 'src/app/core/forms/managment/landing-page.form';
@@ -28,6 +28,10 @@ export class NuevaLandingComponent {
     private landingService: LandingPageManagmentService
   ) { }
 
+  get contenidoControl(): FormControl {
+    return this.landingForm.get('contenido') as FormControl;
+  }
+  
   ngOnInit(): void {
     this.obtenerPlanetas();
   }
@@ -43,7 +47,7 @@ export class NuevaLandingComponent {
 
   onShow() {
     console.log('ID recibido en nueva-landing:', this.landingId);
-    
+
     this.landingForm.reset();
     if (!this.landingId) return;
 
@@ -52,7 +56,6 @@ export class NuevaLandingComponent {
         this.landing = data;
         this.landingForm.patchValue({
           ...data,
-          //contenido: data.contenido?.join(', ') || ''
           contenido: data.contenido || []
         });
         console.log('Formulario actualizado para edición:', this.landingForm.value);
@@ -130,12 +133,6 @@ export class NuevaLandingComponent {
       return true;
     }
     return false;
-  }
-
-  updateContenido() {
-    this.landingForm.patchValue({
-      contenido: this.landingForm.value.contenido.map((item: string) => item.trim())
-    });
   }
   
   ngOnDestroy(): void {

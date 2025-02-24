@@ -70,8 +70,12 @@
       <ng-template pTemplate="body" let-landing >
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ landing.titulo }}</td>
-          <td>{{ landing.descripcion }}</td>
-          <td>{{ landing.contenido }}</td>
+          <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{ landing.descripcion }}
+          </td>
+          <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{ landing.contenido }}
+          </td>
           <td>{{ landing.planetaNombre }}</td>
           <td>
             <button
