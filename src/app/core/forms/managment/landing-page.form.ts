@@ -2,8 +2,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export const createNuevaLandingForm = (formBuilder: FormBuilder): FormGroup => {
     return formBuilder.group({
-        titulo: ['', [Validators.required]],
-        descripcion: ['', [Validators.required]],
+        titulo: ['', [Validators.required, Validators.maxLength(60)]], 
+        descripcion: ['', [Validators.required, Validators.maxLength(200)]],
         contenido: [[], [Validators.required]],
         estado: ['ACTIVO'],
         planetaId: ['', [Validators.required]],

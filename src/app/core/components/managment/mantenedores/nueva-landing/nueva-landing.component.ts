@@ -31,7 +31,7 @@ export class NuevaLandingComponent {
   get contenidoControl(): FormControl {
     return this.landingForm.get('contenido') as FormControl;
   }
-  
+
   ngOnInit(): void {
     this.obtenerPlanetas();
   }
@@ -71,24 +71,38 @@ export class NuevaLandingComponent {
   crearLandingPage() {
     if (this.isFormInvalid()) return;
 
-    const landingData: LandingPageManagment = {
-      ...this.landingForm.value,
-      planetaId: String(this.landingForm.value.planetaId),
-      contenido: this.formatContenido(this.landingForm.value.contenido),
-      imagenUrl: this.landingForm.value.imagenUrl?.trim() || null,
-      color: this.landingForm.value.color?.trim() || null,
-      estado: 'ACTIVO'
-    };
+    const { planetaId, titulo } = this.landingForm.value;
 
-    console.log('Datos enviados:', landingData);
+    this.landingService.listarLandingService$().subscribe(landings => {
+      const planetaEnUso = landings.some(l => l.planetaId === planetaId);
+      const tituloEnUso = landings.some(l => l.titulo === titulo);
 
-    this.landingService.crearLandingService$(landingData).subscribe(success => {
-      if (success) {
-        this.alertService.showSuccess('Landing creada', 'La landing page se ha creado correctamente');
-        this.onHide();
-      } else {
-        this.alertService.showError('Error', 'Ha ocurrido un error al crear la landing page');
+      if (planetaEnUso) {
+        this.alertService.showWarn('Advertencia', 'El planeta ya está en uso en otra landing.');
+        return;
       }
+      if (tituloEnUso) {
+        this.alertService.showWarn('Advertencia', 'El título ya está en uso en otra landing.');
+        return;
+      }
+
+      const landingData: LandingPageManagment = {
+        ...this.landingForm.value,
+        planetaId: String(planetaId),
+        contenido: this.formatContenido(this.landingForm.value.contenido),
+        imagenUrl: this.landingForm.value.imagenUrl?.trim() || null,
+        color: this.landingForm.value.color?.trim() || null,
+        estado: 'ACTIVO'
+      };
+
+      this.landingService.crearLandingService$(landingData).subscribe(success => {
+        if (success) {
+          this.alertService.showSuccess('Landing creada', 'La landing page se ha creado correctamente');
+          this.onHide();
+        } else {
+          this.alertService.showError('Error', 'Ha ocurrido un error al crear la landing page');
+        }
+      });
     });
   }
 
@@ -134,7 +148,7 @@ export class NuevaLandingComponent {
     }
     return false;
   }
-  
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

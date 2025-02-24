@@ -55,16 +55,16 @@ export class LandingPageManagmentService {
     return this.httpClient.patch<any>(`${this.base_url}landing-page/${id}`, landingData).pipe(
       map(response => {
         if (response?.status === 200 || response?.status === 201) {
-          return true; 
+          return true;
         }
-        return false; 
+        return false;
       }),
       catchError(error => {
         console.error('Error al editar landing:', error);
         return of(false);
       })
     );
-}
+  }
 
   eliminarLandingService$(id: string): Observable<boolean> {
     return this.httpClient.delete<any>(`${this.base_url}landing-page/${id}`).pipe(
@@ -80,7 +80,7 @@ export class LandingPageManagmentService {
       })
     );
   }
-
+  
   /*listarDropdownLandingService$(): Observable<any[]> {
     return this.httpClient.get<any>(`${this.base_url}landing-page`).pipe(
       map(response => {

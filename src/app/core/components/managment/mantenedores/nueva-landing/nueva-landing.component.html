@@ -39,13 +39,19 @@
               id="titulo"
               autocomplete="off"
               formControlName="titulo"
+              maxlength="60"
             />
             <label class="ml-2" htmlFor="titulo">Título</label>
           </span>
         </div>
-        <small class="p-error" *ngIf="landingForm.get('titulo')?.invalid && landingForm.get('titulo')?.touched">
-          Este campo es obligatorio
-        </small>
+        <div class="flex align-items-center" style="margin-top: -0.5rem;">
+          <small class="text-500 flex-grow-1 text-left">
+            {{ landingForm.get('titulo')?.value?.length || 0 }}/60 caracteres
+          </small>
+          <small class="p-error" *ngIf="landingForm.get('titulo')?.invalid && landingForm.get('titulo')?.touched">
+            Este campo es obligatorio
+          </small>
+        </div>
       </div>
 
       <!-- Descripción -->
@@ -62,9 +68,14 @@
             <label class="ml-2" htmlFor="descripcion">Descripción</label>
           </span>
         </div>
-        <small class="p-error" *ngIf="landingForm.get('descripcion')?.invalid && landingForm.get('descripcion')?.touched">
-          Este campo es obligatorio
-        </small>
+        <div class="flex align-items-center" style="margin-top: -0.5rem;">
+          <small class="text-500 flex-grow-1 text-left">
+            {{ landingForm.get('descripcion')?.value?.length || 0 }}/200 caracteres
+          </small>
+          <small class="p-error" *ngIf="landingForm.get('descripcion')?.invalid && landingForm.get('descripcion')?.touched">
+            Este campo es obligatorio
+          </small>
+        </div>
       </div>
 
       <!-- Contenido -->
