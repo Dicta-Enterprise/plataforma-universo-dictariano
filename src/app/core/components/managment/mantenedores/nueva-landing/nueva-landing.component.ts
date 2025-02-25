@@ -6,6 +6,7 @@ import { createNuevaLandingForm } from 'src/app/core/forms/managment/landing-pag
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LandingPageManagmentService } from 'src/app/core/services/managment/landing-page/landing-managment.service';
 import { ActivosState } from 'src/app/shared/enums';
+import { LandingUtilsService } from './utils/landing-utils.service';
 
 @Component({
   selector: 'app-nueva-landing',
@@ -25,7 +26,8 @@ export class NuevaLandingComponent {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private landingService: LandingPageManagmentService
+    private landingService: LandingPageManagmentService,
+    private landingUtils: LandingUtilsService
   ) { }
 
   get contenidoControl(): FormControl {
@@ -69,84 +71,55 @@ export class NuevaLandingComponent {
   }
 
   crearLandingPage() {
-    if (this.isFormInvalid()) return;
+    if (this.landingUtils.isFormInvalid(this.landingForm)) return;
 
-    const { planetaId, titulo } = this.landingForm.value;
+    const landingData: LandingPageManagment = {
+      ...this.landingForm.value,
+      planetaId: String(this.landingForm.value.planetaId),
+      contenido: this.landingUtils.formatContenido(this.landingForm.value.contenido),
+      imagenUrl: this.landingForm.value.imagenUrl?.trim() || null,
+      color: this.landingForm.value.color?.trim() || null,
+      estado: 'ACTIVO'
+    };
 
-    this.landingService.listarLandingService$().subscribe(landings => {
-      const planetaEnUso = landings.some(l => l.planetaId === planetaId);
-      const tituloEnUso = landings.some(l => l.titulo === titulo);
+    console.log('Datos enviados:', landingData);
 
-      if (planetaEnUso) {
-        this.alertService.showWarn('Advertencia', 'El planeta ya está en uso en otra landing.');
-        return;
-      }
-      if (tituloEnUso) {
-        this.alertService.showWarn('Advertencia', 'El título ya está en uso en otra landing.');
-        return;
-      }
-
-      const landingData: LandingPageManagment = {
-        ...this.landingForm.value,
-        planetaId: String(planetaId),
-        contenido: this.formatContenido(this.landingForm.value.contenido),
-        imagenUrl: this.landingForm.value.imagenUrl?.trim() || null,
-        color: this.landingForm.value.color?.trim() || null,
-        estado: 'ACTIVO'
-      };
-
-      this.landingService.crearLandingService$(landingData).subscribe(success => {
-        if (success) {
-          this.alertService.showSuccess('Landing creada', 'La landing page se ha creado correctamente');
-          this.onHide();
-        } else {
-          this.alertService.showError('Error', 'Ha ocurrido un error al crear la landing page');
-        }
-      });
+    this.landingService.crearLandingService$(landingData).subscribe({
+      next: (response) => {
+        this.alertService.showSuccess('Landing creada', 'La landing page se ha creado correctamente');
+        this.onHide();
+      },
+      error: (err) => this.landingUtils.manejarErrores(err)
     });
   }
 
   actualizarLanding() {
-    if (this.isFormInvalid()) return;
-
+    if (this.landingUtils.isFormInvalid(this.landingForm)) return;
+  
     this.isLoading = true;
     const { id, ...landingData } = this.landingForm.value;
-    landingData.contenido = this.formatContenido(landingData.contenido);
+    landingData.contenido = this.landingUtils.formatContenido(this.landingForm.value.contenido),
     landingData.color = landingData.color?.trim() || null;
     landingData.imagenUrl = landingData.imagenUrl?.trim() || null;
     landingData.estado = landingData.estado ?? this.landing.estado ?? ActivosState.ACTIVO;
-
+  
     if (landingData.titulo === this.landing.titulo) {
       delete landingData.titulo;
     }
-
+  
     console.log('Datos enviados para actualizar:', landingData);
-
+  
     this.landingService.editarLandingService$(this.landingId, landingData).subscribe({
       next: (response) => {
-        if (response === true) {
-          this.alertService.showSuccess('Landing actualizada', 'La landing page se ha actualizado correctamente');
-          this.onHide();
-        } else {
-          this.alertService.showError('Error', 'No se pudo actualizar la landing page');
-        }
+        this.alertService.showSuccess('Landing actualizada', 'La landing page se ha actualizado correctamente');
+        this.onHide();
+        this.isLoading = false; 
       },
-      complete: () => {
-        this.isLoading = false;
+      error: (err) => {
+        this.landingUtils.manejarErrores(err);
+        this.isLoading = false; 
       }
     });
-  }
-
-  private formatContenido(contenido: any): string[] {
-    return Array.isArray(contenido) ? contenido.map(item => item.trim()) : [];
-  }
-
-  private isFormInvalid(): boolean {
-    if (this.landingForm.invalid) {
-      this.alertService.showWarn('Ups..', 'Formulario incompleto');
-      return true;
-    }
-    return false;
   }
 
   ngOnDestroy(): void {

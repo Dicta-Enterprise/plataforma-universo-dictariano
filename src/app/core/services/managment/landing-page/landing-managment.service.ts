@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
 
 @Injectable({
@@ -36,35 +36,26 @@ export class LandingPageManagmentService {
     );
   }
 
-  crearLandingService$(landing: LandingPageManagment): Observable<boolean> {
+  crearLandingService$(landing: LandingPageManagment): Observable<any> {
     return this.httpClient.post<any>(`${this.base_url}landing-page`, landing).pipe(
       map(response => {
         if (response?.status === 200 || response?.status === 201) {
-          return true;
+          return response;
         }
-        return false;
-      }),
-      catchError(error => {
-        console.error('Error al crear landing:', error);
-        return of(false);
+        throw new Error('Respuesta inesperada del servidor');
       })
     );
   }
 
   editarLandingService$(id: string, landingData: Partial<LandingPageManagment>): Observable<boolean> {
     return this.httpClient.patch<any>(`${this.base_url}landing-page/${id}`, landingData).pipe(
-      map(response => {
-        if (response?.status === 200 || response?.status === 201) {
-          return true;
-        }
-        return false;
-      }),
+      map(response => response?.status === 200 || response?.status === 201),
       catchError(error => {
         console.error('Error al editar landing:', error);
-        return of(false);
+        return throwError(() => error); 
       })
     );
-  }
+  }  
 
   eliminarLandingService$(id: string): Observable<boolean> {
     return this.httpClient.delete<any>(`${this.base_url}landing-page/${id}`).pipe(
@@ -80,7 +71,7 @@ export class LandingPageManagmentService {
       })
     );
   }
-  
+
   /*listarDropdownLandingService$(): Observable<any[]> {
     return this.httpClient.get<any>(`${this.base_url}landing-page`).pipe(
       map(response => {

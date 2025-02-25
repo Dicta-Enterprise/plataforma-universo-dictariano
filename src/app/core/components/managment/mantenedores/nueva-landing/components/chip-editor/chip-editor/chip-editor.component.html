@@ -17,10 +17,12 @@
         <label class="ml-2" htmlFor="contenido">Contenido</label>
     </span>
 </div>
-  
-<small class="p-error" *ngIf="contenidoControl.invalid && contenidoControl.touched">
-    Este campo es obligatorio
-</small>
+
+<div class="flex justify-content-between text-sm mt-1">
+    <small class="p-error" *ngIf="contenidoControl.invalid && contenidoControl.touched">
+        Este campo es obligatorio
+    </small>
+</div>
   
 <p-dialog 
    [(visible)]="mostrarDialogoEdicion" 

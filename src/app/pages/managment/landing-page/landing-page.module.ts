@@ -20,6 +20,6 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     SharedSpinnerModule,
     SharedMantenedoresModule,
     ConfirmDialogModule
-  ]
+  ],
 })
 export class LandingPageModule { }

@@ -9,6 +9,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { LandingPageManagmentService } from '../../../../services/managment/landing-page/landing-managment.service';
 import { ChipsModule } from 'primeng/chips';
 import { ChipEditorComponent } from './components/chip-editor/chip-editor/chip-editor.component';
+import { LandingUtilsService } from './utils/landing-utils.service';
 
 
 
@@ -32,7 +33,8 @@ import { ChipEditorComponent } from './components/chip-editor/chip-editor/chip-e
     MessageService,
     ConfirmationService,
     AlertService,
-    LandingPageManagmentService
+    LandingPageManagmentService,
+    LandingUtilsService
   ]
 })
 export class NuevaLandingModule { }

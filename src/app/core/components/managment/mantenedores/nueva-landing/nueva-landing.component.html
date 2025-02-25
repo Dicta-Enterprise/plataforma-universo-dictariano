@@ -44,8 +44,8 @@
             <label class="ml-2" htmlFor="titulo">Título</label>
           </span>
         </div>
-        <div class="flex align-items-center" style="margin-top: -0.5rem;">
-          <small class="text-500 flex-grow-1 text-left">
+        <div class="flex justify-content-between text-sm mt-1">
+          <small class="text-500">
             {{ landingForm.get('titulo')?.value?.length || 0 }}/60 caracteres
           </small>
           <small class="p-error" *ngIf="landingForm.get('titulo')?.invalid && landingForm.get('titulo')?.touched">
@@ -68,8 +68,8 @@
             <label class="ml-2" htmlFor="descripcion">Descripción</label>
           </span>
         </div>
-        <div class="flex align-items-center" style="margin-top: -0.5rem;">
-          <small class="text-500 flex-grow-1 text-left">
+        <div class="flex justify-content-between text-sm mt-1">
+          <small class="text-500">
             {{ landingForm.get('descripcion')?.value?.length || 0 }}/200 caracteres
           </small>
           <small class="p-error" *ngIf="landingForm.get('descripcion')?.invalid && landingForm.get('descripcion')?.touched">
@@ -113,9 +113,11 @@
               <label class="ml-2" htmlFor="imagenUrl">URL de Imagen</label>
             </span>
           </div>
-          <small class="p-error" *ngIf="landingForm.get('imagenUrl')?.invalid && landingForm.get('imagenUrl')?.touched">
-            URL inválida (.jpg, .png, .gif, .jpeg)
-          </small>
+          <div class="flex justify-content-between text-sm mt-1">
+            <small class="p-error" *ngIf="landingForm.get('imagenUrl')?.invalid && landingForm.get('imagenUrl')?.touched">
+              URL inválida (.jpg, .png, .gif, .jpeg)
+            </small>
+          </div>
         </div>
 
         <!-- Color -->
@@ -131,9 +133,11 @@
               <label class="ml-2" htmlFor="color">Color</label>
             </span>
           </div>
-          <small class="p-error" *ngIf="landingForm.get('color')?.invalid && landingForm.get('color')?.touched">
-            Formato incorrecto (#FFF / #FFFFFF)
-          </small>
+          <div class="flex justify-content-between text-sm mt-1">
+            <small class="p-error" *ngIf="landingForm.get('color')?.invalid && landingForm.get('color')?.touched">
+              Formato incorrecto (#FFF / #FFFFFF)
+            </small>
+          </div>
         </div>
       </div>
     </div>
