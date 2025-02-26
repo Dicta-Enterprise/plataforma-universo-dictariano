@@ -31,7 +31,10 @@
   >
     <div class="grid formgrid p-fluid">
       <!-- Título -->
-      <div class="field mb-4 col-12">
+      <div class="field mb-4 col-12" style="position: relative">
+        <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
+          {{ landingForm.get('titulo')?.value?.length || 0 }}/60 caracteres
+        </small>
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
             <input
@@ -44,10 +47,7 @@
             <label class="ml-2" htmlFor="titulo">Título</label>
           </span>
         </div>
-        <div class="flex justify-content-between text-sm mt-1">
-          <small class="text-500">
-            {{ landingForm.get('titulo')?.value?.length || 0 }}/60 caracteres
-          </small>
+        <div class="flex justify-content-end text-sm mt-1">
           <small class="p-error" *ngIf="landingForm.get('titulo')?.invalid && landingForm.get('titulo')?.touched">
             Este campo es obligatorio
           </small>
@@ -55,7 +55,10 @@
       </div>
 
       <!-- Descripción -->
-      <div class="field mb-4 col-12">
+      <div class="field mb-4 col-12" style="position: relative">
+        <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
+          {{ landingForm.get('descripcion')?.value?.length || 0 }}/200 caracteres
+        </small>
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
             <textarea
@@ -68,10 +71,7 @@
             <label class="ml-2" htmlFor="descripcion">Descripción</label>
           </span>
         </div>
-        <div class="flex justify-content-between text-sm mt-1">
-          <small class="text-500">
-            {{ landingForm.get('descripcion')?.value?.length || 0 }}/200 caracteres
-          </small>
+        <div class="flex justify-content-end text-sm mt-1">
           <small class="p-error" *ngIf="landingForm.get('descripcion')?.invalid && landingForm.get('descripcion')?.touched">
             Este campo es obligatorio
           </small>
@@ -83,7 +83,7 @@
         <app-chip-editor [contenidoControl]="contenidoControl"></app-chip-editor>
       </div>
 
-      <div class="grid formgrid gap-2 col-12">
+      <div class="grid formgrid col-12">
         <!-- Planeta -->
         <div class="field mb-4 col-5">
           <div class="mb-3 flex align-items-center">
@@ -101,7 +101,7 @@
         </div>
 
         <!-- Imagen URL -->
-        <div class="field mb-4 col-5">
+        <div class="field mb-4 col-7">
           <div class="mb-3 flex align-items-center">
             <span class="p-float-label col-12">
               <input
@@ -113,7 +113,7 @@
               <label class="ml-2" htmlFor="imagenUrl">URL de Imagen</label>
             </span>
           </div>
-          <div class="flex justify-content-between text-sm mt-1">
+          <div class="flex justify-content-end text-sm mt-1">
             <small class="p-error" *ngIf="landingForm.get('imagenUrl')?.invalid && landingForm.get('imagenUrl')?.touched">
               URL inválida (.jpg, .png, .gif, .jpeg)
             </small>
@@ -133,11 +133,11 @@
               <label class="ml-2" htmlFor="color">Color</label>
             </span>
           </div>
-          <div class="flex justify-content-between text-sm mt-1">
+          <div class="flex justify-content-end text-sm mt-1">
             <small class="p-error" *ngIf="landingForm.get('color')?.invalid && landingForm.get('color')?.touched">
               Formato incorrecto (#FFF / #FFFFFF)
             </small>
-          </div>
+          </div>          
         </div>
       </div>
     </div>
