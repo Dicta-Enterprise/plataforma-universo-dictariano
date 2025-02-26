@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
 import { createNuevoCursoForm } from 'src/app/core/forms/managment/cursos.form';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
@@ -32,6 +32,17 @@ export class NuevoCursoComponent {
     { id: '6792d8bd005fc1e6836977f3', nombre: 'Planeta 4' }
   ];
 
+  profesores = [
+    { id: '6792d8bd005fc1e6836977f6', nombre: 'Juan Pérez' },
+    { id: '6792d8bd005fc1e6836977f7', nombre: 'María Gómez' },
+    { id: '6792d8bd005fc1e6836977f8', nombre: 'Carlos López' }
+  ];
+
+  idiomas = [
+    { id: '6792d8bd005fc1e6836977f9', nombre: 'Español' },
+    { id: '6792d8bd005fc1e6836977f5', nombre: 'Inglés' },
+  ];
+
   cursoForm: FormGroup = createNuevoCursoForm(this.fb); 
 
   constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService) {}
@@ -39,11 +50,10 @@ export class NuevoCursoComponent {
   ngOnInit(): void {}
 
   onShow() {
-    this.cursoForm.reset();
     if (this.cursoId) {
       this.isLoading = true;
       this.subscription.add(
-        this.cursoService.obtenerCursoService$(this.cursoId).subscribe({
+        this.cursoService.obtenerCursoService$(this.cursoId).pipe(take(1)).subscribe({
           next: (curso) => {
             this.curso = curso;
             this.cursoForm.patchValue({
@@ -66,10 +76,25 @@ export class NuevoCursoComponent {
   }
 
   onHide() {
+    //this.curso = new CursoManagment();
+    //this.cursoId = '';
+    //this.cursoForm.reset();
+    this.resetForm();
+    this.onHideEmit.emit(false);
+  }
+
+  private resetForm() {
     this.curso = new CursoManagment();
     this.cursoId = '';
-    this.cursoForm.reset();
-    this.onHideEmit.emit(false);
+    this.cursoForm.reset({
+      nombre: '',
+      descripcion: '',
+      fechaInicio: null,
+      fechaFinalizacion: null,
+      profesorId: null,
+      idiomaId: null,
+      estado: 'ACTIVO'
+    });
   }
 
   actualizarCurso() {

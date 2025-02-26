@@ -130,6 +130,42 @@
           </small>
         </div>
 
+        <!-- Profesor -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <p-dropdown 
+                [options]="profesores" 
+                optionLabel="nombre" 
+                optionValue="id" 
+
+                placeholder="Seleccione un Profesor"></p-dropdown>
+              <label class="ml-2" >Profesor</label>
+            </span>
+          </div>
+          <small class="p-error" *ngIf="cursoForm.get('profesorId')?.hasError('required') && cursoForm.get('profesorId')?.touched">
+            Selecciona un profesor.
+          </small>
+        </div>
+
+        <!-- Idiomas -->
+        <div class="field mb-4 col-5">
+          <div class="mb-3 flex align-items-center">
+            <span class="p-float-label col-12">
+              <p-dropdown 
+                [options]="idiomas" 
+                optionLabel="nombre" 
+                optionValue="id"
+
+                placeholder="Seleccione un idioma"></p-dropdown>
+              <label class="ml-2" >Idioma</label>
+            </span>
+          </div>
+          <small class="p-error" *ngIf="cursoForm.get('idiomaId')?.hasError('required') && cursoForm.get('idiomaId')?.touched">
+            Selecciona un profesor.
+          </small>
+        </div>
+
         <!-- Imagen -->
         <div class="field mb-4 col-5">
           <div class="mb-3 flex align-items-center">
