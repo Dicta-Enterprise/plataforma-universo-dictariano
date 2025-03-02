@@ -31,221 +31,257 @@
     <div class="grid formgrid p-fluid">
       <!-- Nombre -->
       <div class="field mb-4 col-12">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <input
-              pInputText
-              id="nombre"
-              autocomplete="off"
-              formControlName="nombre"
-            />
-            <label class="ml-2" htmlFor="nombre">Nombre del Curso</label>
-          </span>
-        </div>
-        <small class="p-error" *ngIf="cursoForm.get('nombre')?.hasError('required') && cursoForm.get('nombre')?.touched">
+        <span class="p-float-label w-full">
+          <input
+            pInputText
+            id="nombre"
+            autocomplete="off"
+            formControlName="nombre"
+            [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('nombre')?.invalid && cursoForm.get('nombre')?.touched}"
+          />
+          <label htmlFor="nombre">Nombre del Curso</label>
+        </span>
+        <div class="p-error mt-1" *ngIf="cursoForm.get('nombre')?.hasError('required') && cursoForm.get('nombre')?.touched">
+          <i class="pi pi-exclamation-circle mr-1"></i>
           El nombre es obligatorio.
-        </small>
+        </div>
       </div>
 
       <!-- Descripción -->
       <div class="field mb-4 col-12">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <textarea
-              pInputTextarea
-              id="descripcion"
-              autocomplete="off"
-              formControlName="descripcion"
-              rows="3"
-            ></textarea>
-            <label class="ml-2" htmlFor="descripcion">Descripción</label>
-          </span>
-        </div>
-        <small class="p-error" *ngIf="cursoForm.get('descripcion')?.hasError('required') && cursoForm.get('descripcion')?.touched">
+        <span class="p-float-label w-full">
+          <textarea
+            pInputTextarea
+            id="descripcion"
+            autocomplete="off"
+            formControlName="descripcion"
+            rows="3"
+            [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('descripcion')?.invalid && cursoForm.get('descripcion')?.touched}"
+          ></textarea>
+          <label htmlFor="descripcion">Descripción</label>
+        </span>
+        <div class="p-error mt-1" *ngIf="cursoForm.get('descripcion')?.hasError('required') && cursoForm.get('descripcion')?.touched">
+          <i class="pi pi-exclamation-circle mr-1"></i>
           La descripción es obligatoria.
-        </small>
+        </div>
       </div>
       
-      <div class="grid formgrid gap-2 col-12">
-      
-        <!-- Fecha Inicio -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
-              <p-calendar appendTo="body" [showIcon]="true" formControlName="fechaInicio"></p-calendar>
-              <label class="ml-2" htmlFor="fechaInicio">Fecha de Inicio</label>
+      <div class="col-12 px-2 mb-2 gap-2">
+        <div class="grid formgrid">
+          <!-- Fecha Inicio -->
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-3">
+            <span class="p-float-label w-full">
+              <p-calendar 
+                appendTo="body" 
+                [showIcon]="true" 
+                formControlName="fechaInicio"
+                styleClass="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('fechaInicio')?.invalid && cursoForm.get('fechaInicio')?.touched}"
+              ></p-calendar>
+              <label htmlFor="fechaInicio">Fecha de Inicio</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('fechaInicio')?.hasError('required') && cursoForm.get('fechaInicio')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La fecha de inicio es obligatoria.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('fechaInicio')?.hasError('required') && cursoForm.get('fechaInicio')?.touched">
-            La fecha de inicio es obligatoria.
-          </small>
-        </div>
 
-        <!-- Fecha Finalización -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
-              <p-calendar appendTo="body" [showIcon]="true" formControlName="fechaFinalizacion"></p-calendar>
-              <label class="ml-2" htmlFor="fechaFinalizacion">Fecha de Finalización</label>
+          <!-- Fecha Finalización -->
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
+            <span class="p-float-label w-full">
+              <p-calendar 
+                appendTo="body" 
+                [showIcon]="true" 
+                formControlName="fechaFinalizacion"
+                styleClass="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('fechaFinalizacion')?.invalid && cursoForm.get('fechaFinalizacion')?.touched}"
+              ></p-calendar>
+              <label htmlFor="fechaFinalizacion">Fecha de Finalización</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('fechaFinalizacion')?.hasError('required') && cursoForm.get('fechaFinalizacion')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La fecha de finalización es obligatoria.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('fechaFinalizacion')?.hasError('required') && cursoForm.get('fechaFinalizacion')?.touched">
-            La fecha de finalización es obligatoria.
-          </small>
         </div>
+      </div>
 
-        <!-- Categoría -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+      <div class="col-12 px-2 mb-2 gap-2">
+        <div class="grid formgrid">
+          <!-- Categoría -->
+          <div class="field mb-3 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
+            <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="categorias" 
                 optionLabel="nombre" 
                 optionValue="id" 
                 formControlName="categoriaId"
-                placeholder="Seleccione una Categoría"></p-dropdown>
-              <label class="ml-2" htmlFor="categoriaId">Categoría</label>
+                placeholder="Seleccione una Categoría"
+                styleClass="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('categoriaId')?.invalid && cursoForm.get('categoriaId')?.touched}"
+              ></p-dropdown>
+              <label htmlFor="categoriaId">Categoría</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('categoriaId')?.hasError('required') && cursoForm.get('categoriaId')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              Selecciona una categoría.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('categoriaId')?.hasError('required') && cursoForm.get('categoriaId')?.touched">
-            Selecciona una categoría.
-          </small>
-        </div>
 
-        <!-- Planeta -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+          <!-- Planeta -->
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
+            <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="planetas" 
                 optionLabel="nombre" 
                 optionValue="id" 
                 formControlName="planetaId"
-                placeholder="Seleccione un Planeta"></p-dropdown>
-              <label class="ml-2" htmlFor="planetaId">Planeta</label>
+                placeholder="Seleccione un Planeta"
+                styleClass="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('planetaId')?.invalid && cursoForm.get('planetaId')?.touched}"
+              ></p-dropdown>
+              <label htmlFor="planetaId">Planeta</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('planetaId')?.hasError('required') && cursoForm.get('planetaId')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              Selecciona un planeta.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('planetaId')?.hasError('required') && cursoForm.get('planetaId')?.touched">
-            Selecciona un planeta.
-          </small>
         </div>
+      </div>
 
-        <!-- Profesor -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+      <div class="col-12 px-2 mb-2 gap-2">
+        <div class="grid formgrid">
+          <!-- Profesor -->
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-3">
+            <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="profesores" 
                 optionLabel="nombre" 
                 optionValue="id" 
 
-                placeholder="Seleccione un Profesor"></p-dropdown>
-              <label class="ml-2" >Profesor</label>
+                placeholder="Seleccione un Profesor"
+                styleClass="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('profesorId')?.invalid && cursoForm.get('profesorId')?.touched}"
+              ></p-dropdown>
+              <label>Profesor</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('profesorId')?.hasError('required') && cursoForm.get('profesorId')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              Selecciona un profesor.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('profesorId')?.hasError('required') && cursoForm.get('profesorId')?.touched">
-            Selecciona un profesor.
-          </small>
-        </div>
 
-        <!-- Idiomas -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+          <!-- Idiomas -->
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
+            <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="idiomas" 
                 optionLabel="nombre" 
                 optionValue="id"
 
-                placeholder="Seleccione un idioma"></p-dropdown>
-              <label class="ml-2" >Idioma</label>
+                placeholder="Seleccione un idioma"
+                styleClass="w-full"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('idiomaId')?.invalid && cursoForm.get('idiomaId')?.touched}"
+              ></p-dropdown>
+              <label>Idioma</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('idiomaId')?.hasError('required') && cursoForm.get('idiomaId')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              Selecciona un idioma.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('idiomaId')?.hasError('required') && cursoForm.get('idiomaId')?.touched">
-            Selecciona un profesor.
-          </small>
         </div>
+      </div>
 
-        <!-- Imagen -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+      <div class="col-12 px-2 mb-2 gap-2">
+        <div class="grid formgrid">
+          <!-- Imagen -->
+          <div class="field mb-3 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
+            <span class="p-float-label w-full">
               <input 
                 pInputText id="imagen" 
                 autocomplete="off" 
-                formControlName="imagen" />
-              <label class="ml-2" htmlFor="imagen">URL de Imagen</label>
+                formControlName="imagen"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('imagen')?.invalid && cursoForm.get('imagen')?.touched}" />
+              <label htmlFor="imagen">URL de Imagen</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('imagen')?.hasError('required') && cursoForm.get('imagen')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La URL de la imagen es obligatoria.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('imagen')?.hasError('required') && cursoForm.get('imagen')?.touched">
-            La URL de la imagen es obligatoria.
-          </small>
-        </div>
 
-        <!-- Video -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+          <!-- Video -->
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
+            <span class="p-float-label w-full">
               <input 
                 pInputText id="video" 
                 autocomplete="off" 
-                formControlName="video" />
-              <label class="ml-2" htmlFor="video">URL de Video</label>
+                formControlName="video"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('video')?.invalid && cursoForm.get('video')?.touched}" />
+              <label htmlFor="video">URL de Video</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('video')?.hasError('required') && cursoForm.get('video')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La URL del video es obligatoria.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('video')?.hasError('required') && cursoForm.get('video')?.touched">
-            La URL del video es obligatoria.
-          </small>
-        </div>       
+        </div>
       </div>
 
-      <div class="grid formgrid gap-3 col-12">
-        <!-- Precio -->
-        <div class="field mb-4 col-3">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+      <div class="col-12 px-2 mb-2 gap-3">
+        <div class="grid formgrid">
+          <!-- Precio -->
+          <div class="field mb-4 col-12 md:col-4 lg:col-4 pr-0 md:pr-3">
+            <span class="p-float-label w-full p-input-icon-left">
+              <i class="pi pi-dollar"></i>
               <input 
                 pInputText type="number" 
                 id="precio" 
-                formControlName="precio" />
-              <label class="ml-2" htmlFor="precio">Precio</label>
+                formControlName="precio"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('precio')?.invalid && cursoForm.get('precio')?.touched}" />
+              <label htmlFor="precio" class="ml-4">Precio</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('precio')?.hasError('required') && cursoForm.get('precio')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              El precio es obligatorio.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('precio')?.hasError('required') && cursoForm.get('precio')?.touched">
-            El precio es obligatorio.
-          </small>
-        </div>
-         
-        <!-- Duración -->
-        <div class="field mb-4 col-3">
-          <div class="mb-3 flex align-items-center">
-             <span class="p-float-label col-12">
+           
+          <!-- Duración -->
+          <div class="field mb-4 col-12 md:col-4 lg:col-4 px-0 md:px-3">
+            <span class="p-float-label w-full p-input-icon-left">
+              <i class="pi pi-clock"></i>
               <input 
                 pInputText type="number" 
                 id="duracion" 
-                formControlName="duracion" />
-              <label class="ml-2" htmlFor="duracion">Duración (Horas)</label>
+                formControlName="duracion"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('duracion')?.invalid && cursoForm.get('duracion')?.touched}" />
+              <label htmlFor="duracion" class="ml-4">Duración (Horas)</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('duracion')?.hasError('required') && cursoForm.get('duracion')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La duración es obligatoria.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('duracion')?.hasError('required') && cursoForm.get('duracion')?.touched">
-            La duración es obligatoria.
-          </small>
-        </div>
- 
-        <!-- Cantidad de Alumnos -->
-        <div class="field mb-4 col-3">
-          <div class="mb-3 flex align-items-center">
-            <span class="p-float-label col-12">
+   
+          <!-- Cantidad de Alumnos -->
+          <div class="field mb-4 col-12 md:col-4 lg:col-4 pl-0 md:pl-3">
+            <span class="p-float-label w-full p-input-icon-left">
+              <i class="pi pi-users"></i>
               <input 
                 pInputText type="number" 
                 id="cantidadAlumnos" 
-                formControlName="cantidadAlumnos" />
-              <label class="ml-2" htmlFor="cantidadAlumnos">Cantidad de Alumnos</label>
+                formControlName="cantidadAlumnos"
+                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('cantidadAlumnos')?.invalid && cursoForm.get('cantidadAlumnos')?.touched}" />
+              <label htmlFor="cantidadAlumnos" class="ml-4">Cantidad de Alumnos</label>
             </span>
+            <div class="p-error mt-1" *ngIf="cursoForm.get('cantidadAlumnos')?.hasError('required') && cursoForm.get('cantidadAlumnos')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La cantidad de alumnos es obligatoria.
+            </div>
           </div>
-          <small class="p-error" *ngIf="cursoForm.get('cantidadAlumnos')?.hasError('required') && cursoForm.get('cantidadAlumnos')?.touched">
-            La cantidad de alumnos es obligatoria.
-          </small>
         </div>
       </div>
     </div>
