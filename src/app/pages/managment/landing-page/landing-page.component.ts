@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { finalize, map, Subscription } from 'rxjs';
 import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
+import { CPLANETAS_MANAGMENT } from 'src/app/core/constants/managment/CLanding-managment.constants';
 import { LandingPageManagmentService } from 'src/app/core/services/managment/landing-page/landing-managment.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -19,7 +20,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   isNuevaLanding: boolean = false;
   landings: LandingPageManagment[] = []
   landing: LandingPageManagment = new LandingPageManagment();
-  planetas: { id: string; nombre: string }[] = [];
+  planetas = CPLANETAS_MANAGMENT; 
   buscarlandingForm: FormGroup
   landingAEliminar: LandingPageManagment | null = null;
 
@@ -31,33 +32,30 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.obtenerPlanetas();
     this.listarLanding();
-  }
-
-  obtenerPlanetas() {
-    this.planetas = [
-      { id: '6792877e2942e670016454de', nombre: 'Luminara' },
-      { id: '6792d890005fc1e6836977f1', nombre: 'Planeta 2' },
-      { id: '6792d8aa005fc1e6836977f2', nombre: 'Planeta 3' },
-      { id: '6792d8bd005fc1e6836977f3', nombre: 'Planeta 4' }
-    ];
   }
 
   listarLanding() {
     this.isLoading = true;
+    console.log("Lista de planetas disponibles:", this.planetas);
     this.subscription.add(
-      this.landingService.listarLandingService$().subscribe({
-        next: (data) => {
-          this.landings = data.map(landing => ({
+      this.landingService.listarLandingService$()
+      .pipe(
+        map((landings: LandingPageManagment[]) => 
+          landings.map(landing => ({
             ...landing,
             planetaNombre: this.getNombrePlanetaPorId(landing.planetaId)
-          }));
-          this.isLoading = false;
+          }))
+        ),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
+        next: (data) => {
+          this.landings = data;
+          //console.log("Landings:" , data)
         },
         error: (error) => {
           console.error('Error al obtener Landing Page:', error);
-          this.isLoading = false;
         }
       })
     );
@@ -65,7 +63,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   getNombrePlanetaPorId(id: string): string {
     const planeta = this.planetas.find(plan => plan.id === id);
-    return planeta ? planeta.nombre : 'Planeta no encontrado';
+    return planeta ? planeta.descripcion : 'Planeta no encontrado';
   }
 
   showNuevaLanding(event?: boolean) {

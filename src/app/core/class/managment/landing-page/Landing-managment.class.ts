@@ -7,8 +7,8 @@ export class LandingPageManagment {
     contenido: string[];
     estado: ActivosState;
     planetaId: string;
-    imagenUrl: string | null;  
-    color: string | null;  
+    imagenUrl: string;  
+    color: string;  
 
     constructor(landingPage: Partial<LandingPageManagment> = {}) {
         this.id = landingPage.id ?? '';
@@ -17,11 +17,11 @@ export class LandingPageManagment {
         this.contenido = landingPage.contenido ?? [];
         this.estado = landingPage.estado ?? ActivosState.ACTIVO;
         this.planetaId = landingPage.planetaId ?? '';
-        this.imagenUrl = landingPage.imagenUrl ?? null;
-        this.color = landingPage.color ?? null;
+        this.imagenUrl = landingPage.imagenUrl ?? '';
+        this.color = landingPage.color ?? '';
     }
 
-    static fromJson(landingManagment: any): LandingPageManagment {
+    static fromJson(landingManagment: Partial<LandingPageManagment>): LandingPageManagment {
         return new LandingPageManagment({
             id: landingManagment.id,
             titulo: landingManagment.titulo,
@@ -34,7 +34,7 @@ export class LandingPageManagment {
         });
     }
 
-    static toJson(landingManagment: LandingPageManagment): any {
+    static toJson(landingManagment: LandingPageManagment): Partial<LandingPageManagment> {
         return {
             id: landingManagment.id,
             titulo: landingManagment.titulo,

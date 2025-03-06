@@ -90,7 +90,7 @@
             <span class="p-float-label col-12">
               <p-dropdown
                 [options]="planetas"
-                optionLabel="nombre"
+                optionLabel="descripcion"
                 optionValue="id"
                 formControlName="planetaId"
                 placeholder="Seleccione un Planeta"
@@ -147,7 +147,7 @@
     <p-button
       icon="pi pi-check"
       [label]="landingId == '' ? 'Guardar Landing Page' : 'Actualizar Landing Page'"
-      (click)="landingId == '' ? crearLandingPage() : actualizarLanding()"
+      (click)="crearLandingPage()"
     ></p-button>
   </ng-template>
 </p-dialog>

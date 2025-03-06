@@ -13,61 +13,54 @@ export class LandingPageManagmentService {
   constructor(private httpClient: HttpClient) { }
 
   listarLandingService$(): Observable<LandingPageManagment[]> {
-    return this.httpClient.get<any>(`${this.base_url}landing-page`).pipe(
-      map(response => {
-        if (response && Array.isArray(response.data)) {
-          return response.data.map((landing: any) => LandingPageManagment.fromJson(landing));
-        } else {
-          return [];
-        }
-      })
+    return this.httpClient.get<{ data?: Partial<LandingPageManagment>[] }>(`${this.base_url}landing-page`).pipe(
+      map(response => response.data?.map(landing => LandingPageManagment.fromJson(landing)) ?? [])
     );
   }
 
   obtenerLandingService$(id: string): Observable<LandingPageManagment> {
-    return this.httpClient.get<any>(`${this.base_url}landing-page/${id}`).pipe(
+    return this.httpClient.get<{ data?: Partial<LandingPageManagment> }>(`${this.base_url}landing-page/${id}`).pipe(
       map(response => {
-        if (response && response.data) {
-          return LandingPageManagment.fromJson(response.data);
-        } else {
+        if (!response.data) {
           throw new Error('Landing no encontrada');
         }
+        return LandingPageManagment.fromJson(response.data);
       })
     );
   }
 
   crearLandingService$(landing: LandingPageManagment): Observable<any> {
-    return this.httpClient.post<any>(`${this.base_url}landing-page`, landing).pipe(
-      map(response => {
-        if (response?.status === 200 || response?.status === 201) {
-          return response;
-        }
-        throw new Error('Respuesta inesperada del servidor');
+    return this.httpClient.post<{ status: number; data: any }>(`${this.base_url}landing-page`,
+      LandingPageManagment.toJson(landing)).pipe(
+        map(response => {
+          if (response?.status === 200 || response?.status === 201) {
+            return response.data;
+          }
+          throw new Error('Respuesta inesperada del servidor');
+        }),
+        catchError(error => {
+          console.error('Error al crear landing:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  editarLandingService$(id: string, landingData: Partial<LandingPageManagment>): Observable<boolean> {
+    return this.httpClient.patch<{ status: number }>(`${this.base_url}landing-page/${id}`, landingData).pipe(
+      map(response => response?.status === 200 || response?.status === 201),
+      catchError(error => {
+        console.error('Error al editar landing:', error);
+        return throwError(() => error);
       })
     );
   }
 
-  editarLandingService$(id: string, landingData: Partial<LandingPageManagment>): Observable<boolean> {
-    return this.httpClient.patch<any>(`${this.base_url}landing-page/${id}`, landingData).pipe(
-      map(response => response?.status === 200 || response?.status === 201),
-      catchError(error => {
-        console.error('Error al editar landing:', error);
-        return throwError(() => error); 
-      })
-    );
-  }  
-
   eliminarLandingService$(id: string): Observable<boolean> {
-    return this.httpClient.delete<any>(`${this.base_url}landing-page/${id}`).pipe(
-      map(response => {
-        if (response?.status === 200 || response?.status === 204) {
-          return true;
-        }
-        return false;
-      }),
+    return this.httpClient.delete<{ status: number }>(`${this.base_url}landing-page/${id}`).pipe(
+      map(response => response.status === 200 || response.status === 204),
       catchError(error => {
         console.error('Error al eliminar landing:', error);
-        return of(false);
+        return throwError(() => new Error('Error al eliminar la landing page'));
       })
     );
   }
