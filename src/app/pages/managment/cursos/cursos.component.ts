@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { map, Subscription, finalize } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { CCATEGORIES_CONSTANT, CPLANETS_CONSTANT } from 'src/app/core/constants/constants';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { Estandar } from 'src/app/shared/class/Estandar';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -23,17 +25,9 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   buscarCursoForm:FormGroup
 
-  categorias = [
-    { id: '6708179439154cb23c3150ca', nombre: 'Padres' },
-    { id: '670aa5b834951486809e8fa1', nombre: 'Niños' }
-  ];
+  categorias:Estandar[] = CCATEGORIES_CONSTANT;
   
-  planetas = [
-    { id: '6792877e2942e670016454de', nombre: 'Luminara' },
-    { id: '6792d890005fc1e6836977f1', nombre: 'Planeta 2' },
-    { id: '6792d8aa005fc1e6836977f2', nombre: 'Planeta 3' },
-    { id: '6792d8bd005fc1e6836977f3', nombre: 'Planeta 4' }
-  ];
+  planetas:Estandar[] = CPLANETS_CONSTANT;
 
   constructor(
     private fb:FormBuilder,
@@ -49,18 +43,21 @@ export class CursosComponent  implements OnInit, OnDestroy{
   listarCursos() {
     this.isLoading = true;
     this.subscription.add(
-      this.cursosService.listarCursosService$().subscribe({
+      this.cursosService.listarCursosService$()
+      .pipe(
+        map(cursos => cursos.map(curso => ({
+          ...curso,
+          categoriaNombre: this.getNombreCategoriaPorId(curso.categoriaId),
+          planetaNombre: this.getNombrePlanetaPorId(curso.planetaId),
+        }))),
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
         next: (data) => {
-          this.cursos = data.map(curso => ({
-            ...curso,
-            categoriaNombre: this.getNombreCategoriaPorId(curso.categoriaId),
-            planetaNombre: this.getNombrePlanetaPorId(curso.planetaId)
-          }));
-          this.isLoading = false;
+          this.cursos = data;
         },
         error: (error) => {
           console.error('Error al obtener cursos:', error);
-          this.isLoading = false;
         }
       })
     );
@@ -68,18 +65,18 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   getNombreCategoriaPorId(id: string): string {
     const categoria = this.categorias.find(cat => cat.id === id);
-    return categoria ? categoria.nombre : 'Categoría no encontrada';
+    return categoria ? categoria.descripcion : 'Categoría no encontrada';
   }
   
   getNombrePlanetaPorId(id: string): string {
     const planeta = this.planetas.find(plan => plan.id === id);
-    return planeta ? planeta.nombre : 'Planeta no encontrado';
+    return planeta ? planeta.descripcion : 'Planeta no encontrado';
   }
 
   showNuevoCurso(event?:boolean) {
     if(event != undefined){
       this.isNuevoCurso = event;
-      this.listarCursos();
+      this.curso = new CursoManagment();  
       return
     }
 

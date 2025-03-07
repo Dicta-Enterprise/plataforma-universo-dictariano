@@ -19,7 +19,7 @@
         {{ curso.id ? 'Actualizar Curso' : 'Nuevo Curso' }}
       </h1>
       <span class="text-600 text-base">
-        {{ curso.id ? 'Actualizacion del Curso : [ '+ curso.nombre + ' ]' : 'Crea todas las Cursos que desees' }}
+        {{ curso.id ? 'Actualizacion del Curso : '+ curso.nombre : 'Crea todas las Cursos que desees' }}
       </span>
     </div>
   </ng-template>
@@ -113,7 +113,7 @@
             <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="categorias" 
-                optionLabel="nombre" 
+                optionLabel="descripcion" 
                 optionValue="id" 
                 formControlName="categoriaId"
                 placeholder="Seleccione una Categoría"
@@ -133,7 +133,7 @@
             <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="planetas" 
-                optionLabel="nombre" 
+                optionLabel="descripcion" 
                 optionValue="id" 
                 formControlName="planetaId"
                 placeholder="Seleccione un Planeta"
@@ -157,7 +157,7 @@
             <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="profesores" 
-                optionLabel="nombre" 
+                optionLabel="descripcion" 
                 optionValue="id" 
 
                 placeholder="Seleccione un Profesor"
@@ -177,7 +177,7 @@
             <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="idiomas" 
-                optionLabel="nombre" 
+                optionLabel="descripcion" 
                 optionValue="id"
 
                 placeholder="Seleccione un idioma"

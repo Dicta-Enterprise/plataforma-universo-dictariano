@@ -13,14 +13,14 @@ export class CursosManagmentService {
   constructor(private httpClient: HttpClient) {}
 
   listarCursosService$(): Observable<CursoManagment[]>  {
-    return this.httpClient.get<{data: any[]}>(`${this.base_url}cursos`).pipe(
+    return this.httpClient.get<{data: CursoManagment[]}>(`${this.base_url}cursos`).pipe(
       map(response => response.data.map(curso => CursoManagment.fromJson(curso)))
     );
   }
 
   obtenerCursoService$(id: string): Observable<CursoManagment> {
-    return this.httpClient.get<{data: any}>(`${this.base_url}cursos/${id}`).pipe(
-      map(response => response.data)
+    return this.httpClient.get<{data: CursoManagment}>(`${this.base_url}cursos/${id}`).pipe(
+      map(response => CursoManagment.fromJson(response.data))
     );
   }
 

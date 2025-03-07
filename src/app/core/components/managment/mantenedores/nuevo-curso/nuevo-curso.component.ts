@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription, take } from 'rxjs';
+import { finalize, Subscription, take } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { CCATEGORIES_CONSTANT, CLANGUAGE_CONSTANT, CPLANETS_CONSTANT, CPROFESSOR_CONSTANT } from 'src/app/core/constants/constants';
 import { createNuevoCursoForm } from 'src/app/core/forms/managment/cursos.form';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { Estandar } from 'src/app/shared/class/Estandar';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -20,28 +22,13 @@ export class NuevoCursoComponent {
 
   curso = new CursoManagment();
 
-  categorias = [
-    { id: '6708179439154cb23c3150ca', nombre: 'Padres' },
-    { id: '670aa5b834951486809e8fa1', nombre: 'Niños' }
-  ];
+  categorias:Estandar[] = CCATEGORIES_CONSTANT;
   
-  planetas = [
-    { id: '6792877e2942e670016454de', nombre: 'Luminara' },
-    { id: '6792d890005fc1e6836977f1', nombre: 'Planeta 2' },
-    { id: '6792d8aa005fc1e6836977f2', nombre: 'Planeta 3' },
-    { id: '6792d8bd005fc1e6836977f3', nombre: 'Planeta 4' }
-  ];
+  planetas:Estandar[] = CPLANETS_CONSTANT;
 
-  profesores = [
-    { id: '6792d8bd005fc1e6836977f6', nombre: 'Juan Pérez' },
-    { id: '6792d8bd005fc1e6836977f7', nombre: 'María Gómez' },
-    { id: '6792d8bd005fc1e6836977f8', nombre: 'Carlos López' }
-  ];
+  profesores: Estandar[] = CPROFESSOR_CONSTANT;
 
-  idiomas = [
-    { id: '6792d8bd005fc1e6836977f9', nombre: 'Español' },
-    { id: '6792d8bd005fc1e6836977f5', nombre: 'Inglés' },
-  ];
+  idiomas:Estandar[] = CLANGUAGE_CONSTANT;
 
   cursoForm: FormGroup = createNuevoCursoForm(this.fb); 
 
@@ -51,24 +38,24 @@ export class NuevoCursoComponent {
 
   onShow() {
     if (this.cursoId) {
-      this.isLoading = true;
       this.subscription.add(
-        this.cursoService.obtenerCursoService$(this.cursoId).pipe(take(1)).subscribe({
+        this.cursoService.obtenerCursoService$(this.cursoId)
+        .pipe(
+          take(1),
+          finalize(() => this.isLoading = false)
+        )
+        .subscribe({
           next: (curso) => {
             this.curso = curso;
             this.cursoForm.patchValue({
               ...curso,
-              fechaInicio: new Date(curso.fechaInicio),
-              fechaFinalizacion: new Date(curso.fechaFinalizacion),
               profesorId: curso.profesorId || null,
               idiomaId: curso.idiomaId || null,
             });
-            this.isLoading = false;
           },
           error: (err) => {
             this.alertService.showError('Error', 'No se pudo obtener el curso');
             console.error('Error obteniendo curso:', err);
-            this.isLoading = false;
           }
         })
       );
@@ -76,9 +63,6 @@ export class NuevoCursoComponent {
   }
 
   onHide() {
-    //this.curso = new CursoManagment();
-    //this.cursoId = '';
-    //this.cursoForm.reset();
     this.resetForm();
     this.onHideEmit.emit(false);
   }
@@ -86,15 +70,7 @@ export class NuevoCursoComponent {
   private resetForm() {
     this.curso = new CursoManagment();
     this.cursoId = '';
-    this.cursoForm.reset({
-      nombre: '',
-      descripcion: '',
-      fechaInicio: null,
-      fechaFinalizacion: null,
-      profesorId: null,
-      idiomaId: null,
-      estado: 'ACTIVO'
-    });
+    this.cursoForm.reset();
   }
 
   actualizarCurso() {
@@ -104,7 +80,7 @@ export class NuevoCursoComponent {
       return;
     }
 
-    let cursoActualizar: Partial<CursoManagment> ={ ...this.cursoForm.value, estado: 'ACTIVO'}
+    let cursoActualizar: Partial<CursoManagment> ={ ...this.cursoForm.value}
 
     if(cursoActualizar.nombre === this.curso.nombre){
       delete cursoActualizar.nombre;
