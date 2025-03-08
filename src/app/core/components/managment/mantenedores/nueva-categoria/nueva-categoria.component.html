@@ -30,7 +30,7 @@
     (ngSubmit)="crearCategoria()"
   >
     <div class="grid formgrid p-fluid">
-      <div class="field mb-4 col-12 md:col-3">
+      <div class="field mb-4 col-12 md:col-6">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
             <input
@@ -44,7 +44,7 @@
         </div>
       </div>
 
-      <div class="field mb-4 col-12 md:col-3">
+      <div class="field mb-4 col-12 md:col-6">
         <div class="mb-3 flex align-items-center">
           <span class="p-float-label col-12">
             <input
@@ -58,20 +58,7 @@
         </div>
       </div>
 
-      <div class="field mb-4 col-12 md:col-6">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <p-calendar
-              appendTo="body"
-              [showIcon]="true"
-              [showTime]="true"
-              [showSeconds]="true"
-              formControlName="fechaCreacion"
-            ></p-calendar>
-            <label for="fechaCreacion" class="ml-2">Fecha Creación</label>
-          </span>
-        </div>
-      </div>
+
     </div>
   </form>
 
@@ -79,7 +66,7 @@
     <p-button
       icon="pi pi-check"
       [label]="
-        categoria.id == '' ? 'Guardar Trayectoria' : 'Actualizar Trayectoria'
+        categoriaId == '' ? 'Guardar Categoria' : 'Actualizar Categoria'
       "
       (click)="crearCategoria()"
     ></p-button>
