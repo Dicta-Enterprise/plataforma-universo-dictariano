@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
+import { IGeneric, IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,46 +14,55 @@ export class LandingPageManagmentService {
   constructor(private httpClient: HttpClient) { }
 
   listarLandingService$(): Observable<LandingPageManagment[]> {
-    return this.httpClient.get<{ data?: Partial<LandingPageManagment>[] }>(`${this.base_url}landing-page`).pipe(
-      map(response => response.data?.map(landing => LandingPageManagment.fromJson(landing)) ?? [])
+    let url = `${this.base_url}landing-page`;
+    return this.httpClient.get<IGenericArrays<LandingPageManagment>>(url).pipe(
+      map((response: IGenericArrays<LandingPageManagment>) => {
+        response.data = response.data.map((landing) => {
+          return LandingPageManagment.fromJson(landing);
+        });
+
+        return response.data;
+      })
     );
   }
 
   obtenerLandingService$(id: string): Observable<LandingPageManagment> {
-    return this.httpClient.get<{ data?: Partial<LandingPageManagment> }>(`${this.base_url}landing-page/${id}`).pipe(
+    let url = `${this.base_url}landing-page/${id}`
+
+    return this.httpClient.get<IGeneric<LandingPageManagment>>(url).pipe(
       map(response => {
-        if (!response.data) {
-          throw new Error('Landing no encontrada');
-        }
         return LandingPageManagment.fromJson(response.data);
       })
     );
   }
 
-  crearLandingService$(landing: LandingPageManagment): Observable<any> {
-    return this.httpClient.post<{ status: number; data: any }>(`${this.base_url}landing-page`,
-      LandingPageManagment.toJson(landing)).pipe(
-        map(response => {
-          if (response?.status === 200 || response?.status === 201) {
-            return response.data;
-          }
-          throw new Error('Respuesta inesperada del servidor');
-        }),
-        catchError(error => {
-          console.error('Error al crear landing:', error);
-          return throwError(() => error);
+  crearLandingService$(
+    Landing: LandingPageManagment
+  ): Observable<LandingPageManagment> {
+    let url = `${this.base_url}landing-page`;
+
+    return this.httpClient
+      .post<IGeneric<LandingPageManagment>>(url, Landing)
+      .pipe(
+        map((response) => {
+          return LandingPageManagment.fromJson(response.data);
         })
-      );
+      )
   }
 
-  editarLandingService$(id: string, landingData: Partial<LandingPageManagment>): Observable<boolean> {
-    return this.httpClient.patch<{ status: number }>(`${this.base_url}landing-page/${id}`, landingData).pipe(
-      map(response => response?.status === 200 || response?.status === 201),
-      catchError(error => {
-        console.error('Error al editar landing:', error);
-        return throwError(() => error);
-      })
-    );
+  editarLandingService$(
+    Landing: LandingPageManagment,
+    landingId: string
+  ): Observable<LandingPageManagment> {
+    let url = `${this.base_url}landing-page/${landingId}`;
+
+    return this.httpClient
+      .patch<IGeneric<LandingPageManagment>>(url, Landing)
+      .pipe(
+        map((response) => {
+          return LandingPageManagment.fromJson(response.data);
+        })
+      )
   }
 
   eliminarLandingService$(id: string): Observable<boolean> {

@@ -1,12 +1,13 @@
 import { Directive, Input, OnInit } from '@angular/core';
 import { Tag } from 'primeng/tag';
 import { ActivosState } from '../../enums';
+import { NewActivoState } from '../../enums/activos.enum';
 
 @Directive({
   selector: '[appActivoInactivo]',
 })
 export class ActivoInactivoDirective implements OnInit {
-  @Input('appActivoInactivo') appActivoInactivo!: ActivosState;;
+  @Input('appActivoInactivo') appActivoInactivo!: NewActivoState;
 
   constructor(private pTag: Tag) {}
 
@@ -18,11 +19,11 @@ export class ActivoInactivoDirective implements OnInit {
     this.pTag.severity = config.severity;
   }
 
-  private getTagConfig(activosState: ActivosState) {
+  private getTagConfig(activosState: NewActivoState) {
     switch (activosState) {
-      case ActivosState.ACTIVO:
+      case NewActivoState.ACTIVO:
         return { value: 'ACTIVO', severity: 'success' };
-      case ActivosState.INACTIVO:
+      case NewActivoState.INACTIVO:
         return { value: 'INACTIVO', severity: 'danger' };
       default:
         return { value: 'DESCONOCIDO', severity: 'info' };

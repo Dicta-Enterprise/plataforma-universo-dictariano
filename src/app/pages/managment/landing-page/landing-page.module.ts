@@ -6,6 +6,7 @@ import { ManagmentPrimengModule } from 'src/app/core/themes/managment/managment-
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
 import { SharedMantenedoresModule } from 'src/app/core/components/managment/mantenedores/shared-mantenedores.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
 
 
 
@@ -19,7 +20,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ManagmentPrimengModule,
     SharedSpinnerModule,
     SharedMantenedoresModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    SharedDirectiveModule
   ],
 })
 export class LandingPageModule { }

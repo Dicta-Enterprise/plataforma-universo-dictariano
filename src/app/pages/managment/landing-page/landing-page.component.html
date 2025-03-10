@@ -1,6 +1,5 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-
 <app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
 
 <div class="px-2 md:px-4 lg:px-2 lg:py-2">
@@ -34,7 +33,7 @@
       'titulo',
       'descripcion',
       'contenido',
-      'planetaNombre']"
+      'planeta']"
     >
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between">
@@ -63,11 +62,11 @@
           <th>Descripción</th>
           <th>Contenido</th>
           <th>Planeta</th>
+          <th>Estado</th>
           <th></th>
         </tr>
       </ng-template>
-
-      <ng-template pTemplate="body" let-landing >
+      <ng-template pTemplate="body" let-landing let-columns="columns">
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ landing.titulo }}</td>
           <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -76,7 +75,10 @@
           <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             {{ landing.contenido }}
           </td>
-          <td>{{ landing.planetaNombre }}</td>
+          <td>{{ landing.planetaId}}</td>
+          <td>
+            <p-tag [appActivoInactivo] = landing.estado> </p-tag>
+          </td>
           <td>
             <button
               pButton
@@ -103,4 +105,5 @@
   [isNuevaLanding]="isNuevaLanding"
   [landingId]="landing.id"
   (onHideEmit)="showNuevaLanding($event)"
+  (refreshLanding)="listarLandings()"
 ></app-nueva-landing> 

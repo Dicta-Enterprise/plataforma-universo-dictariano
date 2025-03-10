@@ -1,124 +1,150 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { finalize, Subscription, tap } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
 import { createNuevaLandingForm } from 'src/app/core/forms/managment/landing-page.form';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LandingPageManagmentService } from 'src/app/core/services/managment/landing-page/landing-managment.service';
-import { LandingUtilsService } from './utils/landing-utils.service';
 import { CPLANETAS_MANAGMENT } from '../../../../constants/managment/CLanding-managment.constants';
+import { convertToLandingPageManagment } from 'src/app/shared/functions/managment/landing.function';
 
 @Component({
   selector: 'app-nueva-landing',
   templateUrl: './nueva-landing.component.html',
   styleUrls: ['./nueva-landing.component.css']
 })
-export class NuevaLandingComponent {
+export class NuevaLandingComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
+
   isLoading: boolean = false;
+  @Input() landingId: string;
   @Input() isNuevaLanding: boolean = false;
-  @Input() landingId: string = '';
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
-  landing: LandingPageManagment = new LandingPageManagment();
-  planetas = CPLANETAS_MANAGMENT; 
+  @Output() refreshLanding: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  planetas = CPLANETAS_MANAGMENT;
   landingForm: FormGroup = createNuevaLandingForm(this.fb);
 
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private landingService: LandingPageManagmentService,
-    private landingUtils: LandingUtilsService
+    private landingManagmentService: LandingPageManagmentService,
   ) { }
 
   get contenidoControl(): FormControl {
     return this.landingForm.get('contenido') as FormControl;
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   onShow() {
-    console.log('ID recibido en nueva-landing:', this.landingId);
+    if (this.landingId === '') return;
 
-    this.landingForm.reset();
-    if (!this.landingId) return;
+    this.isLoading = true;
 
-    this.landingService.obtenerLandingService$(this.landingId)
-    .pipe(
-      tap(data => console.log('Landing obtenida:', data)),
-      tap(data => this.landingForm.patchValue({ ...data }))
-    )
-    .subscribe({
-      next: (data) => {
-        this.landing = data;
-        console.log('Formulario actualizado para edición:', this.landingForm.value);
-      },
-      error: (error) => console.error('Error al obtener la landing:', error)
-    });
+    this.subscription.add(
+      this.landingManagmentService
+        .obtenerLandingService$(this.landingId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.landingForm.patchValue(response);
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Ups...',
+              'Ocurrio un error al obtener la landing'
+            );
+          },
+        })
+    );
   }
 
   onHide() {
     this.onHideEmit.emit(false);
+    this.clearComponents();
+  }
+
+  clearComponents() {
+    this.landingForm.reset();
   }
 
   crearLandingPage() {
-    if (this.landingUtils.isFormInvalid(this.landingForm)) return;
+    if (this.landingForm.invalid) {
+      this.alertService.showWarn('Ups...', 'Formulario incompleto');
+      return;
+    }
 
-    const landingData = {
-      ...this.landingForm.value,
-      planeta: String(this.landingForm.value.planeta),
-      contenido: this.landingUtils.formatContenido(this.landingForm.value.contenido),
-      imagenUrl: this.landingForm.value.imagenUrl?.trim() || null,
-      color: this.landingForm.value.color?.trim() || null,
-      estado: this.landingForm.value.estado || 'ACTIVO',
-    };
-  
-    console.log('Datos preparados:', landingData);
-    
-    if (this.landingId) {
-      this.actualizarLanding(landingData);
-    } else {
-      this.guardarLandingPage(landingData);
+    const landing = convertToLandingPageManagment(this.landingForm);
+
+    switch (this.landingId) {
+      case '':
+        this.guardarLandingPage(landing);
+        break;
+      default:
+        this.actualizarLanding(landing);
+        break;
     }
   }
-  
-  guardarLandingPage(landingData: LandingPageManagment) {
-    this.isLoading = true;
-    console.log('Datos enviados:', landingData);
 
-    this.landingService.crearLandingService$(landingData)
-    .pipe(
-      finalize(() => this.isLoading = false)
+  guardarLandingPage(landing: LandingPageManagment) {
+    this.isLoading = true;
+    this.subscription.add(
+      this.landingManagmentService
+        .crearLandingService$(landing)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Landing creada',
+              'Landing creada con éxito'
+            );
+            this.onHide();
+            this.refreshLanding.emit(true);
+          },
+          error: ({ error }) => {
+            if (Array.isArray(error.message)) {
+              error.message.forEach((element: string) => {
+                this.alertService.showError('Ups...', element);
+              });
+            } else {
+              this.alertService.showError('Ups...', error.error || 'Ocurrió un error inesperado');
+            }
+            this.alertService.showError('Upss..', 'Ocurrio un error al crear la landing page');
+
+          }
+        })
     )
-    .subscribe({
-      next: () => {
-        this.alertService.showSuccess('Landing creada', 'La landing page se ha creado correctamente');
-        this.onHide();
-      },
-      error: (err) => this.landingUtils.manejarErrores(err)
-    });
   }
 
-  actualizarLanding(landingData: Partial<LandingPageManagment>) {  
+  actualizarLanding(landing: LandingPageManagment) {
     this.isLoading = true;
-    
-    if (landingData.titulo === this.landing.titulo) {
-      delete landingData.titulo;
-    }
-    console.log('Datos enviados para actualizar:', landingData);
-  
-    this.landingService.editarLandingService$(this.landingId, landingData)
-    .pipe(
-      finalize(() => this.isLoading = false)
-    )
-    .subscribe({
-      next: () => {
-        this.alertService.showSuccess('Landing actualizada', 'La landing page se ha actualizado correctamente');
-        this.onHide();
-      },
-      error: (err) => this.landingUtils.manejarErrores(err)
-    });
+    this.subscription.add(
+      this.landingManagmentService
+        .editarLandingService$(landing, this.landingId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Landing actualizada',
+              'Landing actualizada con exito'
+            );
+            this.onHide();
+            this.refreshLanding.emit(true);
+          },
+          error: ({ error }) => {
+            if (Array.isArray(error.message)) {
+              error.message.forEach((element: any) => {
+                this.alertService.showError('Upss..', element);
+              });
+            } else {
+              this.alertService.showError('Ups...', error.error)
+            }
+
+            this.alertService.showError('Ups..', 'Ocurrio un error al actualizar la landing page');
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {

@@ -83,10 +83,10 @@
         <app-chip-editor [contenidoControl]="contenidoControl"></app-chip-editor>
       </div>
 
-      <div class="grid formgrid col-12">
-        <!-- Planeta -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
+      <div class="col-12 px-2 mb-2">
+        <div class="field mb-4 col-12 flex align-items-center gap-3 justify-content-center">
+          <!-- Planeta -->
+          <div class="col-4" >
             <span class="p-float-label col-12">
               <p-dropdown
                 [options]="planetas"
@@ -98,11 +98,9 @@
               <label class="ml-2" htmlFor="planetaId">Planeta</label>
             </span>
           </div>
-        </div>
-
-        <!-- Imagen URL -->
-        <div class="field mb-4 col-7">
-          <div class="mb-3 flex align-items-center">
+          
+          <!-- Imagen URL -->
+          <div class="col-5">
             <span class="p-float-label col-12">
               <input
                 pInputText
@@ -112,17 +110,16 @@
               />
               <label class="ml-2" htmlFor="imagenUrl">URL de Imagen</label>
             </span>
+            <div class="flex justify-content-end text-sm mt-1">
+              <small class="p-error" *ngIf="landingForm.get('imagenUrl')?.hasError('pattern') &&
+              landingForm.get('imagenUrl')?.value">
+                URL inválida (.jpg, .png, .gif, .jpeg)
+              </small>
+            </div>
           </div>
-          <div class="flex justify-content-end text-sm mt-1">
-            <small class="p-error" *ngIf="landingForm.get('imagenUrl')?.invalid && landingForm.get('imagenUrl')?.touched">
-              URL inválida (.jpg, .png, .gif, .jpeg)
-            </small>
-          </div>
-        </div>
-
-        <!-- Color -->
-        <div class="field mb-4 col-5">
-          <div class="mb-3 flex align-items-center">
+          
+          <!-- Color -->
+          <div class="col-3">
             <span class="p-float-label col-12">
               <input
                 pInputText
@@ -132,12 +129,13 @@
               />
               <label class="ml-2" htmlFor="color">Color</label>
             </span>
+            <div class="flex justify-content-end text-sm mt-1">
+              <small class="p-error" *ngIf="landingForm.get('color')?.hasError('pattern') &&
+              landingForm.get('color')?.value">
+                Formato incorrecto (#FFF / #FFFFFF)
+              </small>
+            </div>          
           </div>
-          <div class="flex justify-content-end text-sm mt-1">
-            <small class="p-error" *ngIf="landingForm.get('color')?.invalid && landingForm.get('color')?.touched">
-              Formato incorrecto (#FFF / #FFFFFF)
-            </small>
-          </div>          
         </div>
       </div>
     </div>

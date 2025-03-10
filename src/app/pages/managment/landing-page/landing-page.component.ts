@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { finalize, map, Subscription } from 'rxjs';
@@ -14,75 +13,70 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
-
   private subscription: Subscription = new Subscription();
   isLoading: boolean = false;
-  isNuevaLanding: boolean = false;
   landings: LandingPageManagment[] = []
   landing: LandingPageManagment = new LandingPageManagment();
-  planetas = CPLANETAS_MANAGMENT; 
-  buscarlandingForm: FormGroup
+  isNuevaLanding: boolean = false;
+
+  planetas = CPLANETAS_MANAGMENT;
   landingAEliminar: LandingPageManagment | null = null;
 
   constructor(
-    private fb: FormBuilder,
-    private landingService: LandingPageManagmentService,
-    private alertService: AlertService,
-    private confirmationService: ConfirmationService
+    private readonly landingManagmentService: LandingPageManagmentService,
+    private readonly alertService: AlertService,
+    private readonly confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
-    this.listarLanding();
+    this.listarLandings();
   }
 
-  listarLanding() {
+  listarLandings() {
     this.isLoading = true;
-    console.log("Lista de planetas disponibles:", this.planetas);
     this.subscription.add(
-      this.landingService.listarLandingService$()
-      .pipe(
-        map((landings: LandingPageManagment[]) => 
-          landings.map(landing => ({
+      this.landingManagmentService
+        .listarLandingService$()
+        .pipe(map((response) => response.map((landing) =>
+          new LandingPageManagment({
             ...landing,
-            planetaNombre: this.getNombrePlanetaPorId(landing.planetaId)
-          }))
-        ),
-        finalize(() => this.isLoading = false)
-      )
-      .subscribe({
-        next: (data) => {
-          this.landings = data;
-          //console.log("Landings:" , data)
-        },
-        error: (error) => {
-          console.error('Error al obtener Landing Page:', error);
-        }
-      })
+            planetaId: this.obtenerPlaneta(landing.planetaId)
+          })
+        )),
+          finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (landings) => {
+            this.landings = landings;
+            console.log('Landings:', this.landings);
+          },
+          error: () => {
+            this.alertService.showError(
+              'Ups..',
+              'Ocurrió un error al listar las landings'
+            );
+          }
+        })
     );
   }
 
-  getNombrePlanetaPorId(id: string): string {
+  obtenerPlaneta(id: string): string {
     const planeta = this.planetas.find(plan => plan.id === id);
-    return planeta ? planeta.descripcion : 'Planeta no encontrado';
+    return planeta ? planeta.descripcion : "Planeta no encontrado";
   }
 
   showNuevaLanding(event?: boolean) {
     if (event != undefined) {
       this.isNuevaLanding = event;
-      this.listarLanding();
+      this.landing = new LandingPageManagment();
       return;
     }
 
     this.isNuevaLanding = !this.isNuevaLanding;
-
-    if (this.isNuevaLanding) {
-      this.landing = new LandingPageManagment();
-    }
   }
 
   editarLanding(landing: LandingPageManagment) {
-    this.showNuevaLanding(true);
-    this.landing = {...landing}
+    this.landing = landing;
+    this.showNuevaLanding();
   }
 
   confirmarEliminacion(landing: LandingPageManagment) {
@@ -108,10 +102,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   eliminarLanding() {
     if (!this.landingAEliminar) return;
 
-    this.landingService.eliminarLandingService$(this.landingAEliminar.id).subscribe({
+    this.landingManagmentService.eliminarLandingService$(this.landingAEliminar.id).subscribe({
       next: () => {
         this.alertService.showSuccess('Eliminación exitosa', 'La landing page ha sido eliminada correctamente');
-        this.listarLanding();
+        this.listarLandings();
       },
       error: (err) => {
         console.error('Error al eliminar:', err);
