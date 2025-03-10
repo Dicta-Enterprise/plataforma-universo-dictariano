@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Table } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { CategoriaManagment } from 'src/app/core/class/managment/managment';
+import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-categoria',
@@ -15,20 +17,50 @@ export class CategoriaComponent implements OnInit, OnDestroy {
   categoria: CategoriaManagment = new CategoriaManagment();
   isNuevaCategoria: boolean = false;
 
-  constructor() {}
+  constructor(
+    private readonly categoriaManagmentService: CategoriaManagmentService,
+    private readonly alertService: AlertService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listarCategorias();
+  }
+
+  listarCategorias() {
+    this.isLoading = true;
+    this.subscription.add(
+      this.categoriaManagmentService
+        .listarCategoriasService$()
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.categorias = response;
+            console.log('categorias', this.categorias);
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Upss..',
+              'Ocurrio un error al listar las categorias'
+            );
+          },
+        })
+    );
+  }
 
   showNuevaCategoria(event?: boolean) {
     if (event != undefined) {
       this.isNuevaCategoria = event;
+      this.categoria = new CategoriaManagment();
       return;
     }
 
     this.isNuevaCategoria = !this.isNuevaCategoria;
   }
 
-  editarCategoria(categoria: CategoriaManagment) {}
+  editarCategoria(categoria: CategoriaManagment) {
+    this.categoria = categoria;
+    this.showNuevaCategoria();
+  }
 
   eliminarCategoria(categoria: CategoriaManagment) {}
 
