@@ -291,7 +291,7 @@
     <p-button
       icon="pi pi-check"
       [label]="curso.id ? 'Actualizar Curso' : 'Crear Curso'"
-      (click)="curso.id ? actualizarCurso() : crearCurso()"
+      (click)="guardarCurso()"
     ></p-button>
   </ng-template>
 </p-dialog>

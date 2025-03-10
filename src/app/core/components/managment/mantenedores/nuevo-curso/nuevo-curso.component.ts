@@ -19,6 +19,7 @@ export class NuevoCursoComponent {
   @Input() isNuevoCurso: boolean = false;
   @Input() cursoId: string = '';
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() refreshCursos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   curso = new CursoManagment();
 
@@ -46,6 +47,7 @@ export class NuevoCursoComponent {
         )
         .subscribe({
           next: (curso) => {
+            console.log(curso);
             this.curso = curso;
             this.cursoForm.patchValue({
               ...curso,
@@ -68,17 +70,31 @@ export class NuevoCursoComponent {
   }
 
   private resetForm() {
-    this.curso = new CursoManagment();
-    this.cursoId = '';
+    //this.curso = new CursoManagment();
+    //this.cursoId = '';
     this.cursoForm.reset();
   }
 
-  actualizarCurso() {
+  guardarCurso(){
 
     if (this.cursoForm.invalid) {
       this.alertService.showWarn('Ups..', 'Formulario incompleto');
       return;
     }
+    //
+    if (this.cursoId) {
+      this.actualizarCurso();
+    } else {
+      this.guardarCurso();
+    }
+  }
+
+  actualizarCurso() {
+
+    // if (this.cursoForm.invalid) {
+    //   this.alertService.showWarn('Ups..', 'Formulario incompleto');
+    //   return;
+    // }
 
     let cursoActualizar: Partial<CursoManagment> ={ ...this.cursoForm.value}
 
@@ -90,6 +106,7 @@ export class NuevoCursoComponent {
       next: (res) => {
         this.alertService.showSuccess('Curso actualizado', 'El curso se ha actualizado correctamente');
         this.onHide();
+        this.refreshCursos.emit(true);
       },
       error: (err) => {
        this.errores(err);
@@ -99,17 +116,18 @@ export class NuevoCursoComponent {
 
   crearCurso() {
 
-    if (this.cursoForm.invalid) {
-      this.alertService.showWarn('Ups..', 'Formulario incompleto');
-      return;
-    }
+    // if (this.cursoForm.invalid) {
+    //   this.alertService.showWarn('Ups..', 'Formulario incompleto');
+    //   return;
+    // }
 
-    const cursoCrear: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
+    let cursoCrear: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
 
     this.cursoService.crearCursoService$(cursoCrear).subscribe({
       next: (res) => {
         this.alertService.showSuccess('Curso creado', 'El curso se ha creado correctamente');
         this.onHide();
+        this.refreshCursos.emit(true);
       },
       error: (err) => {
         this.errores(err);

@@ -117,7 +117,7 @@
       [loading]="isLoading"
       class="w-full"
       [tableStyle]="{ 'min-width': '50rem', 'font-size': '15px' }"
-      currentPageReportTemplate="Mostrando {last} Trayectorias de  {totalRecords}"
+      currentPageReportTemplate="Mostrando {last} Cursos de  {totalRecords}"
       [globalFilterFields]="[
         'nombre',
         'origen.descripcion',
@@ -166,16 +166,6 @@
           <td>{{ curso.fechaCreacion | date: "dd-MM-yyyy" }}</td>
           <td>{{ curso.fechaInicio | date: "dd-MM-yyyy" }}</td>
           <td>{{ curso.fechaFinalizacion | date: "dd-MM-yyyy" }}</td>
-          <!-- <td>
-            <p-tag
-              [appTagActivoState]="curso.estado"
-              class="text-white"
-              [styleClass]="'text-white'"
-            ></p-tag>
-          </td>  -->
-
-          <!-- <td>{{ curso.totalTiempoAcumulado }}</td>
-          <td>{{ curso.totalOficinas }}</td> -->
           <td>{{ curso.cantidadAlumnos }}</td>
           <td>{{ curso.precio | currency: 'USD' }}</td>
           <td>{{ curso.duracion }}</td>
@@ -207,4 +197,5 @@
   [isNuevoCurso]="isNuevoCurso"
   [cursoId]="curso.id"
   (onHideEmit)="showNuevoCurso($event)"
+  (refreshCursos)="listarCursos()"
 ></app-nuevo-curso>

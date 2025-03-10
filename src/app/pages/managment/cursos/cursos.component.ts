@@ -54,6 +54,7 @@ export class CursosComponent  implements OnInit, OnDestroy{
       )
       .subscribe({
         next: (data) => {
+          console.log(data);
           this.cursos = data;
         },
         error: (error) => {
@@ -86,7 +87,7 @@ export class CursosComponent  implements OnInit, OnDestroy{
   buscarCurso(){}
 
   editarCurso(curso:any){
-    this.showNuevoCurso(true);
+    this.showNuevoCurso();
     this.curso = {... curso};
   }
 
