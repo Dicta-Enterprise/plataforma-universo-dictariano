@@ -9,7 +9,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
 import { NuevoCursoModule } from "../../../core/components/managment/mantenedores/nuevo-curso/nuevo-curso.module";
-
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -23,10 +24,11 @@ import { NuevoCursoModule } from "../../../core/components/managment/mantenedore
     SharedSpinnerModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NuevoCursoModule
+    NuevoCursoModule,
+    ConfirmDialogModule
 ],
   providers:[
-    MessageService, ConfirmationService, CursosManagmentService
+    MessageService, ConfirmationService, CursosManagmentService, AlertService
   ]
 })
 export class CursosModule { }

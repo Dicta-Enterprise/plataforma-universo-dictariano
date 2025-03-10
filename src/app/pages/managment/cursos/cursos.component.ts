@@ -1,9 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Subscription } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-cursos',
@@ -17,6 +19,7 @@ export class CursosComponent  implements OnInit, OnDestroy{
   isNuevoCurso: boolean = false;
   cursos: CursoManagment[] = [];
   curso: CursoManagment = new CursoManagment();
+  cursoAEliminar: CursoManagment | null = null;
 
   buscarCursoForm:FormGroup
 
@@ -34,7 +37,9 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   constructor(
     private fb:FormBuilder,
-    private cursosService: CursosManagmentService
+    private cursosService: CursosManagmentService,
+    private confirmationService: ConfirmationService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -83,10 +88,48 @@ export class CursosComponent  implements OnInit, OnDestroy{
   
   buscarCurso(){}
 
-  editarCurso(curso:any){}
+  editarCurso(curso:any){
+    this.showNuevoCurso(true);
+    this.curso = {... curso};
+  }
 
 
-  eliminarCurso(curso:any){}
+  confirmarEliminacion(curso:any){
+    this.cursoAEliminar = curso;
+
+    this.confirmationService.confirm({
+      message: `¿Seguro que quieres eliminar el curso "${curso.nombre}"?`,
+      header: 'Confirmar eliminación',
+      icon: 'pi pi-trash',
+      rejectButtonStyleClass: 'p-button-danger',
+      acceptButtonStyleClass: 'p-button-success',
+      accept: () => {
+        this.eliminarCurso();
+      },
+      reject: () => {
+        this.alertService.showInfo('Eliminación cancelada', 'No se eliminó el curso');
+        this.cursoAEliminar = null; 
+      }
+    });
+  }
+
+  eliminarCurso() {
+    if (!this.cursoAEliminar) return;
+
+    this.cursosService.eliminarCursoService$(this.cursoAEliminar.id).subscribe({
+      next: () => {
+        this.alertService.showSuccess('Curso eliminado', `El curso ha sido eliminado correctamente`);
+        this.listarCursos();
+      },
+      error: (err) => {
+        console.error('Error al eliminar:', err);
+        const mensaje = err.error?.message || 'Ocurrió un error al eliminar el curso';
+        this.alertService.showError('Error', mensaje);
+      }
+    });
+
+    this.cursoAEliminar = null;
+  }
 
   clear(table:Table){
     table.clear();

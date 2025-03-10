@@ -1,4 +1,3 @@
-
 <p-toast></p-toast>
 <app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
 
@@ -15,67 +14,6 @@
       icon="pi pi-plus"
     ></button>
   </div>
-
-  <!-- <div class="surface-card p-4 mt-4 shadow-2 border-round p-fluid">
-    <form
-      class="border-round p-fluid"
-      [formGroup]="buscarCursoForm"
-      (ngSubmit)="buscarCurso()"
-    >
-      <div class="grid formgrid p-fluid justify-content-between">
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <span class="p-float-label col-12">
-              <app-custom-agencias-dropdown
-                formControlName="origen"
-                [label]="'Lugar Origen'"
-                [state]="'Origen'"
-              ></app-custom-agencias-dropdown> 
-            </span>
-          </div>
-        </div>
-
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <span class="p-float-label col-12">
-             <app-custom-agencias-dropdown
-                formControlName="destino"
-                [label]="'Lugar Destino'"
-                [state]="'Destino'"
-              ></app-custom-agencias-dropdown> 
-            </span>
-          </div>
-        </div>
-
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <span class="p-float-label col-12">
-            <p-selectButton
-                [options]="optionsFilter"
-                formControlName="estado"
-                optionLabel="label"
-                optionValue="value"
-              >
-              </p-selectButton> 
-            </span>
-          </div>
-        </div>
-
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <button
-              pButton
-              type="submit"
-              class="bg-gray-900 border-blue-900"
-              pRipple
-              label="Buscar"
-              icon="pi pi-search"
-            ></button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div> -->
 
   <div class="grid formgrid p-fluid mt-4">
     <p-table
@@ -121,32 +59,19 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
+          <th>Estado</th>
           <th>Fecha Creacion</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Fin</th>
-          <th>Cantidad Alumnos</th>
-          <th>Precio</th>
-          <th>Duracion</th>
-          <th>Categoria</th>
-          <th>Profesor</th>
           <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-categoria let-columns="columns">
         <tr class="categoriar-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ categoria.nombre }}</td>
-          <td>{{ categoria.origen.nombreAgencia }}</td>
-          <td>{{ categoria.destino.nombreAgencia }}</td>
           <td>
-            <!-- <p-tag
-              [appTagActivoState]="categoria.estado"
-              class="text-white"
-              [styleClass]="'text-white'"
-            ></p-tag> -->
+            <p-tag [appActivoInactivo]="categoria.estado"> </p-tag>
           </td>
 
-          <td>{{ categoria.totalTiempoAcumulado }}</td>
-          <td>{{ categoria.totalOficinas }}</td>
+          <td>{{ categoria.fechaCreacion | date : "mediumDate" }}</td>
           <td>
             <button
               pButton
@@ -170,7 +95,8 @@
 </div>
 
 <app-nueva-categoria
-[isNuevaCategoria]="isNuevaCategoria"
-[categoria]="categoria"
-(onHideEmit)="showNuevaCategoria($event)"
+  [isNuevaCategoria]="isNuevaCategoria"
+  [categoriaId]="categoria.id"
+  (onHideEmit)="showNuevaCategoria($event)"
+  (refreshCategoria)="listarCategorias()"
 ></app-nueva-categoria>

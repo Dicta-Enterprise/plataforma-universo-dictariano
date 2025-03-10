@@ -76,6 +76,35 @@
     </form>
   </div> -->
 
+  <p-toast />
+  <p-confirmDialog #cd>
+    <ng-template pTemplate="headless" let-message>
+        <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+            <!-- <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem">
+                <i class="pi pi-question text-5xl"></i>
+            </div> -->
+            <span class="font-bold text-2xl block mb-2 mt-4">
+                {{ message.header }}
+            </span>
+            <p class="mb-0">{{ message.message }}</p>
+            <div class="flex align-items-center gap-2 mt-4">
+                <button 
+                    pButton 
+                    label="Eliminar" 
+                    class="w-8rem"
+                    (click)="cd.accept()">
+                </button>
+                <button 
+                    pButton 
+                    label="Cancelar" 
+                    class="p-button-outlined w-8rem"
+                    (click)="cd.reject()">
+                </button>
+            </div>
+        </div>
+    </ng-template>
+  </p-confirmDialog>
+
   <div class="grid formgrid p-fluid mt-4">
     <p-table
       #dt2
@@ -165,7 +194,7 @@
               pRipple
               icon="pi pi-trash"
               class="p-button-rounded p-button-danger"
-              (click)="eliminarCurso(curso)"
+              (click)="confirmarEliminacion(curso)"
             ></button>
           </td>
         </tr>
@@ -176,7 +205,6 @@
 
 <app-nuevo-curso
   [isNuevoCurso]="isNuevoCurso"
-  [curso]="curso"
+  [cursoId]="curso.id"
   (onHideEmit)="showNuevoCurso($event)"
 ></app-nuevo-curso>
-
