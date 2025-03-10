@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { IGeneric, IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,33 +14,42 @@ export class CursosManagmentService {
   constructor(private httpClient: HttpClient) {}
 
   listarCursosService$(): Observable<CursoManagment[]>  {
-    return this.httpClient.get<{data: CursoManagment[]}>(`${this.base_url}cursos`).pipe(
-      map(response => response.data.map(curso => CursoManagment.fromJson(curso)))
+    let url = `${this.base_url}cursos`;
+    return this.httpClient.get<IGenericArrays<CursoManagment>>(url).pipe(
+      map((response: IGenericArrays<CursoManagment>) => {
+        response.data = response.data.map((curso) => {
+          return CursoManagment.fromJson(curso);
+       });
+        return response.data;
+      })
     );
   }
 
   obtenerCursoService$(id: string): Observable<CursoManagment> {
-    return this.httpClient.get<{data: CursoManagment}>(`${this.base_url}cursos/${id}`).pipe(
-      map(response => CursoManagment.fromJson(response.data))
+    let url = `${this.base_url}cursos/${id}`;
+    return this.httpClient.get<IGeneric<CursoManagment>>(url).pipe(
+      map((response) => { 
+        return CursoManagment.fromJson(response.data);
+      })
     );
   }
 
   crearCursoService$(curso: CursoManagment): Observable<CursoManagment> {
-    return this.httpClient.post<CursoManagment>(`${this.base_url}cursos`, curso);
+     let url = `${this.base_url}cursos`;
+    return this.httpClient.post<IGeneric<CursoManagment>>(url, curso).pipe(
+      map((response) => {
+        return CursoManagment.fromJson(response.data);
+      })
+    );
   }
 
-  // crearCursoService$(curso: CursoManagment): Observable<boolean> {
-  //   return this.httpClient.post<{status: number; message: string; data: CursoManagment}>(`${this.base_url}cursos`, curso).pipe(
-  //     map((res)=>{
-  //       if(res.status === 200 || res.status === 201) return true;
-  //       return false;
-  //     }),
-  //     catchError(()=> of(false))
-  //   );
-  // }
-
   editarCursoService$(id:string, curso: Partial<CursoManagment>): Observable<CursoManagment> {
-    return this.httpClient.put<CursoManagment>(`${this.base_url}cursos/${id}`, curso);
+    let url = `${this.base_url}cursos/${id}`;
+    return this.httpClient.put<IGeneric<CursoManagment>>(url, curso).pipe(
+      map((response) => {
+        return CursoManagment.fromJson(response.data);
+      })
+    );
   }
 
   eliminarCursoService$(id: string): Observable<void> {

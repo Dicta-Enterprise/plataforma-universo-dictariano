@@ -16,10 +16,10 @@
   <ng-template pTemplate="header">
     <div class="flex flex-column gap-2">
       <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
-        {{ curso.id ? 'Actualizar Curso' : 'Nuevo Curso' }}
+        {{ cursoId ? 'Actualizar Curso' : 'Nuevo Curso' }}
       </h1>
       <span class="text-600 text-base">
-        {{ curso.id ? 'Actualizacion del Curso : '+ curso.nombre : 'Crea todas las Cursos que desees' }}
+        {{ cursoId ? 'Actualizacion del Curso : '+ curso.nombre : 'Crea todas las Cursos que desees' }}
       </span>
     </div>
   </ng-template>
@@ -290,8 +290,8 @@
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      [label]="curso.id ? 'Actualizar Curso' : 'Crear Curso'"
-      (click)="guardarCurso()"
+      [label]="cursoId ? 'Actualizar Curso' : 'Crear Curso'"
+      (click)="crearCurso()"
     ></p-button>
   </ng-template>
 </p-dialog>

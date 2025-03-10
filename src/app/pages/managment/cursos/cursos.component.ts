@@ -31,9 +31,9 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   constructor(
     private fb:FormBuilder,
-    private cursosService: CursosManagmentService,
-    private confirmationService: ConfirmationService,
-    private alertService: AlertService
+    private readonly cursosService: CursosManagmentService,
+    private readonly confirmationService: ConfirmationService,
+    private readonly alertService: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -45,20 +45,18 @@ export class CursosComponent  implements OnInit, OnDestroy{
     this.subscription.add(
       this.cursosService.listarCursosService$()
       .pipe(
-        map(cursos => cursos.map(curso => ({
-          ...curso,
-          categoriaNombre: this.getNombreCategoriaPorId(curso.categoriaId),
-          planetaNombre: this.getNombrePlanetaPorId(curso.planetaId),
-        }))),
         finalize(() => this.isLoading = false)
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.cursos = data;
+          console.log('Cursos ',this.cursos);
         },
         error: (error) => {
-          console.error('Error al obtener cursos:', error);
+          this.alertService.showError(
+            'Upss..',
+            'Ocurrio un error al listar de los cursos'
+          );
         }
       })
     );
@@ -86,13 +84,13 @@ export class CursosComponent  implements OnInit, OnDestroy{
   
   buscarCurso(){}
 
-  editarCurso(curso:any){
-    this.showNuevoCurso();
+  editarCurso(curso:CursoManagment){
     this.curso = {... curso};
+    this.showNuevoCurso();
   }
 
 
-  confirmarEliminacion(curso:any){
+  confirmarEliminacion(curso:CursoManagment){
     this.cursoAEliminar = curso;
 
     this.confirmationService.confirm({

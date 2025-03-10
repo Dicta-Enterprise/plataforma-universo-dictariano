@@ -5,8 +5,8 @@ export class CursoManagment {
   id: string;
   nombre: string;
   descripcion: string;
-  fechaCreacion: string;
-  fechaActualizacion: string;
+  fechaCreacion: Date;
+  fechaActualizacion: Date;
   fechaInicio: Date;
   fechaFinalizacion: Date;
   cantidadAlumnos: string;
@@ -16,27 +16,27 @@ export class CursoManagment {
   video: string;
   duracion: string;
   categoriaId: string;
-  profesorId: string;
-  idiomaId: string; 
+  profesorId: string | null;
+  idiomaId: string | null; 
   planetaId: string; 
 
   constructor(cursoManagment: Partial<CursoManagment> = {}) {
     this.id = cursoManagment.id ?? '';
     this.nombre = cursoManagment.nombre ?? '';
     this.descripcion = cursoManagment.descripcion ?? '';
-    this.fechaCreacion = cursoManagment.fechaCreacion ?? '';
-    this.fechaActualizacion = cursoManagment.fechaActualizacion ?? '';
+    this.fechaCreacion = cursoManagment.fechaCreacion ?? new Date();
+    this.fechaActualizacion = cursoManagment.fechaActualizacion ?? new Date();
     this.fechaInicio = cursoManagment.fechaInicio ?? new Date();
     this.fechaFinalizacion = cursoManagment.fechaFinalizacion ?? new Date();
     this.cantidadAlumnos = cursoManagment.cantidadAlumnos ?? '';
     this.precio = cursoManagment.precio ?? '';
-    this.profesorId = cursoManagment.profesorId ?? '';
+    this.profesorId = cursoManagment.profesorId ?? null;
     this.estado = cursoManagment.estado ?? ActivosState.ACTIVO;
     this.imagen = cursoManagment.imagen ?? '';
     this.video = cursoManagment.video ?? '';
     this.duracion = cursoManagment.duracion ?? '';
     this.categoriaId = cursoManagment.categoriaId ?? '';
-    this.idiomaId = cursoManagment.idiomaId ?? '';
+    this.idiomaId = cursoManagment.idiomaId ?? null;
     this.planetaId = cursoManagment.planetaId ?? '';
   }
 
@@ -47,8 +47,8 @@ export class CursoManagment {
       descripcion: cursoManagment.descripcion,
       fechaCreacion: cursoManagment.fechaCreacion,
       fechaActualizacion: cursoManagment.fechaActualizacion,
-      fechaInicio: new Date(cursoManagment.fechaInicio),
-      fechaFinalizacion: new Date(cursoManagment.fechaFinalizacion),
+      fechaInicio: cursoManagment.fechaInicio,
+      fechaFinalizacion: cursoManagment.fechaFinalizacion,
       cantidadAlumnos: cursoManagment.cantidadAlumnos,
       precio: cursoManagment.precio,
       profesorId: cursoManagment.profesorId,
@@ -64,17 +64,17 @@ export class CursoManagment {
 
   static toJson(cursoManagment: CursoManagment): any {
     return {
-      id: cursoManagment.id,
+      //id: cursoManagment.id,
       nombre: cursoManagment.nombre,
       descripcion: cursoManagment.descripcion,
-      fechaCreacion: cursoManagment.fechaCreacion,
-      fechaActualizacion: cursoManagment.fechaActualizacion,
+      //fechaCreacion: cursoManagment.fechaCreacion,
+      //fechaActualizacion: cursoManagment.fechaActualizacion,
       fechaInicio: cursoManagment.fechaInicio,
       fechaFinalizacion: cursoManagment.fechaFinalizacion,
       cantidadAlumnos: cursoManagment.cantidadAlumnos,
       precio: cursoManagment.precio,
       profesorId: cursoManagment.profesorId,
-      estado: cursoManagment.estado,
+      estado: 'ACTIVO',
       imagen: cursoManagment.imagen,
       video: cursoManagment.video,
       duracion: cursoManagment.duracion,

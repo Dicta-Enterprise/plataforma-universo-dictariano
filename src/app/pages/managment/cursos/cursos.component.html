@@ -15,67 +15,6 @@
     ></button>
   </div>
 
-  <!-- <div class="surface-card p-4 mt-4 shadow-2 border-round p-fluid">
-    <form
-      class="border-round p-fluid"
-      [formGroup]="buscarCursoForm"
-      (ngSubmit)="buscarCurso()"
-    >
-      <div class="grid formgrid p-fluid justify-content-between">
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <span class="p-float-label col-12">
-              <app-custom-agencias-dropdown
-                formControlName="origen"
-                [label]="'Lugar Origen'"
-                [state]="'Origen'"
-              ></app-custom-agencias-dropdown> 
-            </span>
-          </div>
-        </div>
-
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <span class="p-float-label col-12">
-             <app-custom-agencias-dropdown
-                formControlName="destino"
-                [label]="'Lugar Destino'"
-                [state]="'Destino'"
-              ></app-custom-agencias-dropdown> 
-            </span>
-          </div>
-        </div>
-
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <span class="p-float-label col-12">
-            <p-selectButton
-                [options]="optionsFilter"
-                formControlName="estado"
-                optionLabel="label"
-                optionValue="value"
-              >
-              </p-selectButton> 
-            </span>
-          </div>
-        </div>
-
-        <div class="field col-12 md:col-3">
-          <div class="flex align-items-center">
-            <button
-              pButton
-              type="submit"
-              class="bg-gray-900 border-blue-900"
-              pRipple
-              label="Buscar"
-              icon="pi pi-search"
-            ></button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div> -->
-
   <p-toast />
   <p-confirmDialog #cd>
     <ng-template pTemplate="headless" let-message>
@@ -117,7 +56,7 @@
       [loading]="isLoading"
       class="w-full"
       [tableStyle]="{ 'min-width': '50rem', 'font-size': '15px' }"
-      currentPageReportTemplate="Mostrando {last} Cursos de  {totalRecords}"
+      currentPageReportTemplate="Mostrando {last} Cursos de {totalRecords}"
       [globalFilterFields]="[
         'nombre',
         'origen.descripcion',
@@ -163,14 +102,14 @@
       <ng-template pTemplate="body" let-curso let-columns="columns">
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ curso.nombre }}</td>
-          <td>{{ curso.fechaCreacion | date: "dd-MM-yyyy" }}</td>
-          <td>{{ curso.fechaInicio | date: "dd-MM-yyyy" }}</td>
-          <td>{{ curso.fechaFinalizacion | date: "dd-MM-yyyy" }}</td>
+          <td>{{ curso.fechaCreacion | date: "mediumDate" }}</td>
+          <td>{{ curso.fechaInicio | date: "mediumDate" }}</td>
+          <td>{{ curso.fechaFinalizacion | date: "mediumDate" }}</td>
           <td>{{ curso.cantidadAlumnos }}</td>
           <td>{{ curso.precio | currency: 'USD' }}</td>
           <td>{{ curso.duracion }}</td>
-          <td>{{ curso.categoriaNombre }}</td>
-          <td>{{ curso.planetaNombre }}</td>
+          <td>{{ getNombreCategoriaPorId(curso.categoriaId) }}</td>
+          <td>{{ getNombrePlanetaPorId(curso.planetaId) }}</td>
           <td>
             <button
               pButton
