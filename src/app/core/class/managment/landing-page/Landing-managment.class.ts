@@ -7,8 +7,8 @@ export class LandingPageManagment {
     contenido: string[];
     estado: NewActivoState;
     planetaId: string;
-    imagenUrl: string;
-    color: string;
+    imagenUrl: string | null;
+    color: string | null;
 
     constructor(landingPage: Partial<LandingPageManagment> = {}) {
         this.id = landingPage.id ?? '';
@@ -17,8 +17,8 @@ export class LandingPageManagment {
         this.contenido = landingPage.contenido ?? [];
         this.estado = landingPage.estado ?? NewActivoState.ACTIVO;
         this.planetaId = landingPage.planetaId ?? '';
-        this.imagenUrl = landingPage.imagenUrl ?? '';
-        this.color = landingPage.color ?? '';
+        this.imagenUrl = landingPage.imagenUrl?.trim() || null; 
+        this.color = landingPage.color?.trim() || null; 
     }
 
     static fromJson(landingManagment: any): LandingPageManagment {
@@ -35,30 +35,14 @@ export class LandingPageManagment {
     }
 
     static toJson(landingManagment: LandingPageManagment): any {
-        // return {
-        //     //id: landingManagment.id,
-        //     titulo: landingManagment.titulo,
-        //     descripcion: landingManagment.descripcion,
-        //     contenido: landingManagment.contenido,
-        //     estado: landingManagment.estado,
-        //     planetaId: landingManagment.planetaId,
-        //     imagenUrl: landingManagment.imagenUrl?.trim(),
-        //     color: landingManagment.color?.trim(),
-        // };
-
-        const json: any = {
+        return {
             titulo: landingManagment.titulo,
             descripcion: landingManagment.descripcion,
             contenido: landingManagment.contenido,
             estado: landingManagment.estado,
             planetaId: landingManagment.planetaId,
+            imagenUrl: landingManagment.imagenUrl,
+            color: landingManagment.color,
         };
-        if (landingManagment.imagenUrl?.trim()) {
-            json.imagenUrl = landingManagment.imagenUrl;
-        }
-        if (landingManagment.color?.trim()) {
-            json.color = landingManagment.color;
-        }
-        return json;
     }
 }
