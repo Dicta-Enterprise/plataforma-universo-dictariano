@@ -88,7 +88,6 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
-          <th>Fecha Creacion</th>
           <th>Fecha Inicio</th>
           <th>Fecha Fin</th>
           <th>Cantidad Alumnos</th>
@@ -96,13 +95,13 @@
           <th>Duracion</th>
           <th>Categoria</th>
           <th>Planeta</th>
+          <th>Estado</th>
           <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-curso let-columns="columns">
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ curso.nombre }}</td>
-          <td>{{ curso.fechaCreacion | date: "mediumDate" }}</td>
           <td>{{ curso.fechaInicio | date: "mediumDate" }}</td>
           <td>{{ curso.fechaFinalizacion | date: "mediumDate" }}</td>
           <td>{{ curso.cantidadAlumnos }}</td>
@@ -110,6 +109,9 @@
           <td>{{ curso.duracion }}</td>
           <td>{{ getNombreCategoriaPorId(curso.categoriaId) }}</td>
           <td>{{ getNombrePlanetaPorId(curso.planetaId) }}</td>
+          <td>
+            <p-tag [appActivoInactivo] = curso.estado> </p-tag>
+          </td>
           <td>
             <button
               pButton

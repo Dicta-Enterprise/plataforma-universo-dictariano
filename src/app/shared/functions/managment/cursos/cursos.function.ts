@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
-import { ActivosState } from 'src/app/shared/enums';
+import { ActivosState, NewActivoState } from 'src/app/shared/enums';
 
 export const convertToCursoManagment = (
   cursoForm: FormGroup
@@ -14,7 +14,7 @@ export const convertToCursoManagment = (
     fechaFinalizacion: cursoForm.get('fechaFinalizacion')?.getRawValue(),
     cantidadAlumnos: cursoForm.get('cantidadAlumnos')?.getRawValue(),
     precio: cursoForm.get('precio')?.getRawValue(),
-    estado: ActivosState.ACTIVO,
+    estado: NewActivoState.ACTIVO,
     imagen: cursoForm.get('imagen')?.getRawValue(),
     video: cursoForm.get('video')?.getRawValue(),
     duracion: cursoForm.get('duracion')?.getRawValue(),

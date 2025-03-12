@@ -1,4 +1,4 @@
-import { ActivosState } from "src/app/shared/enums";
+import { ActivosState, NewActivoState } from "src/app/shared/enums";
 import { CategoriaManagment, ProfesorManagment } from "../managment";
 
 export class CursoManagment {
@@ -11,7 +11,7 @@ export class CursoManagment {
   fechaFinalizacion: Date;
   cantidadAlumnos: string;
   precio: string;
-  estado: ActivosState;
+  estado: NewActivoState;
   imagen: string;
   video: string;
   duracion: string;
@@ -31,7 +31,7 @@ export class CursoManagment {
     this.cantidadAlumnos = cursoManagment.cantidadAlumnos ?? '';
     this.precio = cursoManagment.precio ?? '';
     this.profesorId = cursoManagment.profesorId ?? null;
-    this.estado = cursoManagment.estado ?? ActivosState.ACTIVO;
+    this.estado = cursoManagment.estado ?? NewActivoState.ACTIVO;
     this.imagen = cursoManagment.imagen ?? '';
     this.video = cursoManagment.video ?? '';
     this.duracion = cursoManagment.duracion ?? '';
@@ -47,8 +47,8 @@ export class CursoManagment {
       descripcion: cursoManagment.descripcion,
       fechaCreacion: cursoManagment.fechaCreacion,
       fechaActualizacion: cursoManagment.fechaActualizacion,
-      fechaInicio: cursoManagment.fechaInicio,
-      fechaFinalizacion: cursoManagment.fechaFinalizacion,
+      fechaInicio: new Date(cursoManagment.fechaInicio),
+      fechaFinalizacion: new Date(cursoManagment.fechaFinalizacion),
       cantidadAlumnos: cursoManagment.cantidadAlumnos,
       precio: cursoManagment.precio,
       profesorId: cursoManagment.profesorId,
@@ -74,7 +74,7 @@ export class CursoManagment {
       cantidadAlumnos: cursoManagment.cantidadAlumnos,
       precio: cursoManagment.precio,
       profesorId: cursoManagment.profesorId,
-      estado: 'ACTIVO',
+      estado: cursoManagment.estado,
       imagen: cursoManagment.imagen,
       video: cursoManagment.video,
       duracion: cursoManagment.duracion,

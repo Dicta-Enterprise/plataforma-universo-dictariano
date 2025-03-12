@@ -11,6 +11,7 @@ import { CursosManagmentService } from 'src/app/core/services/managment/cursos/c
 import { NuevoCursoModule } from "../../../core/components/managment/mantenedores/nuevo-curso/nuevo-curso.module";
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     ReactiveFormsModule,
     HttpClientModule,
     NuevoCursoModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    SharedDirectiveModule
 ],
   providers:[
     MessageService, ConfirmationService, CursosManagmentService, AlertService

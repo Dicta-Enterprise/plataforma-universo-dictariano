@@ -93,29 +93,6 @@ export class NuevoCursoComponent {
     }
   }
 
-  actualizarCurso(curso: CursoManagment) {
-
-    console.log('Curso:', curso);
-
-    this.isLoading = true;
-    this.subscription.add(
-      this.cursoService.editarCursoService$(this.cursoId, curso)
-      .pipe(
-        finalize(() => this.isLoading = false)
-      )
-      .subscribe({
-        next: (res) => {
-          this.alertService.showSuccess('Curso actualizado', 'El curso se ha actualizado correctamente');
-          this.onHide();
-          this.refreshCursos.emit(true);
-        },
-        error: (err) => {
-          this.errores(err);
-        }
-      })
-    );
-  }
-
   guardarCurso(curso: CursoManagment) {
     this.isLoading = true;
     this.subscription.add(
@@ -126,6 +103,38 @@ export class NuevoCursoComponent {
       .subscribe({
         next: (res) => {
           this.alertService.showSuccess('Curso creado', 'El curso se ha creado correctamente');
+          this.onHide();
+          this.refreshCursos.emit(true);
+        },
+        error: (err) => {
+          this.errores(err);
+        }
+      })
+    );
+  }
+
+
+  actualizarCurso(curso: CursoManagment) {
+
+    console.log('Curso:', curso);
+
+    let cursoActualizar: Partial<CursoManagment> = curso;
+
+    if(curso === cursoActualizar){
+      delete cursoActualizar.nombre;
+    }
+
+    console.log('CursoActualizar:', cursoActualizar);
+
+    this.isLoading = true;
+    this.subscription.add(
+      this.cursoService.editarCursoService$(this.cursoId, cursoActualizar)
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
+        next: (res) => {
+          this.alertService.showSuccess('Curso actualizado', 'El curso se ha actualizado correctamente');
           this.onHide();
           this.refreshCursos.emit(true);
         },
