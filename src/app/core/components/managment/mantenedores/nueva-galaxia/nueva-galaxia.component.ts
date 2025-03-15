@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { createNuevaGalaxiaform } from 'src/app/core/forms/managment/galaxias.form';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { GalaxiasManagmentService } from '../../../../services/managment/galaxias/galaxias-managment.service';
 import { GalaxiaManagment } from 'src/app/core/class/managment/managment';
+import { convertToGalaxiaManagment } from 'src/app/shared/functions/managment/galaxia.function';
 
 @Component({
   selector: 'app-nueva-galaxia',
@@ -31,110 +32,114 @@ private subscription: Subscription = new Subscription();
   ngOnInit(): void {}
 
   onShow() {
-    // if (this.categoriaId === '') return;
+    if (this.galaxiaId === '') return;
 
-    // this.isLoading = true;
+    this.isLoading = true;
 
-    // this.subscription.add(
-    //   this.categoriaManagmentService
-    //     .obtenerCategoriaService$(this.categoriaId)
-    //     .pipe(finalize(() => (this.isLoading = false)))
-    //     .subscribe({
-    //       next: (response) => {
-    //         this.categoriaForm.patchValue(response);
-    //       },
-    //       error: (error) => {
-    //         this.alertService.showError(
-    //           'Upss..',
-    //           'Ocurrio un error al obtener la categoria'
-    //         );
-    //       },
-    //     })
-    // );
+    this.subscription.add(
+      this.galaxiaManagmentService
+        .obtenerGalaxiaService$(this.galaxiaId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.galaxiaForm.patchValue(response);
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Upss..',
+              'Ocurrio un error al obtener la galaxia'
+            );
+          },
+        })
+    );
   }
 
   onHide() {
-    // this.onHideEmit.emit(false);
-
-    // this.clearComponents();
+    this.onHideEmit.emit(false);
+    this.clearComponents();
   }
 
   clearComponents() {
-    // this.categoriaForm.reset();
+    this.galaxiaForm.reset();
   }
 
-  crearCategoria() {
-    // if (this.categoriaForm.invalid) {
-    //   this.alertService.showWarn('Ups..', 'Formulario incompleto');
-    //   return;
-    // }
+  crearGalaxia() {
+    if (this.galaxiaForm.invalid) {
+      this.alertService.showWarn('Ups..', 'Formulario incompleto');
+      return;
+    }
 
-    // const categoria = convertToCategoriaManagment(this.categoriaForm);
+    const galaxia = convertToGalaxiaManagment(this.galaxiaForm);
 
-    // switch (this.categoriaId) {
-    //   case '':
-    //     this.guardarCategoria(categoria);
-    //     break;
-    //   default:
-    //     this.actualizarCategoria(categoria);
-    //     break;
-    // }
+    switch (this.galaxiaId) {
+      case '':
+        this.guardarGalaxia(galaxia);
+        break;
+      default:
+        this.actualizarGalaxia(galaxia);
+        break;
+    }
   }
 
   guardarGalaxia(galaxia: GalaxiaManagment) {
-    // this.isLoading = true;
-    // this.subscription.add(
-    //   this.categoriaManagmentService
-    //     .crearCategoriaService$(categoria)
-    //     .pipe(finalize(() => (this.isLoading = false)))
-    //     .subscribe({
-    //       next: (response) => {
-    //         this.alertService.showSuccess(
-    //           'Categoria creada',
-    //           'Categoria creada con exito'
-    //         );
-    //         this.onHide();
-    //         this.refreshCategoria.emit(true);
-    //       },
-    //       error: ({ error }) => {
-    //         error.message.forEach((element: any) => {
-    //           this.alertService.showError('Upss..', element);
-    //         });
+    this.isLoading = true;
+    this.subscription.add(
+      this.galaxiaManagmentService
+        .crearGalaxiaService$(galaxia)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Galaxia creada',
+              'Galaxia creada con exito'
+            );
+            this.onHide();
+            this.refreshGalaxia.emit(true);
+          },
+          error: ({ error }) => {
+            if (Array.isArray(error.message)) {
+              error.message.forEach((element: string) => {
+                this.alertService.showError('Ups...', element);
+              });
+            } else {
+              this.alertService.showError('Ups...', error.error || 'Ocurrió un error inesperado');
+            }
+            this.alertService.showError('Upss..', 'Ocurrio un error al crear la galaxia');
 
-    //         // this.alertService.showError('Upss..', 'Ocurrio un error al crear la categoria');
-    //       },
-    //     })
-    // );
+          }
+        })
+    );
   }
 
   actualizarGalaxia(galaxia: GalaxiaManagment) {
-    // this.isLoading = true;
+    this.isLoading = true;
 
-    // this.subscription.add(
-    //   this.categoriaManagmentService
-    //     .editarCategoriaService$(categoria, this.categoriaId)
-    //     .pipe(finalize(() => (this.isLoading = false)))
-    //     .subscribe({
-    //       next: (response) => {
-    //         this.alertService.showSuccess(
-    //           'Categoria actualizada',
-    //           'Categoria actualizada con exito'
-    //         );
-    //         this.onHide();
-    //         this.refreshCategoria.emit(true);
-    //       },
-    //       error: ({ error }) => {
-    //         error.message.forEach((element: any) => {
-    //           this.alertService.showError('Upss..', element);
-    //         });
+    this.subscription.add(
+      this.galaxiaManagmentService
+        .editarGalaxiaService$(galaxia, this.galaxiaId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Galaxia actualizada',
+              'Galaxia actualizada con exito'
+            );
+            this.onHide();
+            this.refreshGalaxia.emit(true);
+          },
+          error: ({ error }) => {
+            if (Array.isArray(error.message)) {
+              error.message.forEach((element: any) => {
+                this.alertService.showError('Upss..', element);
+              });
+            } else {
+              this.alertService.showError('Ups...', error.error)
+            }
 
-    //         this.alertService.showError(
-    //           'Upss..',
-    //           'Ocurrio un error al actualizar la categoria'
-    //         );
-    //       },
-    //     })
-    // );
+            this.alertService.showError('Ups..', 'Ocurrio un error al actualizar la galaxia');
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {

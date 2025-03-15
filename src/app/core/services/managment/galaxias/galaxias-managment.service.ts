@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { GalaxiaManagment } from 'src/app/core/class/managment/managment';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
+import { IGeneric, IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +27,42 @@ export class GalaxiasManagmentService {
     );
   }
 
-  obtenerGalaxiaService$(id: number) { }
+  obtenerGalaxiaService$(id: string): Observable<GalaxiaManagment> {
+    let url = `${this.base_url}galaxias/${id}`;
 
-  crearGalaxiaService$(galaxia: GalaxiaManagment) { }
+    return this.httpClient.get<IGeneric<GalaxiaManagment>>(url).pipe(
+      map((response) => {
+        return GalaxiaManagment.fromJson(response.data);
+      })
+    );
+  }
 
-  editarGalaxiaService$(galaxia: GalaxiaManagment) { }
+  crearGalaxiaService$(galaxia: GalaxiaManagment): Observable<GalaxiaManagment> {
+    let url = `${this.base_url}galaxias`;
+
+    return this.httpClient
+      .post<IGeneric<GalaxiaManagment>>(url, galaxia)
+      .pipe(
+        map((response) => {
+          return GalaxiaManagment.fromJson(response.data);
+        })
+      );
+  }
+
+  editarGalaxiaService$(
+    galaxia: GalaxiaManagment,
+    galaxiaId: string
+  ): Observable<GalaxiaManagment> {
+    let url = `${this.base_url}galaxias/${galaxiaId}`;
+
+    return this.httpClient
+      .patch<IGeneric<GalaxiaManagment>>(url, galaxia)
+      .pipe(
+        map((response) => {
+          return GalaxiaManagment.fromJson(response.data);
+        })
+      );
+  }
 
   eliminarGalaxiaService$(id: string): Observable<boolean> {
     return this.httpClient.delete<{ status: number }>(`${this.base_url}galaxias/${id}`).pipe(
