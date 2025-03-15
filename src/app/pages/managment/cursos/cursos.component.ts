@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { map, Subscription, finalize } from 'rxjs';
+import { map, Subscription, finalize, Observable, catchError, of } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
 import { CCATEGORIES_CONSTANT, CPLANETS_CONSTANT } from 'src/app/core/constants/constants';
+import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
 import { Estandar } from 'src/app/shared/class/Estandar';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -25,7 +26,8 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   buscarCursoForm:FormGroup
 
-  categorias:Estandar[] = CCATEGORIES_CONSTANT;
+  //categorias:Estandar[] = CCATEGORIES_CONSTANT;
+  categoriasMap: Map<string, string> = new Map();
   
   planetas:Estandar[] = CPLANETS_CONSTANT;
 
@@ -33,11 +35,26 @@ export class CursosComponent  implements OnInit, OnDestroy{
     private fb:FormBuilder,
     private readonly cursosService: CursosManagmentService,
     private readonly confirmationService: ConfirmationService,
-    private readonly alertService: AlertService
+    private readonly alertService: AlertService,
+    private readonly categoriaManagmentService: CategoriaManagmentService 
   ) { }
 
   ngOnInit(): void {
-    this.listarCursos();
+    this.cargarCategorias();
+  }
+
+  cargarCategorias() {
+    this.subscription.add(
+      this.categoriaManagmentService.listarCategoriasService$().subscribe({
+        next: (categorias) => {
+          this.categoriasMap = new Map(categorias.map(c => [c.id, c.nombre]));
+          this.listarCursos();
+        },
+        error: (error) => {
+          this.alertService.showError('Error', 'No se pudieron cargar las categorías');
+        }
+      })
+    );
   }
 
   listarCursos() {
@@ -63,8 +80,7 @@ export class CursosComponent  implements OnInit, OnDestroy{
   }
 
   getNombreCategoriaPorId(id: string): string {
-    const categoria = this.categorias.find(cat => cat.id === id);
-    return categoria ? categoria.descripcion : 'Categoría no encontrada';
+    return this.categoriasMap.get(id) || 'Categoría no encontrada';
   }
   
   getNombrePlanetaPorId(id: string): string {

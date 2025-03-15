@@ -8,6 +8,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
 import { HttpClientModule } from '@angular/common/http';
+import { CustomDropdownsModule } from "../../../../widgets/dropdowns/custom-dropdowns.module";
 
 
 
@@ -20,8 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
     ManagmentPrimengModule,
     SharedSpinnerModule,
     ReactiveFormsModule,
-    HttpClientModule
-  ],
+    HttpClientModule,
+    CustomDropdownsModule
+],
   exports:[
     NuevoCursoComponent
   ],

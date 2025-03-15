@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Subscription, take } from 'rxjs';
-import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { CategoriaManagment, CursoManagment } from 'src/app/core/class/managment/managment';
 import { CCATEGORIES_CONSTANT, CLANGUAGE_CONSTANT, CPLANETS_CONSTANT, CPROFESSOR_CONSTANT } from 'src/app/core/constants/constants';
 import { createNuevoCursoForm } from 'src/app/core/forms/managment/cursos.form';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
@@ -23,8 +23,6 @@ export class NuevoCursoComponent {
   @Output() refreshCursos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   curso = new CursoManagment();//
-
-  categorias:Estandar[] = CCATEGORIES_CONSTANT;
   
   planetas:Estandar[] = CPLANETS_CONSTANT;
 

@@ -110,7 +110,11 @@
         <div class="grid formgrid">
           <!-- Categoría -->
           <div class="field mb-3 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
-            <span class="p-float-label w-full">
+            <app-custom-categoria-dropdown
+              formControlName="categoriaId"
+              label="Categoría"
+            ></app-custom-categoria-dropdown>
+            <!-- <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="categorias" 
                 optionLabel="descripcion" 
@@ -125,7 +129,7 @@
             <div class="p-error mt-1" *ngIf="cursoForm.get('categoriaId')?.hasError('required') && cursoForm.get('categoriaId')?.touched">
               <i class="pi pi-exclamation-circle mr-1"></i>
               Selecciona una categoría.
-            </div>
+            </div> -->
           </div>
 
           <!-- Planeta -->
@@ -153,7 +157,7 @@
       <div class="col-12 px-2 mb-2 gap-2">
         <div class="grid formgrid">
           <!-- Profesor -->
-          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-3">
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
             <span class="p-float-label w-full">
               <p-dropdown 
                 [options]="profesores"
@@ -233,10 +237,10 @@
         </div>
       </div>
 
-      <div class="col-12 px-2 mb-2 gap-3">
+      <div class="col-12 px-2 mb-2 gap-2">
         <div class="grid formgrid">
           <!-- Precio -->
-          <div class="field mb-4 col-12 md:col-4 lg:col-4 pr-0 md:pr-3">
+          <div class="field mb-3 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
             <span class="p-float-label w-full p-input-icon-left">
               <i class="pi pi-dollar"></i>
               <input 
@@ -252,25 +256,8 @@
             </div>
           </div>
            
-          <!-- Duración -->
-          <div class="field mb-4 col-12 md:col-4 lg:col-4 px-0 md:px-3">
-            <span class="p-float-label w-full p-input-icon-left">
-              <i class="pi pi-clock"></i>
-              <input 
-                pInputText type="number" 
-                id="duracion" 
-                formControlName="duracion"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('duracion')?.invalid && cursoForm.get('duracion')?.touched}" />
-              <label htmlFor="duracion" class="ml-4">Duración (Horas)</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('duracion')?.hasError('required') && cursoForm.get('duracion')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              La duración es obligatoria.
-            </div>
-          </div>
-   
           <!-- Cantidad de Alumnos -->
-          <div class="field mb-4 col-12 md:col-4 lg:col-4 pl-0 md:pl-3">
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
             <span class="p-float-label w-full p-input-icon-left">
               <i class="pi pi-users"></i>
               <input 
