@@ -23,8 +23,7 @@ const VALUE_ACCESOR = {
   providers: [VALUE_ACCESOR],
 })
 export class CustomCategoriaDropdownComponent
-  implements OnInit, OnDestroy, ControlValueAccessor
-{
+  implements OnInit, OnDestroy, ControlValueAccessor {
   private subscription: Subscription = new Subscription();
   categoriaControl: FormControl;
   isLoading: boolean = false;
@@ -32,39 +31,40 @@ export class CustomCategoriaDropdownComponent
   categorias: CategoriaManagment[] = [];
   @Input() label: string = 'Seleccione una categoría';
 
-  onChange: (value: any) => void = () => {};
-  onTouched: () => void = () => {};
+  onChange: (value: any) => void = () => { };
+  onTouched: () => void = () => { };
   isDisabled = false;
   value: string | null = null;
 
   constructor(
-    private alertService: AlertService, 
+    private alertService: AlertService,
     private categoriaManagmentService: CategoriaManagmentService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.listarCategorias();
   }
 
   listarCategorias() {
-      this.isLoading = true;
-      this.subscription.add(
-        this.categoriaManagmentService
-          .listarCategoriasService$()
-          .pipe(finalize(() => (this.isLoading = false)))
-          .subscribe({
-            next: (response) => {
-              this.categorias = response;
-            },
-            error: (error) => {
-              this.alertService.showError(
-                'Upss..',
-                'Ocurrio un error al listar las categorias'
-              );
-            },
-          })
-      );
-    }
+    this.isLoading = true;
+    this.subscription.add(
+      this.categoriaManagmentService
+        .listarCategoriasService$()
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.categorias = response;
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Upss..',
+              'Ocurrio un error al listar las categorias'
+            );
+          },
+        })
+    );
+  }
 
   writeValue(id: string | null): void {
     this.value = id;

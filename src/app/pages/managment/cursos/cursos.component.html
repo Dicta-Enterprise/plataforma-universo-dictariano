@@ -106,7 +106,7 @@
           <td>{{ curso.fechaFinalizacion | date: "mediumDate" }}</td>
           <td>{{ curso.cantidadAlumnos }}</td>
           <td>{{ curso.precio | currency: 'USD' }}</td>
-          <td>{{ curso.duracion }}</td>
+          <td>{{ curso.duracion | formatoHoras}}</td>
           <td>{{ getNombreCategoriaPorId(curso.categoriaId) }}</td>
           <td>{{ getNombrePlanetaPorId(curso.planetaId) }}</td>
           <td>

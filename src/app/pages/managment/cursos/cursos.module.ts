@@ -12,6 +12,7 @@ import { NuevoCursoModule } from "../../../core/components/managment/mantenedore
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
+import { SharedPipeModule } from 'src/app/shared/pipes/shared-pipe.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive
     HttpClientModule,
     NuevoCursoModule,
     ConfirmDialogModule,
-    SharedDirectiveModule
+    SharedDirectiveModule,
+    SharedPipeModule
 ],
   providers:[
     MessageService, ConfirmationService, CursosManagmentService, AlertService

@@ -15,6 +15,8 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { RouterModule } from '@angular/router';
 import { ActivoInactivoPipe } from './shared/pipes/activo-inactivo/activo-inactivo.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { FormatoHorasPipe } from './shared/pipes/formato-horas/formato-horas.pipe';
+import { SharedModule } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,6 @@ import { HttpClientModule } from '@angular/common/http';
     NavBarComponent,
     FooterComponent,
     ActivoInactivoPipe,
-    
   ],
   imports: [
     BrowserModule,
@@ -33,7 +34,8 @@ import { HttpClientModule } from '@angular/common/http';
     StyleClassModule,
     InputTextModule,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
