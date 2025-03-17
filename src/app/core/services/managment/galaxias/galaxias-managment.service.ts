@@ -72,7 +72,6 @@ export class GalaxiasManagmentService {
         return throwError(() => new Error('Error al eliminar la galaxia'));
       })
     );
-
   }
 
   listarDropdownGalaxiasService$() { }

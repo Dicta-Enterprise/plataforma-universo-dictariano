@@ -43,7 +43,7 @@ export class GalaxiasComponent {
           },
           error: (error) => {
             this.alertService.showError(
-              'Upss..',
+              'Ups...',
               'Ocurrio un error al listar las galaxias'
             );
           },
@@ -91,7 +91,7 @@ export class GalaxiasComponent {
 
     this.galaxiaManagmentService.eliminarGalaxiaService$(this.galaxiaAEliminar.id).subscribe({
       next: () => {
-        this.alertService.showSuccess('Eliminación exitosa', 'La landing page ha sido eliminada correctamente');
+        this.alertService.showSuccess('Eliminación exitosa', 'La galaxia ha sido eliminada correctamente');
         this.listarGalaxias();
       },
       error: (err) => {

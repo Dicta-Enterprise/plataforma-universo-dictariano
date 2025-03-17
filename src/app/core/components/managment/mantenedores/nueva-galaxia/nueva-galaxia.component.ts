@@ -13,7 +13,7 @@ import { convertToGalaxiaManagment } from 'src/app/shared/functions/managment/ga
   styleUrls: ['./nueva-galaxia.component.css']
 })
 export class NuevaGalaxiaComponent {
-private subscription: Subscription = new Subscription();
+  private subscription: Subscription = new Subscription();
   @Input() galaxiaId: string;
 
   isLoading: boolean = false;
@@ -27,9 +27,9 @@ private subscription: Subscription = new Subscription();
     private fb: FormBuilder,
     private alertService: AlertService,
     private readonly galaxiaManagmentService: GalaxiasManagmentService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onShow() {
     if (this.galaxiaId === '') return;
