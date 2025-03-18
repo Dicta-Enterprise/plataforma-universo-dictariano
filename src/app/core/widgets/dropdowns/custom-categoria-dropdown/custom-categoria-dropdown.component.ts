@@ -40,6 +40,7 @@ export class CustomCategoriaDropdownComponent
     private alertService: AlertService,
     private categoriaManagmentService: CategoriaManagmentService
   ) {
+    this.categoriaControl = new FormControl(null);
   }
 
   ngOnInit(): void {
@@ -68,6 +69,7 @@ export class CustomCategoriaDropdownComponent
 
   writeValue(id: string | null): void {
     this.value = id;
+    this.categoriaControl.setValue(id, {emitEvent: false});
   }
 
   registerOnChange(fn: any): void {

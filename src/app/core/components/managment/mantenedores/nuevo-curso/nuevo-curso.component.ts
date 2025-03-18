@@ -23,7 +23,7 @@ export class NuevoCursoComponent {
   @Output() refreshCursos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   curso = new CursoManagment();//
-  
+
   planetas:Estandar[] = CPLANETS_CONSTANT;
 
   profesores: Estandar[] = CPROFESSOR_CONSTANT;

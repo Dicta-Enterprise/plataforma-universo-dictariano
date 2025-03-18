@@ -30,8 +30,8 @@ import { SharedPipeModule } from 'src/app/shared/pipes/shared-pipe.module';
     ConfirmDialogModule,
     SharedDirectiveModule,
     SharedPipeModule
-],
-  providers:[
+  ],
+  providers: [
     MessageService, ConfirmationService, CursosManagmentService, AlertService
   ]
 })
