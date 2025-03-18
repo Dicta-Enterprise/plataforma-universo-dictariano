@@ -104,7 +104,7 @@ export class NuevaGalaxiaComponent {
             } else {
               this.alertService.showError('Ups...', error.error || 'Ocurrió un error inesperado');
             }
-            this.alertService.showError('Upss..', 'Ocurrio un error al crear la galaxia');
+            this.alertService.showError('Ups...', 'Ocurrio un error al crear la galaxia');
 
           }
         })

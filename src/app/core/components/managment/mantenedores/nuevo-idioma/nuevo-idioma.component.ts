@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { IdiomaManagment } from 'src/app/core/class/managment/managment';
 import { createNuevoIdiomaform } from 'src/app/core/forms/managment/idioma.form';
 import { IdiomaManagmentService } from 'src/app/core/services/managment/idioma/idioma-managment.service';
+import { convertToIdiomaManagment } from 'src/app/shared/functions/managment/idioma.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -31,26 +32,26 @@ export class NuevoIdiomaComponent {
   ngOnInit(): void { }
 
   onShow() {
-    // if (this.galaxiaId === '') return;
+    if (this.idiomaId === '') return;
 
-    // this.isLoading = true;
+    this.isLoading = true;
 
-    // this.subscription.add(
-    //   this.galaxiaManagmentService
-    //     .obtenerGalaxiaService$(this.galaxiaId)
-    //     .pipe(finalize(() => (this.isLoading = false)))
-    //     .subscribe({
-    //       next: (response) => {
-    //         this.galaxiaForm.patchValue(response);
-    //       },
-    //       error: (error) => {
-    //         this.alertService.showError(
-    //           'Upss..',
-    //           'Ocurrio un error al obtener la galaxia'
-    //         );
-    //       },
-    //     })
-    // );
+    this.subscription.add(
+      this.idiomaManagmentService
+        .obtenerIdiomaService$(this.idiomaId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.idiomaForm.patchValue(response);
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Upss..',
+              'Ocurrio un error al obtener el idioma'
+            );
+          },
+        })
+    );
   }
 
   onHide() {
@@ -62,83 +63,83 @@ export class NuevoIdiomaComponent {
     this.idiomaForm.reset();
   }
 
-  crearGalaxia() {
-    // if (this.galaxiaForm.invalid) {
-    //   this.alertService.showWarn('Ups..', 'Formulario incompleto');
-    //   return;
-    // }
+  crearIdioma() {
+    if (this.idiomaForm.invalid) {
+      this.alertService.showWarn('Ups..', 'Formulario incompleto');
+      return;
+    }
 
-    // const galaxia = convertToGalaxiaManagment(this.galaxiaForm);
+    const idioma = convertToIdiomaManagment(this.idiomaForm);
 
-    // switch (this.galaxiaId) {
-    //   case '':
-    //     this.guardarGalaxia(galaxia);
-    //     break;
-    //   default:
-    //     this.actualizarGalaxia(galaxia);
-    //     break;
-    // }
+    switch (this.idiomaId) {
+      case '':
+        this.guardarIdioma(idioma);
+        break;
+      default:
+        this.actualizarIdioma(idioma);
+        break;
+    }
   }
 
-  guardarGalaxia(idioma: IdiomaManagment) {
-    // this.isLoading = true;
-    // this.subscription.add(
-    //   this.galaxiaManagmentService
-    //     .crearGalaxiaService$(galaxia)
-    //     .pipe(finalize(() => (this.isLoading = false)))
-    //     .subscribe({
-    //       next: (response) => {
-    //         this.alertService.showSuccess(
-    //           'Galaxia creada',
-    //           'Galaxia creada con exito'
-    //         );
-    //         this.onHide();
-    //         this.refreshGalaxia.emit(true);
-    //       },
-    //       error: ({ error }) => {
-    //         if (Array.isArray(error.message)) {
-    //           error.message.forEach((element: string) => {
-    //             this.alertService.showError('Ups...', element);
-    //           });
-    //         } else {
-    //           this.alertService.showError('Ups...', error.error || 'Ocurrió un error inesperado');
-    //         }
-    //         this.alertService.showError('Upss..', 'Ocurrio un error al crear la galaxia');
+  guardarIdioma(idioma: IdiomaManagment) {
+    this.isLoading = true;
+    this.subscription.add(
+      this.idiomaManagmentService
+        .crearIdiomaService$(idioma)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Idioma creado',
+              'Idioma creado con exito'
+            );
+            this.onHide();
+            this.refreshIdioma.emit(true);
+          },
+          error: ({ error }) => {
+            if (Array.isArray(error.message)) {
+              error.message.forEach((element: string) => {
+                this.alertService.showError('Ups...', element);
+              });
+            } else {
+              this.alertService.showError('Ups...', error.error || 'Ocurrió un error inesperado');
+            }
+            this.alertService.showError('Ups...', 'Ocurrio un error al crear el idioma');
 
-    //       }
-    //     })
-    // );
+          }
+        })
+    );
   }
 
-  actualizarGalaxia(idioma: IdiomaManagment) {
-    // this.isLoading = true;
+  actualizarIdioma(idioma: IdiomaManagment) {
+    this.isLoading = true;
 
-    // this.subscription.add(
-    //   this.galaxiaManagmentService
-    //     .editarGalaxiaService$(galaxia, this.galaxiaId)
-    //     .pipe(finalize(() => (this.isLoading = false)))
-    //     .subscribe({
-    //       next: (response) => {
-    //         this.alertService.showSuccess(
-    //           'Galaxia actualizada',
-    //           'Galaxia actualizada con exito'
-    //         );
-    //         this.onHide();
-    //         this.refreshGalaxia.emit(true);
-    //       },
-    //       error: ({ error }) => {
-    //         if (Array.isArray(error.message)) {
-    //           error.message.forEach((element: any) => {
-    //             this.alertService.showError('Upss..', element);
-    //           });
-    //         } else {
-    //           this.alertService.showError('Ups...', error.error)
-    //         }
+    this.subscription.add(
+      this.idiomaManagmentService
+        .editarIdiomaService$(idioma, this.idiomaId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Idioma actualizado',
+              'Idioma actualizado con exito'
+            );
+            this.onHide();
+            this.refreshIdioma.emit(true);
+          },
+          error: ({ error }) => {
+            if (Array.isArray(error.message)) {
+              error.message.forEach((element: any) => {
+                this.alertService.showError('Ups...', element);
+              });
+            } else {
+              this.alertService.showError('Ups...', error.error)
+            }
 
-    //         this.alertService.showError('Ups..', 'Ocurrio un error al actualizar la galaxia');
-    //       },
-    //     })
-    // );
+            this.alertService.showError('Ups...', 'Ocurrio un error al actualizar el idioma');
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {

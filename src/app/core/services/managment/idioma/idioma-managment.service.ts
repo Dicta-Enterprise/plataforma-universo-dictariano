@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { IdiomaManagment } from 'src/app/core/class/managment/managment';
-import { IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
+import { IGeneric, IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IdiomaManagmentService {
+  
   private base_url = environment.URL_BACKEND;
 
   constructor(private httpClient: HttpClient) { }
@@ -26,11 +27,42 @@ export class IdiomaManagmentService {
     );
   }
 
-  obtenerIdiomaService$(id: number) { }
+  obtenerIdiomaService$(id: string): Observable<IdiomaManagment> {
+    let url = `${this.base_url}idiomas/${id}`;
 
-  crearIdiomaService$(idioma: IdiomaManagment) { }
+    return this.httpClient.get<IGeneric<IdiomaManagment>>(url).pipe(
+      map((response) => {
+        return IdiomaManagment.fromJson(response.data);
+      })
+    );
+  }
 
-  editarIdiomaService$(idioma: IdiomaManagment) { }
+  crearIdiomaService$(idioma: IdiomaManagment): Observable<IdiomaManagment> {
+    let url = `${this.base_url}idiomas`;
+
+    return this.httpClient
+      .post<IGeneric<IdiomaManagment>>(url, idioma)
+      .pipe(
+        map((response) => {
+          return IdiomaManagment.fromJson(response.data);
+        })
+      );
+  }
+
+  editarIdiomaService$(
+    idioma: IdiomaManagment,
+    idiomaId: string
+  ): Observable<IdiomaManagment> {
+    let url = `${this.base_url}idiomas/${idiomaId}`;
+
+    return this.httpClient
+      .patch<IGeneric<IdiomaManagment>>(url, idioma)
+      .pipe(
+        map((response) => {
+          return IdiomaManagment.fromJson(response.data);
+        })
+      );
+  }
 
   eliminarIdiomaService$(id: string): Observable<boolean> {
     return this.httpClient.delete<{ status: number }>(`${this.base_url}idiomas/${id}`).pipe(
