@@ -17,5 +17,5 @@ export const convertToProfesorManagment = (
         fechaActualizacion: new Date(),
         fechaNacimiento: profesorForm.get('fechaNacimiento')?.getRawValue(),
     });
-    return ProfesorManagment.fromJson(myProfesor);
+    return ProfesorManagment.toJson(myProfesor);
 };

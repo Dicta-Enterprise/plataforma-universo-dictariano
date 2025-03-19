@@ -115,18 +115,10 @@ export class NuevoCursoComponent {
   actualizarCurso(curso: CursoManagment) {
 
     console.log('Curso:', curso);
-
-    let cursoActualizar: Partial<CursoManagment> = curso;
-
-    if(curso === cursoActualizar){
-      delete cursoActualizar.nombre;
-    }
-
-    console.log('CursoActualizar:', cursoActualizar);
-
+    
     this.isLoading = true;
     this.subscription.add(
-      this.cursoService.editarCursoService$(this.cursoId, cursoActualizar)
+      this.cursoService.editarCursoService$(this.cursoId, curso)
       .pipe(
         finalize(() => this.isLoading = false)
       )

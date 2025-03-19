@@ -113,6 +113,21 @@ export class ProfesorComponent implements OnInit, OnDestroy {
     table.clear();
   }
 
+  calcularEdad(fechaNacimiento: Date): number {
+    
+    const fechaNac = new Date(fechaNacimiento);
+    const hoy = new Date();
+  
+    let edad = hoy.getFullYear() - fechaNac.getFullYear();
+    const mes = hoy.getMonth() - fechaNac.getMonth();
+  
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
+      edad--;
+    }
+  
+    return edad;
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
