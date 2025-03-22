@@ -28,6 +28,8 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   //categorias:Estandar[] = CCATEGORIES_CONSTANT;
   categoriasMap: Map<string, string> = new Map();
+
+  selectedCategoria: string | null = null; 
   
   planetas:Estandar[] = CPLANETS_CONSTANT;
 
@@ -88,6 +90,14 @@ export class CursosComponent  implements OnInit, OnDestroy{
     return planeta ? planeta.descripcion : 'Planeta no encontrado';
   }
 
+  filtrarPorCategoria(categoriaId: string | null, table: Table) {
+    if (categoriaId) {
+      table.filter(categoriaId, 'categoriaId', 'equals');
+    } else {
+      table.clear();
+    }
+  }
+
   showNuevoCurso(event?:boolean) {
     if(event != undefined){
       this.isNuevoCurso = event;
@@ -145,6 +155,7 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   clear(table:Table){
     table.clear();
+    this.selectedCategoria = null;
   }
 
   ngOnDestroy(): void {

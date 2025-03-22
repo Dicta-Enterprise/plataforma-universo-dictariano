@@ -59,13 +59,11 @@
       currentPageReportTemplate="Mostrando {last} Cursos de {totalRecords}"
       [globalFilterFields]="[
         'nombre',
-        'origen.descripcion',
-        'destino.descripcion',
-        'totalOficinas'
+        'categoriaId',
       ]"
     >
       <ng-template pTemplate="caption">
-        <div class="flex justify-content-between">
+        <div class="flex justify-content-between align-items-center">
           <button
             pButton
             label="Limpiar"
@@ -73,6 +71,14 @@
             icon="pi pi-filter-slash"
             (click)="clear(dt2)"
           ></button>
+
+          <app-custom-categoria-dropdown
+            [(ngModel)]="selectedCategoria"
+            (ngModelChange)="filtrarPorCategoria($event, dt2)"
+            label="Filtrar por Categoría"
+            class="ml-2"
+          ></app-custom-categoria-dropdown>
+
           <span class="p-input-icon-left ml-auto w-20rem">
             <i class="pi pi-search"></i>
             <input

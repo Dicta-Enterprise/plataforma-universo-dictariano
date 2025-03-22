@@ -26,8 +26,6 @@ export class NuevoCursoComponent {
 
   planetas:Estandar[] = CPLANETS_CONSTANT;
 
-  profesores: Estandar[] = CPROFESSOR_CONSTANT;
-
   idiomas:Estandar[] = CLANGUAGE_CONSTANT;
 
   cursoForm: FormGroup = createNuevoCursoForm(this.fb); 

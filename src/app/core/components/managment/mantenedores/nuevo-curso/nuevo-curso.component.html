@@ -114,22 +114,6 @@
               formControlName="categoriaId"
               label="Categoría"
             ></app-custom-categoria-dropdown>
-            <!-- <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="categorias" 
-                optionLabel="descripcion" 
-                optionValue="id" 
-                formControlName="categoriaId"
-                placeholder="Seleccione una Categoría"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('categoriaId')?.invalid && cursoForm.get('categoriaId')?.touched}"
-              ></p-dropdown>
-              <label htmlFor="categoriaId">Categoría</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('categoriaId')?.hasError('required') && cursoForm.get('categoriaId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona una categoría.
-            </div> -->
           </div>
 
           <!-- Planeta -->
@@ -158,25 +142,10 @@
         <div class="grid formgrid">
           <!-- Profesor -->
           <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
-            <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="profesores"
-                [filter]="true" 
-                filterBy="descripcion"
-                [showClear]="true"
-                optionLabel="descripcion" 
-                optionValue="id" 
-
-                placeholder="Seleccione un Profesor"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('profesorId')?.invalid && cursoForm.get('profesorId')?.touched}"
-              ></p-dropdown>
-              <label>Profesor</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('profesorId')?.hasError('required') && cursoForm.get('profesorId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona un profesor.
-            </div>
+            <app-custom-profesor-dropdown
+              formControlName="profesorId"
+              label="Profesor"
+            ></app-custom-profesor-dropdown>
           </div>
 
           <!-- Idiomas -->

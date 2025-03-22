@@ -1,11 +1,12 @@
 <span class="p-float-label w-full">
     <p-dropdown
-      placeholder="Seleccione una categoría"
+      [placeholder]="label"
       [options]="categorias"
       optionLabel="nombre"
       appendTo="body"
       optionValue="id"
       filterBy="nombre"
+      [showClear]="true" 
       [filter]="true"
       [disabled]="isDisabled"
       (onChange)="handleValueChange($event)"

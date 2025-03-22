@@ -6,20 +6,23 @@ import { CustomGalaxiasDropdownComponent } from './custom-galaxias-dropdown/cust
 import { CustomPlanetasDropdownComponent } from './custom-planetas-dropdown/custom-planetas-dropdown.component';
 import { CustomCategoriaDropdownComponent } from './custom-categoria-dropdown/custom-categoria-dropdown.component';
 import { ManagmentPrimengModule } from '../../themes/managment/managment-primeng.module';
+import { CustomProfesorDropdownComponent } from './custom-profesor-dropdown/custom-profesor-dropdown.component';
 
 @NgModule({
   declarations: [
     CustomCursosDropdownComponent,
     CustomGalaxiasDropdownComponent,
     CustomPlanetasDropdownComponent,
-    CustomCategoriaDropdownComponent
+    CustomCategoriaDropdownComponent,
+    CustomProfesorDropdownComponent
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ManagmentPrimengModule],
   exports: [
     CustomCursosDropdownComponent,
     CustomGalaxiasDropdownComponent,
     CustomPlanetasDropdownComponent,
-    CustomCategoriaDropdownComponent
+    CustomCategoriaDropdownComponent,
+    CustomProfesorDropdownComponent
   ],
 })
 export class CustomDropdownsModule {}
