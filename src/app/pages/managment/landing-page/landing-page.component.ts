@@ -5,6 +5,7 @@ import { finalize, map, Subscription } from 'rxjs';
 import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
 import { CPLANETAS_MANAGMENT } from 'src/app/core/constants/managment/CLanding-managment.constants';
 import { LandingPageManagmentService } from 'src/app/core/services/managment/landing-page/landing-managment.service';
+import { PlanetasManagmentService } from 'src/app/core/services/managment/planetas/planetas-managment.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -19,19 +20,37 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   landing: LandingPageManagment = new LandingPageManagment();
   isNuevaLanding: boolean = false;
 
-  planetas = CPLANETAS_MANAGMENT;
+  //planetas = CPLANETAS_MANAGMENT;
+  planetasMap: Map<string, string> = new Map();
+
   landingAEliminar: LandingPageManagment | null = null;
 
   constructor(
     private readonly landingManagmentService: LandingPageManagmentService,
+    private readonly planetaManagmentService: PlanetasManagmentService,
     private readonly alertService: AlertService,
     private readonly confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
-    this.listarLandings();
+    //this.listarLandings();
+    this.cargarPlanetas(); 
   }
 
+  cargarPlanetas() {
+    this.subscription.add(
+      this.planetaManagmentService.listarPlanetasService$().subscribe({
+        next: (planetas) => {
+          this.planetasMap = new Map(planetas.map(p => [p.id, p.nombre]));
+          this.listarLandings();
+        },
+        error: () => {
+          this.alertService.showError('Error', 'No se pudieron cargar los planetas');
+        }
+      })
+    );
+  }
+  
   listarLandings() {
     this.isLoading = true;
     this.subscription.add(
@@ -60,8 +79,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   obtenerPlaneta(id: string): string {
-    const planeta = this.planetas.find(plan => plan.id === id);
-    return planeta ? planeta.descripcion : "Planeta no encontrado";
+    return this.planetasMap.get(id) || 'Planeta no encontrado'
   }
 
   showNuevaLanding(event?: boolean) {

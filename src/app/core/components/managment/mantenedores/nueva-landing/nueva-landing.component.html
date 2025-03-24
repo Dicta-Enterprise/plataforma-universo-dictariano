@@ -87,16 +87,10 @@
         <div class="field mb-4 col-12 flex align-items-center gap-3 justify-content-center">
           <!-- Planeta -->
           <div class="col-4" >
-            <span class="p-float-label col-12">
-              <p-dropdown
-                [options]="planetas"
-                optionLabel="descripcion"
-                optionValue="id"
-                formControlName="planetaId"
-                placeholder="Seleccione un Planeta"
-              ></p-dropdown>
-              <label class="ml-2" htmlFor="planetaId">Planeta</label>
-            </span>
+            <app-custom-planetas-dropdown
+              formControlName="planetaId"
+            ></app-custom-planetas-dropdown>
+
           </div>
           
           <!-- Imagen URL -->
