@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit } from '@angular/core';
 import { Tag } from 'primeng/tag';
-import { ActivosState, NewActivoState } from '../../enums';
+import { NewActivoState } from '../../enums';
 
 @Directive({
   selector: '[appActivoInactivo]',

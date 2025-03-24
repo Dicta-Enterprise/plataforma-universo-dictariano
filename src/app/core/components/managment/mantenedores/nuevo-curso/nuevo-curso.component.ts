@@ -26,8 +26,6 @@ export class NuevoCursoComponent {
 
   planetas:Estandar[] = CPLANETS_CONSTANT;
 
-  idiomas:Estandar[] = CLANGUAGE_CONSTANT;
-
   cursoForm: FormGroup = createNuevoCursoForm(this.fb); 
 
   constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService) {}
@@ -48,8 +46,6 @@ export class NuevoCursoComponent {
             this.curso = curso;//
             this.cursoForm.patchValue({
               ...curso,
-              profesorId: curso.profesorId || null,
-              idiomaId: curso.idiomaId || null,
             });
           },
           error: (err) => {

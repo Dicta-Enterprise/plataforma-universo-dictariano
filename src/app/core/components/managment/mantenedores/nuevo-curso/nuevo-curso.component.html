@@ -150,22 +150,10 @@
 
           <!-- Idiomas -->
           <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
-            <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="idiomas"
-                optionLabel="descripcion" 
-                optionValue="id"
-
-                placeholder="Seleccione un idioma"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('idiomaId')?.invalid && cursoForm.get('idiomaId')?.touched}"
-              ></p-dropdown>
-              <label>Idioma</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('idiomaId')?.hasError('required') && cursoForm.get('idiomaId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona un idioma.
-            </div>
+            <app-custom-idioma-dropdown
+              formControlName="idiomaId"
+              label="Idioma"
+            ></app-custom-idioma-dropdown>
           </div>
         </div>
       </div>

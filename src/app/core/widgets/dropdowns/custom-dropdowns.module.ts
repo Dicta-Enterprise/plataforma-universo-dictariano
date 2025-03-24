@@ -7,6 +7,7 @@ import { CustomPlanetasDropdownComponent } from './custom-planetas-dropdown/cust
 import { CustomCategoriaDropdownComponent } from './custom-categoria-dropdown/custom-categoria-dropdown.component';
 import { ManagmentPrimengModule } from '../../themes/managment/managment-primeng.module';
 import { CustomProfesorDropdownComponent } from './custom-profesor-dropdown/custom-profesor-dropdown.component';
+import { CustomIdiomaDropdownComponent } from './custom-idioma-dropdown/custom-idioma-dropdown.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CustomProfesorDropdownComponent } from './custom-profesor-dropdown/cust
     CustomGalaxiasDropdownComponent,
     CustomPlanetasDropdownComponent,
     CustomCategoriaDropdownComponent,
-    CustomProfesorDropdownComponent
+    CustomProfesorDropdownComponent,
+    CustomIdiomaDropdownComponent
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ManagmentPrimengModule],
   exports: [
@@ -22,7 +24,8 @@ import { CustomProfesorDropdownComponent } from './custom-profesor-dropdown/cust
     CustomGalaxiasDropdownComponent,
     CustomPlanetasDropdownComponent,
     CustomCategoriaDropdownComponent,
-    CustomProfesorDropdownComponent
+    CustomProfesorDropdownComponent,
+    CustomIdiomaDropdownComponent
   ],
 })
 export class CustomDropdownsModule {}

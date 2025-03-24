@@ -16,8 +16,8 @@ export class CursoManagment {
   video: string;
   duracion: string;
   categoriaId: string;
-  profesorId: string | null;
-  idiomaId: string | null; 
+  profesorId: string;
+  idiomaId: string; 
   planetaId: string; 
 
   constructor(cursoManagment: Partial<CursoManagment> = {}) {
@@ -30,13 +30,13 @@ export class CursoManagment {
     this.fechaFinalizacion = cursoManagment.fechaFinalizacion ?? new Date();
     this.cantidadAlumnos = cursoManagment.cantidadAlumnos ?? '';
     this.precio = cursoManagment.precio ?? '';
-    this.profesorId = cursoManagment.profesorId ?? null;
+    this.profesorId = cursoManagment.profesorId ?? '';
     this.estado = cursoManagment.estado ?? NewActivoState.ACTIVO;
     this.imagen = cursoManagment.imagen ?? '';
     this.video = cursoManagment.video ?? '';
     this.duracion = cursoManagment.duracion ?? '';
     this.categoriaId = cursoManagment.categoriaId ?? '';
-    this.idiomaId = cursoManagment.idiomaId ?? null;
+    this.idiomaId = cursoManagment.idiomaId ?? '';
     this.planetaId = cursoManagment.planetaId ?? '';
   }
 
