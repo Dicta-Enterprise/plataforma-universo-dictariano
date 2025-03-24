@@ -1,0 +1,55 @@
+<div class="mb-3 flex align-items-center">
+    <span class="p-float-label col-12">
+        <p-chips 
+            [formControl]="contenidoControl" 
+            (onAdd)="trimContenido()" 
+            (onRemove)="trimContenido()"
+            placeholder="Escribe un párrafo y presiona Enter"
+        >
+            <ng-template let-chip pTemplate="chip">
+                <div class="flex align-items-center gap-2">
+                    <span>{{ chip }}</span>
+                    <i class="pi pi-pencil cursor-pointer" (click)="editarChip(chip)"></i>
+                </div>
+            </ng-template>
+        </p-chips>
+        <label class="ml-2" htmlFor="contenido">Contenido</label>
+    </span>
+</div>
+
+<div class="col-12 text-sm mt-1 text-right">
+    <small class="p-error" *ngIf="contenidoControl.invalid && contenidoControl.touched">
+      Este campo es obligatorio
+    </small>
+</div>
+    
+<p-dialog 
+   [(visible)]="mostrarDialogoEdicion" 
+   [modal]="true" 
+   header="Editar contenido" 
+   [draggable]="false"
+>
+    <div class="p-fluid">
+        <div class="field">
+            <label for="editChip">Nuevo texto</label>
+            <input 
+                pInputText id="editChip" 
+                [(ngModel)]="chipEditado" 
+            />
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button 
+            label="Cancelar" 
+            icon="pi pi-times" 
+            (click)="mostrarDialogoEdicion = false"
+        ></p-button>
+        <p-button 
+            label="Guardar" 
+            icon="pi pi-check" 
+            (click)="guardarEdicionChip()"
+        ></p-button>
+    </ng-template>
+</p-dialog>
+  

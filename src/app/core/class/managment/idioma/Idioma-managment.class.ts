@@ -1,28 +1,28 @@
-import { ActivosState } from 'src/app/shared/enums';
+import { NewActivoState } from '../../../../shared/enums/activos.enum';
 
 export class IdiomaManagment {
   id: string;
   nombre: string;
-  estado: ActivosState;
-  imagen: string;
-  fechaCreacion: string;
-  fechaActualizacion: string;
+  descripcion: string;
+  estado: NewActivoState;
+  fechaCreacion: Date;
+  fechaActualizacion: Date;
 
   constructor(idiomaManagment: Partial<IdiomaManagment> = {}) {
-    this.id = idiomaManagment.id || '';
-    this.nombre = idiomaManagment.nombre || '';
-    this.estado = idiomaManagment.estado || ActivosState.ACTIVO;
-    this.imagen = idiomaManagment.imagen || '';
-    this.fechaCreacion = idiomaManagment.fechaCreacion || '';
-    this.fechaActualizacion = idiomaManagment.fechaActualizacion || '';
+    this.id = idiomaManagment.id ?? '';
+    this.nombre = idiomaManagment.nombre ?? '';
+    this.descripcion = idiomaManagment.descripcion ?? '';
+    this.estado = idiomaManagment.estado ?? NewActivoState.ACTIVO;
+    this.fechaCreacion = idiomaManagment.fechaCreacion ?? new Date();
+    this.fechaActualizacion = idiomaManagment.fechaActualizacion ?? new Date();
   }
 
   static fromJson(idiomaManagment: any): IdiomaManagment {
     return new IdiomaManagment({
       id: idiomaManagment.id,
       nombre: idiomaManagment.nombre,
+      descripcion: idiomaManagment.descripcion,
       estado: idiomaManagment.estado,
-      imagen: idiomaManagment.imagen,
       fechaCreacion: idiomaManagment.fechaCreacion,
       fechaActualizacion: idiomaManagment.fechaActualizacion,
     });
@@ -30,10 +30,10 @@ export class IdiomaManagment {
 
   static toJson(idiomaManagment: IdiomaManagment): any {
     return {
-      id: idiomaManagment.id,
+      //id: idiomaManagment.id,
       nombre: idiomaManagment.nombre,
+      descripcion: idiomaManagment.descripcion,
       estado: idiomaManagment.estado,
-      imagen: idiomaManagment.imagen,
       fechaCreacion: idiomaManagment.fechaCreacion,
       fechaActualizacion: idiomaManagment.fechaActualizacion,
     };

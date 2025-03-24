@@ -1,1 +1,92 @@
-<p>nuevo-idioma works!</p>
+<p-toast></p-toast>
+<app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
+
+<p-dialog
+  [(visible)]="isNuevoIdioma"
+  (onShow)="onShow()"
+  (onHide)="onHide()"
+  appendTo="body"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '52vw' }"
+  header="NUEVO IDIOMA"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column gap-2">
+        <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
+            {{ idiomaId ? 'ACTUALIZAR IDIOMA' : 'NUEVO IDIOMA' }}
+        </h1>
+        <span class="text-600 text-base">
+            {{ idiomaId ? 'Actualizando Idioma' : 'Crea todas los idioma que desees' }}
+        </span>
+    </div>
+  </ng-template>
+
+  <form
+    class="flex flex-column gap-3 mt-4"
+    [formGroup]="idiomaForm"
+    (ngSubmit)="crearIdioma()"
+  >
+    <div class="grid formgrid p-fluid">
+
+        <div class="field mb-4 col-12 md:col-12" style="position: relative">
+            <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
+                {{ idiomaForm.get('nombre')?.value?.length || 0 }}/60 caracteres
+            </small>
+
+            <div class="mb-3 flex align-items-center">
+                <span class="p-float-label col-12">
+                    <input
+                        pInputText
+                        id="nombre"
+                        autocomplete="off"
+                        formControlName="nombre"
+                        maxlength="60"
+                    />
+                    <label class="ml-2" htmlFor="nombre">Nombre</label>
+                </span>
+            </div>
+            <div class="flex justify-content-end text-sm mt-1">
+                <small class="p-error" *ngIf="idiomaForm.get('nombre')?.invalid && idiomaForm.get('nombre')?.touched">
+                  Este campo es obligatorio
+                </small>
+            </div>
+        </div>
+
+        <div class="field mb-4 col-12 md:col-12" style="position: relative">
+            <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
+                {{ idiomaForm.get('descripcion')?.value?.length || 0 }}/200 caracteres
+            </small>
+            <div class="mb-3 flex align-items-center">
+                <span class="p-float-label col-12">
+                    <input
+                        pInputText
+                        id="descripcion"
+                        autocomplete="off"
+                        formControlName="descripcion"
+                        maxlength="200"
+                    />
+                    <label class="ml-2" htmlFor="descripcion">Descripcion</label>
+                </span>
+            </div>
+            <div class="flex justify-content-end text-sm mt-1">
+                <small class="p-error" *ngIf="idiomaForm.get('descripcion')?.invalid && idiomaForm.get('descripcion')?.touched">
+                    Este campo es obligatorio
+                </small>
+            </div>
+        </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      [label]="
+        idiomaId == '' ? 'Guardar Idioma' : 'Actualizar Idioma'
+      "
+      (click)="crearIdioma()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

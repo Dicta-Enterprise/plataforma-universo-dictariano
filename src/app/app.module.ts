@@ -17,6 +17,7 @@ import { ActivoInactivoPipe } from './shared/pipes/activo-inactivo/activo-inacti
 import { HttpClientModule } from '@angular/common/http';
 import { FormatoHorasPipe } from './shared/pipes/formato-horas/formato-horas.pipe';
 import { SharedModule } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { SharedModule } from 'primeng/api';
     HttpClientModule,
     SharedModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

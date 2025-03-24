@@ -1,0 +1,151 @@
+<p-toast></p-toast>
+<app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
+
+<p-dialog
+  [(visible)]="isNuevaLanding"
+  (onShow)="onShow()"
+  (onHide)="onHide()"
+  appendTo="body"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '52vw' }"
+  header="NUEVA LANDING PAGE"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column gap-2">
+      <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
+        {{ landingId ? 'ACTUALIZAR LANDING PAGE' : 'NUEVA LANDING PAGE' }}
+      </h1>
+      <span class="text-600 text-base">
+        {{ landingId ? 'Actualizando Landing Page' : 'Crea todas las Landing Page que desees' }}
+      </span>
+    </div>
+  </ng-template>
+
+  <form
+    class="flex flex-column gap-3 mt-4"
+    [formGroup]="landingForm"
+    (ngSubmit)="crearLandingPage()"
+  >
+    <div class="grid formgrid p-fluid">
+      <!-- Título -->
+      <div class="field mb-4 col-12" style="position: relative">
+        <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
+          {{ landingForm.get('titulo')?.value?.length || 0 }}/60 caracteres
+        </small>
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <input
+              pInputText
+              id="titulo"
+              autocomplete="off"
+              formControlName="titulo"
+              maxlength="60"
+            />
+            <label class="ml-2" htmlFor="titulo">Título</label>
+          </span>
+        </div>
+        <div class="flex justify-content-end text-sm mt-1">
+          <small class="p-error" *ngIf="landingForm.get('titulo')?.invalid && landingForm.get('titulo')?.touched">
+            Este campo es obligatorio
+          </small>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="field mb-4 col-12" style="position: relative">
+        <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
+          {{ landingForm.get('descripcion')?.value?.length || 0 }}/200 caracteres
+        </small>
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <textarea
+              pInputTextarea
+              id="descripcion"
+              autocomplete="off"
+              formControlName="descripcion"
+              rows="3"
+            ></textarea>
+            <label class="ml-2" htmlFor="descripcion">Descripción</label>
+          </span>
+        </div>
+        <div class="flex justify-content-end text-sm mt-1">
+          <small class="p-error" *ngIf="landingForm.get('descripcion')?.invalid && landingForm.get('descripcion')?.touched">
+            Este campo es obligatorio
+          </small>
+        </div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="field mb-4 col-12">
+        <app-chip-editor [contenidoControl]="contenidoControl"></app-chip-editor>
+      </div>
+
+      <div class="col-12 px-2 mb-2">
+        <div class="field mb-4 col-12 flex align-items-center gap-3 justify-content-center">
+          <!-- Planeta -->
+          <div class="col-4" >
+            <span class="p-float-label col-12">
+              <p-dropdown
+                [options]="planetas"
+                optionLabel="descripcion"
+                optionValue="id"
+                formControlName="planetaId"
+                placeholder="Seleccione un Planeta"
+              ></p-dropdown>
+              <label class="ml-2" htmlFor="planetaId">Planeta</label>
+            </span>
+          </div>
+          
+          <!-- Imagen URL -->
+          <div class="col-5">
+            <span class="p-float-label col-12">
+              <input
+                pInputText
+                id="imagenUrl"
+                autocomplete="off"
+                formControlName="imagenUrl"
+              />
+              <label class="ml-2" htmlFor="imagenUrl">URL de Imagen</label>
+            </span>
+            <div class="flex justify-content-end text-sm mt-1">
+              <small class="p-error" *ngIf="landingForm.get('imagenUrl')?.hasError('pattern') &&
+              landingForm.get('imagenUrl')?.value">
+                URL inválida (.jpg, .png, .gif, .jpeg)
+              </small>
+            </div>
+          </div>
+          
+          <!-- Color -->
+          <div class="col-3">
+            <span class="p-float-label col-12">
+              <input
+                pInputText
+                id="color"
+                autocomplete="off"
+                formControlName="color"
+              />
+              <label class="ml-2" htmlFor="color">Color</label>
+            </span>
+            <div class="flex justify-content-end text-sm mt-1">
+              <small class="p-error" *ngIf="landingForm.get('color')?.hasError('pattern') &&
+              landingForm.get('color')?.value">
+                Formato incorrecto (#FFF / #FFFFFF)
+              </small>
+            </div>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      [label]="landingId == '' ? 'Guardar Landing Page' : 'Actualizar Landing Page'"
+      (click)="crearLandingPage()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

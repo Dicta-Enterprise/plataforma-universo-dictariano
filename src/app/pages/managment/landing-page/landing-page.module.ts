@@ -1,34 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IdiomasComponent } from './idiomas.component';
-import { IdiomasRoutingModule } from './idiomas-routing.module';
+import { LandingPageComponent } from './landing-page.component';
+import { LandingRoutingModule } from './landing-page-routing.module';
 import { ManagmentPrimengModule } from 'src/app/core/themes/managment/managment-primeng.module';
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
+import { SharedMantenedoresModule } from 'src/app/core/components/managment/mantenedores/shared-mantenedores.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
-import { SharedMantenedoresModule } from 'src/app/core/components/managment/mantenedores/shared-mantenedores.module';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { AlertService } from 'src/app/shared/services/alert.service';
 
 
 
 @NgModule({
   declarations: [
-    IdiomasComponent
+    LandingPageComponent
   ],
   imports: [
     CommonModule,
-    IdiomasRoutingModule,
+    LandingRoutingModule,
     ManagmentPrimengModule,
     SharedSpinnerModule,
     SharedMantenedoresModule,
-    SharedDirectiveModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    SharedDirectiveModule
   ],
-  providers: [
-    MessageService,
-    ConfirmationService,
-    AlertService
-  ]
 })
-export class IdiomasModule { }
+export class LandingPageModule { }
