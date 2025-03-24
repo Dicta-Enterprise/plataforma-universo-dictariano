@@ -60,6 +60,7 @@
       [globalFilterFields]="[
         'nombre',
         'categoriaId',
+        'planetaId',
       ]"
     >
       <ng-template pTemplate="caption">
@@ -78,6 +79,13 @@
             label="Filtrar por Categoría"
             class="ml-2"
           ></app-custom-categoria-dropdown>
+
+          <app-custom-planetas-dropdown
+            [(ngModel)]="selectedPlaneta"
+            (ngModelChange)="filtrarPorPlaneta($event, dt2)"
+            label="Filtrar por Planeta"
+            class="ml-2"
+          ></app-custom-planetas-dropdown>
 
           <span class="p-input-icon-left ml-auto w-20rem">
             <i class="pi pi-search"></i>

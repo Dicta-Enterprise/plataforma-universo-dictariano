@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { map, Subscription, finalize, Observable, catchError, of } from 'rxjs';
+import { map, Subscription, finalize, Observable, catchError, of, forkJoin } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
 import { CCATEGORIES_CONSTANT, CPLANETS_CONSTANT } from 'src/app/core/constants/constants';
 import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { PlanetasManagmentService } from 'src/app/core/services/managment/planetas/planetas-managment.service';
 import { Estandar } from 'src/app/shared/class/Estandar';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -28,8 +29,10 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   //categorias:Estandar[] = CCATEGORIES_CONSTANT;
   categoriasMap: Map<string, string> = new Map();
+  planetasMap: Map<string, string> = new Map();
 
   selectedCategoria: string | null = null; 
+  selectedPlaneta: string | null = null;
   
   planetas:Estandar[] = CPLANETS_CONSTANT;
 
@@ -38,22 +41,27 @@ export class CursosComponent  implements OnInit, OnDestroy{
     private readonly cursosService: CursosManagmentService,
     private readonly confirmationService: ConfirmationService,
     private readonly alertService: AlertService,
-    private readonly categoriaManagmentService: CategoriaManagmentService 
+    private readonly categoriaManagmentService: CategoriaManagmentService,
+    private readonly planetaManagmentService: PlanetasManagmentService,
   ) { }
 
   ngOnInit(): void {
-    this.cargarCategorias();
+    this.cargarDatosIniciales();
   }
 
-  cargarCategorias() {
+  cargarDatosIniciales() {
     this.subscription.add(
-      this.categoriaManagmentService.listarCategoriasService$().subscribe({
-        next: (categorias) => {
+      forkJoin({
+        categorias: this.categoriaManagmentService.listarCategoriasService$(),
+        planetas: this.planetaManagmentService.listarPlanetasService$()
+      }).subscribe({
+        next: ({ categorias, planetas }) => {
           this.categoriasMap = new Map(categorias.map(c => [c.id, c.nombre]));
+          this.planetasMap = new Map(planetas.map(p => [p.id, p.nombre]));
           this.listarCursos();
         },
-        error: (error) => {
-          this.alertService.showError('Error', 'No se pudieron cargar las categorías');
+        error: () => {
+          this.alertService.showError('Error', 'No se pudieron cargar las categorías o los planetas');
         }
       })
     );
@@ -86,16 +94,29 @@ export class CursosComponent  implements OnInit, OnDestroy{
   }
   
   getNombrePlanetaPorId(id: string): string {
-    const planeta = this.planetas.find(plan => plan.id === id);
-    return planeta ? planeta.descripcion : 'Planeta no encontrado';
+    return this.planetasMap.get(id) || 'Planeta no encontrado'
   }
 
-  filtrarPorCategoria(categoriaId: string | null, table: Table) {
-    if (categoriaId) {
-      table.filter(categoriaId, 'categoriaId', 'equals');
-    } else {
-      table.clear();
+  filtrarCursos(table: Table) {
+    table.clear();
+    
+    if (this.selectedCategoria) {
+      table.filter(this.selectedCategoria, 'categoriaId', 'equals');
     }
+    
+    if (this.selectedPlaneta) {
+      table.filter(this.selectedPlaneta, 'planetaId', 'equals');
+    }
+  }
+  
+  filtrarPorCategoria(categoriaId: string | null, table: Table) {
+    this.selectedCategoria = categoriaId;
+    this.filtrarCursos(table);
+  }
+  
+  filtrarPorPlaneta(planetaId: string | null, table: Table) {
+    this.selectedPlaneta = planetaId;
+    this.filtrarCursos(table);
   }
 
   showNuevoCurso(event?:boolean) {
@@ -156,6 +177,7 @@ export class CursosComponent  implements OnInit, OnDestroy{
   clear(table:Table){
     table.clear();
     this.selectedCategoria = null;
+    this.selectedPlaneta = null;
   }
 
   ngOnDestroy(): void {

@@ -55,7 +55,7 @@ export class CustomPlanetasDropdownComponent
         .subscribe({
           next: (response) => {
             this.planetas = response;
-            console.log('planetas', this.planetas);
+            //console.log('planetas', this.planetas);
           },
           error: (error) => {
             this.alertService.showError(

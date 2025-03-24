@@ -13,19 +13,19 @@ import { CustomIdiomaDropdownComponent } from './custom-idioma-dropdown/custom-i
   declarations: [
     CustomCursosDropdownComponent,
     CustomGalaxiasDropdownComponent,
-    CustomPlanetasDropdownComponent,
     CustomCategoriaDropdownComponent,
     CustomProfesorDropdownComponent,
-    CustomIdiomaDropdownComponent
+    CustomIdiomaDropdownComponent,
+    CustomPlanetasDropdownComponent
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ManagmentPrimengModule],
   exports: [
     CustomCursosDropdownComponent,
     CustomGalaxiasDropdownComponent,
-    CustomPlanetasDropdownComponent,
     CustomCategoriaDropdownComponent,
     CustomProfesorDropdownComponent,
-    CustomIdiomaDropdownComponent
+    CustomIdiomaDropdownComponent,
+    CustomPlanetasDropdownComponent
   ],
 })
 export class CustomDropdownsModule {}

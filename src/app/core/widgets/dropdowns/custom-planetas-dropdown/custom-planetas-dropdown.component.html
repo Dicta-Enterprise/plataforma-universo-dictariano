@@ -1,10 +1,11 @@
-<span class="p-float-label col-12">
+<span class="p-float-label w-full">
     <p-dropdown
       placeholder="Seleccione un Planeta"
       [options]="planetas"
       appendTo="body"
       optionLabel="nombre"
       optionValue="id"
+      [showClear]="true" 
       filterBy="nombre"
       [formControl]="planetasControl"
       [filter]="true"

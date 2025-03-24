@@ -118,22 +118,10 @@
 
           <!-- Planeta -->
           <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
-            <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="planetas" 
-                optionLabel="descripcion" 
-                optionValue="id" 
-                formControlName="planetaId"
-                placeholder="Seleccione un Planeta"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('planetaId')?.invalid && cursoForm.get('planetaId')?.touched}"
-              ></p-dropdown>
-              <label htmlFor="planetaId">Planeta</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('planetaId')?.hasError('required') && cursoForm.get('planetaId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona un planeta.
-            </div>
+            <app-custom-planetas-dropdown
+              formControlName="planetaId"
+              label="Planeta"
+            ></app-custom-planetas-dropdown>
           </div>
         </div>
       </div>

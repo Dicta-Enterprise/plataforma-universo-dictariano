@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Subscription, take } from 'rxjs';
 import { CategoriaManagment, CursoManagment } from 'src/app/core/class/managment/managment';
@@ -8,11 +8,13 @@ import { CursosManagmentService } from 'src/app/core/services/managment/cursos/c
 import { Estandar } from 'src/app/shared/class/Estandar';
 import { convertToCursoManagment } from 'src/app/shared/functions/managment/cursos/cursos.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { PlanetasManagmentService } from 'src/app/core/services/managment/planetas/planetas-managment.service';
+
 
 @Component({
   selector: 'app-nuevo-curso',
   templateUrl: './nuevo-curso.component.html',
-  styleUrls: ['./nuevo-curso.component.css']
+  styleUrls: ['./nuevo-curso.component.css'],
 })
 export class NuevoCursoComponent {
   private subscription: Subscription = new Subscription();
@@ -24,11 +26,11 @@ export class NuevoCursoComponent {
 
   curso = new CursoManagment();//
 
-  planetas:Estandar[] = CPLANETS_CONSTANT;
-
   cursoForm: FormGroup = createNuevoCursoForm(this.fb); 
 
-  constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService) {}
+  constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService,
+    private planetaManagmentService:PlanetasManagmentService,
+  ) {}
 
   ngOnInit(): void {}
 

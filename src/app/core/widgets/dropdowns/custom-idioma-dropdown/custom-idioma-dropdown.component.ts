@@ -52,7 +52,7 @@ export class CustomIdiomaDropdownComponent
         .subscribe({
           next: (response) => {
             this.idiomas = response;
-            console.log('idiomas', this.idiomas);
+            //console.log('idiomas', this.idiomas);
           },
           error: (error) => {
             this.alertService.showError(
