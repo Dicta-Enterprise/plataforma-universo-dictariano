@@ -4,9 +4,10 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { Estandar } from 'src/app/core/class/estandar/Estandar.class';
+import { finalize, map, Subscription } from 'rxjs';
+import { PlanetaManagment } from 'src/app/core/class/managment/managment';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { PlanetasManagmentService } from '../../../services/managment/planetas/planetas-managment.service';
 
 const VALUE_ACCESOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -21,32 +22,54 @@ const VALUE_ACCESOR = {
   providers: [VALUE_ACCESOR],
 })
 export class CustomPlanetasDropdownComponent
-  implements OnInit, OnDestroy, ControlValueAccessor
-{
+  implements OnInit, OnDestroy, ControlValueAccessor {
   private subscription: Subscription = new Subscription();
   planetasControl: FormControl;
   isLoading: boolean = false;
 
-  planetas: Estandar[] = [];
-  @Input() label: string = 'Planetas';
+  planetas: PlanetaManagment[] = [];
+  @Input() label: string = 'Planeta';
 
-  onChange: (value: any) => void = () => {};
-  onTouched: () => void = () => {};
+  onChange: (value: any) => void = () => { };
+  onTouched: () => void = () => { };
   isDisabled = false;
-  value: Estandar;
+  value: string | null = null;
 
-  constructor(private alertService: AlertService) {
-    this.planetasControl = new FormControl({
-      value: null,
-      disabled: this.isDisabled,
-    });
+  constructor(
+    private alertService: AlertService,
+    private planetasManagmentService: PlanetasManagmentService
+  ) {
+    this.planetasControl = new FormControl(null);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { 
+    this.listarPlanetas();
+  }
 
-  writeValue(obj: Estandar): void {
-    this.value = obj;
-    this.planetasControl.patchValue(obj);
+  listarPlanetas() {
+    this.isLoading = true;
+    this.subscription.add(
+      this.planetasManagmentService
+        .listarPlanetasService$()
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.planetas = response;
+            console.log('planetas', this.planetas);
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Ups...',
+              'Ocurrio un error al listar los planetas'
+            );
+          },
+        })
+    );
+  }
+
+  writeValue(id: string): void {
+    this.value = id;
+    this.planetasControl.patchValue(id, { emitEvent: false });
   }
 
   registerOnChange(fn: any): void {
@@ -63,6 +86,7 @@ export class CustomPlanetasDropdownComponent
 
   handleValueChange(event: any): void {
     const selectedValue = event.value;
+    this.value = selectedValue;
     this.onChange(selectedValue);
     this.onTouched();
   }
