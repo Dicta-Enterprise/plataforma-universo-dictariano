@@ -8,6 +8,8 @@ import { LandingPageManagmentService } from 'src/app/core/services/managment/lan
 import { CPLANETAS_MANAGMENT } from '../../../../constants/managment/CLanding-managment.constants';
 import { convertToLandingPageManagment } from 'src/app/shared/functions/managment/landing.function';
 
+// Este es el componente hijo, aqui se llaman a los servicios de obetener
+//  editar y crear.  
 @Component({
   selector: 'app-nueva-landing',
   templateUrl: './nueva-landing.component.html',
@@ -75,6 +77,7 @@ export class NuevaLandingComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Convierte los datos del formulario en un objeto LandingPageManagment
     const landing = convertToLandingPageManagment(this.landingForm);
 
     switch (this.landingId) {

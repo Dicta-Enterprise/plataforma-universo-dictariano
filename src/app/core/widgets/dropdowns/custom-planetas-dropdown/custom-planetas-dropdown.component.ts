@@ -15,6 +15,7 @@ const VALUE_ACCESOR = {
   multi: true,
 };
 
+// El manejo en el resto de dropdown es similar en cuanto a su estructura
 @Component({
   selector: 'app-custom-planetas-dropdown',
   templateUrl: './custom-planetas-dropdown.component.html',
@@ -46,6 +47,7 @@ export class CustomPlanetasDropdownComponent
     this.listarPlanetas();
   }
 
+  // Se lista a los planetas para obetenerlos desde la BD - Se llama al servicio
   listarPlanetas() {
     this.isLoading = true;
     this.subscription.add(

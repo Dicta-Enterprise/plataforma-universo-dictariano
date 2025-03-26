@@ -8,6 +8,11 @@ import { LandingPageManagmentService } from 'src/app/core/services/managment/lan
 import { PlanetasManagmentService } from 'src/app/core/services/managment/planetas/planetas-managment.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
+// Los metodos que se manejan aqui tienen una misma estructura para el resto 
+// de componentes pertenecientes a los MANTENEDORES
+
+// Este es el componente padre, aqui se usan los servicios de listar y eliminar
+// el componente hijo es nueva-landing (ubicar en core > components > nueva-landing)
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
@@ -21,8 +26,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   isNuevaLanding: boolean = false;
 
   //planetas = CPLANETAS_MANAGMENT;
+  // Almacena los planetas donde la clave es el ID y el valor es el nombre del planeta
   planetasMap: Map<string, string> = new Map();
-
   landingAEliminar: LandingPageManagment | null = null;
 
   constructor(
@@ -34,9 +39,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     //this.listarLandings();
-    this.cargarPlanetas(); 
+    this.cargarPlanetas();
   }
 
+  // Realicé el metodo de carga de Planetas para obtener desde la BD los planetas a Landing
+  // Para revisar los servicios ubicar ( app > core > service > managment)
   cargarPlanetas() {
     this.subscription.add(
       this.planetaManagmentService.listarPlanetasService$().subscribe({
@@ -50,7 +57,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       })
     );
   }
-  
+
   listarLandings() {
     this.isLoading = true;
     this.subscription.add(
@@ -78,6 +85,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     );
   }
 
+  // Busca el nombre del planeta por su ID.
   obtenerPlaneta(id: string): string {
     return this.planetasMap.get(id) || 'Planeta no encontrado'
   }
@@ -98,8 +106,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   confirmarEliminacion(landing: LandingPageManagment) {
+    // Guarda la landing que se quiere eliminar
     this.landingAEliminar = landing;
 
+    // Muestra un cuadro de confirmación antes de eliminar
     this.confirmationService.confirm({
       message: `Esto eliminará la landing "${landing.titulo}"`,
       header: '¿Eliminar Landing Page?',
@@ -108,7 +118,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       rejectLabel: 'Cancelar',
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
-        this.eliminarLanding();
+        this.eliminarLanding(); // Si acepta, procede con la eliminación
       },
       reject: () => {
         this.alertService.showInfo('Eliminación cancelada', 'No se eliminó la landing page');
@@ -118,8 +128,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   eliminarLanding() {
-    if (!this.landingAEliminar) return;
+    if (!this.landingAEliminar) return; // Si no hay landing seleccionada, no hace nada
 
+    // Llama al servicio para eliminar la landing
     this.landingManagmentService.eliminarLandingService$(this.landingAEliminar.id).subscribe({
       next: () => {
         this.alertService.showSuccess('Eliminación exitosa', 'La landing page ha sido eliminada correctamente');
@@ -132,7 +143,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.landingAEliminar = null;
+    this.landingAEliminar = null; // Limpia la variable después del intento de eliminación
   }
 
   clear(table: Table) {

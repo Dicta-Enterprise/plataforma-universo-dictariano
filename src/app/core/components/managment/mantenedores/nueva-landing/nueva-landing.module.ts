@@ -12,7 +12,7 @@ import { ChipEditorComponent } from './components/chip-editor/chip-editor/chip-e
 import { CustomPlanetasDropdownComponent } from 'src/app/core/widgets/dropdowns/custom-planetas-dropdown/custom-planetas-dropdown.component';
 
 
-
+// Es importante revisar la importancion de los modulos necesarios
 @NgModule({
   declarations: [
     NuevaLandingComponent,

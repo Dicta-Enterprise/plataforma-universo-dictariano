@@ -2,6 +2,7 @@ import { FormGroup } from '@angular/forms';
 import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
 import { NewActivoState } from 'src/app/shared/enums';
 
+// Convierte un formulario en un objeto LandingPageManagment
 export const convertToLandingPageManagment = (
   landingForm: FormGroup
 ): LandingPageManagment => {

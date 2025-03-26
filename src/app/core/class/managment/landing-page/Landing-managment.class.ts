@@ -7,7 +7,7 @@ export class LandingPageManagment {
     contenido: string[];
     estado: NewActivoState;
     planetaId: string;
-    imagenUrl: string | null;
+    imagenUrl: string | null; // Null - opcional :'D, preferible no usar null
     color: string | null;
 
     constructor(landingPage: Partial<LandingPageManagment> = {}) {
