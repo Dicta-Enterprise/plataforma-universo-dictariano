@@ -14,6 +14,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
 import { SharedPipeModule } from 'src/app/shared/pipes/shared-pipe.module';
 import { CustomDropdownsModule } from 'src/app/core/widgets/dropdowns/custom-dropdowns.module';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CustomDropdownsModule } from 'src/app/core/widgets/dropdowns/custom-dro
     SharedDirectiveModule,
     SharedPipeModule,
     FormsModule,
-    CustomDropdownsModule
+    CustomDropdownsModule,
+    TableModule
   ],
   providers: [
     MessageService, ConfirmationService, CursosManagmentService, AlertService

@@ -27,15 +27,15 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   buscarCursoForm:FormGroup
 
-  //categorias:Estandar[] = CCATEGORIES_CONSTANT;
   categoriasMap: Map<string, string> = new Map();
   planetasMap: Map<string, string> = new Map();
+
+  categoriasFiltro: { label: string; value: string }[] = [];
+  planetasFiltro: { label: string; value: string }[] = [];
 
   selectedCategoria: string | null = null; 
   selectedPlaneta: string | null = null;
   
-  planetas:Estandar[] = CPLANETS_CONSTANT;
-
   constructor(
     private fb:FormBuilder,
     private readonly cursosService: CursosManagmentService,
@@ -58,6 +58,10 @@ export class CursosComponent  implements OnInit, OnDestroy{
         next: ({ categorias, planetas }) => {
           this.categoriasMap = new Map(categorias.map(c => [c.id, c.nombre]));
           this.planetasMap = new Map(planetas.map(p => [p.id, p.nombre]));
+
+          // Convertimos los mapas a listas de objetos { label, value } para el filtro
+          this.categoriasFiltro = categorias.map(c => ({ label: c.nombre, value: c.id }));
+          this.planetasFiltro = planetas.map(p => ({ label: p.nombre, value: p.id }));
           this.listarCursos();
         },
         error: () => {
@@ -97,27 +101,27 @@ export class CursosComponent  implements OnInit, OnDestroy{
     return this.planetasMap.get(id) || 'Planeta no encontrado'
   }
 
-  filtrarCursos(table: Table) {
-    table.clear();
+  // filtrarCursos(table: Table) {
+  //   table.clear();
     
-    if (this.selectedCategoria) {
-      table.filter(this.selectedCategoria, 'categoriaId', 'equals');
-    }
+  //   if (this.selectedCategoria) {
+  //     table.filter(this.selectedCategoria, 'categoriaId', 'equals');
+  //   }
     
-    if (this.selectedPlaneta) {
-      table.filter(this.selectedPlaneta, 'planetaId', 'equals');
-    }
-  }
+  //   if (this.selectedPlaneta) {
+  //     table.filter(this.selectedPlaneta, 'planetaId', 'equals');
+  //   }
+  // }
   
-  filtrarPorCategoria(categoriaId: string | null, table: Table) {
-    this.selectedCategoria = categoriaId;
-    this.filtrarCursos(table);
-  }
+  // filtrarPorCategoria(categoriaId: string | null, table: Table) {
+  //   this.selectedCategoria = categoriaId;
+  //   this.filtrarCursos(table);
+  // }
   
-  filtrarPorPlaneta(planetaId: string | null, table: Table) {
-    this.selectedPlaneta = planetaId;
-    this.filtrarCursos(table);
-  }
+  // filtrarPorPlaneta(planetaId: string | null, table: Table) {
+  //   this.selectedPlaneta = planetaId;
+  //   this.filtrarCursos(table);
+  // }
 
   showNuevoCurso(event?:boolean) {
     if(event != undefined){

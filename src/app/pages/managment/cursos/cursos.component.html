@@ -73,7 +73,7 @@
             (click)="clear(dt2)"
           ></button>
 
-          <app-custom-categoria-dropdown
+          <!-- <app-custom-categoria-dropdown
             [(ngModel)]="selectedCategoria"
             (ngModelChange)="filtrarPorCategoria($event, dt2)"
             label="Filtrar por Categoría"
@@ -85,7 +85,7 @@
             (ngModelChange)="filtrarPorPlaneta($event, dt2)"
             label="Filtrar por Planeta"
             class="ml-2"
-          ></app-custom-planetas-dropdown>
+          ></app-custom-planetas-dropdown> -->
 
           <span class="p-input-icon-left ml-auto w-20rem">
             <i class="pi pi-search"></i>
@@ -100,15 +100,48 @@
       </ng-template>
 
       <ng-template pTemplate="header">
+         <!-- FILTROS -->
+         <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>
+            <p-columnFilter field="categoriaId" matchMode="equals" [showMenu]="true">
+              <ng-template pTemplate="filter" let-filter>
+                <p-dropdown 
+                  [options]="categoriasFiltro" 
+                  (onChange)="dt2.filter($event.value, 'categoriaId', 'equals')" 
+                  placeholder="Categoría" 
+                  appendTo="body"
+                  [style]="{ 'width': '150px', 'font-size': '12px', 'height': '45px' }">
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter field="planetaId" matchMode="equals" [showMenu]="true">
+              <ng-template pTemplate="filter" let-filter>
+                <p-dropdown 
+                  [options]="planetasFiltro"
+                  (onChange)="dt2.filter($event.value, 'planetaId', 'equals')" 
+                  placeholder="Planeta" 
+                  appendTo="body"
+                  [style]="{ 'width': '140px', 'font-size': '12px', 'height': '45px' }">
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter>
+          </th>
+          <th></th>
+          <th></th>
+        </tr>
         <tr>
-          <th>Nombre</th>
-          <th>Fecha Inicio</th>
-          <th>Fecha Fin</th>
-          <th>Cantidad Alumnos</th>
-          <th>Precio</th>
-          <th>Duracion (Dias)</th>
-          <th>Categoria</th>
-          <th>Planeta</th>
+          <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+          <th pSortableColumn="fechaInicio">Fecha Inicio <p-sortIcon field="fechaInicio"></p-sortIcon></th>
+          <th pSortableColumn="fechaFinalizacion">Fecha Fin <p-sortIcon field="fechaFinalizacion"></p-sortIcon></th>
+          <th pSortableColumn="duracion">Duración (Días) <p-sortIcon field="duracion"></p-sortIcon></th>
+          <th pSortableColumn="categoriaId">Categoría <p-sortIcon field="categoriaId"></p-sortIcon></th>
+          <th pSortableColumn="planetaId">Planeta <p-sortIcon field="planetaId"></p-sortIcon></th>
           <th>Estado</th>
           <th></th>
         </tr>
@@ -118,8 +151,8 @@
           <td>{{ curso.nombre }}</td>
           <td>{{ curso.fechaInicio | date: "mediumDate" }}</td>
           <td>{{ curso.fechaFinalizacion | date: "mediumDate" }}</td>
-          <td>{{ curso.cantidadAlumnos }}</td>
-          <td>{{ curso.precio | currency: 'USD' }}</td>
+          <!-- <td>{{ curso.cantidadAlumnos }}</td>
+          <td>{{ curso.precio | currency: 'USD' }}</td> -->
           <td>{{ curso.duracion | formatoHoras}}</td>
           <td>{{ getNombreCategoriaPorId(curso.categoriaId) }}</td>
           <td>{{ getNombrePlanetaPorId(curso.planetaId) }}</td>
