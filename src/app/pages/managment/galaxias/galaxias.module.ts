@@ -9,13 +9,10 @@ import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
-
+import { ChipModule } from 'primeng/chip';
 
 @NgModule({
-  declarations: [
-    GalaxiasComponent
-  ],
+  declarations: [GalaxiasComponent],
   imports: [
     CommonModule,
     GalaxiasRoutingModule,
@@ -23,12 +20,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     SharedSpinnerModule,
     SharedMantenedoresModule,
     SharedDirectiveModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ChipModule,
   ],
-  providers: [
-    MessageService,
-    ConfirmationService,
-    AlertService
-  ]
+  providers: [MessageService, ConfirmationService, AlertService],
 })
-export class GalaxiasModule { }
+export class GalaxiasModule {}

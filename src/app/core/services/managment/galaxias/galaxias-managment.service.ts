@@ -3,16 +3,18 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { GalaxiaManagment } from 'src/app/core/class/managment/managment';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { IGeneric, IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
+import {
+  IGeneric,
+  IGenericArrays,
+} from 'src/app/core/interfaces/genericas/IGeneric.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GalaxiasManagmentService {
-
   private base_url = environment.URL_BACKEND;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   listarGalaxiasService$(): Observable<GalaxiaManagment[]> {
     let url = `${this.base_url}galaxias`;
@@ -21,8 +23,6 @@ export class GalaxiasManagmentService {
         return response.data._value.map((galaxia) => {
           return GalaxiaManagment.fromJson(galaxia);
         });
-
-        
       })
     );
   }
@@ -37,16 +37,16 @@ export class GalaxiasManagmentService {
     );
   }
 
-  crearGalaxiaService$(galaxia: GalaxiaManagment): Observable<GalaxiaManagment> {
+  crearGalaxiaService$(
+    galaxia: GalaxiaManagment
+  ): Observable<GalaxiaManagment> {
     let url = `${this.base_url}galaxias`;
 
-    return this.httpClient
-      .post<IGeneric<GalaxiaManagment>>(url, galaxia)
-      .pipe(
-        map((response) => {
-          return GalaxiaManagment.fromJson(response.data);
-        })
-      );
+    return this.httpClient.post<IGeneric<GalaxiaManagment>>(url, galaxia).pipe(
+      map((response) => {
+        return GalaxiaManagment.fromJson(response.data);
+      })
+    );
   }
 
   editarGalaxiaService$(
@@ -55,24 +55,24 @@ export class GalaxiasManagmentService {
   ): Observable<GalaxiaManagment> {
     let url = `${this.base_url}galaxias/${galaxiaId}`;
 
-    return this.httpClient
-      .patch<IGeneric<GalaxiaManagment>>(url, galaxia)
-      .pipe(
-        map((response) => {
-          return GalaxiaManagment.fromJson(response.data);
-        })
-      );
-  }
-
-  eliminarGalaxiaService$(id: string): Observable<boolean> {
-    return this.httpClient.delete<{ status: number }>(`${this.base_url}galaxias/${id}`).pipe(
-      map(response => response.status === 200 || response.status === 204),
-      catchError(error => {
-        console.error('Error al eliminar galaxia:', error);
-        return throwError(() => new Error('Error al eliminar la galaxia'));
+    return this.httpClient.patch<IGeneric<GalaxiaManagment>>(url, galaxia).pipe(
+      map((response) => {
+        return GalaxiaManagment.fromJson(response.data);
       })
     );
   }
 
-  listarDropdownGalaxiasService$() { }
+  eliminarGalaxiaService$(id: string): Observable<boolean> {
+    return this.httpClient
+      .delete<{ status: number }>(`${this.base_url}galaxias/${id}`)
+      .pipe(
+        map((response) => response.status === 200 || response.status === 204),
+        catchError((error) => {
+          console.error('Error al eliminar galaxia:', error);
+          return throwError(() => new Error('Error al eliminar la galaxia'));
+        })
+      );
+  }
+
+  listarDropdownGalaxiasService$() {}
 }

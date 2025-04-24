@@ -1,4 +1,5 @@
 import { NewActivoState } from 'src/app/shared/enums';
+import { CategoriaManagment } from '../managment';
 
 export class GalaxiaManagment {
   id: string;
@@ -8,6 +9,7 @@ export class GalaxiaManagment {
   estado: NewActivoState;
   fechaCreacion: Date;
   fechaActualizacion: Date;
+  categorias: CategoriaManagment[];
 
   constructor(galaxiaManagment: Partial<GalaxiaManagment> = {}) {
     this.id = galaxiaManagment.id ?? '';
@@ -17,6 +19,7 @@ export class GalaxiaManagment {
     this.estado = galaxiaManagment.estado ?? NewActivoState.ACTIVO;
     this.fechaCreacion = galaxiaManagment.fechaCreacion ?? new Date();
     this.fechaActualizacion = galaxiaManagment.fechaActualizacion ?? new Date();
+    this.categorias = galaxiaManagment.categorias ?? [];
   }
 
   static fromJson(galaxiaManagment: any): GalaxiaManagment {
@@ -28,6 +31,9 @@ export class GalaxiaManagment {
       estado: galaxiaManagment.estado,
       fechaCreacion: galaxiaManagment.fechaCreacion,
       fechaActualizacion: galaxiaManagment.fechaActualizacion,
+      categorias: galaxiaManagment.categorias.map((categoria: any) =>
+        CategoriaManagment.fromJson(categoria)
+      ),
     });
   }
 

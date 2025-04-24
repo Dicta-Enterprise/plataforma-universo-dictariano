@@ -38,8 +38,9 @@ export class GalaxiasComponent {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
+            console.log(response);
             this.galaxias = response;
-            console.log('galaxias', this.galaxias);
+
           },
           error: (error) => {
             this.alertService.showError(

@@ -11,8 +11,6 @@ export class ActivoInactivoDirective implements OnInit {
   constructor(private pTag: Tag) {}
 
   ngOnInit(): void {
-
-    console.log(this.appActivoInactivo);
     const config = this.getTagConfig(this.appActivoInactivo);
     this.pTag.value = config.value;
     this.pTag.severity = config.severity;
