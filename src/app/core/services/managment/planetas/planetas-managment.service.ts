@@ -11,28 +11,26 @@ import { IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.inter
 export class PlanetasManagmentService {
   private base_url = environment.URL_BACKEND;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   listarPlanetasService$(): Observable<PlanetaManagment[]> {
     let url = `${this.base_url}planetas`;
     return this.httpClient.get<IGenericArrays<PlanetaManagment>>(url).pipe(
       map((response: IGenericArrays<PlanetaManagment>) => {
-        response.data = response.data.map((planeta) => {
+        return response.data._value.map((planeta) => {
           return PlanetaManagment.fromJson(planeta);
         });
-
-        return response.data;
       })
     );
   }
 
-  obtenerPlanetaService$(id: number) { }
+  obtenerPlanetaService$(id: number) {}
 
-  crearPlanetaService$(planeta: PlanetaManagment) { }
+  crearPlanetaService$(planeta: PlanetaManagment) {}
 
-  editarPlanetaService$(planeta: PlanetaManagment) { }
+  editarPlanetaService$(planeta: PlanetaManagment) {}
 
-  eliminarPlanetaService$(id: number) { }
+  eliminarPlanetaService$(id: number) {}
 
-  listarDropdownPlanetasService$() { }
+  listarDropdownPlanetasService$() {}
 }

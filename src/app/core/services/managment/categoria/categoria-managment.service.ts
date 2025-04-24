@@ -2,10 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
-import {
-  CategoriaManagment,
-  CursoManagment,
-} from 'src/app/core/class/managment/managment';
+import { CategoriaManagment } from 'src/app/core/class/managment/managment';
 import {
   IGeneric,
   IGenericArrays,
@@ -23,11 +20,9 @@ export class CategoriaManagmentService {
     let url = `${this.base_url}categorias`;
     return this.httpClient.get<IGenericArrays<CategoriaManagment>>(url).pipe(
       map((response: IGenericArrays<CategoriaManagment>) => {
-        response.data = response.data.map((categoria) => {
+        return response.data._value.map((categoria) => {
           return CategoriaManagment.fromJson(categoria);
         });
-
-        return response.data;
       })
     );
   }
@@ -58,7 +53,7 @@ export class CategoriaManagmentService {
 
   editarCategoriaService$(
     Categoria: CategoriaManagment,
-    categoriaId:string
+    categoriaId: string
   ): Observable<CategoriaManagment> {
     let url = `${this.base_url}categorias/${categoriaId}`;
 

@@ -18,11 +18,11 @@ export class GalaxiasManagmentService {
     let url = `${this.base_url}galaxias`;
     return this.httpClient.get<IGenericArrays<GalaxiaManagment>>(url).pipe(
       map((response: IGenericArrays<GalaxiaManagment>) => {
-        response.data = response.data.map((galaxia) => {
+        return response.data._value.map((galaxia) => {
           return GalaxiaManagment.fromJson(galaxia);
         });
 
-        return response.data;
+        
       })
     );
   }

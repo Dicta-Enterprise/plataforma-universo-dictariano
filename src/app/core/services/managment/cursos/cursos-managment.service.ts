@@ -3,24 +3,26 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
-import { IGeneric, IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
+import {
+  IGeneric,
+  IGenericArrays,
+} from 'src/app/core/interfaces/genericas/IGeneric.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CursosManagmentService {
   private base_url = environment.URL_BACKEND;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   listarCursosService$(): Observable<CursoManagment[]> {
     let url = `${this.base_url}cursos`;
     return this.httpClient.get<IGenericArrays<CursoManagment>>(url).pipe(
       map((response: IGenericArrays<CursoManagment>) => {
-        response.data = response.data.map((curso) => {
+        return response.data._value.map((curso) => {
           return CursoManagment.fromJson(curso);
         });
-        return response.data;
       })
     );
   }
@@ -43,7 +45,10 @@ export class CursosManagmentService {
     );
   }
 
-  editarCursoService$(id: string, curso: Partial<CursoManagment>): Observable<CursoManagment> {
+  editarCursoService$(
+    id: string,
+    curso: Partial<CursoManagment>
+  ): Observable<CursoManagment> {
     let url = `${this.base_url}cursos/${id}`;
     return this.httpClient.patch<IGeneric<CursoManagment>>(url, curso).pipe(
       map((response) => {
@@ -56,5 +61,5 @@ export class CursosManagmentService {
     return this.httpClient.delete<void>(`${this.base_url}cursos/${id}`);
   }
 
-  listarDropdownCursosService$() { }
+  listarDropdownCursosService$() {}
 }
