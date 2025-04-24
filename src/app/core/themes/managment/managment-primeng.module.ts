@@ -12,6 +12,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
 @NgModule({
 
   exports: [
@@ -26,7 +27,8 @@ import { DialogModule } from 'primeng/dialog';
     MultiSelectModule,
     TagModule,
     ToastModule,
-    DialogModule
+    DialogModule,
+    InputSwitchModule,
   ],
 })
 export class ManagmentPrimengModule {}

@@ -8,6 +8,7 @@ import { SharedMantenedoresModule } from 'src/app/core/components/managment/mant
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,6 +18,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     CategoriaRoutingModule,
     ManagmentPrimengModule,
     SharedSpinnerModule,

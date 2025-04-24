@@ -61,7 +61,7 @@
           <th>Nombre</th>
           <th>Estado</th>
           <th>Fecha Creacion</th>
-          <th></th>
+          <th>Acciones</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-categoria let-columns="columns">
@@ -80,13 +80,13 @@
               class="p-button-rounded p-button-secondary mr-2"
               (click)="editarCategoria(categoria)"
             ></button>
-            <button
-              pButton
-              pRipple
-              icon="pi pi-trash"
-              class="p-button-rounded p-button-danger"
-              (click)="eliminarCategoria(categoria)"
-            ></button>
+
+            <p-inputSwitch
+              name="payment"
+              class="ml-3"
+              [(ngModel)]="categoria.activo"
+              (ngModelChange)="eliminarCategoria(categoria)"
+            ></p-inputSwitch>
           </td>
         </tr>
       </ng-template>
