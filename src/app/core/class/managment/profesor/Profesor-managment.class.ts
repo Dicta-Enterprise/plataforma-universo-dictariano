@@ -1,4 +1,4 @@
-import { ActivosState } from 'src/app/shared/enums';
+import { NewActivoState } from 'src/app/shared/enums';
 
 export class ProfesorManagment {
   id: string;
@@ -7,24 +7,24 @@ export class ProfesorManagment {
   email: string;
   telefono: string;
   direccion: string;
-  estado: ActivosState;
+  estado: NewActivoState;
   imagen: string;
-  fechaCreacion: string;
-  fechaActualizacion: string;
-  fechaNacimiento: string;
+  fechaCreacion: Date;
+  fechaActualizacion: Date;
+  fechaNacimiento: Date;
 
   constructor(profesorManagment: Partial<ProfesorManagment> = {}) {
-    this.id = profesorManagment.id || '';
-    this.nombre = profesorManagment.nombre || '';
-    this.apellido = profesorManagment.apellido || '';
-    this.email = profesorManagment.email || '';
-    this.telefono = profesorManagment.telefono || '';
-    this.direccion = profesorManagment.direccion || '';
-    this.estado = profesorManagment.estado || ActivosState.ACTIVO;
-    this.imagen = profesorManagment.imagen || '';
-    this.fechaCreacion = profesorManagment.fechaCreacion || '';
-    this.fechaActualizacion = profesorManagment.fechaActualizacion || '';
-    this.fechaNacimiento = profesorManagment.fechaNacimiento || '';
+    this.id = profesorManagment.id ?? '';
+    this.nombre = profesorManagment.nombre ?? '';
+    this.apellido = profesorManagment.apellido ?? '';
+    this.email = profesorManagment.email ?? '';
+    this.telefono = profesorManagment.telefono ?? '';
+    this.direccion = profesorManagment.direccion ?? '';
+    this.estado = profesorManagment.estado ?? NewActivoState.ACTIVO;
+    this.imagen = profesorManagment.imagen ?? '';
+    this.fechaCreacion = profesorManagment.fechaCreacion ?? new Date();
+    this.fechaActualizacion = profesorManagment.fechaActualizacion ?? new Date();
+    this.fechaNacimiento = profesorManagment.fechaNacimiento || new Date();
   }
 
   static fromJson(profesorManagment: any): ProfesorManagment {
@@ -39,13 +39,13 @@ export class ProfesorManagment {
       imagen: profesorManagment.imagen,
       fechaCreacion: profesorManagment.fechaCreacion,
       fechaActualizacion: profesorManagment.fechaActualizacion,
-      fechaNacimiento: profesorManagment.fechaNacimiento,
+      fechaNacimiento: new Date(profesorManagment.fechaNacimiento),
     });
   }
 
   static toJson(profesorManagment: ProfesorManagment): any {
     return {
-      id: profesorManagment.id,
+      //id: profesorManagment.id,
       nombre: profesorManagment.nombre,
       apellido: profesorManagment.apellido,
       email: profesorManagment.email,
@@ -53,8 +53,8 @@ export class ProfesorManagment {
       direccion: profesorManagment.direccion,
       estado: profesorManagment.estado,
       imagen: profesorManagment.imagen,
-      fechaCreacion: profesorManagment.fechaCreacion,
-      fechaActualizacion: profesorManagment.fechaActualizacion,
+      //fechaCreacion: profesorManagment.fechaCreacion,
+      //fechaActualizacion: profesorManagment.fechaActualizacion,
       fechaNacimiento: profesorManagment.fechaNacimiento,
     };
   }

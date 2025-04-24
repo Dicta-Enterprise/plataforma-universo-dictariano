@@ -2,9 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { Subscription } from 'rxjs';
+import { map, Subscription, finalize, Observable, catchError, of, forkJoin } from 'rxjs';
 import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { CCATEGORIES_CONSTANT, CPLANETS_CONSTANT } from 'src/app/core/constants/constants';
+import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { PlanetasManagmentService } from 'src/app/core/services/managment/planetas/planetas-managment.service';
+import { Estandar } from 'src/app/shared/class/Estandar';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -23,63 +27,106 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   buscarCursoForm:FormGroup
 
-  categorias = [
-    { id: '6708179439154cb23c3150ca', nombre: 'Padres' },
-    { id: '670aa5b834951486809e8fa1', nombre: 'Niños' }
-  ];
-  
-  planetas = [
-    { id: '6792877e2942e670016454de', nombre: 'Luminara' },
-    { id: '6792d890005fc1e6836977f1', nombre: 'Planeta 2' },
-    { id: '6792d8aa005fc1e6836977f2', nombre: 'Planeta 3' },
-    { id: '6792d8bd005fc1e6836977f3', nombre: 'Planeta 4' }
-  ];
+  categoriasMap: Map<string, string> = new Map();
+  planetasMap: Map<string, string> = new Map();
 
+  categoriasFiltro: { label: string; value: string }[] = [];
+  planetasFiltro: { label: string; value: string }[] = [];
+
+  selectedCategoria: string | null = null; 
+  selectedPlaneta: string | null = null;
+  
   constructor(
     private fb:FormBuilder,
-    private cursosService: CursosManagmentService,
-    private confirmationService: ConfirmationService,
-    private alertService: AlertService
+    private readonly cursosService: CursosManagmentService,
+    private readonly confirmationService: ConfirmationService,
+    private readonly alertService: AlertService,
+    private readonly categoriaManagmentService: CategoriaManagmentService,
+    private readonly planetaManagmentService: PlanetasManagmentService,
   ) { }
 
   ngOnInit(): void {
-    this.listarCursos();
+    this.cargarDatosIniciales();
+  }
+
+  cargarDatosIniciales() {
+    this.subscription.add(
+      forkJoin({
+        categorias: this.categoriaManagmentService.listarCategoriasService$(),
+        planetas: this.planetaManagmentService.listarPlanetasService$()
+      }).subscribe({
+        next: ({ categorias, planetas }) => {
+          this.categoriasMap = new Map(categorias.map(c => [c.id, c.nombre]));
+          this.planetasMap = new Map(planetas.map(p => [p.id, p.nombre]));
+
+          // Convertimos los mapas a listas de objetos { label, value } para el filtro
+          this.categoriasFiltro = categorias.map(c => ({ label: c.nombre, value: c.id }));
+          this.planetasFiltro = planetas.map(p => ({ label: p.nombre, value: p.id }));
+          this.listarCursos();
+        },
+        error: () => {
+          this.alertService.showError('Error', 'No se pudieron cargar las categorías o los planetas');
+        }
+      })
+    );
   }
 
   listarCursos() {
     this.isLoading = true;
     this.subscription.add(
-      this.cursosService.listarCursosService$().subscribe({
+      this.cursosService.listarCursosService$()
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
         next: (data) => {
-          this.cursos = data.map(curso => ({
-            ...curso,
-            categoriaNombre: this.getNombreCategoriaPorId(curso.categoriaId),
-            planetaNombre: this.getNombrePlanetaPorId(curso.planetaId)
-          }));
-          this.isLoading = false;
+          this.cursos = data;
+          console.log('Cursos ',this.cursos);
         },
         error: (error) => {
-          console.error('Error al obtener cursos:', error);
-          this.isLoading = false;
+          this.alertService.showError(
+            'Upss..',
+            'Ocurrio un error al listar de los cursos'
+          );
         }
       })
     );
   }
 
   getNombreCategoriaPorId(id: string): string {
-    const categoria = this.categorias.find(cat => cat.id === id);
-    return categoria ? categoria.nombre : 'Categoría no encontrada';
+    return this.categoriasMap.get(id) || 'Categoría no encontrada';
   }
   
   getNombrePlanetaPorId(id: string): string {
-    const planeta = this.planetas.find(plan => plan.id === id);
-    return planeta ? planeta.nombre : 'Planeta no encontrado';
+    return this.planetasMap.get(id) || 'Planeta no encontrado'
   }
+
+  // filtrarCursos(table: Table) {
+  //   table.clear();
+    
+  //   if (this.selectedCategoria) {
+  //     table.filter(this.selectedCategoria, 'categoriaId', 'equals');
+  //   }
+    
+  //   if (this.selectedPlaneta) {
+  //     table.filter(this.selectedPlaneta, 'planetaId', 'equals');
+  //   }
+  // }
+  
+  // filtrarPorCategoria(categoriaId: string | null, table: Table) {
+  //   this.selectedCategoria = categoriaId;
+  //   this.filtrarCursos(table);
+  // }
+  
+  // filtrarPorPlaneta(planetaId: string | null, table: Table) {
+  //   this.selectedPlaneta = planetaId;
+  //   this.filtrarCursos(table);
+  // }
 
   showNuevoCurso(event?:boolean) {
     if(event != undefined){
       this.isNuevoCurso = event;
-      this.listarCursos();
+      this.curso = new CursoManagment();  
       return
     }
 
@@ -88,13 +135,13 @@ export class CursosComponent  implements OnInit, OnDestroy{
   
   buscarCurso(){}
 
-  editarCurso(curso:any){
-    this.showNuevoCurso(true);
+  editarCurso(curso:CursoManagment){
     this.curso = {... curso};
+    this.showNuevoCurso();
   }
 
 
-  confirmarEliminacion(curso:any){
+  confirmarEliminacion(curso:CursoManagment){
     this.cursoAEliminar = curso;
 
     this.confirmationService.confirm({
@@ -133,6 +180,8 @@ export class CursosComponent  implements OnInit, OnDestroy{
 
   clear(table:Table){
     table.clear();
+    this.selectedCategoria = null;
+    this.selectedPlaneta = null;
   }
 
   ngOnDestroy(): void {

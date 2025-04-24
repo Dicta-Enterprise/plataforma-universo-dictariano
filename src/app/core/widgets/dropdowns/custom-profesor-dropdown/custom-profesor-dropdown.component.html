@@ -1,0 +1,16 @@
+<span class="p-float-label w-full">
+    <p-dropdown
+      [placeholder]="label"
+      [options]="profesores"
+      optionLabel="nombreCompleto"
+      appendTo="body"
+      optionValue="id"
+      filterBy="nombreCompleto"
+      [showClear]="true" 
+      [filter]="true"
+      [disabled]="isDisabled"
+      (onChange)="handleValueChange($event)"
+      [formControl]="profesorControl"
+    ></p-dropdown>
+    <label for="float-label" class="ml-2">{{ label }}</label>
+</span>

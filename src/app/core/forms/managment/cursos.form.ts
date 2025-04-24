@@ -11,7 +11,6 @@ export const createNuevoCursoForm = (formBuilder: FormBuilder): FormGroup => {
         estado: ['ACTIVO'],
         imagen: ['', [Validators.required, Validators.pattern(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/)]],
         video: ['', [Validators.required, Validators.pattern(/(http(s?):)([/|.|\w|\s|-])*\.(?:mp4|avi|mkv|webm|ogg)/)]],
-        duracion: [0, [Validators.required, Validators.min(1)]],
         categoriaId: [null],
         profesorId: [null],
         idiomaId: [null],

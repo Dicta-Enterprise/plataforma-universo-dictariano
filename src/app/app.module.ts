@@ -15,6 +15,7 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { RouterModule } from '@angular/router';
 import { ActivoInactivoPipe } from './shared/pipes/activo-inactivo/activo-inactivo.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 
 @NgModule({
@@ -23,7 +24,6 @@ import { MessageService } from 'primeng/api';
     NavBarComponent,
     FooterComponent,
     ActivoInactivoPipe,
-    
   ],
   imports: [
     BrowserModule,
@@ -34,7 +34,8 @@ import { MessageService } from 'primeng/api';
     StyleClassModule,
     InputTextModule,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

@@ -1,14 +1,17 @@
-<span class="p-float-label">
+<span class="p-float-label w-full">
     <p-dropdown
-      placeholder="Seleccione un Estado de Vehiculo"
+      [placeholder]="label"
       [options]="categorias"
+      optionLabel="nombre"
       appendTo="body"
-      optionLabel="descripcion"
-      filterBy="descripcion"
-      [formControl]="categoriaControl"
+      optionValue="id"
+      filterBy="nombre"
+      [showClear]="true" 
       [filter]="true"
+      [disabled]="isDisabled"
       (onChange)="handleValueChange($event)"
+      [formControl]="categoriaControl"
     ></p-dropdown>
     <label for="float-label" class="ml-2">{{ label }}</label>
-  </span>
+</span>
   

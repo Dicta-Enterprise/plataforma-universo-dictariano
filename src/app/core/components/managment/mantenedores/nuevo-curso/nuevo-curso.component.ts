@@ -1,15 +1,20 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subscription, take } from 'rxjs';
-import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { finalize, Subscription, take } from 'rxjs';
+import { CategoriaManagment, CursoManagment } from 'src/app/core/class/managment/managment';
+import { CCATEGORIES_CONSTANT, CLANGUAGE_CONSTANT, CPLANETS_CONSTANT, CPROFESSOR_CONSTANT } from 'src/app/core/constants/constants';
 import { createNuevoCursoForm } from 'src/app/core/forms/managment/cursos.form';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { Estandar } from 'src/app/shared/class/Estandar';
+import { convertToCursoManagment } from 'src/app/shared/functions/managment/cursos/cursos.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { PlanetasManagmentService } from 'src/app/core/services/managment/planetas/planetas-managment.service';
+
 
 @Component({
   selector: 'app-nuevo-curso',
   templateUrl: './nuevo-curso.component.html',
-  styleUrls: ['./nuevo-curso.component.css']
+  styleUrls: ['./nuevo-curso.component.css'],
 })
 export class NuevoCursoComponent {
   private subscription: Subscription = new Subscription();
@@ -17,58 +22,37 @@ export class NuevoCursoComponent {
   @Input() isNuevoCurso: boolean = false;
   @Input() cursoId: string = '';
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() refreshCursos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  curso = new CursoManagment();
-
-  categorias = [
-    { id: '6708179439154cb23c3150ca', nombre: 'Padres' },
-    { id: '670aa5b834951486809e8fa1', nombre: 'Niños' }
-  ];
-  
-  planetas = [
-    { id: '6792877e2942e670016454de', nombre: 'Luminara' },
-    { id: '6792d890005fc1e6836977f1', nombre: 'Planeta 2' },
-    { id: '6792d8aa005fc1e6836977f2', nombre: 'Planeta 3' },
-    { id: '6792d8bd005fc1e6836977f3', nombre: 'Planeta 4' }
-  ];
-
-  profesores = [
-    { id: '6792d8bd005fc1e6836977f6', nombre: 'Juan Pérez' },
-    { id: '6792d8bd005fc1e6836977f7', nombre: 'María Gómez' },
-    { id: '6792d8bd005fc1e6836977f8', nombre: 'Carlos López' }
-  ];
-
-  idiomas = [
-    { id: '6792d8bd005fc1e6836977f9', nombre: 'Español' },
-    { id: '6792d8bd005fc1e6836977f5', nombre: 'Inglés' },
-  ];
+  curso = new CursoManagment();//
 
   cursoForm: FormGroup = createNuevoCursoForm(this.fb); 
 
-  constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService) {}
+  constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService,
+    private planetaManagmentService:PlanetasManagmentService,
+  ) {}
 
   ngOnInit(): void {}
 
   onShow() {
     if (this.cursoId) {
-      this.isLoading = true;
       this.subscription.add(
-        this.cursoService.obtenerCursoService$(this.cursoId).pipe(take(1)).subscribe({
+        this.cursoService.obtenerCursoService$(this.cursoId)
+        .pipe(
+          take(1),
+          finalize(() => this.isLoading = false)
+        )
+        .subscribe({
           next: (curso) => {
-            this.curso = curso;
+            console.log(curso);
+            this.curso = curso;//
             this.cursoForm.patchValue({
               ...curso,
-              fechaInicio: new Date(curso.fechaInicio),
-              fechaFinalizacion: new Date(curso.fechaFinalizacion),
-              profesorId: curso.profesorId || null,
-              idiomaId: curso.idiomaId || null,
             });
-            this.isLoading = false;
           },
           error: (err) => {
             this.alertService.showError('Error', 'No se pudo obtener el curso');
             console.error('Error obteniendo curso:', err);
-            this.isLoading = false;
           }
         })
       );
@@ -76,83 +60,75 @@ export class NuevoCursoComponent {
   }
 
   onHide() {
-    //this.curso = new CursoManagment();
-    //this.cursoId = '';
-    //this.cursoForm.reset();
     this.resetForm();
     this.onHideEmit.emit(false);
   }
 
-  private resetForm() {
-    this.curso = new CursoManagment();
-    this.cursoId = '';
-    this.cursoForm.reset({
-      nombre: '',
-      descripcion: '',
-      fechaInicio: null,
-      fechaFinalizacion: null,
-      profesorId: null,
-      idiomaId: null,
-      estado: 'ACTIVO'
-    });
+  resetForm() {
+    this.cursoForm.reset();
   }
 
-  actualizarCurso() {
+  crearCurso(){
 
     if (this.cursoForm.invalid) {
       this.alertService.showWarn('Ups..', 'Formulario incompleto');
       return;
     }
+    
+    const curso = convertToCursoManagment(this.cursoForm);
 
-    let cursoActualizar: Partial<CursoManagment> ={ ...this.cursoForm.value, estado: 'ACTIVO'}
-
-    if(cursoActualizar.nombre === this.curso.nombre){
-      delete cursoActualizar.nombre;
+    switch(this.cursoId){
+      case '':
+        this.guardarCurso(curso);
+        break;
+      default:
+        this.actualizarCurso(curso);
+        break;
     }
-
-    this.cursoService.editarCursoService$(this.cursoId, cursoActualizar).subscribe({
-      next: (res) => {
-        this.alertService.showSuccess('Curso actualizado', 'El curso se ha actualizado correctamente');
-        this.onHide();
-      },
-      error: (err) => {
-       this.errores(err);
-      }
-    });
   }
 
-  crearCurso() {
+  guardarCurso(curso: CursoManagment) {
+    this.isLoading = true;
+    this.subscription.add(
+      this.cursoService.crearCursoService$(curso)
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
+        next: (res) => {
+          this.alertService.showSuccess('Curso creado', 'El curso se ha creado correctamente');
+          this.onHide();
+          this.refreshCursos.emit(true);
+        },
+        error: (err) => {
+          this.errores(err);
+        }
+      })
+    );
+  }
 
-    if (this.cursoForm.invalid) {
-      this.alertService.showWarn('Ups..', 'Formulario incompleto');
-      return;
-    }
 
-    const cursoCrear: CursoManagment ={ ...this.cursoForm.value, estado: 'ACTIVO'}
+  actualizarCurso(curso: CursoManagment) {
 
-    this.cursoService.crearCursoService$(cursoCrear).subscribe({
-      next: (res) => {
-        this.alertService.showSuccess('Curso creado', 'El curso se ha creado correctamente');
-        this.onHide();
-      },
-      error: (err) => {
-        this.errores(err);
-      }
-    });
-
-    // this.cursoService.crearCursoService$(curso).subscribe({
-    //   next: (success) => {
-    //     if(success){
-    //       this.alertService.showSuccess('Curso creado', 'El curso se ha creado correctamente');
-    //       this.onHide();
-    //     }else{
-    //       this.alertService.showError('Error', 'No se pudo crear el curso');
-    //     }
-    //   },
-    //   error: (err) => {
-    //     this.errores(err);
-    //   }
-    // });
+    console.log('Curso:', curso);
+    
+    this.isLoading = true;
+    this.subscription.add(
+      this.cursoService.editarCursoService$(this.cursoId, curso)
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
+        next: (res) => {
+          this.alertService.showSuccess('Curso actualizado', 'El curso se ha actualizado correctamente');
+          this.onHide();
+          this.refreshCursos.emit(true);
+        },
+        error: (err) => {
+          this.errores(err);
+        }
+      })
+    );
   }
 
   private errores(err: any) {

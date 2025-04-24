@@ -1,1 +1,181 @@
-<p>nuevo-profesor works!</p>
+<p-toast></p-toast>
+<app-spinner-jump class="overlay" *ngIf="isLoading"></app-spinner-jump>
+
+<p-dialog
+  [(visible)]="isNuevoProfesor"
+  (onShow)="onShow()"
+  (onHide)="onHide()"
+  appendTo="body"
+  [modal]="true"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '52vw' }"
+  header="NUEVO PROFESOR"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <ng-template pTemplate="header">
+    <div class="flex flex-column gap-2">
+      <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
+        {{ profesorId ? 'Actualizar Profesor' : 'Nuevo Profesor' }}
+      </h1>
+      <span class="text-600 text-base">
+        {{ profesorId ? 'Actualización del Profesor: ' + profesor.nombre : 'Registra un nuevo profesor en el sistema' }}
+      </span>
+    </div>
+  </ng-template>
+
+  <form class="flex flex-column gap-3 mt-4" 
+    [formGroup]="profesorForm"
+  >
+    <div class="grid formgrid p-fluid">
+      <!-- Nombre y Apellido -->
+      <div class="col-12 px-2 mb-2 gap-2">
+        <div class="grid formgrid">
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-3">
+            <span class="p-float-label w-full">
+              <input
+                pInputText
+                id="nombre"
+                autocomplete="off"
+                formControlName="nombre"
+                pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*"
+                title="Solo se permiten letras"
+                [ngClass]="{'ng-invalid ng-dirty': profesorForm.get('nombre')?.invalid && profesorForm.get('nombre')?.touched}"
+              />
+              <label htmlFor="nombre">Nombre</label>
+            </span>
+            <div class="p-error mt-1" *ngIf="profesorForm.get('nombre')?.hasError('required') && profesorForm.get('nombre')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              El nombre es obligatorio.
+            </div>
+          </div>
+
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
+            <span class="p-float-label w-full">
+              <input
+                pInputText
+                id="apellido"
+                autocomplete="off"
+                formControlName="apellido"
+                pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*"
+                title="Solo se permiten letras"
+                [ngClass]="{'ng-invalid ng-dirty': profesorForm.get('apellido')?.invalid && profesorForm.get('apellido')?.touched}"
+              />
+              <label htmlFor="apellido">Apellido</label>
+            </span>
+            <div class="p-error mt-1" *ngIf="profesorForm.get('apellido')?.hasError('required') && profesorForm.get('apellido')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              El apellido es obligatorio.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="field mb-4 col-12">
+        <span class="p-float-label w-full">
+          <input
+            pInputText
+            id="email"
+            type="email"
+            autocomplete="off"
+            formControlName="email"
+            [ngClass]="{'ng-invalid ng-dirty': profesorForm.get('email')?.invalid && profesorForm.get('email')?.touched}"
+          />
+          <label htmlFor="email">Correo Electrónico</label>
+        </span>
+        <div class="p-error mt-1" *ngIf="profesorForm.get('email')?.hasError('required') && profesorForm.get('email')?.touched">
+          <i class="pi pi-exclamation-circle mr-1"></i>
+          El correo electrónico es obligatorio.
+        </div>
+      </div>
+
+      <!-- Teléfono y Dirección -->
+      <div class="col-12 px-2 mb-2 gap-2">
+        <div class="grid formgrid">
+          <div class="field mb-4 col-12 md:col-4 lg:col-4 pr-0 md:pr-3">
+            <span class="p-float-label w-full">
+              <p-inputMask 
+                id="telefono"
+                formControlName="telefono"
+                mask="+99 999 999 999"
+                placeholder="+51 999 999 999"
+                [ngClass]="{'ng-invalid ng-dirty': profesorForm.get('telefono')?.invalid && profesorForm.get('telefono')?.touched}"
+              ></p-inputMask>
+              <label htmlFor="telefono">Teléfono</label>
+            </span>
+            <div class="p-error mt-1" *ngIf="profesorForm.get('telefono')?.hasError('required') && profesorForm.get('telefono')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              El teléfono es obligatorio.
+            </div>
+          </div>
+
+          <div class="field mb-4 col-12 md:col-8 lg:col-8 pl-0 md:pl-3">
+            <span class="p-float-label w-full">
+              <input
+                pInputText
+                id="direccion"
+                autocomplete="off"
+                formControlName="direccion"
+                [ngClass]="{'ng-invalid ng-dirty': profesorForm.get('direccion')?.invalid && profesorForm.get('direccion')?.touched}"
+              />
+              <label htmlFor="direccion">Dirección</label>
+            </span>
+            <div class="p-error mt-1" *ngIf="profesorForm.get('direccion')?.hasError('required') && profesorForm.get('direccion')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La dirección es obligatoria.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Imagen y Fecha de Nacimiento -->
+      <div class="col-12 px-2 mb-2 gap-2">
+        <div class="grid formgrid">
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-3">
+            <span class="p-float-label w-full">
+              <input
+                pInputText
+                id="imagen"
+                autocomplete="off"
+                formControlName="imagen"
+                [ngClass]="{'ng-invalid ng-dirty': profesorForm.get('imagen')?.invalid && profesorForm.get('imagen')?.touched}"
+              />
+              <label htmlFor="imagen">URL de la Imagen</label>
+            </span>
+            <div class="p-error mt-1" *ngIf="profesorForm.get('imagen')?.hasError('required') && profesorForm.get('imagen')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La URL de la imagen es obligatoria.
+            </div>
+          </div>
+
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
+            <span class="p-float-label w-full">
+              <p-calendar
+                appendTo="body"
+                [showIcon]="true"
+                formControlName="fechaNacimiento"
+                styleClass="w-full"
+                [showButtonBar]="true"
+                [ngClass]="{'ng-invalid ng-dirty': profesorForm.get('fechaNacimiento')?.invalid && profesorForm.get('fechaNacimiento')?.touched}"
+              ></p-calendar>
+              <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
+            </span>
+            <div class="p-error mt-1" *ngIf="profesorForm.get('fechaNacimiento')?.hasError('required') && profesorForm.get('fechaNacimiento')?.touched">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              La fecha de nacimiento es obligatoria.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      icon="pi pi-check"
+      [label]="profesorId ? 'Actualizar Profesor' : 'Crear Profesor'"
+      (click)="crearProfesor()"
+    ></p-button>
+  </ng-template>
+</p-dialog>

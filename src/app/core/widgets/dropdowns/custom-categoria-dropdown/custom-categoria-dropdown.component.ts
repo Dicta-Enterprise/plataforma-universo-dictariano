@@ -4,8 +4,10 @@ import {
   FormControl,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { Estandar } from 'src/app/core/class/estandar/Estandar.class';
+import { CategoriaManagment } from 'src/app/core/class/managment/managment';
+import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 const VALUE_ACCESOR = {
@@ -21,32 +23,53 @@ const VALUE_ACCESOR = {
   providers: [VALUE_ACCESOR],
 })
 export class CustomCategoriaDropdownComponent
-  implements OnInit, OnDestroy, ControlValueAccessor
-{
+  implements OnInit, OnDestroy, ControlValueAccessor {
   private subscription: Subscription = new Subscription();
   categoriaControl: FormControl;
   isLoading: boolean = false;
 
-  categorias: Estandar[] = [];
-  @Input() label: string = 'Estado de Vehiculo';
+  categorias: CategoriaManagment[] = [];
+  @Input() label: string = 'Seleccione una categoría';
 
-  onChange: (value: any) => void = () => {};
-  onTouched: () => void = () => {};
+  onChange: (value: any) => void = () => { };
+  onTouched: () => void = () => { };
   isDisabled = false;
-  value: Estandar;
+  value: string | null = null;
 
-  constructor(private alertService: AlertService) {
-    this.categoriaControl = new FormControl({
-      value: null,
-      disabled: this.isDisabled,
-    });
+  constructor(
+    private alertService: AlertService,
+    private categoriaManagmentService: CategoriaManagmentService
+  ) {
+    this.categoriaControl = new FormControl(null);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.listarCategorias();
+  }
 
-  writeValue(obj: Estandar): void {
-    this.value = obj;
-    this.categoriaControl.patchValue(obj);
+  listarCategorias() {
+    this.isLoading = true;
+    this.subscription.add(
+      this.categoriaManagmentService
+        .listarCategoriasService$()
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.categorias = response;
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Upss..',
+              'Ocurrio un error al listar las categorias'
+            );
+          },
+        })
+    );
+  }
+
+  writeValue(id: string | null): void {
+    this.value = id;
+    this.categoriaControl.setValue(id, {emitEvent: false});
   }
 
   registerOnChange(fn: any): void {
@@ -63,6 +86,7 @@ export class CustomCategoriaDropdownComponent
 
   handleValueChange(event: any): void {
     const selectedValue = event.value;
+    this.value = selectedValue;
     this.onChange(selectedValue);
     this.onTouched();
   }

@@ -1,35 +1,31 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
-import { finalize, map, Subscription } from 'rxjs';
-import { PlanetaManagment } from 'src/app/core/class/managment/managment';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { finalize, Subscription } from 'rxjs';
+import { IdiomaManagment } from 'src/app/core/class/managment/managment';
+import { IdiomaManagmentService } from 'src/app/core/services/managment/idioma/idioma-managment.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { PlanetasManagmentService } from '../../../services/managment/planetas/planetas-managment.service';
+
 
 const VALUE_ACCESOR = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => CustomPlanetasDropdownComponent),
+  useExisting: forwardRef(() => CustomIdiomaDropdownComponent),
   multi: true,
 };
 
-// El manejo en el resto de dropdown es similar en cuanto a su estructura
 @Component({
-  selector: 'app-custom-planetas-dropdown',
-  templateUrl: './custom-planetas-dropdown.component.html',
-  styleUrls: ['./custom-planetas-dropdown.component.css'],
+  selector: 'app-custom-idioma-dropdown',
+  templateUrl: './custom-idioma-dropdown.component.html',
+  styleUrls: ['./custom-idioma-dropdown.component.css'],
   providers: [VALUE_ACCESOR],
 })
-export class CustomPlanetasDropdownComponent
+export class CustomIdiomaDropdownComponent
   implements OnInit, OnDestroy, ControlValueAccessor {
   private subscription: Subscription = new Subscription();
-  planetasControl: FormControl;
+  idiomaControl: FormControl;
   isLoading: boolean = false;
 
-  planetas: PlanetaManagment[] = [];
-  @Input() label: string = 'Planeta';
+  idiomas: IdiomaManagment[] = [];
+  @Input() label: string = 'Seleccione un Idioma';
 
   onChange: (value: any) => void = () => { };
   onTouched: () => void = () => { };
@@ -38,40 +34,39 @@ export class CustomPlanetasDropdownComponent
 
   constructor(
     private alertService: AlertService,
-    private planetasManagmentService: PlanetasManagmentService
+    private idiomaManagmentService: IdiomaManagmentService
   ) {
-    this.planetasControl = new FormControl(null);
+    this.idiomaControl = new FormControl(null);
   }
 
-  ngOnInit(): void { 
-    this.listarPlanetas();
+  ngOnInit(): void {
+    this.listarIdiomas();
   }
 
-  // Se lista a los planetas para obetenerlos desde la BD - Se llama al servicio
-  listarPlanetas() {
+  listarIdiomas() {
     this.isLoading = true;
     this.subscription.add(
-      this.planetasManagmentService
-        .listarPlanetasService$()
+      this.idiomaManagmentService
+        .listarIdiomasService$()
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
-            this.planetas = response;
-            //console.log('planetas', this.planetas);
+            this.idiomas = response;
+            //console.log('idiomas', this.idiomas);
           },
           error: (error) => {
             this.alertService.showError(
               'Ups...',
-              'Ocurrio un error al listar los planetas'
+              'Ocurrio un error al listar los idiomas'
             );
           },
         })
     );
   }
 
-  writeValue(id: string): void {
+  writeValue(id: string | null): void {
     this.value = id;
-    this.planetasControl.patchValue(id, { emitEvent: false });
+    this.idiomaControl.setValue(id, {emitEvent: false});
   }
 
   registerOnChange(fn: any): void {

@@ -16,10 +16,10 @@
   <ng-template pTemplate="header">
     <div class="flex flex-column gap-2">
       <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
-        {{ curso.id ? 'Actualizar Curso' : 'Nuevo Curso' }}
+        {{ cursoId ? 'Actualizar Curso' : 'Nuevo Curso' }}
       </h1>
       <span class="text-600 text-base">
-        {{ curso.id ? 'Actualizacion del Curso : [ '+ curso.nombre + ' ]' : 'Crea todas las Cursos que desees' }}
+        {{ cursoId ? 'Actualizacion del Curso : '+ curso.nombre : 'Crea todas las Cursos que desees' }}
       </span>
     </div>
   </ng-template>
@@ -110,42 +110,18 @@
         <div class="grid formgrid">
           <!-- Categoría -->
           <div class="field mb-3 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
-            <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="categorias" 
-                optionLabel="nombre" 
-                optionValue="id" 
-                formControlName="categoriaId"
-                placeholder="Seleccione una Categoría"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('categoriaId')?.invalid && cursoForm.get('categoriaId')?.touched}"
-              ></p-dropdown>
-              <label htmlFor="categoriaId">Categoría</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('categoriaId')?.hasError('required') && cursoForm.get('categoriaId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona una categoría.
-            </div>
+            <app-custom-categoria-dropdown
+              formControlName="categoriaId"
+              label="Categoría"
+            ></app-custom-categoria-dropdown>
           </div>
 
           <!-- Planeta -->
           <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
-            <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="planetas" 
-                optionLabel="nombre" 
-                optionValue="id" 
-                formControlName="planetaId"
-                placeholder="Seleccione un Planeta"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('planetaId')?.invalid && cursoForm.get('planetaId')?.touched}"
-              ></p-dropdown>
-              <label htmlFor="planetaId">Planeta</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('planetaId')?.hasError('required') && cursoForm.get('planetaId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona un planeta.
-            </div>
+            <app-custom-planetas-dropdown
+              formControlName="planetaId"
+              label="Planeta"
+            ></app-custom-planetas-dropdown>
           </div>
         </div>
       </div>
@@ -153,43 +129,19 @@
       <div class="col-12 px-2 mb-2 gap-2">
         <div class="grid formgrid">
           <!-- Profesor -->
-          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-3">
-            <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="profesores" 
-                optionLabel="nombre" 
-                optionValue="id" 
-
-                placeholder="Seleccione un Profesor"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('profesorId')?.invalid && cursoForm.get('profesorId')?.touched}"
-              ></p-dropdown>
-              <label>Profesor</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('profesorId')?.hasError('required') && cursoForm.get('profesorId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona un profesor.
-            </div>
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
+            <app-custom-profesor-dropdown
+              formControlName="profesorId"
+              label="Profesor"
+            ></app-custom-profesor-dropdown>
           </div>
 
           <!-- Idiomas -->
           <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
-            <span class="p-float-label w-full">
-              <p-dropdown 
-                [options]="idiomas" 
-                optionLabel="nombre" 
-                optionValue="id"
-
-                placeholder="Seleccione un idioma"
-                styleClass="w-full"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('idiomaId')?.invalid && cursoForm.get('idiomaId')?.touched}"
-              ></p-dropdown>
-              <label>Idioma</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('idiomaId')?.hasError('required') && cursoForm.get('idiomaId')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              Selecciona un idioma.
-            </div>
+            <app-custom-idioma-dropdown
+              formControlName="idiomaId"
+              label="Idioma"
+            ></app-custom-idioma-dropdown>
           </div>
         </div>
       </div>
@@ -200,7 +152,8 @@
           <div class="field mb-3 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
             <span class="p-float-label w-full">
               <input 
-                pInputText id="imagen" 
+                pInputText 
+                id="imagen" 
                 autocomplete="off" 
                 formControlName="imagen"
                 [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('imagen')?.invalid && cursoForm.get('imagen')?.touched}" />
@@ -230,10 +183,10 @@
         </div>
       </div>
 
-      <div class="col-12 px-2 mb-2 gap-3">
+      <div class="col-12 px-2 mb-2 gap-2">
         <div class="grid formgrid">
           <!-- Precio -->
-          <div class="field mb-4 col-12 md:col-4 lg:col-4 pr-0 md:pr-3">
+          <div class="field mb-3 col-12 md:col-6 lg:col-6 pr-0 md:pr-2">
             <span class="p-float-label w-full p-input-icon-left">
               <i class="pi pi-dollar"></i>
               <input 
@@ -249,25 +202,8 @@
             </div>
           </div>
            
-          <!-- Duración -->
-          <div class="field mb-4 col-12 md:col-4 lg:col-4 px-0 md:px-3">
-            <span class="p-float-label w-full p-input-icon-left">
-              <i class="pi pi-clock"></i>
-              <input 
-                pInputText type="number" 
-                id="duracion" 
-                formControlName="duracion"
-                [ngClass]="{'ng-invalid ng-dirty': cursoForm.get('duracion')?.invalid && cursoForm.get('duracion')?.touched}" />
-              <label htmlFor="duracion" class="ml-4">Duración (Horas)</label>
-            </span>
-            <div class="p-error mt-1" *ngIf="cursoForm.get('duracion')?.hasError('required') && cursoForm.get('duracion')?.touched">
-              <i class="pi pi-exclamation-circle mr-1"></i>
-              La duración es obligatoria.
-            </div>
-          </div>
-   
           <!-- Cantidad de Alumnos -->
-          <div class="field mb-4 col-12 md:col-4 lg:col-4 pl-0 md:pl-3">
+          <div class="field mb-4 col-12 md:col-6 lg:col-6 pl-0 md:pl-3">
             <span class="p-float-label w-full p-input-icon-left">
               <i class="pi pi-users"></i>
               <input 
@@ -290,8 +226,8 @@
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      [label]="curso.id ? 'Actualizar Curso' : 'Crear Curso'"
-      (click)="curso.id ? actualizarCurso() : crearCurso()"
+      [label]="cursoId ? 'Actualizar Curso' : 'Crear Curso'"
+      (click)="crearCurso()"
     ></p-button>
   </ng-template>
 </p-dialog>

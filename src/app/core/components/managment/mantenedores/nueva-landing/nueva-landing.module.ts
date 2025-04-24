@@ -9,7 +9,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { LandingPageManagmentService } from '../../../../services/managment/landing-page/landing-managment.service';
 import { ChipsModule } from 'primeng/chips';
 import { ChipEditorComponent } from './components/chip-editor/chip-editor/chip-editor.component';
-import { CustomPlanetasDropdownComponent } from 'src/app/core/widgets/dropdowns/custom-planetas-dropdown/custom-planetas-dropdown.component';
+import { CustomDropdownsModule } from 'src/app/core/widgets/dropdowns/custom-dropdowns.module';
 
 
 // Es importante revisar la importancion de los modulos necesarios
@@ -17,7 +17,6 @@ import { CustomPlanetasDropdownComponent } from 'src/app/core/widgets/dropdowns/
   declarations: [
     NuevaLandingComponent,
     ChipEditorComponent,
-    CustomPlanetasDropdownComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +25,7 @@ import { CustomPlanetasDropdownComponent } from 'src/app/core/widgets/dropdowns/
     ReactiveFormsModule,
     ChipsModule,
     FormsModule,
+    CustomDropdownsModule
   ],
   exports: [
     NuevaLandingComponent
