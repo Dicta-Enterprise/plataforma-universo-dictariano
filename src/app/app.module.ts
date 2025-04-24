@@ -13,12 +13,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { RouterModule } from '@angular/router';
+import { ActivoInactivoPipe } from './shared/pipes/activo-inactivo/activo-inactivo.pipe';
+import { HttpClientModule } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     FooterComponent,
+    ActivoInactivoPipe,
     
   ],
   imports: [
@@ -29,9 +33,10 @@ import { RouterModule } from '@angular/router';
     MenubarModule,
     StyleClassModule,
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

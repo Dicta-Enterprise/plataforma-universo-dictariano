@@ -9,13 +9,13 @@ export class CategoriaManagment {
   fechaActualizacion: Date;
 
   constructor(categoriaManagment: Partial<CategoriaManagment> = {}) {
-    this.id = categoriaManagment.id || '';
-    this.nombre = categoriaManagment.nombre || '';
-    this.estado = categoriaManagment.estado || ActivosState.ACTIVO;
-    this.imagen = categoriaManagment.imagen || '';
-    this.fechaCreacion = categoriaManagment.fechaCreacion || new Date();
+    this.id = categoriaManagment.id ?? '';
+    this.nombre = categoriaManagment.nombre ?? '';
+    this.estado = categoriaManagment.estado ?? ActivosState.ACTIVO;
+    this.imagen = categoriaManagment.imagen ?? '';
+    this.fechaCreacion = categoriaManagment.fechaCreacion ?? new Date();
     this.fechaActualizacion =
-      categoriaManagment.fechaActualizacion || new Date();
+      categoriaManagment.fechaActualizacion ?? new Date();
   }
 
   static fromJson(categoriaManagment: any): CategoriaManagment {
@@ -31,12 +31,13 @@ export class CategoriaManagment {
 
   static toJson(categoriaManagment: CategoriaManagment): any {
     return {
-      id: categoriaManagment.id,
+      // id: categoriaManagment.id,
       nombre: categoriaManagment.nombre,
-      estado: categoriaManagment.estado,
-      imagen: categoriaManagment.imagen,
+      estado: 'ACTIVO',
+      // imagen: categoriaManagment.imagen,
       fechaCreacion: categoriaManagment.fechaCreacion,
       fechaActualizacion: categoriaManagment.fechaActualizacion,
     };
   }
+
 }

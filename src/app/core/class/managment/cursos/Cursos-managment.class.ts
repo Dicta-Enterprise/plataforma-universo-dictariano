@@ -6,34 +6,38 @@ export class CursoManagment {
   nombre: string;
   descripcion: string;
   fechaCreacion: string;
+  fechaActualizacion: string;
   fechaInicio: string;
   fechaFinalizacion: string;
   cantidadAlumnos: string;
   precio: string;
-  profesor: ProfesorManagment;
   estado: ActivosState;
   imagen: string;
   video: string;
   duracion: string;
-  categoria: CategoriaManagment;
-  idioma: string;
+  categoriaId: string;
+  profesorId: string | null;
+  idiomaId: string | null; 
+  planetaId: string; 
 
   constructor(cursoManagment: Partial<CursoManagment> = {}) {
-    this.id = cursoManagment.id || '';
-    this.nombre = cursoManagment.nombre || '';
-    this.descripcion = cursoManagment.descripcion || '';
-    this.fechaCreacion = cursoManagment.fechaCreacion || '';
-    this.fechaInicio = cursoManagment.fechaInicio || '';
-    this.fechaFinalizacion = cursoManagment.fechaFinalizacion || '';
-    this.cantidadAlumnos = cursoManagment.cantidadAlumnos || '';
-    this.precio = cursoManagment.precio || '';
-    this.profesor = cursoManagment.profesor || new ProfesorManagment();
-    this.estado = cursoManagment.estado || ActivosState.ACTIVO;
-    this.imagen = cursoManagment.imagen || '';
-    this.video = cursoManagment.video || '';
-    this.duracion = cursoManagment.duracion || '';
-    this.categoria = cursoManagment.categoria || new CategoriaManagment();
-    this.idioma = cursoManagment.idioma || '';
+    this.id = cursoManagment.id ?? '';
+    this.nombre = cursoManagment.nombre ?? '';
+    this.descripcion = cursoManagment.descripcion ?? '';
+    this.fechaCreacion = cursoManagment.fechaCreacion ?? '';
+    this.fechaActualizacion = cursoManagment.fechaActualizacion ?? '';
+    this.fechaInicio = cursoManagment.fechaInicio ?? '';
+    this.fechaFinalizacion = cursoManagment.fechaFinalizacion ?? '';
+    this.cantidadAlumnos = cursoManagment.cantidadAlumnos ?? '';
+    this.precio = cursoManagment.precio ?? '';
+    this.profesorId = cursoManagment.profesorId ?? '';
+    this.estado = cursoManagment.estado ?? ActivosState.ACTIVO;
+    this.imagen = cursoManagment.imagen ?? '';
+    this.video = cursoManagment.video ?? '';
+    this.duracion = cursoManagment.duracion ?? '';
+    this.categoriaId = cursoManagment.categoriaId ?? '';
+    this.idiomaId = cursoManagment.idiomaId ?? null;
+    this.planetaId = cursoManagment.planetaId ?? '';
   }
 
   static fromJson(cursoManagment: any): CursoManagment {
@@ -42,17 +46,19 @@ export class CursoManagment {
       nombre: cursoManagment.nombre,
       descripcion: cursoManagment.descripcion,
       fechaCreacion: cursoManagment.fechaCreacion,
+      fechaActualizacion: cursoManagment.fechaActualizacion,
       fechaInicio: cursoManagment.fechaInicio,
       fechaFinalizacion: cursoManagment.fechaFinalizacion,
       cantidadAlumnos: cursoManagment.cantidadAlumnos,
       precio: cursoManagment.precio,
-      profesor: cursoManagment.profesor,
+      profesorId: cursoManagment.profesorId,
       estado: cursoManagment.estado,
       imagen: cursoManagment.imagen,
       video: cursoManagment.video,
       duracion: cursoManagment.duracion,
-      categoria: cursoManagment.categoria,
-      idioma: cursoManagment.idioma,
+      categoriaId: cursoManagment.categoriaId,
+      idiomaId: cursoManagment.idiomaId ?? null,
+      planetaId: cursoManagment.planetaId,
     });
   }
 
@@ -62,17 +68,19 @@ export class CursoManagment {
       nombre: cursoManagment.nombre,
       descripcion: cursoManagment.descripcion,
       fechaCreacion: cursoManagment.fechaCreacion,
+      fechaActualizacion: cursoManagment.fechaActualizacion,
       fechaInicio: cursoManagment.fechaInicio,
       fechaFinalizacion: cursoManagment.fechaFinalizacion,
       cantidadAlumnos: cursoManagment.cantidadAlumnos,
       precio: cursoManagment.precio,
-      profesor: cursoManagment.profesor,
+      profesorId: cursoManagment.profesorId,
       estado: cursoManagment.estado,
       imagen: cursoManagment.imagen,
       video: cursoManagment.video,
       duracion: cursoManagment.duracion,
-      categoria: cursoManagment.categoria,
-      idioma: cursoManagment.idioma,
+      categoriaId: cursoManagment.categoriaId,
+      idiomaId: cursoManagment.idiomaId ?? null,
+      planetaId: cursoManagment.planetaId,
     };
   }
 }

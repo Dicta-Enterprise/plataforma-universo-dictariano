@@ -1,25 +1,78 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { IdiomaManagment } from 'src/app/core/class/managment/managment';
+import { IGeneric, IGenericArrays } from 'src/app/core/interfaces/genericas/IGeneric.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IdiomaManagmentService {
+  
   private base_url = environment.URL_BACKEND;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
-  listarIdiomasService$() {}
+  listarIdiomasService$(): Observable<IdiomaManagment[]> {
+    let url = `${this.base_url}idiomas`;
+    return this.httpClient.get<IGenericArrays<IdiomaManagment>>(url).pipe(
+      map((response: IGenericArrays<IdiomaManagment>) => {
+        response.data = response.data.map((idioma) => {
+          return IdiomaManagment.fromJson(idioma);
+        });
 
-  obtenerIdiomaService$(id: number) {}
+        return response.data;
+      })
+    );
+  }
 
-  crearIdiomaService$(idioma: IdiomaManagment) {}
+  obtenerIdiomaService$(id: string): Observable<IdiomaManagment> {
+    let url = `${this.base_url}idiomas/${id}`;
 
-  editarIdiomaService$(idioma: IdiomaManagment) {}
+    return this.httpClient.get<IGeneric<IdiomaManagment>>(url).pipe(
+      map((response) => {
+        return IdiomaManagment.fromJson(response.data);
+      })
+    );
+  }
 
-  eliminarIdiomaService$(id: number) {}
+  crearIdiomaService$(idioma: IdiomaManagment): Observable<IdiomaManagment> {
+    let url = `${this.base_url}idiomas`;
 
-  listarDropdownIdiomasService$() {}
+    return this.httpClient
+      .post<IGeneric<IdiomaManagment>>(url, idioma)
+      .pipe(
+        map((response) => {
+          return IdiomaManagment.fromJson(response.data);
+        })
+      );
+  }
+
+  editarIdiomaService$(
+    idioma: IdiomaManagment,
+    idiomaId: string
+  ): Observable<IdiomaManagment> {
+    let url = `${this.base_url}idiomas/${idiomaId}`;
+
+    return this.httpClient
+      .patch<IGeneric<IdiomaManagment>>(url, idioma)
+      .pipe(
+        map((response) => {
+          return IdiomaManagment.fromJson(response.data);
+        })
+      );
+  }
+
+  eliminarIdiomaService$(id: string): Observable<boolean> {
+    return this.httpClient.delete<{ status: number }>(`${this.base_url}idiomas/${id}`).pipe(
+      map(response => response.status === 200 || response.status === 204),
+      catchError(error => {
+        console.error('Error al eliminar idioma:', error);
+        return throwError(() => new Error('Error al eliminar el idioma'));
+      })
+    );
+  }
+
+  listarDropdownIdiomasService$() { }
 }

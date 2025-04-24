@@ -5,6 +5,9 @@ import { CategoriaRoutingModule } from './categoria-routing.module';
 import { ManagmentPrimengModule } from 'src/app/core/themes/managment/managment-primeng.module';
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
 import { SharedMantenedoresModule } from 'src/app/core/components/managment/mantenedores/shared-mantenedores.module';
+import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 
 
@@ -17,7 +20,13 @@ import { SharedMantenedoresModule } from 'src/app/core/components/managment/mant
     CategoriaRoutingModule,
     ManagmentPrimengModule,
     SharedSpinnerModule,
-    SharedMantenedoresModule
+    SharedMantenedoresModule,
+    SharedDirectiveModule
+  ],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    AlertService
   ]
 })
 export class CategoriaModule { }

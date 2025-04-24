@@ -1,14 +1,15 @@
-<span class="p-float-label">
+<span class="p-float-label col-12">
     <p-dropdown
-      placeholder="Seleccione un Estado de Vehiculo"
+      placeholder="Seleccione un Planeta"
       [options]="planetas"
       appendTo="body"
-      optionLabel="descripcion"
-      filterBy="descripcion"
+      optionLabel="nombre"
+      optionValue="id"
+      filterBy="nombre"
       [formControl]="planetasControl"
       [filter]="true"
       (onChange)="handleValueChange($event)"
     ></p-dropdown>
-    <label for="float-label" class="ml-2">{{ label }}</label>
+    <label class="ml-2" htmlFor="planetaId">{{ label }}</label>
   </span>
   
