@@ -13,6 +13,8 @@ import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { BadgeModule } from 'primeng/badge';
+import { ProgressBarModule } from 'primeng/progressbar';
 @NgModule({
 
   exports: [
@@ -29,6 +31,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     ToastModule,
     DialogModule,
     InputSwitchModule,
+    BadgeModule,
+    ProgressBarModule
+    
   ],
 })
 export class ManagmentPrimengModule {}

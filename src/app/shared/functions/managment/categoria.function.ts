@@ -7,6 +7,7 @@ export const convertToCategoriaManagment = (
 ): CategoriaManagment => {
   const myCategoria = new CategoriaManagment({
     nombre: categoriaForm.get('nombre')?.getRawValue(),
+    descripcion: categoriaForm.get('descripcion')?.getRawValue(),
     estado: ActivosState.ACTIVO,
     imagen: categoriaForm.get('imagen')?.getRawValue(),
     fechaCreacion: new Date(),

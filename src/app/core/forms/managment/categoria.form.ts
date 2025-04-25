@@ -5,6 +5,7 @@ export const createNuevaCategoriaForm = (
 ): FormGroup => {
   return formBuilder.group({
     nombre: [''],
+    descripcion: [''],
     imagen: [''],
   });
 };

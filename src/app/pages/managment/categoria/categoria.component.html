@@ -61,6 +61,7 @@
           <th>Nombre</th>
           <th>Estado</th>
           <th>Fecha Creacion</th>
+          <th>Imagen</th>
           <th>Acciones</th>
         </tr>
       </ng-template>
@@ -72,6 +73,14 @@
           </td>
 
           <td>{{ categoria.fechaCreacion | date : "mediumDate" }}</td>
+          <td>
+            <img
+              *ngIf="categoria.imagenUrl"
+              [src]="categoria.imagenUrl"
+              alt="Imagen Categoria"
+              class="w-10rem h-10rem object-cover"
+            />
+          </td>
           <td>
             <button
               pButton

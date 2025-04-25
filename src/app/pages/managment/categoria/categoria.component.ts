@@ -34,10 +34,11 @@ export class CategoriaComponent implements OnInit, OnDestroy {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
-            this.categorias = response;
-            console.log('categorias', this.categorias);
+            console.log(response);
+            this.categorias = response;            
           },
           error: (error) => {
+            console.log(error);
             this.alertService.showError(
               'Upss..',
               'Ocurrio un error al listar las categorias'

@@ -49,25 +49,43 @@
           <span class="p-float-label col-12">
             <input
               pInputText
-              id="imagen"
+              id="descripcion"
               autocomplete="off"
-              formControlName="imagen"
+              formControlName="descripcion"
             />
-            <label class="ml-2" htmlFor="imagen">Imagen</label>
+            <label class="ml-2" htmlFor="descripcion">Descripcion</label>
           </span>
         </div>
       </div>
 
-
+      <div class="field mb-4 col-12 md:col-12">
+        <div class="mb-3 flex align-items-center">
+          <span class="p-float-label col-12">
+            <p-fileUpload 
+            name="demo[]" 
+            url="https://www.primefaces.org/cdn/api/upload.php" 
+            (onUpload)="onUpload($event)" 
+            [multiple]="true" 
+            accept="image/*" 
+            [maxFileSize]="1000000">
+                <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">
+                            {{ file.name }} - {{ file.size }} bytes
+                        </li>
+                    </ul>
+                </ng-template>
+        </p-fileUpload>
+          </span>
+        </div>
+      </div>
     </div>
   </form>
 
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      [label]="
-        categoriaId == '' ? 'Guardar Categoria' : 'Actualizar Categoria'
-      "
+      [label]="categoriaId == '' ? 'Guardar Categoria' : 'Actualizar Categoria'"
       (click)="crearCategoria()"
     ></p-button>
   </ng-template>

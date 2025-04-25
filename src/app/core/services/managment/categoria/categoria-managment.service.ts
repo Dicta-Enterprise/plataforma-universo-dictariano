@@ -37,19 +37,34 @@ export class CategoriaManagmentService {
     );
   }
 
+
+
+
   crearCategoriaService$(
-    Categoria: CategoriaManagment
+    Categoria: CategoriaManagment,
+    imagen:File
   ): Observable<CategoriaManagment> {
     let url = `${this.base_url}categorias`;
+    const formData = new FormData();
+    // Agregar campos del formulario
+    formData.append('nombre', Categoria.nombre);
+    formData.append('descripcion', Categoria.descripcion);
+    // Agrega otros campos según tu DTO
+    
+    // Agregar archivo
+    formData.append('file', imagen, imagen.name);
 
     return this.httpClient
-      .post<IGeneric<CategoriaManagment>>(url, Categoria)
+      .post<IGeneric<CategoriaManagment>>(url, formData)
       .pipe(
         map((response) => {
           return CategoriaManagment.fromJson(response.data);
         })
       );
   }
+
+
+
 
   editarCategoriaService$(
     Categoria: CategoriaManagment,

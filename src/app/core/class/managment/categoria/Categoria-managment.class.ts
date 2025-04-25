@@ -3,6 +3,8 @@ import { ActivosState } from 'src/app/shared/enums';
 export class CategoriaManagment {
   id: string;
   nombre: string;
+  descripcion: string;
+  imagenUrl: string;
   estado: ActivosState;
   imagen: string;
   fechaCreacion: Date;
@@ -11,6 +13,8 @@ export class CategoriaManagment {
   constructor(categoriaManagment: Partial<CategoriaManagment> = {}) {
     this.id = categoriaManagment.id ?? '';
     this.nombre = categoriaManagment.nombre ?? '';
+    this.descripcion = categoriaManagment.descripcion ?? '';
+    this.imagenUrl = categoriaManagment.imagenUrl ?? '';
     this.estado = categoriaManagment.estado ?? ActivosState.ACTIVO;
     this.imagen = categoriaManagment.imagen ?? '';
     this.fechaCreacion = categoriaManagment.fechaCreacion ?? new Date();
@@ -22,6 +26,8 @@ export class CategoriaManagment {
     return new CategoriaManagment({
       id: categoriaManagment.id,
       nombre: categoriaManagment.nombre,
+      descripcion: categoriaManagment.descripcion,
+      imagenUrl: categoriaManagment.imagenUrl,
       estado: categoriaManagment.estado,
       imagen: categoriaManagment.imagen,
       fechaCreacion: categoriaManagment.fechaCreacion,
@@ -31,8 +37,9 @@ export class CategoriaManagment {
 
   static toJson(categoriaManagment: CategoriaManagment): any {
     return {
-      // id: categoriaManagment.id,
+      //id: categoriaManagment.id,
       nombre: categoriaManagment.nombre,
+      descripcion: categoriaManagment.descripcion,
       estado: 'ACTIVO',
       // imagen: categoriaManagment.imagen,
       fechaCreacion: categoriaManagment.fechaCreacion,
