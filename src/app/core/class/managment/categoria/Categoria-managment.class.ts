@@ -6,7 +6,6 @@ export class CategoriaManagment {
   descripcion: string;
   imagenUrl: string;
   estado: ActivosState;
-  imagen: string;
   fechaCreacion: Date;
   fechaActualizacion: Date;
 
@@ -14,9 +13,8 @@ export class CategoriaManagment {
     this.id = categoriaManagment.id ?? '';
     this.nombre = categoriaManagment.nombre ?? '';
     this.descripcion = categoriaManagment.descripcion ?? '';
-    this.imagenUrl = categoriaManagment.imagenUrl ?? '';
+    this.imagenUrl = categoriaManagment.imagenUrl ?? 'assets/loaders/bottle-loader.gif';
     this.estado = categoriaManagment.estado ?? ActivosState.ACTIVO;
-    this.imagen = categoriaManagment.imagen ?? '';
     this.fechaCreacion = categoriaManagment.fechaCreacion ?? new Date();
     this.fechaActualizacion =
       categoriaManagment.fechaActualizacion ?? new Date();
@@ -29,7 +27,6 @@ export class CategoriaManagment {
       descripcion: categoriaManagment.descripcion,
       imagenUrl: categoriaManagment.imagenUrl,
       estado: categoriaManagment.estado,
-      imagen: categoriaManagment.imagen,
       fechaCreacion: categoriaManagment.fechaCreacion,
       fechaActualizacion: categoriaManagment.fechaActualizacion,
     });
@@ -41,7 +38,6 @@ export class CategoriaManagment {
       nombre: categoriaManagment.nombre,
       descripcion: categoriaManagment.descripcion,
       estado: 'ACTIVO',
-      // imagen: categoriaManagment.imagen,
       fechaCreacion: categoriaManagment.fechaCreacion,
       fechaActualizacion: categoriaManagment.fechaActualizacion,
     };

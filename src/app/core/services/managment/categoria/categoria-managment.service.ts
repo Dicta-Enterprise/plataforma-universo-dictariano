@@ -32,7 +32,7 @@ export class CategoriaManagmentService {
 
     return this.httpClient.get<IGeneric<CategoriaManagment>>(url).pipe(
       map((response) => {
-        return CategoriaManagment.fromJson(response.data);
+        return CategoriaManagment.fromJson(response.data._value);
       })
     );
   }

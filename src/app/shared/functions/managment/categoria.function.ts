@@ -9,7 +9,6 @@ export const convertToCategoriaManagment = (
     nombre: categoriaForm.get('nombre')?.getRawValue(),
     descripcion: categoriaForm.get('descripcion')?.getRawValue(),
     estado: ActivosState.ACTIVO,
-    imagen: categoriaForm.get('imagen')?.getRawValue(),
     fechaCreacion: new Date(),
     fechaActualizacion: new Date(),
   });

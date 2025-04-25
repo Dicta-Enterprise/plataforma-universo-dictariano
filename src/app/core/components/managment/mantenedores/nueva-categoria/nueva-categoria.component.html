@@ -8,7 +8,7 @@
   appendTo="body"
   [modal]="true"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '52vw' }"
+  [style]="{ width: '35vw' }"
   header="NUEVA CATEGORIA"
   [draggable]="false"
   [resizable]="false"
@@ -24,63 +24,66 @@
     </div>
   </ng-template>
 
-  <form
-    class="flex flex-column gap-3 mt-4"
-    [formGroup]="categoriaForm"
-    (ngSubmit)="crearCategoria()"
-  >
-    <div class="grid formgrid p-fluid">
-      <div class="field mb-4 col-12 md:col-6">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <input
-              pInputText
-              id="nombre"
-              autocomplete="off"
-              formControlName="nombre"
-            />
-            <label class="ml-2" htmlFor="nombre">Nombre</label>
-          </span>
-        </div>
-      </div>
+  <div class="p-fluid flex flex-column lg:flex-row">
+    <div class="p-5 border-round flex-auto">
+      <div class="flex gap-5 flex-column-reverse md:flex-row">
+        <form
+          class="grid formgrid p-fluid"
+          [formGroup]="categoriaForm"
+          (ngSubmit)="crearCategoria()"
+        >
+          <div class="field mb-4 col-12 md:col-12">
+            <div class="mb-3 flex align-items-center">
+              <span class="p-float-label col-12">
+                <input
+                  pInputText
+                  id="nombre"
+                  autocomplete="off"
+                  formControlName="nombre"
+                />
+                <label class="ml-2" htmlFor="nombre">Nombre</label>
+              </span>
+            </div>
+          </div>
 
-      <div class="field mb-4 col-12 md:col-6">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <input
-              pInputText
-              id="descripcion"
-              autocomplete="off"
-              formControlName="descripcion"
-            />
-            <label class="ml-2" htmlFor="descripcion">Descripcion</label>
-          </span>
-        </div>
-      </div>
+          <div class="field mb-4 col-12 md:col-12">
+            <div class="mb-3 flex align-items-center">
+              <span class="p-float-label col-12">
+                <textarea
+                  id="float-input"
+                  formControlName="descripcion"
+                  rows="5"
+                  cols="30"
+                  pInputTextarea
+                >
+                </textarea>
+                <label class="ml-2" htmlFor="descripcion">Descripcion</label>
+              </span>
+            </div>
+          </div>
+        </form>
+        <div class="flex flex-column align-items-center flex-or">
+          <img
+            [src]="categoria.imagenUrl"
+            class="h-10rem w-10rem border-round-3xl"
+          />
 
-      <div class="field mb-4 col-12 md:col-12">
-        <div class="mb-3 flex align-items-center">
-          <span class="p-float-label col-12">
-            <p-fileUpload 
-            name="demo[]" 
-            url="https://www.primefaces.org/cdn/api/upload.php" 
-            (onUpload)="onUpload($event)" 
-            [multiple]="true" 
-            accept="image/*" 
-            [maxFileSize]="1000000">
-                <ng-template pTemplate="content">
-                    <ul *ngIf="uploadedFiles.length">
-                        <li *ngFor="let file of uploadedFiles">
-                            {{ file.name }} - {{ file.size }} bytes
-                        </li>
-                    </ul>
-                </ng-template>
-        </p-fileUpload>
-          </span>
+          <p-fileUpload
+            mode="basic"
+            name="avatar"
+            url="./upload.php"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            (onUpload)="onBasicUploadAuto($event)"
+            [auto]="true"
+            styleClass="p-button-outlined p-button-plain mt-2"
+            chooseLabel="Cambiar"
+            chooseIcon="pi pi-pencil"
+          ></p-fileUpload>
         </div>
       </div>
     </div>
-  </form>
+  </div>
 
   <ng-template pTemplate="footer">
     <p-button

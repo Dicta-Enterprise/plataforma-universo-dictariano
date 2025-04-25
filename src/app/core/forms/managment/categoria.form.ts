@@ -1,11 +1,10 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export const createNuevaCategoriaForm = (
   formBuilder: FormBuilder
 ): FormGroup => {
   return formBuilder.group({
-    nombre: [''],
-    descripcion: [''],
-    imagen: [''],
+    nombre: ['', [Validators.required]],
+    descripcion: ['', [Validators.required]],
   });
 };

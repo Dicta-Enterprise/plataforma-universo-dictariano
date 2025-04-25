@@ -7,13 +7,10 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
 import { finalize, Subscription } from 'rxjs';
 import { CategoriaManagment } from 'src/app/core/class/managment/managment';
 import { createNuevaCategoriaForm } from 'src/app/core/forms/managment/categoria.form';
-import { UploadImageService } from 'src/app/core/services/azure/upload.image.service';
 import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
-import { FolderState } from 'src/app/shared/enums/folder.enum';
 import { convertToCategoriaManagment } from 'src/app/shared/functions/managment/categoria.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
@@ -27,6 +24,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
   selectedFile: File = new File([], '');
   uploadedFiles: any[] = [];
   isLoading: boolean = false;
+  categoria: CategoriaManagment = new CategoriaManagment();
   @Input() isNuevaCategoria: boolean = false;
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() refreshCategoria: EventEmitter<boolean> =
@@ -37,7 +35,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private readonly categoriaManagmentService: CategoriaManagmentService,
+    private readonly categoriaManagmentService: CategoriaManagmentService
   ) {}
 
   ngOnInit(): void {}
@@ -53,9 +51,11 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
+            this.categoria = response;
             this.categoriaForm.patchValue(response);
           },
           error: (error) => {
+            console.log(error);
             this.alertService.showError(
               'Upss..',
               'Ocurrio un error al obtener la categoria'
@@ -73,6 +73,10 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
 
   clearComponents() {
     this.categoriaForm.reset();
+    this.selectedFile = new File([], '');
+    this.uploadedFiles = [];
+    this.categoria = new CategoriaManagment();
+    this.categoriaId = '';
   }
 
   crearCategoria() {
@@ -109,9 +113,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
             this.refreshCategoria.emit(true);
           },
           error: ({ error }) => {
-            error.message.forEach((element: any) => {
-              this.alertService.showError('Upss..', element);
-            });
+            this.alertService.showError('Upss..', error.message);
           },
         })
     );
@@ -153,7 +155,23 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
 
   onUpload(event: any) {
     if (this.uploadedFiles.length > 0) {
-      this.alertService.showWarn('Advertencia', 'Solo se permite subir un archivo.');
+      this.alertService.showWarn(
+        'Advertencia',
+        'Solo se permite subir un archivo.'
+      );
+      return;
+    }
+
+    this.selectedFile = event.files[0];
+    this.uploadedFiles.push(this.selectedFile);
+  }
+
+  onBasicUploadAuto(event: any) {
+    if (this.uploadedFiles.length > 0) {
+      this.alertService.showWarn(
+        'Advertencia',
+        'Solo se permite subir un archivo.'
+      );
       return;
     }
 
