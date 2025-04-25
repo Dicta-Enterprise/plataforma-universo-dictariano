@@ -17,7 +17,7 @@ export class CategoriaComponent implements OnInit, OnDestroy {
   categorias: CategoriaManagment[] = [];
   categoria: CategoriaManagment = new CategoriaManagment();
   isNuevaCategoria: boolean = false;
-  categoriaState:ActivosState = ActivosState.ACTIVO;
+  categoriaState: ActivosState = ActivosState.ACTIVO;
 
   constructor(
     private readonly categoriaManagmentService: CategoriaManagmentService,
@@ -36,15 +36,10 @@ export class CategoriaComponent implements OnInit, OnDestroy {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
-            console.log(response);
-            this.categorias = response;            
+            this.categorias = response;
           },
-          error: (error) => {
-            console.log(error);
-            this.alertService.showError(
-              'Upss..',
-              'Ocurrio un error al listar las categorias'
-            );
+          error: ({ error }) => {
+            this.alertService.showError('Upss..', error.message);
           },
         })
     );
@@ -73,19 +68,14 @@ export class CategoriaComponent implements OnInit, OnDestroy {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
-   
             this.alertService.showSuccess(
               'Exito',
               'Categoria eliminada correctamente'
             );
             this.listarCategorias();
           },
-          error: (error) => {
-            console.log(error);
-            this.alertService.showError(
-              'Upss..',
-              'Ocurrio un error al eliminar la categoria'
-            );
+          error: ({ error }) => {
+            this.alertService.showError('Upss..', error.message);
           },
         })
     );

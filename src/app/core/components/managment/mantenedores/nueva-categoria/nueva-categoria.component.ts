@@ -58,7 +58,6 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
             this.categoriaForm.patchValue(response);
           },
           error: (error) => {
-            console.log(error);
             this.alertService.showError(
               'Upss..',
               'Ocurrio un error al obtener la categoria'
@@ -139,14 +138,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
             this.refreshCategoria.emit(true);
           },
           error: ({ error }) => {
-            error.message.forEach((element: any) => {
-              this.alertService.showError('Upss..', element);
-            });
-
-            this.alertService.showError(
-              'Upss..',
-              'Ocurrio un error al actualizar la categoria'
-            );
+            this.alertService.showError('Upss..', error.message);
           },
         })
     );

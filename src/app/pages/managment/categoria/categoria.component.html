@@ -28,12 +28,7 @@
       class="w-full"
       [tableStyle]="{ 'min-width': '50rem', 'font-size': '15px' }"
       currentPageReportTemplate="Mostrando {last} Trayectorias de  {totalRecords}"
-      [globalFilterFields]="[
-        'nombre',
-        'origen.descripcion',
-        'destino.descripcion',
-        'totalOficinas'
-      ]"
+      [globalFilterFields]="['nombre', 'descripcion']"
     >
       <ng-template pTemplate="caption">
         <div class="flex justify-content-between">
@@ -59,6 +54,7 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Nombre</th>
+          <th>Descripción</th>
           <th>Estado</th>
           <th>Fecha Creacion</th>
           <th>Imagen</th>
@@ -68,8 +64,9 @@
       <ng-template pTemplate="body" let-categoria let-columns="columns">
         <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ categoria.nombre }}</td>
+          <td>{{ categoria.descripcion }}</td>
           <td>
-            <p-tag [appActivoInactivo]="categoria.estado"> </p-tag>
+            <p-tag [appBooleanStatus]="categoria.estado"> </p-tag>
           </td>
 
           <td>{{ categoria.fechaCreacion | date : "mediumDate" }}</td>
@@ -81,7 +78,7 @@
               class="w-5rem h-5rem object-cover"
             />
           </td>
-          <td>
+          <td class="justify-content-center align-items-center">
             <button
               pButton
               pRipple
