@@ -3,6 +3,7 @@ import { Table } from 'primeng/table';
 import { finalize, Subscription } from 'rxjs';
 import { CategoriaManagment } from 'src/app/core/class/managment/managment';
 import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
+import { ActivosState } from 'src/app/shared/enums';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -16,6 +17,7 @@ export class CategoriaComponent implements OnInit, OnDestroy {
   categorias: CategoriaManagment[] = [];
   categoria: CategoriaManagment = new CategoriaManagment();
   isNuevaCategoria: boolean = false;
+  categoriaState:ActivosState = ActivosState.ACTIVO;
 
   constructor(
     private readonly categoriaManagmentService: CategoriaManagmentService,
@@ -63,7 +65,31 @@ export class CategoriaComponent implements OnInit, OnDestroy {
     this.showNuevaCategoria();
   }
 
-  eliminarCategoria(categoria: CategoriaManagment) {}
+  eliminarCategoria(categoria: CategoriaManagment) {
+    this.isLoading = true;
+    this.subscription.add(
+      this.categoriaManagmentService
+        .eliminarCategoriaService$(categoria.id)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+   
+            this.alertService.showSuccess(
+              'Exito',
+              'Categoria eliminada correctamente'
+            );
+            this.listarCategorias();
+          },
+          error: (error) => {
+            console.log(error);
+            this.alertService.showError(
+              'Upss..',
+              'Ocurrio un error al eliminar la categoria'
+            );
+          },
+        })
+    );
+  }
 
   clear(table: Table) {
     table.clear();

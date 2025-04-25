@@ -81,7 +81,15 @@ export class CategoriaManagmentService {
       );
   }
 
-  eliminarCategoriaService$(id: number) {}
+
+  eliminarCategoriaService$(id: string):Observable<CategoriaManagment> {
+    let url = `${this.base_url}categorias/${id}`;
+    return this.httpClient.delete<IGeneric<CategoriaManagment>>(url).pipe(
+      map((response) => {
+        return CategoriaManagment.fromJson(response.data._value);
+      })
+    );
+  }
 
   listarDropdownCategoriasService$() {}
 }

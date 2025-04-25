@@ -66,7 +66,7 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-categoria let-columns="columns">
-        <tr class="categoriar-pointer hover:bg-blue-900 hover:text-white">
+        <tr class="cursor-pointer hover:bg-blue-900 hover:text-white">
           <td>{{ categoria.nombre }}</td>
           <td>
             <p-tag [appActivoInactivo]="categoria.estado"> </p-tag>
@@ -93,7 +93,7 @@
             <p-inputSwitch
               name="payment"
               class="ml-3"
-              [(ngModel)]="categoria.activo"
+              [(ngModel)]="categoria.estado"
               (ngModelChange)="eliminarCategoria(categoria)"
             ></p-inputSwitch>
           </td>

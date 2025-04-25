@@ -5,7 +5,7 @@ export class CategoriaManagment {
   nombre: string;
   descripcion: string;
   imagenUrl: string;
-  estado: ActivosState;
+  estado: boolean;
   fechaCreacion: Date;
   fechaActualizacion: Date;
 
@@ -14,19 +14,19 @@ export class CategoriaManagment {
     this.nombre = categoriaManagment.nombre ?? '';
     this.descripcion = categoriaManagment.descripcion ?? '';
     this.imagenUrl = categoriaManagment.imagenUrl ?? 'assets/loaders/bottle-loader.gif';
-    this.estado = categoriaManagment.estado ?? ActivosState.ACTIVO;
+    this.estado = categoriaManagment.estado ?? true;
     this.fechaCreacion = categoriaManagment.fechaCreacion ?? new Date();
     this.fechaActualizacion =
       categoriaManagment.fechaActualizacion ?? new Date();
   }
 
-  static fromJson(categoriaManagment: any): CategoriaManagment {
+  static fromJson(categoriaManagment: any): CategoriaManagment {    
     return new CategoriaManagment({
       id: categoriaManagment.id,
       nombre: categoriaManagment.nombre,
       descripcion: categoriaManagment.descripcion,
       imagenUrl: categoriaManagment.imagenUrl,
-      estado: categoriaManagment.estado,
+      estado: categoriaManagment.estado ,
       fechaCreacion: categoriaManagment.fechaCreacion,
       fechaActualizacion: categoriaManagment.fechaActualizacion,
     });
@@ -37,7 +37,7 @@ export class CategoriaManagment {
       //id: categoriaManagment.id,
       nombre: categoriaManagment.nombre,
       descripcion: categoriaManagment.descripcion,
-      estado: 'ACTIVO',
+      estado: categoriaManagment.estado,
       fechaCreacion: categoriaManagment.fechaCreacion,
       fechaActualizacion: categoriaManagment.fechaActualizacion,
     };
