@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { finalize, Subscription } from 'rxjs';
 import { CategoriaManagment } from 'src/app/core/class/managment/managment';
 import { createNuevaCategoriaForm } from 'src/app/core/forms/managment/categoria.form';
@@ -23,6 +24,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
   @Input() categoriaId: string;
   selectedFile: File = new File([], '');
   uploadedFiles: any[] = [];
+  tempUrl: SafeUrl;
   isLoading: boolean = false;
   categoria: CategoriaManagment = new CategoriaManagment();
   @Input() isNuevaCategoria: boolean = false;
@@ -35,7 +37,8 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private readonly categoriaManagmentService: CategoriaManagmentService
+    private readonly categoriaManagmentService: CategoriaManagmentService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {}
@@ -175,7 +178,19 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.categoria.imagenUrl = URL.createObjectURL(event.files[0]);
+    this.tempUrl = this.sanitizer.bypassSecurityTrustUrl(
+      this.categoria.imagenUrl
+    );
+
     this.selectedFile = event.files[0];
     this.uploadedFiles.push(this.selectedFile);
+  }
+
+  deleteImageTemp() {
+    this.selectedFile = new File([], '');
+    this.uploadedFiles = [];
+    this.categoria.imagenUrl = '';
+    this.tempUrl = this.sanitizer.bypassSecurityTrustUrl('');
   }
 }

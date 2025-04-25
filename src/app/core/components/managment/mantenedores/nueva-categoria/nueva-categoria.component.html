@@ -32,7 +32,7 @@
           [formGroup]="categoriaForm"
           (ngSubmit)="crearCategoria()"
         >
-          <div class="field mb-4 col-12 md:col-12">
+          <div class="field mb-3 col-12 md:col-12">
             <div class="mb-3 flex align-items-center">
               <span class="p-float-label col-12">
                 <input
@@ -52,7 +52,7 @@
                 <textarea
                   id="float-input"
                   formControlName="descripcion"
-                  rows="5"
+                  rows="7"
                   cols="30"
                   pInputTextarea
                 >
@@ -70,16 +70,16 @@
 
           <p-fileUpload
             mode="basic"
-            name="avatar"
-            url="./upload.php"
+            [auto]="true"
+            name="file"
+            chooseIcon="pi pi-pencil"
+            [customUpload]="true"
             accept="image/*"
             [maxFileSize]="1000000"
-            (onUpload)="onBasicUploadAuto($event)"
-            [auto]="true"
             styleClass="p-button-outlined p-button-plain mt-2"
-            chooseLabel="Cambiar"
-            chooseIcon="pi pi-pencil"
-          ></p-fileUpload>
+            (uploadHandler)="onBasicUploadAuto($event)"
+            chooseLabel="Seleccionar Imagen"
+          />
         </div>
       </div>
     </div>
