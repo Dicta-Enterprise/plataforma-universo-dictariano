@@ -50,10 +50,9 @@ export class GalaxiaRepositoryImpl implements GalaxiaRepository {
   }
 
   editarGalaxiaService$(
-    galaxiaId: string,
     galaxia: GalaxiaManagment
   ): Observable<GalaxiaManagment> {
-    let url = `${this.base_url}galaxias/${galaxiaId}`;
+    let url = `${this.base_url}galaxias/${galaxia.id}`;
 
     return this.httpClient.patch<IGeneric<GalaxiaManagment>>(url, galaxia).pipe(
       map((response) => {

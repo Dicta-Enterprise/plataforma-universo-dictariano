@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { map, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CategoriaManagment } from 'src/app/core/class/managment/managment';
-import {
-  IGeneric,
-  IGenericArrays,
-} from 'src/app/core/interfaces/genericas/IGeneric.interface';
+import { CategoriaRepository } from 'src/app/core/repositories/managment/categoria.repository';
+import { CATEGORIA_REPOSITORY } from 'src/app/core/tokens/managment/categoria.token';
 
 @Injectable({
   providedIn: 'root',
@@ -14,81 +12,35 @@ import {
 export class CategoriaManagmentService {
   private base_url = environment.URL_BACKEND;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    @Inject(CATEGORIA_REPOSITORY)
+    private readonly categoriaRepository: CategoriaRepository,
+    private httpClient: HttpClient
+  ) {}
 
   listarCategoriasService$(): Observable<CategoriaManagment[]> {
-    let url = `${this.base_url}categorias`;
-    return this.httpClient.get<IGenericArrays<CategoriaManagment>>(url).pipe(
-      map((response: IGenericArrays<CategoriaManagment>) => {
-        return response.data._value.map((categoria) => {
-          return CategoriaManagment.fromJson(categoria);
-        });
-      })
-    );
+    return this.categoriaRepository.listarCategoriasService$();
   }
 
   obtenerCategoriaService$(id: string): Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias/${id}`;
-
-    return this.httpClient.get<IGeneric<CategoriaManagment>>(url).pipe(
-      map((response) => {
-        return CategoriaManagment.fromJson(response.data._value);
-      })
-    );
+    return this.categoriaRepository.obtenerCategoriaService$(id);
   }
-
-
-
 
   crearCategoriaService$(
     Categoria: CategoriaManagment,
-    imagen:File
+    imagen: File
   ): Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias`;
-    const formData = new FormData();
-    // Agregar campos del formulario
-    formData.append('nombre', Categoria.nombre);
-    formData.append('descripcion', Categoria.descripcion);
-    // Agrega otros campos según tu DTO
-    
-    // Agregar archivo
-    formData.append('file', imagen, imagen.name);
-
-    return this.httpClient
-      .post<IGeneric<CategoriaManagment>>(url, formData)
-      .pipe(
-        map((response) => {
-          return CategoriaManagment.fromJson(response.data);
-        })
-      );
+    return this.categoriaRepository.crearCategoriaService$(Categoria, imagen);
   }
-
-
-
 
   editarCategoriaService$(
-    Categoria: CategoriaManagment,
-    categoriaId: string
+    Categoria: CategoriaManagment
   ): Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias/${categoriaId}`;
-
-    return this.httpClient
-      .patch<IGeneric<CategoriaManagment>>(url, Categoria)
-      .pipe(
-        map((response) => {
-          return CategoriaManagment.fromJson(response.data);
-        })
-      );
+    return this.categoriaRepository.editarCategoriaService$(Categoria);
   }
 
-
-  eliminarCategoriaService$(id: string):Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias/${id}`;
-    return this.httpClient.delete<IGeneric<CategoriaManagment>>(url).pipe(
-      map((response) => {
-        return CategoriaManagment.fromJson(response.data._value);
-      })
-    );
+  eliminarCategoriaService$(id: string): Observable<CategoriaManagment> {
+    return this.categoriaRepository.eliminarCategoriaService$(id);
   }
 
   listarDropdownCategoriasService$() {}

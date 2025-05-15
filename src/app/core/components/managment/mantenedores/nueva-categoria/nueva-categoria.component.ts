@@ -126,7 +126,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.categoriaManagmentService
-        .editarCategoriaService$(categoria, this.categoriaId)
+        .editarCategoriaService$(categoria)
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {

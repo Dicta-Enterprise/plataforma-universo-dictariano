@@ -29,9 +29,8 @@ export class GalaxiasManagmentService {
 
   editarGalaxiaService$(
     galaxia: GalaxiaManagment,
-    galaxiaId: string
   ): Observable<GalaxiaManagment> {
-    return this.galaxiaRepository.editarGalaxiaService$(galaxiaId, galaxia);
+    return this.galaxiaRepository.editarGalaxiaService$( galaxia);
   }
 
   eliminarGalaxiaService$(id: string): Observable<GalaxiaManagment> {

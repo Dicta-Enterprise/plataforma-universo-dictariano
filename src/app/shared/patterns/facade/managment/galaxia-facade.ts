@@ -36,4 +36,36 @@ export class GalaxiaFacade {
       },
     });
   }
+
+  obtenerGalaxia(id: string) {
+    this.galaxiaService.obtenerGalaxiaService$(id).subscribe({
+      next: (response) => {
+        this.galaxia$.next(response);
+        this.alertService.showSuccess('Exito', 'Galaxia cargada');
+      },
+    });
+  }
+
+  crearGalaxia(galaxia: GalaxiaManagment) {
+    this.galaxiaService.crearGalaxiaService$(galaxia).subscribe({
+      next: (response) => {
+        this.alertService.showSuccess('Exito', 'Galaxia creada');
+        this.galaxias$.next([...this.galaxias$.getValue(), response]);
+      },
+    });
+  }
+
+  actualizarGalaxia(galaxia: GalaxiaManagment) {
+    this.galaxiaService.editarGalaxiaService$(galaxia).subscribe({
+      next: (response) => {
+        this.alertService.showSuccess('Exito', 'Galaxia actualizada');
+        const galaxias = this.galaxias$.getValue();
+        const index = galaxias.findIndex((g) => g.id === galaxia.id);
+        if (index !== -1) {
+          galaxias[index] = response;
+          this.galaxias$.next(galaxias);
+        }
+      },
+    });
+  }
 }
