@@ -1,18 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { createNuevaGalaxiaform } from 'src/app/core/forms/managment/galaxias.form';
-import { AlertService } from 'src/app/shared/services/alert.service';
 import { CategoriaManagment } from 'src/app/core/class/managment/managment';
 import { convertToGalaxiaManagment } from 'src/app/shared/functions/managment/galaxia.function';
 import { GalaxiaFacade } from 'src/app/shared/patterns/facade/managment/galaxia-facade';
 import { CategoriaFacade } from 'src/app/shared/patterns/facade/managment/categoria-facade';
-
-export interface ItemImagen {
-  file: File;
-  categoria: string;
-  url: string;
-}
+import { ItemImagen } from 'src/app/core/interfaces/genericas/IItemImagen.interface';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-nueva-galaxia',
@@ -27,14 +22,15 @@ export class NuevaGalaxiaComponent {
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() refreshGalaxia: EventEmitter<boolean> = new EventEmitter<boolean>();
   imagenPreviews: ItemImagen[] = [];
-  galaxiaForm: FormGroup;
+
+  galaxiaForm: FormGroup = createNuevaGalaxiaform(this.fb);
   categorias$ = this.categoriaFacade.categorias$;
 
   constructor(
     private fb: FormBuilder,
-    private alertService: AlertService,
     private readonly galaxiaFacade: GalaxiaFacade,
-    private readonly categoriaFacade: CategoriaFacade
+    private readonly categoriaFacade: CategoriaFacade,
+    private readonly alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -42,26 +38,14 @@ export class NuevaGalaxiaComponent {
   }
 
   onShow() {
-    this.galaxiaForm = createNuevaGalaxiaform(
-      this.fb,
-      this.categorias$.getValue().length
-    );
-
     if (this.galaxiaId === '') return;
 
     this.galaxiaFacade.obtenerGalaxia(this.galaxiaId);
   }
 
-  get imagenesFormArray(): FormArray {
-    return this.galaxiaForm.get('imagenes') as FormArray;
-  }
-
   onFileSelected(event: any, index: number, categoria: CategoriaManagment) {
     const file: File = event.files[0];
     if (!file) return;
-
-    this.imagenesFormArray.at(index).get('imagen')?.setValue(file);
-
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -75,31 +59,25 @@ export class NuevaGalaxiaComponent {
   }
 
   crearGalaxia() {
-    // if (this.galaxiaForm.invalid) {
-    //   this.alertService.showWarn('Ups..', 'Formulario incompleto');
-    //   return;
-    // }
+    if (this.galaxiaForm.invalid) {
+      this.alertService.showWarn('Ups..', 'Formulario incompleto');
+      return;
+    }
 
-    console.log("Creando");
-    console.log(this.galaxiaForm.getRawValue());
-    console.log(this.imagenPreviews);
+    const galaxia = convertToGalaxiaManagment(
+      this.galaxiaForm,
+      this.imagenPreviews
+    );
 
-
-
-    const galaxia = convertToGalaxiaManagment(this.galaxiaForm);
-
-
-
-
-
-    // switch (this.galaxiaId) {
-    //   case '':
-    //     this.galaxiaFacade.crearGalaxia(galaxia);
-    //     break;
-    //   default:
-    //     this.galaxiaFacade.actualizarGalaxia(galaxia);
-    //     break;
-    // }
+    
+    switch (this.galaxiaId) {
+      case '':
+        this.galaxiaFacade.crearGalaxia(galaxia);
+        break;
+      default:
+        this.galaxiaFacade.actualizarGalaxia(galaxia);
+        break;
+    }
   }
 
   onHide() {

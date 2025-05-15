@@ -41,6 +41,8 @@ export class GalaxiaRepositoryImpl implements GalaxiaRepository {
   crearGalaxiaService$(
     galaxia: GalaxiaManagment
   ): Observable<GalaxiaManagment> {
+
+    console.log(galaxia);
     let url = `${this.base_url}galaxias`;
     return this.httpClient.post<IGeneric<GalaxiaManagment>>(url, galaxia).pipe(
       map((response) => {
