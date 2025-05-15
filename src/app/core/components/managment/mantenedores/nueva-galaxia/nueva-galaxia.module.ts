@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { GalaxiasManagmentService } from '../../../../services/managment/galaxias/galaxias-managment.service';
+import { CustomDropdownsModule } from 'src/app/core/widgets/dropdowns/custom-dropdowns.module';
 
 
 
@@ -19,7 +20,8 @@ import { GalaxiasManagmentService } from '../../../../services/managment/galaxia
     ManagmentPrimengModule,
     SharedSpinnerModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    CustomDropdownsModule
   ],
   exports: [
     NuevaGalaxiaComponent

@@ -1,17 +1,15 @@
 <span class="p-float-label w-full">
-    <p-dropdown
-      [placeholder]="label"
-      [options]="categorias"
-      optionLabel="nombre"
-      appendTo="body"
-      optionValue="id"
-      filterBy="nombre"
-      [showClear]="true" 
-      [filter]="true"
-      [disabled]="isDisabled"
-      (onChange)="handleValueChange($event)"
-      [formControl]="categoriaControl"
-    ></p-dropdown>
-    <label for="float-label" class="ml-2">{{ label }}</label>
+  <p-dropdown
+    [placeholder]="label"
+    [options]="categorias"
+    optionLabel="nombre"
+    appendTo="body"
+    optionValue="id"
+    filterBy="nombre"
+    [showClear]="true"
+    [filter]="true"
+    (onChange)="handleValueChange($event)"
+    [formControl]="categoriaControl"
+  ></p-dropdown>
+  <label for="float-label" class="ml-2">{{ label }}</label>
 </span>
-  

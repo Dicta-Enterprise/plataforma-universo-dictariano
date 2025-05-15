@@ -65,21 +65,13 @@
     <div formArrayName="imagenes">
       <div
         class="grid align-items-center"
-        *ngFor="let categoria of categorias; let i = index"
+        *ngFor="let categoria of categorias$ | async; let i = index"
         [formGroupName]="i"
       >
         <div class="field col-12 md:col-4">
           <span class="p-float-label w-full">
-            <p-dropdown
-              optionLabel="nombre"
-              appendTo="body"
-              [options]="categorias"
-              placeholder="Selecciona una Categoria"
-              inputId="categoria-select"
-              class="w-full"
-              formControlName="categoria"
-            />
-            <label for="categoria-select">Categorías</label>
+            <app-custom-categoria-dropdown
+            ></app-custom-categoria-dropdown>
           </span>
         </div>
 
@@ -101,7 +93,7 @@
         <div class="field col-12 md:col-4 flex justify-content-center">
           <img
             *ngIf="imagenPreviews[i]"
-            [src]="imagenPreviews[i]"
+            [src]="imagenPreviews[i].url"
             class="h-10rem w-10rem border-round-3xl object-cover"
             alt="Vista previa de imagen"
           />

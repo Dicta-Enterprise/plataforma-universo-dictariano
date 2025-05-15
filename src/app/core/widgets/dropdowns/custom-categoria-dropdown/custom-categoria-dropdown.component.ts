@@ -5,7 +5,6 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
-import { Estandar } from 'src/app/core/class/estandar/Estandar.class';
 import { CategoriaManagment } from 'src/app/core/class/managment/managment';
 import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
