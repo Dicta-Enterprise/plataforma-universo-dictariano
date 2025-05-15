@@ -15,6 +15,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { BadgeModule } from 'primeng/badge';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { DividerModule } from 'primeng/divider';
 @NgModule({
 
   exports: [
@@ -32,7 +33,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
     DialogModule,
     InputSwitchModule,
     BadgeModule,
-    ProgressBarModule
+    ProgressBarModule,
+    DividerModule
     
   ],
 })

@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 
-
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -17,6 +16,8 @@ import { ActivoInactivoPipe } from './shared/pipes/activo-inactivo/activo-inacti
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { CUSTOM_PROVIDERS } from './core/providers/providers';
+import { SharedSpinnerModule } from './shared/components/spinners/shared-spinner.module';
 
 @NgModule({
   declarations: [
@@ -33,11 +34,13 @@ import { MessageService } from 'primeng/api';
     MenubarModule,
     StyleClassModule,
     InputTextModule,
+    SharedSpinnerModule,
+
     ButtonModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
   ],
-  providers: [MessageService],
-  bootstrap: [AppComponent]
+  providers: [MessageService, ...CUSTOM_PROVIDERS],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

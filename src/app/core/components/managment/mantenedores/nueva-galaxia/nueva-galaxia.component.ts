@@ -1,16 +1,26 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
 import { createNuevaGalaxiaform } from 'src/app/core/forms/managment/galaxias.form';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { GalaxiasManagmentService } from '../../../../services/managment/galaxias/galaxias-managment.service';
-import { GalaxiaManagment } from 'src/app/core/class/managment/managment';
+import {
+  CategoriaManagment,
+  GalaxiaManagment,
+} from 'src/app/core/class/managment/managment';
 import { convertToGalaxiaManagment } from 'src/app/shared/functions/managment/galaxia.function';
+import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
+
+
+export interface ItemImagen {
+  imagen: File;
+  categoria: string;
+}
 
 @Component({
   selector: 'app-nueva-galaxia',
   templateUrl: './nueva-galaxia.component.html',
-  styleUrls: ['./nueva-galaxia.component.css']
+  styleUrls: ['./nueva-galaxia.component.css'],
 })
 export class NuevaGalaxiaComponent {
   private subscription: Subscription = new Subscription();
@@ -21,15 +31,44 @@ export class NuevaGalaxiaComponent {
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() refreshGalaxia: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  galaxiaForm: FormGroup = createNuevaGalaxiaform(this.fb);
+
+
+  categorias: CategoriaManagment[] = [];
+  imagenPreviews: ItemImagen[] = [];
+
+
+  galaxiaForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private readonly galaxiaManagmentService: GalaxiasManagmentService
-  ) { }
+    private readonly galaxiaManagmentService: GalaxiasManagmentService,
+    private readonly categoriaManagmentService: CategoriaManagmentService
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.listarCategorias();
+  }
+
+  listarCategorias() {
+    this.subscription.add(
+      this.categoriaManagmentService.listarCategoriasService$().subscribe({
+        next: (response) => {
+          this.categorias = response;
+          this.galaxiaForm = createNuevaGalaxiaform(
+            this.fb,
+            this.categorias.length
+          );
+        },
+        error: () => {
+          this.alertService.showError(
+            'Upss..',
+            'Ocurrió un error al obtener las categorías'
+          );
+        },
+      })
+    );
+  }
 
   onShow() {
     if (this.galaxiaId === '') return;
@@ -53,15 +92,36 @@ export class NuevaGalaxiaComponent {
         })
     );
   }
+  get imagenesFormArray(): FormArray {
+    return this.galaxiaForm.get('imagenes') as FormArray;
+  }
+
+  onFileSelected(event: any, index: number, categoria:CategoriaManagment) {
+    const file: File = event.files[0];
+    if (!file) return;
+
+    // Guarda la imagen en el FormArray
+    this.imagenesFormArray.at(index).get('imagen')?.setValue(file);
+
+    // Opcional: Mostrar preview de imagen
+    const reader = new FileReader();
+    reader.onload = () => {
+      // this.imagenPreviews[index] = reader.result as string;
+      this.imagenPreviews[index] = {
+        imagen: file,
+        categoria: categoria.nombre,
+      };
+    };
+    reader.readAsDataURL(file);
+  }
+
+
 
   onHide() {
     this.onHideEmit.emit(false);
-    this.clearComponents();
   }
 
-  clearComponents() {
-    this.galaxiaForm.reset();
-  }
+
 
   crearGalaxia() {
     if (this.galaxiaForm.invalid) {
@@ -102,11 +162,16 @@ export class NuevaGalaxiaComponent {
                 this.alertService.showError('Ups...', element);
               });
             } else {
-              this.alertService.showError('Ups...', error.error || 'Ocurrió un error inesperado');
+              this.alertService.showError(
+                'Ups...',
+                error.error || 'Ocurrió un error inesperado'
+              );
             }
-            this.alertService.showError('Ups...', 'Ocurrio un error al crear la galaxia');
-
-          }
+            this.alertService.showError(
+              'Ups...',
+              'Ocurrio un error al crear la galaxia'
+            );
+          },
         })
     );
   }
@@ -133,10 +198,13 @@ export class NuevaGalaxiaComponent {
                 this.alertService.showError('Upss..', element);
               });
             } else {
-              this.alertService.showError('Ups...', error.error)
+              this.alertService.showError('Ups...', error.error);
             }
 
-            this.alertService.showError('Ups..', 'Ocurrio un error al actualizar la galaxia');
+            this.alertService.showError(
+              'Ups..',
+              'Ocurrio un error al actualizar la galaxia'
+            );
           },
         })
     );

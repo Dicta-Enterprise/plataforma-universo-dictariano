@@ -15,96 +15,105 @@
 >
   <ng-template pTemplate="header">
     <div class="flex flex-column gap-2">
-        <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
-            {{ galaxiaId ? 'ACTUALIZAR GALAXIA' : 'NUEVA GALAXIA' }}
-        </h1>
-        <span class="text-600 text-base">
-            {{ galaxiaId ? 'Actualizando Galaxia' : 'Crea todas las galaxias que desees' }}
-        </span>
+      <h1 class="m-0 text-900 font-semibold text-xl line-height-3">
+        {{ galaxiaId ? "ACTUALIZAR GALAXIA" : "NUEVA GALAXIA" }}
+      </h1>
+      <span class="text-600 text-base">
+        {{
+          galaxiaId
+            ? "Actualizando Galaxia"
+            : "Crea todas las galaxias que desees"
+        }}
+      </span>
     </div>
   </ng-template>
 
   <form
-    class="flex flex-column gap-3 mt-4"
+    *ngIf="galaxiaForm"
+    class="flex flex-column gap-5 mt-4"
     [formGroup]="galaxiaForm"
     (ngSubmit)="crearGalaxia()"
   >
-    <div class="grid formgrid p-fluid">
+    <div class="grid">
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label">
+          <input
+            pInputText
+            id="nombre"
+            autocomplete="off"
+            formControlName="nombre"
+            class="w-full"
+          />
+          <label for="nombre">Nombre</label>
+        </span>
+      </div>
 
-        <div class="field mb-4 col-12 md:col-12" style="position: relative">
-            <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
-                {{ galaxiaForm.get('nombre')?.value?.length || 0 }}/60 caracteres
-            </small>
+      <div class="field col-12 md:col-6">
+        <span class="p-float-label">
+          <input
+            pInputText
+            id="descripcion"
+            autocomplete="off"
+            formControlName="descripcion"
+            class="w-full"
+          />
+          <label for="descripcion">Descripción</label>
+        </span>
+      </div>
+    </div>
 
-            <div class="mb-3 flex align-items-center">
-                <span class="p-float-label col-12">
-                    <input
-                        pInputText
-                        id="nombre"
-                        autocomplete="off"
-                        formControlName="nombre"
-                        maxlength="60"
-                    />
-                    <label class="ml-2" htmlFor="nombre">Nombre</label>
-                </span>
-            </div>
-            <div class="flex justify-content-end text-sm mt-1">
-                <small class="p-error" *ngIf="galaxiaForm.get('nombre')?.invalid && galaxiaForm.get('nombre')?.touched">
-                  Este campo es obligatorio
-                </small>
-            </div>
+    <div formArrayName="imagenes">
+      <div
+        class="grid align-items-center"
+        *ngFor="let categoria of categorias; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="field col-12 md:col-4">
+          <span class="p-float-label w-full">
+            <p-dropdown
+              optionLabel="nombre"
+              appendTo="body"
+              [options]="categorias"
+              placeholder="Selecciona una Categoria"
+              inputId="categoria-select"
+              class="w-full"
+              formControlName="categoria"
+            />
+            <label for="categoria-select">Categorías</label>
+          </span>
         </div>
 
-        <div class="field mb-4 col-12 md:col-12" style="position: relative">
-            <small class="text-500 " style="position: absolute; top: -25px; right: 30px; font-size: 0.75rem;">
-                {{ galaxiaForm.get('descripcion')?.value?.length || 0 }}/200 caracteres
-            </small>
-            <div class="mb-3 flex align-items-center">
-                <span class="p-float-label col-12">
-                    <input
-                        pInputText
-                        id="descripcion"
-                        autocomplete="off"
-                        formControlName="descripcion"
-                        maxlength="200"
-                    />
-                    <label class="ml-2" htmlFor="descripcion">Descripcion</label>
-                </span>
-            </div>
-            <div class="flex justify-content-end text-sm mt-1">
-                <small class="p-error" *ngIf="galaxiaForm.get('descripcion')?.invalid && galaxiaForm.get('descripcion')?.touched">
-                    Este campo es obligatorio
-                </small>
-            </div>
+        <div class="field col-12 md:col-4">
+          <p-fileUpload
+            mode="basic"
+            [auto]="true"
+            name="file"
+            chooseIcon="pi pi-pencil"
+            [customUpload]="true"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            styleClass="p-button-outlined p-button-plain w-full"
+            chooseLabel="Seleccionar Imagen"
+            (onSelect)="onFileSelected($event, i, categoria)"
+          />
         </div>
 
-        <div class="field mb-4 col-12 md:col-7">
-            <div class="mb-3 flex align-items-center">
-                <span class="p-float-label col-12">
-                    <input
-                        pInputText
-                        id="imagen"
-                        autocomplete="off"
-                        formControlName="imagen"
-                    />
-                    <label class="ml-2" htmlFor="imagen">Imagen</label>
-                </span>
-            </div>
-            <div class="flex justify-content-end text-sm mt-1">
-                <small class="p-error" *ngIf="galaxiaForm.get('imagen')?.invalid && galaxiaForm.get('imagen')?.touched">
-                    URL inválida (.jpg, .png, .gif, .jpeg)
-                </small>
-            </div>
+        <div class="field col-12 md:col-4 flex justify-content-center">
+          <img
+            *ngIf="imagenPreviews[i]"
+            [src]="imagenPreviews[i]"
+            class="h-10rem w-10rem border-round-3xl object-cover"
+            alt="Vista previa de imagen"
+          />
         </div>
+      </div>
     </div>
   </form>
 
   <ng-template pTemplate="footer">
     <p-button
       icon="pi pi-check"
-      [label]="
-        galaxiaId == '' ? 'Guardar Galaxia' : 'Actualizar Galaxia'
-      "
+      [label]="galaxiaId == '' ? 'Guardar Galaxia' : 'Actualizar Galaxia'"
       (click)="crearGalaxia()"
     ></p-button>
   </ng-template>
