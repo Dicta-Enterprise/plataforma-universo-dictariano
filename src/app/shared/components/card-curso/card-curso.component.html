@@ -1,0 +1,30 @@
+<p-card
+  [style]="{ width: '300px', background: '#1f1f1f', color: '#fff' }"
+  class="rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out"
+>
+  <ng-template pTemplate="header">
+    <img
+      [src]="curso.imagen"
+      alt="Curso"
+      style="width: 80px; margin: auto; display: block;"
+    />
+  </ng-template>
+
+  <h2 class="text-xl font-bold text-center mb-2">{{ curso.nombre }}</h2>
+
+  <p class="text-sm text-justify px-2 mb-3">{{ curso.descripcion }}</p>
+
+  <ul class="text-sm list-disc pl-6 mb-4">
+    <li *ngFor="let b of curso.beneficios">{{ b }}</li>
+  </ul>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-center">
+      <p-button
+        label="Quiero empezar"
+        icon="pi pi-check"
+        class="p-button-success p-button-rounded w-full"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-card>

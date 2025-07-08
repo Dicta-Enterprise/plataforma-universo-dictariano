@@ -1,0 +1,36 @@
+<div class="bg-black text-white px-4 py-8">
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-bold mb-2">Todos los Cursos</h1>
+    <p class="text-gray-300">Explora todas las categorías disponibles</p>
+  </div>
+
+  <!-- Niños -->
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-center">Cursos para Niños</h2>
+    <div class="flex justify-center flex-wrap gap-6">
+      <ng-container *ngFor="let curso of cursosNinos">
+        <app-card-curso [curso]="curso"></app-card-curso>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Jóvenes -->
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-center">Cursos para Jóvenes</h2>
+    <div class="flex justify-center flex-wrap gap-6">
+      <ng-container *ngFor="let curso of cursosJovenes">
+        <app-card-curso [curso]="curso"></app-card-curso>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Padres -->
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold mb-4 text-center">Cursos para Padres</h2>
+    <div class="flex justify-center flex-wrap gap-6">
+      <ng-container *ngFor="let curso of cursosPadres">
+        <app-card-curso [curso]="curso"></app-card-curso>
+      </ng-container>
+    </div>
+  </div>
+</div>

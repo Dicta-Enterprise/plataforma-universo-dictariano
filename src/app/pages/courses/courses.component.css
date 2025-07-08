@@ -1,0 +1,8 @@
+:host {
+  background-image: url('/assets/img/galaxia2.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: block;
+  padding: 2rem;
+}

@@ -1,0 +1,15 @@
+<div class="bg-black text-white px-4 py-8">
+  <div class="text-center mb-8">
+    <h1 class="text-3xl font-bold">Cursos para Padres</h1>
+  </div>
+
+  <div class="flex flex-wrap justify-center gap-6">
+    <app-card-curso
+      *ngFor="let curso of cursos"
+      [curso]="curso"
+    ></app-card-curso>
+  </div>
+</div>
+
+
+

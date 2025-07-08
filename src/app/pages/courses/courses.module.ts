@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { CardModule } from 'primeng/card';
@@ -9,9 +10,21 @@ import { HttpClientModule } from '@angular/common/http';
 import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { CursosTodosComponent } from './cursos-todos/cursos-todos.component';
+import { CursosPadresComponent } from './cursos-padres/cursos-padres.component';
+import { CursosJovenesComponent } from './cursos-jovenes/cursos-jovenes.component';
+import { CursosNinosComponent } from './cursos-ninos/cursos-ninos.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+
+
 @NgModule({
   declarations: [
-    CoursesComponent
+    CoursesComponent,
+    CursosTodosComponent,
+    CursosPadresComponent,
+    CursosJovenesComponent,
+    CursosNinosComponent,
+
   ],
   imports: [
     CommonModule,
@@ -19,6 +32,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
     CardModule,
     ButtonModule,
     HttpClientModule,
+    SharedModule
   ],
   providers: [
     CursosManagmentService, MessageService, ConfirmationService, AlertService
