@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* You can add global styles to this file, and also import other style files */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
@@ -20,6 +24,24 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 9999; 
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation-name: fade-in;
+  animation-duration: 1s; /* un poco más larga */
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
 }
 
 

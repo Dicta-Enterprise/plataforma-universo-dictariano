@@ -1,29 +1,39 @@
+
 <p-card
-  [style]="{ width: '300px', background: '#1f1f1f', color: '#fff' }"
-  class="rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 ease-in-out"
+  [style]="{
+    width: '300px',
+    background: 'linear-gradient(to bottom, #1f1f2e, #0f0f1f)',
+    color: '#fff',
+    borderRadius: '20px',
+    border: '1px solid #3b3b5f'
+  }"
+  class="transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_0_20px_#5b5bff]
+         animate-fade-in"
+
+
 >
   <ng-template pTemplate="header">
     <img
       [src]="curso.imagen"
       alt="Curso"
-      style="width: 80px; margin: auto; display: block;"
+      style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin: auto; display: block; box-shadow: 0 0 10px #5b5bff;"
     />
   </ng-template>
 
-  <h2 class="text-xl font-bold text-center mb-2">{{ curso.nombre }}</h2>
+  <h2 class="text-xl font-bold text-center mb-2 text-indigo-300">{{ curso.nombre }}</h2>
 
-  <p class="text-sm text-justify px-2 mb-3">{{ curso.descripcion }}</p>
+  <p class="text-sm text-justify px-2 mb-3 text-gray-300">{{ curso.descripcion }}</p>
 
-  <ul class="text-sm list-disc pl-6 mb-4">
+  <ul class="text-sm list-disc pl-6 mb-4 text-indigo-200">
     <li *ngFor="let b of curso.beneficios">{{ b }}</li>
   </ul>
 
   <ng-template pTemplate="footer">
     <div class="flex justify-center">
       <p-button
-        label="Quiero empezar"
-        icon="pi pi-check"
-        class="p-button-success p-button-rounded w-full"
+        label="🚀 Empezar Curso"
+        icon="pi pi-play"
+        class="p-button-rounded p-button-info w-full"
       ></p-button>
     </div>
   </ng-template>
