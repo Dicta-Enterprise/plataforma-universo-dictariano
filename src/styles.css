@@ -39,9 +39,8 @@ body {
 
 .animate-fade-in {
   animation-name: fade-in;
-  animation-duration: 1s; /* un poco más larga */
+  animation-duration: 1s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 }
-
 
