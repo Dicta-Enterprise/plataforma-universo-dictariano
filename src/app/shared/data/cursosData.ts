@@ -46,6 +46,58 @@ export const cursosData: Curso[] = [
       'Cómo enfrentar a pederastas'
     ],
     imagen: 'https://cdn-icons-png.flaticon.com/512/4086/4086679.png'
+  },
+  {
+    id: 4,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'ninos',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 5,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'ninos',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 6,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 7,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'padres',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
   }
   
 ];
