@@ -1,6 +1,6 @@
 import { Curso } from "src/app/core/class/curso/curso.class";
 
-export const CursosData: Curso[] = [
+export const CCURSO_CONSTANT: Curso[] = [
   {
     id: 1,
     nombre: 'Protección Infantil Digital',
