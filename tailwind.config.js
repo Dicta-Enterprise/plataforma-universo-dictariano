@@ -3,8 +3,15 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
   ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
+safelist: [
+    /^p-carousel/,
+    /^p-button/,
+    /^p-tag/,
+    /^pi-/,
+    /^p-/,
+    /^w-/,
+    /^rounded-/,
+  ],
+  theme: { extend: {} },
+  plugins: []
+}

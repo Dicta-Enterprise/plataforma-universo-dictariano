@@ -42,16 +42,16 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 4,
-    nombre: 'Protección Infantil Digital',
-    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'ninos',
     beneficios: [
-      'Reconocer propuestas negativas',
-      'Cómo enfrentar el grooming',
-      'Desarrollo de resolución de problemas',
-      'Comunicación abierta con padres'
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
     ],
-    imagen: '/assets/img/niñocelular.png'
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
   },
   {
     id: 5,
@@ -91,6 +91,216 @@ export const CCURSO_CONSTANT: Curso[] = [
       'Comunicación abierta con padres'
     ],
     imagen: '/assets/img/niñocelular.png'
-  }
+  },
+  {
+    id: 8,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+  {
+    id: 9,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 10,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+  {
+    id: 11,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+  {
+    id: 12,
+    nombre: 'Parentalidad Digital Responsable',
+    descripcion: 'Guía para que los padres entiendan los riesgos y cómo actuar.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Psicología del pederasta',
+      'Función parental digital',
+      'Técnicas para prevenir el grooming',
+      'Cómo enfrentar a pederastas'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/4086/4086679.png'
+  },
+  {
+    id: 13,
+    nombre: 'Parentalidad Digital Responsable',
+    descripcion: 'Guía para que los padres entiendan los riesgos y cómo actuar.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Psicología del pederasta',
+      'Función parental digital',
+      'Técnicas para prevenir el grooming',
+      'Cómo enfrentar a pederastas'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/4086/4086679.png'
+  },
+  {
+    id: 14,
+    nombre: 'Parentalidad Digital Responsable',
+    descripcion: 'Guía para que los padres entiendan los riesgos y cómo actuar.',
+    categoria: 'jovenes',
+    beneficios: [
+      'Psicología del pederasta',
+      'Función parental digital',
+      'Técnicas para prevenir el grooming',
+      'Cómo enfrentar a pederastas'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/4086/4086679.png'
+  },
+  {
+    id: 15,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'padres',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 16,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'padres',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 17,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'padres',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 18,
+    nombre: 'Protección Infantil Digital',
+    descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
+    categoria: 'padres',
+    beneficios: [
+      'Reconocer propuestas negativas',
+      'Cómo enfrentar el grooming',
+      'Desarrollo de resolución de problemas',
+      'Comunicación abierta con padres'
+    ],
+    imagen: '/assets/img/niñocelular.png'
+  },
+  {
+    id: 19,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'ninos',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+  {
+    id: 20,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'ninos',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+  {
+    id: 21,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'ninos',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+  {
+    id: 22,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'ninos',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+  {
+    id: 23,
+    nombre: 'Prevención de Grooming en Adolescentes',
+    descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
+    categoria: 'ninos',
+    beneficios: [
+      'Confianza personal',
+      'Pensamiento crítico',
+      'Autoprotección en internet',
+      'Uso consciente de herramientas digitales'
+    ],
+    imagen: 'https://cdn-icons-png.flaticon.com/512/3048/3048394.png'
+  },
+
+
   
 ];

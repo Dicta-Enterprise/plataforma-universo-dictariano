@@ -20,6 +20,18 @@ const routes: Routes = [
             .then(m => m.CursosPadresModule)
       },
       {
+        path: 'jovenes',
+        loadChildren: () =>
+          import('./cursos-jovenes/cursos-jovenes.module')
+            .then(m => m.CursosJovenesModule)
+      },
+      {
+        path: 'ninos',
+        loadChildren: () =>
+          import('./cursos-ninos/cursos-ninos.module')
+            .then(m => m.CursosNinosModule)
+      },
+      {
         path: '',
         redirectTo: 'todos',
         pathMatch: 'full'

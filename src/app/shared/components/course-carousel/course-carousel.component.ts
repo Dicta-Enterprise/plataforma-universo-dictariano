@@ -1,0 +1,37 @@
+import { Component, Input, OnInit }   from '@angular/core';
+import { of }                         from 'rxjs';
+import { map }                        from 'rxjs/operators';
+import { Curso }                      from 'src/app/core/class/curso/curso.class';
+import { CCURSO_CONSTANT } from 'src/app/core/constants/courses/CCurso.constant';
+
+@Component({
+  selector: 'app-course-carousel',
+  templateUrl: './course-carousel.component.html'
+})
+export class CourseCarouselComponent implements OnInit {
+  @Input() category!: 'todos'|'ninos'|'jovenes'|'padres';
+  cursos: Curso[] = [];
+  responsiveOptions = [
+    { breakpoint:'1024px', numVisible:3, numScroll:1 },
+    { breakpoint:'900px',  numVisible:3, numScroll:1 },
+    { breakpoint:'800px', numVisible:2, numScroll:1 },
+    { breakpoint:'768px',  numVisible:2, numScroll:1 },
+    { breakpoint:'560px',  numVisible:1, numScroll:1 }
+  ];
+
+  ngOnInit() {
+
+    of(CCURSO_CONSTANT.map(Curso.fromJson))
+      .pipe(
+        map(all =>
+          all.filter(c =>
+            this.category === 'todos' ? true : c.categoria === this.category
+          )
+        )
+      )
+      .subscribe(filtered => {
+        console.log('Cursos en carousel:', filtered);
+        this.cursos = filtered;
+      });
+  }
+}
