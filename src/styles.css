@@ -44,3 +44,36 @@ body {
   animation-fill-mode: forwards;
 }
 
+/* === Personalización de flechas del Carousel === */
+/* Asegúrate de que tu <p-carousel> tenga styleClass="mi-carousel" */
+.mi-carousel .p-carousel-prev,
+.mi-carousel .p-carousel-next {
+  /* fondo del botón */
+  background-color: #22d3ee !important;  /* mas claro */
+  /* quita cualquier borde que venga del tema */
+  border: none !important;  
+  /* tamaño */
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  /* círculo */
+  border-radius: 50% !important;
+  /* sombra */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+  /* centra el icono */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* color e icono */
+.mi-carousel .p-carousel-prev .p-button-icon,
+.mi-carousel .p-carousel-next .p-button-icon {
+  color: #fff !important;
+  font-size: 1.25rem !important;
+}
+
+/* hover */
+.mi-carousel .p-carousel-prev:hover,
+.mi-carousel .p-carousel-next:hover {
+  background-color: #15b6cf !important;  /* más oscuro */
+}

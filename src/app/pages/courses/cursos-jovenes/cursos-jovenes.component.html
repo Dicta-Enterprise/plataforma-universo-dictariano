@@ -2,5 +2,15 @@
   <h1 class="text-4xl font-bold mb-2 text-cyan-400">Cursos para Jóvenes</h1>
 </div>
 
-<app-course-carousel category="jovenes"></app-course-carousel>
-
+<div class="grid 
+    grid-cols-1 
+    sm:grid-cols-2 
+    md:grid-cols-3 
+    lg:grid-cols-4 
+    xl:grid-cols-5
+    gap-6 
+    px-4">
+  <ng-container *ngFor="let curso of cursos">
+    <app-card-curso [curso]="curso"></app-card-curso>
+  </ng-container>
+</div>

@@ -13,5 +13,5 @@ safelist: [
     /^rounded-/,
   ],
   theme: { extend: {} },
-  plugins: []
+  plugins: [],
 }
