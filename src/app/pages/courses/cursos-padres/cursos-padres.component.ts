@@ -3,7 +3,7 @@ import { Curso } from 'src/app/core/class/curso/curso.class';
 import { CCURSO_CONSTANT } from 'src/app/core/constants/courses/CCurso.constant';
 
 @Component({
-  selector: 'app-cursos-ninos',
+  selector: 'app-cursos-padres',
   templateUrl: './cursos-padres.component.html',
 })
 export class CursosPadresComponent implements OnInit {

@@ -2,9 +2,8 @@
 <p-card
   styleClass="
     card-curso           /* identificador para tu CSS */
-    flex flex-col h-full /* tarjeta = flex-column a toda altura */
-    w-full max-w-full
-    min-h-[32rem]
+    flex flex-col h-full min-h-[680px] /* altura */
+    
     transition-all duration-300 ease-in-out
     hover:scale-105 hover:shadow-[0_0_20px_#15b6cf]
     animate-fade-in
@@ -20,22 +19,25 @@
     <img
       [src]="curso.imagen"
       alt="Curso"
-      style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin: auto; display: block; box-shadow: 0 0 10px #a5cfff;"
+      style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-top:20px; margin-left: 40%; ; display: block; box-shadow: 0 0 10px #a5cfff;"
     />
   </ng-template>
 
   <!-- Contenedor principal que crece y empuja el footer abajo -->
-  <div class="flex-1 flex flex-col px-4 pt-2">
+  <div class="
+      h-72             /* <-- aquí el height fijo */
+      flex flex-col
+      px-4 pt-2
+      
+    "
+  >
     <h2 class="text-xl font-bold text-center mb-2 text-cyan-200">
       {{ curso.nombre }}
     </h2>
-
-    <p
-      class="text-sm text-justify mb-3 text-white ">
+    <p class="text-sm text-justify mb-3 text-white">
       {{ curso.descripcion }}
     </p>
-
-    <ul class="text-sm list-disc pl-6 mb-4 text-white flex-1 overflow-auto">
+    <ul class="text-sm list-disc pl-6 text-white">
       <li *ngFor="let b of curso.beneficios">{{ b }}</li>
     </ul>
   </div>
@@ -46,6 +48,7 @@
       <p-button
         label="Empezar Curso... 🚀"
         icon="pi pi-play"
+        (onClick)="irADetalle()"
         styleClass="
           p-button-lg p-button-rounded
           bg-gradient-to-r from-teal-300 to-cyan-400

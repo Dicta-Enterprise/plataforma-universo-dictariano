@@ -3,6 +3,7 @@ import { Curso } from "src/app/core/class/curso/curso.class";
 export const CCURSO_CONSTANT: Curso[] = [
   {
     id: 1,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'ninos',
@@ -16,6 +17,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 2,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'jovenes',
@@ -29,6 +31,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 3,
+    precio: 99.00,
     nombre: 'Parentalidad Digital Responsable',
     descripcion: 'Guía para que los padres entiendan los riesgos y cómo actuar.',
     categoria: 'padres',
@@ -42,6 +45,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 4,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'ninos',
@@ -55,6 +59,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 5,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'ninos',
@@ -68,6 +73,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 6,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'jovenes',
@@ -81,6 +87,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 7,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'padres',
@@ -94,6 +101,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 8,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'jovenes',
@@ -107,6 +115,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 9,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'jovenes',
@@ -120,6 +129,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 10,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'jovenes',
@@ -133,6 +143,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 11,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'jovenes',
@@ -146,6 +157,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 12,
+    precio: 99.00,
     nombre: 'Parentalidad Digital Responsable',
     descripcion: 'Guía para que los padres entiendan los riesgos y cómo actuar.',
     categoria: 'jovenes',
@@ -159,6 +171,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 13,
+    precio: 99.00,
     nombre: 'Parentalidad Digital Responsable',
     descripcion: 'Guía para que los padres entiendan los riesgos y cómo actuar.',
     categoria: 'jovenes',
@@ -172,6 +185,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 14,
+    precio: 99.00,
     nombre: 'Parentalidad Digital Responsable',
     descripcion: 'Guía para que los padres entiendan los riesgos y cómo actuar.',
     categoria: 'jovenes',
@@ -185,6 +199,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 15,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'padres',
@@ -198,6 +213,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 16,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'padres',
@@ -211,6 +227,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 17,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'padres',
@@ -224,6 +241,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 18,
+    precio: 99.00,
     nombre: 'Protección Infantil Digital',
     descripcion: 'Ayuda a tu hijo a identificar situaciones de riesgo en internet.',
     categoria: 'padres',
@@ -237,6 +255,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 19,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'ninos',
@@ -250,6 +269,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 20,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'ninos',
@@ -263,6 +283,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 21,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'ninos',
@@ -276,6 +297,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 22,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'ninos',
@@ -289,6 +311,7 @@ export const CCURSO_CONSTANT: Curso[] = [
   },
   {
     id: 23,
+    precio: 99.00,
     nombre: 'Prevención de Grooming en Adolescentes',
     descripcion: 'Herramientas para adolescentes para protegerse en redes sociales.',
     categoria: 'ninos',

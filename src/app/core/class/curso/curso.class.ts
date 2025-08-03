@@ -7,6 +7,7 @@ export class Curso {
   public categoria: Categoria;
   public beneficios: string[];
   public imagen: string;
+  public precio: number;
 
   constructor(item: Partial<Curso> = {}) {
     this.id          = item.id           ?? 0;
@@ -15,6 +16,7 @@ export class Curso {
     this.categoria   = item.categoria    ?? 'todos';
     this.beneficios  = item.beneficios   ?? [];
     this.imagen      = item.imagen       ?? '';
+    this.precio      = item.precio ?? 99;
   }
 
   static fromJson(o: any): Curso {

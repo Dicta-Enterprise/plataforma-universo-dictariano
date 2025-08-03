@@ -35,6 +35,10 @@ const routes: Routes = [
         path: '',
         redirectTo: 'todos',
         pathMatch: 'full'
+      },
+      { 
+        path: 'detalle', 
+        loadChildren: () => import('./curso-detalle/curso-detalle.module').then(m => m.CursoDetalleModule) 
       }
     ]
   }
