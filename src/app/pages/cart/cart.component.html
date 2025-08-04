@@ -1,0 +1,38 @@
+<div class="max-w-3xl mx-auto mt-10 bg-gray-900 rounded-xl p-8 shadow-xl text-white">
+  <h1 class="text-3xl font-bold mb-6 flex items-center gap-2">
+    <i class="pi pi-shopping-cart text-emerald-400"></i>
+    Mi carrito
+  </h1>
+
+  <div *ngIf="cart.items.length === 0" class="text-center text-gray-400 mb-4">
+    No hay cursos en tu carrito aún.
+  </div>
+
+  <div *ngIf="cart.items.length > 0" class="space-y-4 mb-6">
+    <div *ngFor="let curso of cart.items" class="flex items-center gap-4 bg-gray-800 rounded-lg p-4">
+      <img [src]="curso.imagen" alt="{{ curso.nombre }}" class="w-16 h-16 rounded object-cover" />
+      <div class="flex-1">
+        <div class="font-bold text-lg">{{ curso.nombre }}</div>
+        <div class="text-cyan-400 font-semibold">S/ {{ curso.precio | number:'1.2-2' }}</div>
+      </div>
+      <button (click)="remove(curso.id)"
+        class="ml-2 bg-red-500 hover:bg-red-700 text-white px-3 py-2 rounded-full transition">
+        <i class="pi pi-trash"></i>
+      </button>
+    </div>
+
+    <div class="flex justify-between items-center mt-6 text-lg font-bold">
+      <span>Total:</span>
+      <span class="text-emerald-400 text-2xl">S/ {{ cart.getTotal() | number:'1.2-2' }}</span>
+    </div>
+
+    <div class="flex gap-4 mt-4">
+      <button (click)="clear()" class="flex-1 bg-gray-700 hover:bg-gray-600 py-3 rounded-lg font-semibold transition">
+        Vaciar carrito
+      </button>
+      <button class="flex-1 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-emerald-500 hover:to-cyan-500 text-black font-bold py-3 rounded-lg shadow">
+        Finalizar compra
+      </button>
+    </div>
+  </div>
+</div>

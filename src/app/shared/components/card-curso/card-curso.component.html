@@ -44,21 +44,33 @@
 
   <ng-template pTemplate="footer">
     <!-- mt-auto empuja siempre al fondo -->
-    <div class="mt-auto flex justify-center p-4">
+    <div class="mt-auto flex justify-center p-4 gap-3">
       <p-button
-        label="Empezar Curso... 🚀"
-        icon="pi pi-play"
-        (onClick)="irADetalle()"
-        styleClass="
-          p-button-lg p-button-rounded
-          bg-gradient-to-r from-teal-300 to-cyan-400
-          text-black
-          hover:from-cyan-500 hover:to-teal-300 hover:!text-black
-          transform hover:-translate-y-0.5 hover:scale-105
-          transition duration-200
-          w-3/4 max-w-xs
-        "
-      ></p-button>
+  label="Empezar  Curso ... 🚀"
+  icon="pi pi-play"
+  (onClick)="irADetalle()"
+  styleClass="
+    p-button-rounded
+    bg-gradient-to-r from-teal-300 to-cyan-400
+    text-black font-bold
+    py-3 px-2         <!-- MÁS PADDING -->
+    w-full max-w-xs
+    text-lg
+    hover:from-cyan-500 hover:to-teal-300 hover:text-black
+    transition duration-200
+  "
+></p-button>
+       <button
+      class="mt-1 flex items-center justify-center gap-2 
+      bg-cyan-600 hover:bg-cyan-700 text-white 
+      rounded-full px-2 py-3
+      shadow transition
+      text-lg
+      font-bold"
+      (click)="agregarAlCarrito()"
+    >
+      <i class="pi pi-shopping-cart text-xl"></i>
+    </button>
     </div>
   </ng-template>
 </p-card>
