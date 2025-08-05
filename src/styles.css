@@ -77,3 +77,8 @@ body {
 .mi-carousel .p-carousel-next:hover {
   background-color: #15b6cf !important;  /* más oscuro */
 }
+
+.p-button .p-button-icon-left {
+  margin-right: -3rem !important;
+  margin-left: 2rem !important;
+}
