@@ -154,15 +154,29 @@
       class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row"
     >
           <!-- Icono del carrito -->
-        <a [routerLink]="['/cart']" class="relative group ml-4 cursor-pointer">
-          <i class="pi pi-shopping-cart text-3xl text-white group-hover:text-emerald-300 transition"></i>
-          <span *ngIf="(count$ | async) as count">
-            <span *ngIf="count > 0"
-              class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs rounded-full px-2">
-              {{ count }}
-            </span>
-          </span>
-        </a>
+       <li>
+        <a
+          pRipple
+          [routerLink]="['/cart']"
+          class="relative flex px-6 p-3 lg:px-3 lg:py-2 items-center
+                text-gray-400 hover:text-white hover:bg-gray-800
+                font-medium border-round cursor-pointer
+                transition-colors transition-duration-150"
+          aria-label="Carrito"
+        >
+          <i class="pi pi-shopping-cart text-2xl"></i>
+
+          <!-- badge -->
+          <ng-container *ngIf="(count$ | async) as count">
+          <span *ngIf="count > 0"
+                class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white
+                   text-xs rounded-full px-2 py-0.5">
+          {{ count }}
+      </span>
+    </ng-container>
+  </a>
+</li>
+
       <li class="flex-order-2 lg:flex-order-0">
         <div class="flex px-6 p-3 lg:px-3 lg:py-2">
           <span class="justify-center w-full">
@@ -176,6 +190,24 @@
           </span>
         </div>
       </li>
+
+        <ng-container *ngIf="!auth.isLoggedIn(); else loggedBlock">
+    <button
+      class="px-4 py-1 bg-gray-200 rounded font-semibold text-black ml-3 hover:bg-cyan-500 transition"
+      routerLink="/auth/login"
+    >
+      Login
+    </button>
+  </ng-container>
+  <ng-template #loggedBlock>
+    <img
+      [src]="auth.getUserImg()"
+      alt="Profile"
+      class="w-8 h-8 rounded-full ml-3 border-2 border-cyan-300 object-cover cursor-pointer"
+      (click)="abrirPerfil()"
+    />
+  </ng-template>
+  
       <li class="border-top-1 border-gray-800 lg:border-top-none">
         <a
           pRipple
