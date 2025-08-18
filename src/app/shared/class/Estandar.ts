@@ -1,7 +1,7 @@
 export class Estandar {
-    id: string;
-    descripcion: string;
-    activo: boolean;
+    public id: string;
+    public descripcion: string;
+    public activo: boolean;
 
     constructor(item: Partial<Estandar> = {}) {
         this.id = item.id || '';
@@ -9,6 +9,7 @@ export class Estandar {
         this.activo = item.activo || false;
     }
 
+    //se usa cuando hacemos solicitudes a API -- response
     static fromJson(itemJson: any): Estandar {
         return new Estandar({
             id: itemJson.id,
@@ -17,6 +18,7 @@ export class Estandar {
         });
     }
 
+    //Se usa cuando enviamos datos a la API -- request
     static toJson(item: Estandar): any {
         return {
             id: item.id,

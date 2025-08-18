@@ -1,0 +1,16 @@
+<p-carousel
+  styleClass="mi-carousel"
+  [value]="cursos"
+  [numVisible]="4"
+  [numScroll]="1"
+  [circular]="true"
+  [autoplayInterval]="5000"
+  [responsiveOptions]="responsiveOptions"
+  class="mb-8"
+>
+  <ng-template pTemplate="item" let-curso>
+    <div class="px-4"> 
+    <app-card-curso [curso]="curso"></app-card-curso>
+    </div>
+  </ng-template>
+</p-carousel>

@@ -1,0 +1,75 @@
+<!-- src/app/shared/components/card-curso/card-curso.component.html -->
+<p-card
+  styleClass="
+    card-curso           /* identificador para tu CSS */
+    flex flex-col h-full min-h-[680px] /* altura */
+    
+    transition-all duration-300 ease-in-out
+    hover:scale-105 hover:shadow-[0_0_20px_#15b6cf]
+    animate-fade-in
+  "
+  [style]="{
+    background: 'linear-gradient(to bottom, #141e30, #243b55)',
+    color: '#fff',
+    borderRadius: '20px',
+    border: '1px solid #3b3b5f'
+  }"
+>
+  <ng-template pTemplate="header">
+    <img
+      [src]="curso.imagen"
+      alt="Curso"
+      style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-top:20px; margin-left: 40%; ; display: block; box-shadow: 0 0 10px #a5cfff;"
+    />
+  </ng-template>
+
+  <!-- Contenedor principal que crece y empuja el footer abajo -->
+  <div class="
+      h-72             /* <-- aquí el height fijo */
+      flex flex-col
+      px-4 pt-2
+      
+    "
+  >
+    <h2 class="text-xl font-bold text-center mb-2 text-cyan-200">
+      {{ curso.nombre }}
+    </h2>
+    <p class="text-sm text-justify mb-3 text-white">
+      {{ curso.descripcion }}
+    </p>
+    <ul class="text-sm list-disc pl-6 text-white">
+      <li *ngFor="let b of curso.beneficios">{{ b }}</li>
+    </ul>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <!-- mt-auto empuja siempre al fondo -->
+    <div class="mt-auto flex justify-center p-4 gap-3">
+      <p-button
+  label="Empezar  Curso ... 🚀"
+  (onClick)="irADetalle()"
+  styleClass="
+    p-button-rounded
+    bg-gradient-to-r from-teal-300 to-cyan-400
+    text-black font-bold
+    py-3 px-2         <!-- MÁS PADDING -->
+    w-full max-w-xs
+    text-lg
+    hover:from-cyan-500 hover:to-teal-300 hover:text-black
+    transition duration-200
+  "
+></p-button>
+       <button
+      class="mt-1 flex items-center justify-center gap-2 
+      bg-cyan-600 hover:bg-cyan-700 text-white 
+      rounded-full px-2 py-3
+      shadow transition
+      text-lg
+      font-bold"
+      (click)="agregarAlCarrito()"
+    >
+      <i class="pi pi-shopping-cart text-xl"></i>
+    </button>
+    </div>
+  </ng-template>
+</p-card>

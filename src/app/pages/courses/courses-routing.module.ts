@@ -3,7 +3,45 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoursesComponent } from './courses.component';
 
 const routes: Routes = [
-  {path:'', component: CoursesComponent}
+  {
+    path: '',
+    component: CoursesComponent,
+    children: [
+      {
+        path: 'todos',
+        loadChildren: () =>
+          import('./cursos-todos/cursos-todos.module')
+            .then(m => m.CursosTodosModule)
+      },
+      {
+        path: 'padres',
+        loadChildren: () =>
+          import('./cursos-padres/cursos-padres.module')
+            .then(m => m.CursosPadresModule)
+      },
+      {
+        path: 'jovenes',
+        loadChildren: () =>
+          import('./cursos-jovenes/cursos-jovenes.module')
+            .then(m => m.CursosJovenesModule)
+      },
+      {
+        path: 'ninos',
+        loadChildren: () =>
+          import('./cursos-ninos/cursos-ninos.module')
+            .then(m => m.CursosNinosModule)
+      },
+      {
+        path: '',
+        redirectTo: 'todos',
+        pathMatch: 'full'
+      },
+      { 
+        path: 'detalle', 
+        loadChildren: () => import('./curso-detalle/curso-detalle.module').then(m => m.CursoDetalleModule) 
+      }
+    ]
+  }
 ];
 
 @NgModule({
