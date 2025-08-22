@@ -32,11 +32,6 @@ const routes: Routes = [
       import('./pages/perfil/perfil.module').then((m) => m.PerfilModule),
   },
   {
-    path: 'managment',
-    loadChildren: () =>
-      import('./pages/managment/managment.module').then((m) => m.ManagmentModule),
-  },
-  {
     path: '**',
     redirectTo: '',
   },
