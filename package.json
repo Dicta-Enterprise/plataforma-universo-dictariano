@@ -8,11 +8,12 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,html,scss}": [
-      "eslint --fix"
+      "eslint --fix",
+      "git add"
     ]
   },
   "private": true,
