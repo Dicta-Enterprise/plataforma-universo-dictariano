@@ -30,13 +30,14 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
-      "@angular-eslint/prefer-inject": "off", // desactiva uso obligatorio de inject()
-      // "@typescript-eslint/no-unused-vars": ["warn"], // variables sin usar solo warning
-      // "@typescript-eslint/no-explicit-any": "warn",   // any permitido pero warning
+      "@angular-eslint/prefer-inject": "off",
+      "@typescript-eslint/no-unused-vars": ["error"],
+      "@typescript-eslint/no-explicit-any": "error",  
+      "@typescript-eslint/no-empty-function": "error",
       "quotes": ["error", "single"],
       "semi": ["error", "always"],
       "indent": ["error", 2],
-      "no-console": "warn"
+      "no-console": "error"
     },
   },
   {
