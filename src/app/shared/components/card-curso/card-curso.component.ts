@@ -5,7 +5,8 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 
 @Component({
   selector: 'app-card-curso',
-  templateUrl: './card-curso.component.html'
+  templateUrl: './card-curso.component.html',
+  styleUrls: ['./card-curso.component.css']
 })
 
 export class CardCursoComponent {
@@ -16,6 +17,16 @@ constructor(
   private cart: CartService
   ) {}
 
+  private glowByCat: Partial<Record<Curso['categoria'], string>> = {
+  ninos:   '#f59e0b',
+  jovenes: '#34d399',
+  padres:  '#04d6f1ff'
+};
+
+  get glowColor(): string {
+  const cat = this.curso?.categoria as keyof typeof this.glowByCat;
+  return this.glowByCat[cat] ?? '#22d3ee';
+}
 
   irADetalle() {
     // Solo navega si el curso existe y tiene id

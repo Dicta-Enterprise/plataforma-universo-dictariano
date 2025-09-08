@@ -8,7 +8,9 @@
     hover:scale-105 hover:shadow-[0_0_20px_#15b6cf]
     animate-fade-in
   "
-  [style]="{
+  [ngStyle]="{'--glow': glowColor}"
+  
+   [style]="{
     background: 'linear-gradient(to bottom, #141e30, #243b55)',
     color: '#fff',
     borderRadius: '20px',
@@ -19,7 +21,7 @@
     <img
       [src]="curso.imagen"
       alt="Curso"
-      style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-top:20px; margin-left: 40%; ; display: block; box-shadow: 0 0 10px #a5cfff;"
+      style="width: 200px; height: 250px; object-fit: cover; border-radius: 50%; margin-top:20px; margin-left:auto; margin-right: auto; display: block; box-shadow: 0 0 10px #a5cfff;"
     />
   </ng-template>
 
@@ -45,31 +47,22 @@
   <ng-template pTemplate="footer">
     <!-- mt-auto empuja siempre al fondo -->
     <div class="mt-auto flex justify-center p-4 gap-3">
-      <p-button
-  label="Empezar  Curso ... 🚀"
-  (onClick)="irADetalle()"
-  styleClass="
-    p-button-rounded
-    bg-gradient-to-r from-teal-300 to-cyan-400
-    text-black font-bold
-    py-3 px-2         <!-- MÁS PADDING -->
-    w-full max-w-xs
-    text-lg
-    hover:from-cyan-500 hover:to-teal-300 hover:text-black
-    transition duration-200
-  "
-></p-button>
-       <button
-      class="mt-1 flex items-center justify-center gap-2 
-      bg-cyan-600 hover:bg-cyan-700 text-white 
-      rounded-full px-2 py-3
-      shadow transition
-      text-lg
-      font-bold"
-      (click)="agregarAlCarrito()"
-    >
-      <i class="pi pi-shopping-cart text-xl"></i>
-    </button>
-    </div>
+  <!-- Botón grande: Empezar Curso (verde) -->
+  <button class="action-button start-button flex-1" (click)="irADetalle()">
+    🚀 Empezar curso
+  </button>
+
+  <!-- Botón pequeño: Agregar al (texto arriba + icono abajo) -->
+  <button class="action-button cart-button-tall" (click)="agregarAlCarrito()">
+    <span class="button-text">Agregar al</span>
+    <svg viewBox="0 0 24 24" class="cart-icon">
+      <path
+        d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A.996.996 0 0 0 21.42 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+
   </ng-template>
 </p-card>

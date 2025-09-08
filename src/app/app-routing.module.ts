@@ -8,10 +8,21 @@ const routes: Routes = [
       import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
-    path: 'auth',
-    loadChildren: () =>
-      import('./pages/auth/auth.module').then((m) => m.AuthModule),
+  path: 'auth',
+  children: [
+    {
+      path: 'login',
+      loadChildren: () =>
+        import('./pages/auth/login/login.module').then(m => m.LoginModule)
+    },
+    {
+      path: 'register',
+      loadChildren: () =>
+        import('./pages/auth/register/register.module').then(m => m.RegisterModule)
+    }
+    ]
   },
+ 
   {
     path: 'courses',
     loadChildren: () =>

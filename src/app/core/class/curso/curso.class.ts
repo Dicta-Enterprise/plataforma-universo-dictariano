@@ -26,7 +26,8 @@ export class Curso {
       descripcion: o.descripcion,
       categoria:   o.categoria,
       beneficios:  o.beneficios,
-      imagen:      o.imagen
+      imagen:      o.imagen,
+      precio:      o.precio
     });
   }
 }
