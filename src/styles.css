@@ -9,9 +9,8 @@
 body {
   margin: 0;
   background: #000;
-  color: #fff; 
+  color: #fff;
 }
-
 
 .overlay {
   position: fixed;
@@ -19,11 +18,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); 
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; 
+  z-index: 9999;
 }
 
 @keyframes fade-in {
@@ -44,41 +43,72 @@ body {
   animation-fill-mode: forwards;
 }
 
-/* === Personalización de flechas del Carousel === */
-/* Asegúrate de que tu <p-carousel> tenga styleClass="mi-carousel" */
+/* =========================================================
+   CARRUSEL – FLECHAS (estilo original tuyo)
+   ========================================================= */
 .mi-carousel .p-carousel-prev,
 .mi-carousel .p-carousel-next {
-  /* fondo del botón */
-  background-color: #22d3ee !important;  /* mas claro */
-  /* quita cualquier borde que venga del tema */
-  border: none !important;  
-  /* tamaño */
+  background-color: #22d3ee !important; /* fondo */
+  border: none !important;
   width: 2.5rem !important;
   height: 2.5rem !important;
-  /* círculo */
   border-radius: 50% !important;
-  /* sombra */
   box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
-  /* centra el icono */
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+
+  /* NUEVO: posición relativa al carrusel y centrado vertical */
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
 }
 
-/* color e icono */
+/* NUEVO: que cada carrusel sea el contenedor de referencia */
+.mi-carousel {
+  position: relative;
+  overflow-x: hidden;   /* evita scroll lateral */
+  overflow-y: visible;  /* deja salir el glow por arriba/abajo */
+  padding-top: 25px;     /* espacio para glow superior */
+  padding-bottom: 20px; /* espacio para glow inferior */
+}
+
+/* NUEVO: flecha izquierda/derecha */
+.mi-carousel .p-carousel-prev { left: 6px; }
+.mi-carousel .p-carousel-next { right: 6px; }
+
+/* iconos */
 .mi-carousel .p-carousel-prev .p-button-icon,
 .mi-carousel .p-carousel-next .p-button-icon {
   color: #fff !important;
   font-size: 1.25rem !important;
 }
 
-/* hover */
 .mi-carousel .p-carousel-prev:hover,
 .mi-carousel .p-carousel-next:hover {
-  background-color: #15b6cf !important;  /* más oscuro */
+  background-color: #15b6cf !important;
 }
 
+/* botón con icono a la izquierda (de tus p-button) */
 .p-button .p-button-icon-left {
   margin-right: -3rem !important;
   margin-left: 2rem !important;
+}
+
+/* =========================================================
+   CARRUSEL – PERMITIR QUE EL GLOW NO SE CORTE
+   (estas clases en PrimeNG suelen tener overflow hidden)
+   ========================================================= */
+.mi-carousel .p-carousel-content,
+.mi-carousel .p-carousel-container,
+.mi-carousel .p-carousel-items-content,
+.mi-carousel .p-carousel-items-container,
+.mi-carousel .p-carousel-item {
+  overflow: visible !important;   /* clave para que no recorte */
+}
+
+/* por si el tema pone overflow en la card */
+.mi-carousel .p-carousel-item .p-card {
+  overflow: visible;
 }

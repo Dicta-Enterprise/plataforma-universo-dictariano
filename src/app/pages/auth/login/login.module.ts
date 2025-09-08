@@ -9,11 +9,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
 import{DividerModule} from'primeng/divider';
+import { FormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [
-    //Componentes
-    LoginComponent
-  ],
+  declarations: [LoginComponent],
   imports: [
     //Modulos
     CommonModule,
@@ -21,7 +19,8 @@ import{DividerModule} from'primeng/divider';
     CheckboxModule,
     InputTextModule,
     ButtonModule,
-    DividerModule
+    DividerModule,
+    FormsModule
   ]
 })
 export class LoginModule { }

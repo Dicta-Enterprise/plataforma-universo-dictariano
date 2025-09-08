@@ -1,1 +1,85 @@
-<p>register works!</p>
+
+<div class="min-h-screen flex items-center justify-center bg-black">
+  <div class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-md">
+    <div class="flex flex-col items-center mb-8">
+    <img
+        src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
+        alt="Image"
+        class="w-24 h-24 md:w-28 md:h-28 mb-3 drop-shadow"
+      />
+      </div>
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-6 text-center">
+      Crea tu cuenta
+    </h2>
+
+    <form (ngSubmit)="registrarme()">
+      <div class="mb-4">
+        <label for="name1" class="block text-gray-300 font-medium mb-1">Nombre</label>
+        <input
+          id="name1"
+          name="nombre"
+          type="text"
+          placeholder="Tu nombre"
+          [(ngModel)]="model.nombre"
+          pInputText
+          class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label for="email1" class="block text-gray-300 font-medium mb-1">Email</label>
+        <input
+          id="email1"
+          name="email"
+          type="email"
+          placeholder="Tu correo"
+          [(ngModel)]="model.email"
+          pInputText
+          class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
+        />
+      </div>
+
+      <div class="mb-4">
+        <div class="relative">
+          <input
+            [type]="showPass ? 'text' : 'password'"
+            pInputText
+            [(ngModel)]="model.password"
+            name="password"
+            placeholder="contraseña"
+            class="w-full p-3 rounded bg-gray-900 text-white border-0 focus:ring-2 focus:ring-cyan-400 pr-11"
+            autocomplete="current-password"
+          />
+          <button type="button"
+                  class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  (click)="showPass = !showPass">
+            <i class="pi" [ngClass]="!showPass ? 'pi-eye-slash' : 'pi-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center mb-6 text-sm">
+        <p-checkbox
+          name="aceptaTyC"
+          [(ngModel)]="model.aceptaTyC"
+          [binary]="true"
+          styleClass="mr-2"
+        ></p-checkbox>
+        <span class="text-gray-300">
+          Acepto los <a class="text-blue-400 hover:underline cursor-pointer">Términos y Condiciones</a>
+        </span>
+      </div>
+
+      <button
+        type="submit"
+        pButton
+        [label]="loading ? 'Creando...' : 'Crear cuenta'"
+        [disabled]="loading"
+        class="w-full py-3 text-lg font-semibold rounded-lg
+               bg-gradient-to-r from-teal-400 to-cyan-500 border-0 shadow-md
+               text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black
+               transition flex items-center justify-center gap-2"
+      ></button>
+    </form>
+  </div>
+</div>
