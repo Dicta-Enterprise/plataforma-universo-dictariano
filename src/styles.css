@@ -5,7 +5,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
-
+:root{
+  --color-card-primary: #000;
+}
 body {
   margin: 0;
   background: #000;
@@ -49,7 +51,7 @@ body {
 .mi-carousel .p-carousel-prev,
 .mi-carousel .p-carousel-next {
   /* fondo del botón */
-  background-color: #22d3ee !important;  /* mas claro */
+  background-color: var(--dynamic-primary-color) !important;  /* mas claro */
   /* quita cualquier borde que venga del tema */
   border: none !important;  
   /* tamaño */

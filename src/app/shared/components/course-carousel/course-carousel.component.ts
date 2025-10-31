@@ -10,15 +10,18 @@ import { CCURSO_CONSTANT } from 'src/app/core/constants/courses/CCurso.constant'
 })
 export class CourseCarouselComponent implements OnInit {
   @Input() category!: 'todos'|'ninos'|'jovenes'|'padres';
+  @Input() bg_color = '#1F2F4A';
+  @Input() primary_color = '#15b6cf';
+  @Input() secondary_color = '#235E66';
   cursos: Curso[] = [];
   responsiveOptions = [
-  { breakpoint: '1400px', numVisible: 3, numScroll: 1 },
-  { breakpoint: '1320px', numVisible: 3, numScroll: 1 },
-  { breakpoint: '1200px', numVisible: 2, numScroll: 1 },
-  { breakpoint: '992px',  numVisible: 2, numScroll: 1 },
-  { breakpoint: '768px',  numVisible: 1, numScroll: 1 },
-  { breakpoint: '560px',  numVisible: 1, numScroll: 1 }
-];
+    { breakpoint: '1400px', numVisible: 3, numScroll: 1 },
+    { breakpoint: '1320px', numVisible: 3, numScroll: 1 },
+    { breakpoint: '1200px', numVisible: 2, numScroll: 1 },
+    { breakpoint: '992px',  numVisible: 2, numScroll: 1 },
+    { breakpoint: '768px',  numVisible: 1, numScroll: 1 },
+    { breakpoint: '560px',  numVisible: 1, numScroll: 1 }
+  ];
 
 
   ngOnInit() {
@@ -32,7 +35,7 @@ export class CourseCarouselComponent implements OnInit {
         )
       )
       .subscribe(filtered => {
-        console.log('Cursos en carousel:', filtered);
+        //console.log('Cursos en carousel:', filtered);
         this.cursos = filtered;
       });
 

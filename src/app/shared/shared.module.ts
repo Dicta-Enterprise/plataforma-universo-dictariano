@@ -7,6 +7,7 @@ import { CourseCarouselComponent } from './components/course-carousel/course-car
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { RouterModule } from '@angular/router';
+import { BadgeModule } from 'primeng/badge';
 
 
 
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     ButtonModule,
     CarouselModule,
     TagModule,
-    RouterModule
+    RouterModule,
+    BadgeModule
   ],
   exports: [
     CardCursoComponent,
