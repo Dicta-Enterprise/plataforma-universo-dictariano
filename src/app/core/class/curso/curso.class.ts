@@ -1,5 +1,14 @@
 export type Categoria = 'todos' | 'ninos' | 'jovenes' | 'padres';
 
+interface CursoData {
+  id: number; // Asume que 'id' es un número o cadena
+  nombre: string;
+  descripcion: string;
+  categoria: Categoria;
+  beneficios: string[]; // Asume que 'beneficios' es un array de cadenas
+  imagen: string;
+}
+
 export class Curso {
   public id: number;
   public nombre: string;
@@ -19,7 +28,7 @@ export class Curso {
     this.precio      = item.precio ?? 99;
   }
 
-  static fromJson(o: any): Curso {
+  static fromJson(o: CursoData): Curso {
     return new Curso({
       id:          o.id,
       nombre:      o.nombre,
