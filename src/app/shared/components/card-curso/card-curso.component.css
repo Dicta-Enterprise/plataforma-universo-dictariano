@@ -3,6 +3,9 @@
     background-size: 400%;
     border-radius: 3rem;
 }
+.card-curso-card-button:hover{
+    background-position: 30%;
+}
 
 .card-curso-button-carrito:hover i{
     animation: carrito_button 1.2s infinite linear;
