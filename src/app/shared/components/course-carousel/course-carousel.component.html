@@ -1,4 +1,5 @@
 <p-carousel
+  *ngIf="cursos.length>0"
   styleClass="mi-carousel"
   [value]="cursos"
   [numVisible]="4"
@@ -15,3 +16,6 @@
     </div>
   </ng-template>
 </p-carousel>
+<div *ngIf="cursos.length===0">
+  <h2 class="text-center">No hay cursos en esta categoría</h2>
+</div>

@@ -41,8 +41,8 @@
     <p class="text-sm text-justify mb-3 text-white">
       {{ curso.descripcion }}
     </p>
-    <ul class="sm:block hidden text-sm list-disc pl-6 text-white">
-      <li *ngFor="let b of curso.beneficios">{{ b }}</li>
+    <ul *ngFor="let benef of curso.beneficios; index as i;" class="text-sm list-disc pl-6 text-white">
+      <li >{{ benef.titulo }}: {{benef.descripcion}}</li>
     </ul>
   </div>
 
