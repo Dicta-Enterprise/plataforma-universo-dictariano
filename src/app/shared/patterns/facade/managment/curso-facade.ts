@@ -59,7 +59,7 @@ export class CursoFacade {
         this.alertService.showSuccess('Exito', 'Curso eliminado');
 
         this.cursos$.next(
-          this.cursos$.getValue().filter((curso) => curso.id !== id)
+          this.cursos$.getValue().filter((curso) => curso.id.toString() !== id)
         );
       },
     });
@@ -84,7 +84,7 @@ export class CursoFacade {
   }
 
   actualizarCurso(curso: CursoManagment) {
-    this.cursoService.editarCursoService$(curso.id,curso).subscribe({
+    this.cursoService.editarCursoService$(curso.id.toString(),curso).subscribe({
       next: (response) => {
         this.alertService.showSuccess('Exito', 'Curso actualizado');
         const cursos = this.cursos$.getValue();
