@@ -22,9 +22,9 @@
 
     <!-- Beneficios/temario -->
     <div class="mb-4">
-      <h2 class="font-semibold text-cyan-300 text-lg mb-2">¿Qué aprenderás?</h2>
-      <ul class="list-disc pl-6 space-y-1 text-gray-300">
-        <li *ngFor="let b of curso?.beneficios">{{ b }}</li>
+      <h2 class="font-semibold text-cyan-300 text-lg mb-2">¿Cuales son los beneficios?</h2>
+      <ul *ngFor="let benef of curso?.beneficios" class="list-disc pl-6 space-y-1 text-gray-300">
+        <li >{{ benef.titulo }}: {{benef.descripcion}}</li>
       </ul>
     </div>
 

@@ -1,11 +1,20 @@
 export type Categoria = 'todos' | 'ninos' | 'jovenes' | 'padres';
+class Beneficios {
+  titulo: string;
+  descripcion: string;
+
+  constructor(titulo:string, descripcion:string){
+    this.titulo = titulo;
+    this.descripcion = descripcion;
+  }
+}
 
 export class Curso {
   public id: number;
   public nombre: string;
   public descripcion: string;
-  public categoria: Categoria;
-  public beneficios: string[];
+  public categoria: string;
+  public beneficios: Beneficios[];
   public imagen: string;
   public precio: number;
 
@@ -19,14 +28,15 @@ export class Curso {
     this.precio      = item.precio ?? 99;
   }
 
-  static fromJson(o: any): Curso {
+  static fromJson(o: unknown): Curso {
+    const casted = o as Record<string, unknown>;
     return new Curso({
-      id:          o.id,
-      nombre:      o.nombre,
-      descripcion: o.descripcion,
-      categoria:   o.categoria,
-      beneficios:  o.beneficios,
-      imagen:      o.imagen
+      id:          casted['id'] as number,
+      nombre:      casted['nombre'] as string,
+      descripcion: casted['descripcion'] as string,
+      categoria:   casted['categoria'] as string,
+      beneficios:  casted['beneficios'] as Beneficios[],
+      imagen:      casted['imagen'] as string
     });
   }
 }

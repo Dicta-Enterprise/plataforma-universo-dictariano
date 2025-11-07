@@ -1,5 +1,6 @@
-import { Curso } from "src/app/core/class/curso/curso.class";
-
+import { Curso } from 'src/app/core/class/curso/curso.class';
+export const CursosData: Curso[] = [];
+/*
 export const CursosData: Curso[] = [
   {
     id: 1,
@@ -327,3 +328,4 @@ export const CursosData: Curso[] = [
 
   
 ];
+*/
