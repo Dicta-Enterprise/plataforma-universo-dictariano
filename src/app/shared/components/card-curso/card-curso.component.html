@@ -2,36 +2,40 @@
 <p-card
   styleClass="
     card-curso           /* identificador para tu CSS */
-    flex flex-col h-full min-h-[680px] /* altura */
-    
+    flex flex-col h-full min-h-[550px] /* altura */
+    py-4
     transition-all duration-300 ease-in-out
-    hover:scale-105 hover:shadow-[0_0_20px_#15b6cf]
+    hover:scale-105 hover:shadow-[0_10px_20px_-6px_var(--dynamic-hover-color)]
     animate-fade-in
+    flex flex-col gap-1 items-center justify-around
+    my-4
   "
   [style]="{
-    background: 'linear-gradient(to bottom, #141e30, #243b55)',
+    background: 'linear-gradient(to bottom, #141e30, '+bg_color+')',
     color: '#fff',
     borderRadius: '20px',
     border: '1px solid #3b3b5f'
   }"
+  [style.--dynamic-hover-color]="primary_color"
 >
   <ng-template pTemplate="header">
     <img
       [src]="curso.imagen"
       alt="Curso"
-      style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%; margin-top:20px; margin-left: 40%; ; display: block; box-shadow: 0 0 10px #a5cfff;"
+      style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; margin-left: 20px; ; display: block; box-shadow: 0 15px 10px -10px #3b434b;"
     />
   </ng-template>
 
   <!-- Contenedor principal que crece y empuja el footer abajo -->
   <div class="
-      h-72             /* <-- aquí el height fijo */
+      sm:h-72
+      h-50
       flex flex-col
       px-4 pt-2
       
     "
   >
-    <h2 class="text-xl font-bold text-center mb-2 text-cyan-200">
+    <h2 class="card-curso-titulo text-xl font-bold text-center mb-2" [style.color]="primary_color">
       {{ curso.nombre }}
     </h2>
     <p class="text-sm text-justify mb-3 text-white">
@@ -44,32 +48,56 @@
 
   <ng-template pTemplate="footer">
     <!-- mt-auto empuja siempre al fondo -->
-    <div class="mt-auto flex justify-center p-4 gap-3">
+    <div class="mt-auto flex sm:flex-row flex-col justify-center sm:p-0 pt-0 gap-3">
       <p-button
-  label="Empezar  Curso ... 🚀"
+      class="card-curso-card-button"
+  label="Empezar  Curso"
   (onClick)="irADetalle()"
   styleClass="
     p-button-rounded
-    bg-gradient-to-r from-teal-300 to-cyan-400
-    text-black font-bold
-    py-3 px-2         <!-- MÁS PADDING -->
+    
+    text-white font-bold
+    sm:py-2 py-3 px-4
     w-full max-w-xs
     text-lg
-    hover:from-cyan-500 hover:to-teal-300 hover:text-black
+    rounded-[5rem]
+
     transition duration-200
+    hover:transition hover:duration-500
+    hover:ease-in-out
+    hover:brightness-80
+    shadow-[0_.3rem_0_0_rgb(22,22,22)]
+    hover:shadow-[0_0_0_0_rgb(22,22,22)]
   "
+  [style.--dynamic-hover-color]="primary_color"
+  [style.--dynamic-hover-color-sec]="secondary_color"
 ></p-button>
-       <button
-      class="mt-1 flex items-center justify-center gap-2 
-      bg-cyan-600 hover:bg-cyan-700 text-white 
-      rounded-full px-2 py-3
-      shadow transition
-      text-lg
-      font-bold"
-      (click)="agregarAlCarrito()"
-    >
-      <i class="pi pi-shopping-cart text-xl"></i>
-    </button>
+       
+          <button
+          class="card-curso-button-carrito relative mt-0 flex items-center justify-center gap-2 
+          bg-[var(--dynamic-secondary-color)] hover:bg-[var(--dynamic-primary-color)] text-white 
+          px-6 sm:py-0 py-3
+          text-lg
+          font-bold
+          rounded-[5rem]
+          transition duration-200
+          hover:transition hover:duration-500
+          hover:ease-in-out
+          hover:brightness-80
+          shadow-[0_.3rem_0_0_rgb(22,22,22)]
+          hover:shadow-[0_0_0_0_rgb(22,22,22)]
+          hover:bg-position-30
+          "
+          (click)="agregarAlCarrito()"
+          [style.--dynamic-secondary-color]="secondary_color"
+          [style.--dynamic-primary-color]="primary_color"
+        >
+        <p-badge *ngIf="getCursoCarrito()>0" [value]="getCursoCarrito().toString()" badgeSize="small" 
+        class="absolute -top-2 right-0"
+        ></p-badge>
+          <i class="pi pi-shopping-cart text-2xl"></i>
+        
+        </button>
     </div>
   </ng-template>
 </p-card>

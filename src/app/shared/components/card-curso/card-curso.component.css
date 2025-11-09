@@ -1,0 +1,31 @@
+.card-curso-card-button {
+    background: linear-gradient(90deg,var(--dynamic-hover-color-sec),var(--dynamic-hover-color),var(--dynamic-hover-color-sec),var(--dynamic-hover-color-sec),var(--dynamic-hover-color));
+    background-size: 400%;
+    border-radius: 3rem;
+}
+.card-curso-card-button:hover{
+    background-position: 30%;
+}
+
+.card-curso-button-carrito:hover i{
+    animation: carrito_button 1.2s infinite linear;
+}
+.card-curso-card-button, .card-curso-button-carrito{
+    transition: all 200ms ease;
+}
+.card-curso-card-button:hover, .card-curso-button-carrito:hover {
+    transform: translateY(2px);
+    transition: all 500ms ease;
+}
+
+@keyframes carrito_button {
+    0%,100%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(10deg);
+    }
+    75%{
+        transform: rotate(-10deg);
+    }
+}

@@ -8,10 +8,11 @@
   [autoplayInterval]="5000"
   [responsiveOptions]="responsiveOptions"
   class="mb-8"
+  [style.--dynamic-primary-color]="primary_color"
 >
   <ng-template pTemplate="item" let-curso>
-    <div class="px-4"> 
-    <app-card-curso [curso]="curso"></app-card-curso>
+    <div class="sm:px-4 px-0"> 
+    <app-card-curso [curso]="curso" [bg_color]="bg_color" [primary_color]="primary_color" [secondary_color]="secondary_color"></app-card-curso>
     </div>
   </ng-template>
 </p-carousel>
