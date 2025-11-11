@@ -1,7 +1,9 @@
 <div class="text-center mb-8">
   <h1 class="text-4xl font-bold mb-2 text-cyan-400">Cursos para Jóvenes</h1>
 </div>
-
+<div class="w-full flex flex-col items-center justify-center">
+  <p-progressSpinner *ngIf="cursos.length === 0" styleClass="w-4rem h-4rem"strokeWidth="4" animationDuration="1.6s" aria-label="Cargando"></p-progressSpinner>
+</div>
 <div class="grid 
     grid-cols-1 
     sm:grid-cols-1

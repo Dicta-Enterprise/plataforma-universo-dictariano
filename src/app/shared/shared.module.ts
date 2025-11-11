@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
     CardCursoComponent,
-    CourseCarouselComponent 
+    CourseCarouselComponent
   ],
   imports: [
     CommonModule,
@@ -27,8 +27,8 @@ import { RouterModule } from '@angular/router';
   ],
   exports: [
     CardCursoComponent,
-    CourseCarouselComponent
-
+    CourseCarouselComponent,
+    ProgressSpinnerModule
   ]
 })
 export class SharedModule { }
