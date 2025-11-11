@@ -3,6 +3,7 @@ import { CursoFacade } from '../../patterns/facade/managment/curso-facade';
 import { CategoriaManagment, CursoManagment } from 'src/app/core/class/managment/managment';
 import { CategoriaFacade } from '../../patterns/facade/managment/categoria-facade';
 
+
 @Component({
   selector: 'app-course-carousel',
   templateUrl: './course-carousel.component.html'

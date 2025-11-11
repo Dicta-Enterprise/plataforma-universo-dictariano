@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CourseCarouselComponent } from './components/course-carousel/course-carousel.component';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouterModule } from '@angular/router';
 
 
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     ButtonModule,
     CarouselModule,
     TagModule,
+    ProgressSpinnerModule,
     RouterModule
   ],
   exports: [
