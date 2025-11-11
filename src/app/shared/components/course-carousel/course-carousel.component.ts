@@ -9,8 +9,14 @@ import { CategoriaFacade } from '../../patterns/facade/managment/categoria-facad
   templateUrl: './course-carousel.component.html'
 })
 export class CourseCarouselComponent implements OnInit {
-  @Input() category!: 'todos'|'ninos'|'jovenes'|'padres';
+
+  @Input() category!: 'todos'|'ninos'|'jovenes'|'padres'; //colocar la categoría a la que pertenece la card actual
+  @Input() bg_color = '#1F2F4A'; //color de fondo para cada card
+  @Input() primary_color = '#15b6cf';//color primario (el del titulo, parte del boton principal, sombra de la card y flechas)
+  @Input() secondary_color = '#235E66';//color secundario (boton de compra y degradado en boton principal)
+  
   cursos: CursoManagment[] = [];
+
   responsiveOptions = [
     { breakpoint: '1400px', numVisible: 3, numScroll: 1 },
     { breakpoint: '1320px', numVisible: 3, numScroll: 1 },

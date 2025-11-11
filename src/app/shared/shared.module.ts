@@ -8,6 +8,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouterModule } from '@angular/router';
+import { BadgeModule } from 'primeng/badge';
 
 
 
@@ -23,7 +24,8 @@ import { RouterModule } from '@angular/router';
     CarouselModule,
     TagModule,
     ProgressSpinnerModule,
-    RouterModule
+    RouterModule,
+    BadgeModule
   ],
   exports: [
     CardCursoComponent,

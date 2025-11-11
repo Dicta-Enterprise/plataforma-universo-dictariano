@@ -6,3 +6,10 @@
   display: block;
   padding: 2rem;
 }
+
+@media (width <= 600px) {
+  :host{
+    padding: 0rem;
+  }
+  
+}
