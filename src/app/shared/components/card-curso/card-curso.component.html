@@ -1,14 +1,15 @@
 <!-- src/app/shared/components/card-curso/card-curso.component.html -->
 <p-card
-  styleClass="
-    card-curso           /* identificador para tu CSS */
+  class="card-curso"
+  styleClass="bg-transparent"
+>
+  <div class="
+    card-inner
+    relative
     flex flex-col h-full min-h-[550px] /* altura */
-    py-4
-    transition-all duration-300 ease-in-out
-    hover:scale-105 hover:shadow-[0_10px_20px_-6px_var(--dynamic-hover-color)]
-    animate-fade-in
-    flex flex-col gap-1 items-center justify-around
-    my-4
+    py-6
+    hover:shadow-[0_10px_20px_-6px_var(--dynamic-hover-color)]
+    animate-fade-in-out
   "
   [style]="{
     background: 'linear-gradient(to bottom, #141e30, '+bg_color+')',
@@ -17,8 +18,17 @@
     border: '1px solid #3b3b5f'
   }"
   [style.--dynamic-hover-color]="primary_color"
->
-  <ng-template pTemplate="header">
+  >
+    <div class="card-image absolute w-full h-full top-0 left-0">
+    <img
+      [src]="curso.imagen.startsWith('https')?curso.imagen:'/assets/loaders/bottle-loader.gif'"
+      alt="Curso banner"
+      style="width: 100%; height: 100%; object-fit: cover; display: block;"
+    />
+    <h2 class="absolute bottom-10 left-4 card-curso-titulo text-xl font-bold m-2" [style.color]="primary_color">{{curso.nombre}}</h2>
+  </div>
+  <div class="card-content absolute w-full h-full top-0 left-0 py-4">
+    <ng-template pTemplate="header">
     <img
       [src]="curso.imagen"
       alt="Curso"
@@ -100,4 +110,6 @@
         </button>
     </div>
   </ng-template>
+  </div>
+  </div>
 </p-card>
