@@ -1,12 +1,12 @@
 <!-- src/app/shared/components/card-curso/card-curso.component.html -->
-<p-card
-  class="card-curso"
-  styleClass="bg-transparent"
+<div
+  class="card-curso bg-transparent my-5"
+  [class] = "isPhone?'card-curso-phone':''"
 >
   <div class="
     card-inner
     relative
-    flex flex-col h-full min-h-[550px] /* altura */
+    flex flex-col h-full min-h-[500px] /* altura */
     py-6
     hover:shadow-[0_10px_20px_-6px_var(--dynamic-hover-color)]
     animate-fade-in-out
@@ -19,7 +19,7 @@
   }"
   [style.--dynamic-hover-color]="primary_color"
   >
-    <div class="card-image absolute w-full h-full top-0 left-0">
+    <div class="card-image absolute w-full h-full top-0 left-0 flex flex-row justify-center items-center">
     <img
       [src]="curso.imagen.startsWith('https')?curso.imagen:'/assets/loaders/bottle-loader.gif'"
       alt="Curso banner"
@@ -27,21 +27,13 @@
     />
     <h2 class="absolute bottom-10 left-4 card-curso-titulo text-xl font-bold m-2" [style.color]="primary_color">{{curso.nombre}}</h2>
   </div>
-  <div class="card-content absolute w-full h-full top-0 left-0 py-4">
-    <ng-template pTemplate="header">
-    <img
-      [src]="curso.imagen"
-      alt="Curso"
-      style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; margin-left: 20px; ; display: block; box-shadow: 0 15px 10px -10px #3b434b;"
-    />
-  </ng-template>
+  <div class="card-content absolute w-full h-full top-0 left-0 ml-0 mt-0 grid grid-rows-[4fr_1fr] grid-cols-1 p-5 gap-4">
+    
 
   <!-- Contenedor principal que crece y empuja el footer abajo -->
   <div class="
-      sm:h-72
-      h-50
       flex flex-col
-      px-4 pt-2
+      px-2 pt-0
       
     "
   >
@@ -51,37 +43,32 @@
     <p class="text-sm text-justify mb-3 text-white">
       {{ curso.descripcion }}
     </p>
-    <ul *ngFor="let benef of curso.beneficios; index as i;" class="text-sm list-disc pl-6 text-white">
+    <ul *ngFor="let benef of curso.beneficios; index as i;" class="text-sm list-disc pl-4 text-white">
       <li >{{ benef.titulo }}: {{benef.descripcion}}</li>
     </ul>
   </div>
 
-  <ng-template pTemplate="footer">
+  <div class="w-full ">
     <!-- mt-auto empuja siempre al fondo -->
-    <div class="mt-auto flex sm:flex-row flex-col justify-center sm:p-0 pt-0 gap-3">
+    <div class="w-full flex sm:flex-row flex-col justify-center sm:p-0 pt-0 gap-3 z-10">
       <p-button
-      class="card-curso-card-button"
-  label="Empezar  Curso"
-  (onClick)="irADetalle()"
-  styleClass="
-    p-button-rounded
-    
-    text-white font-bold
-    sm:py-2 py-3 px-4
-    w-full max-w-xs
-    text-lg
-    rounded-[5rem]
+      class="card-curso-card-button p-button-rounded
+        text-white font-bold text-center cursor-pointer
+        sm:py-2 py-3 px-4
+        w-full max-w-xs
+        text-lg
+        rounded-[5rem]
 
-    transition duration-200
-    hover:transition hover:duration-500
-    hover:ease-in-out
-    hover:brightness-80
-    shadow-[0_.3rem_0_0_rgb(22,22,22)]
-    hover:shadow-[0_0_0_0_rgb(22,22,22)]
-  "
-  [style.--dynamic-hover-color]="primary_color"
-  [style.--dynamic-hover-color-sec]="secondary_color"
-></p-button>
+        transition duration-200
+        hover:transition hover:duration-500
+        hover:ease-in-out
+        hover:brightness-80
+        shadow-[0_.3rem_0_0_rgb(22,22,22)]
+        hover:shadow-[0_0_0_0_rgb(22,22,22)]"
+      (onClick)="irADetalle()"
+      [style.--dynamic-hover-color]="primary_color"
+      [style.--dynamic-hover-color-sec]="secondary_color"
+    >Empezar Curso</p-button>
        
           <button
           class="card-curso-button-carrito relative mt-0 flex items-center justify-center gap-2 
@@ -109,7 +96,7 @@
         
         </button>
     </div>
-  </ng-template>
   </div>
+</div>
   </div>
-</p-card>
+</div>
