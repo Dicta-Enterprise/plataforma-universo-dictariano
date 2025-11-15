@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CourseCarouselComponent } from './components/course-carousel/course-carousel.component';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 
@@ -14,7 +15,7 @@ import { BadgeModule } from 'primeng/badge';
 @NgModule({
   declarations: [
     CardCursoComponent,
-    CourseCarouselComponent 
+    CourseCarouselComponent
   ],
   imports: [
     CommonModule,
@@ -22,13 +23,14 @@ import { BadgeModule } from 'primeng/badge';
     ButtonModule,
     CarouselModule,
     TagModule,
+    ProgressSpinnerModule,
     RouterModule,
     BadgeModule
   ],
   exports: [
     CardCursoComponent,
-    CourseCarouselComponent
-
+    CourseCarouselComponent,
+    ProgressSpinnerModule
   ]
 })
 export class SharedModule { }

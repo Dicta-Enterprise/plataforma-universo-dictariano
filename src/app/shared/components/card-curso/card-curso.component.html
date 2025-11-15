@@ -19,8 +19,9 @@
   [style.--dynamic-hover-color]="primary_color"
 >
   <ng-template pTemplate="header">
+    
     <img
-      [src]="curso.imagen"
+      [src]="curso.imagen.startsWith('https')?curso.imagen:'/assets/loaders/bottle-loader.gif'"
       alt="Curso"
       style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%; margin-left: 20px; ; display: block; box-shadow: 0 15px 10px -10px #3b434b;"
     />
