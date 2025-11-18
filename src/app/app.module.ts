@@ -10,6 +10,8 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
 import { StyleClassModule } from 'primeng/styleclass';
 import { RouterModule } from '@angular/router';
 import { ActivoInactivoPipe } from './shared/pipes/activo-inactivo/activo-inactivo.pipe';
@@ -32,6 +34,8 @@ import { SharedSpinnerModule } from './shared/components/spinners/shared-spinner
     BrowserAnimationsModule,
     RouterModule,
     MenubarModule,
+    AvatarModule,
+    MenuModule,
     StyleClassModule,
     InputTextModule,
     SharedSpinnerModule,
