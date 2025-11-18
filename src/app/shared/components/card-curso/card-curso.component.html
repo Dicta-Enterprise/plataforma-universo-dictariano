@@ -6,7 +6,7 @@
   <div class="
     card-inner
     relative
-    flex flex-col h-full min-h-[500px] /* altura */
+    flex flex-col h-full min-h-[680px] /* altura */
     py-6
     hover:shadow-[0_10px_20px_-6px_var(--dynamic-hover-color)]
     animate-fade-in-out
@@ -27,9 +27,15 @@
     />
     <h2 class="absolute bottom-10 left-4 card-curso-titulo text-xl font-bold m-2" [style.color]="primary_color">{{curso.nombre}}</h2>
   </div>
-  <div class="card-content absolute w-full h-full top-0 left-0 ml-0 mt-0 grid grid-rows-[4fr_1fr] grid-cols-1 p-5 gap-4">
+  <div class="card-content absolute w-full h-full top-0 left-0 ml-0 mt-0 grid grid-rows-[3fr_5fr_1fr] grid-cols-1 p-5 gap-4">
     
-
+  <div class="w-full flex flex-col justify-center items-center">
+    <img
+      [src]="curso.imagen"
+      alt="Curso"
+      style="width: 200px; height: 200px; object-fit: cover; border-radius: 50% ; display: block; box-shadow: 0 0 10px #a5cfff;"
+    />
+  </div>
   <!-- Contenedor principal que crece y empuja el footer abajo -->
   <div class="
       flex flex-col
@@ -41,10 +47,10 @@
       {{ curso.nombre }}
     </h2>
     <p class="text-sm text-justify mb-3 text-white">
-      {{ curso.descripcion }}
+      {{ curso.descripcion | formatoDescripcion }}
     </p>
     <ul *ngFor="let benef of curso.beneficios; index as i;" class="text-sm list-disc pl-4 text-white">
-      <li >{{ benef.titulo }}: {{benef.descripcion}}</li>
+      <li *ngIf="!isPhone">{{ benef | formatoBeneficios }}</li>
     </ul>
   </div>
 
@@ -56,7 +62,7 @@
         text-white font-bold text-center cursor-pointer
         sm:py-2 py-3 px-4
         w-full max-w-xs
-        text-lg
+        text-base
         rounded-[5rem]
 
         transition duration-200
@@ -74,7 +80,7 @@
           class="card-curso-button-carrito relative mt-0 flex items-center justify-center gap-2 
           bg-[var(--dynamic-secondary-color)] hover:bg-[var(--dynamic-primary-color)] text-white 
           px-6 sm:py-0 py-3
-          text-lg
+          text-sm
           font-bold
           rounded-[5rem]
           transition duration-200

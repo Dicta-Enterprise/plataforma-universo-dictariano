@@ -8,6 +8,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
+import { SharedPipeModule } from './pipes/shared-pipe.module';
 
 
 
@@ -23,7 +24,8 @@ import { BadgeModule } from 'primeng/badge';
     CarouselModule,
     TagModule,
     RouterModule,
-    BadgeModule
+    BadgeModule,
+    SharedPipeModule
   ],
   exports: [
     CardCursoComponent,

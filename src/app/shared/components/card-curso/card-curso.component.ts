@@ -22,7 +22,7 @@ export class CardCursoComponent{
   private readonly cart: CartService
   ) {
     this.setIsPhone();
-    document.addEventListener('resize', () => {
+    window.addEventListener('resize', () => {
       this.setIsPhone();
     });
   }
