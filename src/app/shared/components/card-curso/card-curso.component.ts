@@ -28,9 +28,7 @@ export class CardCursoComponent{
   }
 
   public setIsPhone():void{
-    setTimeout(() => {
-      this.isPhone = innerWidth < 500;
-    }, 2000);
+    this.isPhone = innerWidth < 500;
   }
 
   public get dynamicHoverClass(): string {

@@ -17,17 +17,12 @@
     animation: rotate_card .6s linear;
 }
 
-.card-curso-phone .card-inner {
-    animation: rotate_card .6s linear;
-    animation-delay: 0s;
-}
-
-.card-curso:hover .card-inner .card-image, .card-curso-phone .card-inner .card-image {
+.card-curso:hover .card-inner .card-image{
     transform: rotateY(180deg) !important;
     transition-delay: .3s;
 
 }
-.card-curso:hover .card-inner .card-content, .card-curso-phone .card-inner .card-content {
+.card-curso:hover .card-inner .card-content{
     transform: rotateY(0deg) !important;
     transition-delay: .3s;
 }
