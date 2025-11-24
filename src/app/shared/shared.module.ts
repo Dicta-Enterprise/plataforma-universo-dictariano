@@ -9,6 +9,7 @@ import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
+import { SharedPipeModule } from './pipes/shared-pipe.module';
 
 
 
@@ -25,7 +26,8 @@ import { BadgeModule } from 'primeng/badge';
     TagModule,
     ProgressSpinnerModule,
     RouterModule,
-    BadgeModule
+    BadgeModule,
+    SharedPipeModule
   ],
   exports: [
     CardCursoComponent,

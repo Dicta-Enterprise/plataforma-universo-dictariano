@@ -38,10 +38,26 @@ body {
     transform: scale(1);
   }
 }
+@keyframes fade-in-out {
+  50% {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
 .animate-fade-in {
   animation-name: fade-in;
   animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+.animate-fade-in-out {
+  animation-name: fade-in-out;
+  animation-duration: .4s;
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 }
