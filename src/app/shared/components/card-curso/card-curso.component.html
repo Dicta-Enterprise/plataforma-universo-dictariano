@@ -30,7 +30,7 @@
     
   <div class="w-full flex flex-col justify-center items-center">
     <img
-      [src]="curso.imagen"
+      [src]="curso.imagen.startsWith('https')?curso.imagen:'/assets/loaders/bottle-loader.gif'"
       alt="Curso"
       style="width: 200px; height: 200px; object-fit: cover; border-radius: 50% ; display: block; box-shadow: 0 0 10px #a5cfff;"
     />

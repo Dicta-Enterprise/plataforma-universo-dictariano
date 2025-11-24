@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { CourseCarouselComponent } from './components/course-carousel/course-carousel.component';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { SharedPipeModule } from './pipes/shared-pipe.module';
@@ -15,7 +16,7 @@ import { SharedPipeModule } from './pipes/shared-pipe.module';
 @NgModule({
   declarations: [
     CardCursoComponent,
-    CourseCarouselComponent 
+    CourseCarouselComponent
   ],
   imports: [
     CommonModule,
@@ -23,14 +24,15 @@ import { SharedPipeModule } from './pipes/shared-pipe.module';
     ButtonModule,
     CarouselModule,
     TagModule,
+    ProgressSpinnerModule,
     RouterModule,
     BadgeModule,
     SharedPipeModule
   ],
   exports: [
     CardCursoComponent,
-    CourseCarouselComponent
-
+    CourseCarouselComponent,
+    ProgressSpinnerModule
   ]
 })
 export class SharedModule { }

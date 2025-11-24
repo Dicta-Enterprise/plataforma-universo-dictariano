@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { BadgeModule } from 'primeng/badge';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { DividerModule } from 'primeng/divider';
 @NgModule({
@@ -33,6 +34,7 @@ import { DividerModule } from 'primeng/divider';
     DialogModule,
     InputSwitchModule,
     BadgeModule,
+    ProgressSpinnerModule,
     ProgressBarModule,
     DividerModule
     

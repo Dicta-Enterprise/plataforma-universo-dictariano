@@ -16,6 +16,6 @@
     </div>
   </ng-template>
 </p-carousel>
-<div *ngIf="cursos.length===0">
-  <h2 class="text-center">No hay cursos en esta categoría</h2>
+<div *ngIf="cursos.length===0" class="flex flex-col items-center justify-center">
+  <p-progressSpinner styleClass="w-4rem h-4rem"strokeWidth="4" animationDuration="1.6s" aria-label="Cargando"></p-progressSpinner>
 </div>
