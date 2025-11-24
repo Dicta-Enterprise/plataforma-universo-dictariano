@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/core/services/auth/auth.service';
 })
 export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
+  userItems: MenuItem[];
   count$: Observable<number>;
 
   constructor(
@@ -23,6 +24,28 @@ export class NavBarComponent implements OnInit {
   
   
   ngOnInit(): void {
+    this.userItems = [
+      {
+        label: 'Ver perfil',
+        icon: 'pi pi-user', // Icono de PrimeIcons
+        //command: () => this.onViewProfile()
+      },
+      {
+        label: 'Ver mis compras',
+        icon: 'pi pi-user', // Icono de PrimeIcons
+        //command: () => this.onViewProfile()
+      },
+      {
+        label: 'Ver mis cursos',
+        icon: 'pi pi-user', // Icono de PrimeIcons
+        //command: () => this.onViewProfile()
+      },
+      {
+        label: 'Cerrar sesión',
+        icon: 'pi pi-sign-out', // Icono de PrimeIcons
+        //command: () => this.onLogout()
+      }
+    ];
     this.items = [
       {
         label: 'Home',
@@ -36,18 +59,44 @@ export class NavBarComponent implements OnInit {
         icon: 'pi pi-fw pi-book',
         styleClass: 'custom-menu-item',
         routerLink: '/courses',
+        items: [
+          {
+            label: 'Todos los cursos',
+            icon: 'pi pi-fw pi-book',
+            styleClass: 'custom-menu-item',
+            routerLink: '/courses'
+          },
+          {
+            label: 'Padres',
+            icon: 'pi pi-fw pi-book',
+            styleClass: 'custom-menu-item',
+            routerLink: '/courses'
+          },
+          {
+            label: 'Jóvenes',
+            icon: 'pi pi-fw pi-book',
+            styleClass: 'custom-menu-item',
+            routerLink: '/courses'
+          },
+          {
+            label: 'Niños',
+            icon: 'pi pi-fw pi-book',
+            styleClass: 'custom-menu-item',
+            routerLink: '/courses'
+          }
+        ]
       },
       {
-        label: 'Nosotros',
+        label: 'Acerca de Nosotros',
         icon: 'pi pi-fw pi-users',
         styleClass: 'custom-menu-item',
         routerLink: '/about',
-      },
+      }
     ]; 
   }
-   abrirPerfil() {
+  abrirPerfil() {
     // Por ahora puedes navegar a /perfil, o mostrar modal
     // this.router.navigate(['/perfil']);
     alert('Ir a perfil (aquí va tu lógica)');
-   }
+  }
 }
