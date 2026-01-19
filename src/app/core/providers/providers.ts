@@ -4,6 +4,7 @@ import { ErrorInterceptor } from 'src/app/shared/interceptors/error.interceptor'
 import { CUSTOM_GALAXIA_PROVIDER } from './managment/galaxia.provider';
 import { SpinnerInterceptor } from 'src/app/shared/interceptors/spinner.interceptor';
 import { CUSTOM_CATEGORIA_PROVIDER } from './managment/categoria.provider';
+import { CUSTOM_REGISTER_PROVIDER } from './managment/register.provider';
 
 export const CUSTOM_PROVIDERS: Provider[] = [
   //   {
@@ -24,4 +25,5 @@ export const CUSTOM_PROVIDERS: Provider[] = [
 
   ...CUSTOM_GALAXIA_PROVIDER,
   ...CUSTOM_CATEGORIA_PROVIDER,
+  ...CUSTOM_REGISTER_PROVIDER,
 ];
