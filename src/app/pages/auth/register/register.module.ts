@@ -15,6 +15,7 @@ import { RippleModule } from 'primeng/ripple';
     //Componentes
     RegisterComponent
   ],
+  
   imports: [
     //Modulos
     CommonModule,

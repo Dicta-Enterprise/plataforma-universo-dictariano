@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { StepPresenter } from 'src/app/core/helpers/step.presenter';
-import { RegisterManagment } from 'src/app/core/class/managment/register/Register-managment.class';
+import { Register } from 'src/app/core/class/auth/register.class';
 import { PasswordValidator } from 'src/app/core/validators/password.validator';
-@Injectable({
+  @Injectable({
   providedIn: 'root',
 })
-export class RegisterFormPresenter extends StepPresenter<RegisterManagment> {
+export class RegisterFormPresenter extends StepPresenter<Register> {
   public username!: FormControl;
   public email!: FormControl;
   public password!: FormControl;

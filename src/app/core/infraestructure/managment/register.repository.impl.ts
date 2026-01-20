@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { environment } from 'environments/environment';
 
 import { RegisterRepository } from '../../repositories/managment/register.repository';
-import { RegisterManagment } from '../../class/managment/managment';
+import { Register } from '../../class/auth/register.class';
 import { IGeneric } from '../../interfaces/genericas/IGeneric.interface';
 
 @Injectable({
@@ -17,14 +17,14 @@ export class RegisterRepositoryImpl implements RegisterRepository {
   constructor(private httpClient: HttpClient) {}
 
   registrarUsuarioService(
-    register: RegisterManagment
-  ): Observable<RegisterManagment> {
+    register: Register
+  ): Observable<Register> {
 
     const url = `${this.base_url}auth/register`; 
 
-    return this.httpClient.post<IGeneric<RegisterManagment>>(url, register).pipe(
+    return this.httpClient.post<IGeneric<Register>>(url, register).pipe(
         map((response) => {
-          return RegisterManagment.fromJson(response.data);
+          return Register.fromJson(response.data);
         })
       );
   }

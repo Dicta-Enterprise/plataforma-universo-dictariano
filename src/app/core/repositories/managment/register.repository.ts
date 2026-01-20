@@ -1,8 +1,8 @@
 import { Observable } from 'rxjs';
-import { RegisterManagment } from '../../class/managment/managment';
+import { Register } from '../../class/auth/register.class';
 
 export interface RegisterRepository {
   registrarUsuarioService(
-    register: RegisterManagment
-  ): Observable<RegisterManagment>;
+    register: Register
+  ): Observable<Register>;
 }

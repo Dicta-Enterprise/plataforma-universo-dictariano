@@ -7,4 +7,3 @@ export * from './galaxias/Galaxias-managment.class';
 export * from './planetas/Planetas-managment.class';
 export * from './idioma/Idioma-managment.class';
 export * from './profesor/Profesor-managment.class';
-export * from './register/Register-managment.class';

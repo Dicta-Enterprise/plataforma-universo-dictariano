@@ -6,5 +6,6 @@ export const CUSTOM_REGISTER_PROVIDER: Provider[] = [
   {
     provide: REGISTER_REPOSITORY,
     useClass: RegisterRepositoryImpl,
+    
   },
 ];

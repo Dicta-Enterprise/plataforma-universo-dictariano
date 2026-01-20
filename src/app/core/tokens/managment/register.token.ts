@@ -3,4 +3,5 @@ import { RegisterRepository } from '../../repositories/managment/register.reposi
 
 export const REGISTER_REPOSITORY = new InjectionToken<RegisterRepository>(
   'REGISTER_REPOSITORY'
+  
 );

@@ -10,26 +10,26 @@ import { RegisterFacade } from 'src/app/shared/patterns/facade/managment/registe
 export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
-    public readonly RegisterFormPresenter: RegisterFormPresenter,
+    public readonly registerFormPresenter: RegisterFormPresenter, //mayus
     private readonly registerFacade: RegisterFacade
   ) {}
 
   ngOnInit(): void {
-    this.RegisterFormPresenter.createForm();
+    this.registerFormPresenter.createForm();
   }
 
   submit(): void {
-    if (this.RegisterFormPresenter.Invalid) {
-      this.RegisterFormPresenter.MarkAllAsTouched();
+    if (this.registerFormPresenter.Invalid) {
+      this.registerFormPresenter.MarkAllAsTouched();
       return;
     }
 
     this.registerFacade.registrarUsuario(
-      this.RegisterFormPresenter.Value
+      this.registerFormPresenter.Value
     );
   }
 
   ngOnDestroy(): void {
-    this.RegisterFormPresenter.destroy();
+    this.registerFacade.destroy();
   }
 }

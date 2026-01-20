@@ -25,11 +25,6 @@ export class StepPresenter<T extends Record<string, any>> {
     return this.form.valid;
   }
 
-  destroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-  }
-
   patchValue(
     model: T,
     options?: { emitEvent?: boolean; onlySelf?: boolean }
