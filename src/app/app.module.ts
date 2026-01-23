@@ -20,6 +20,7 @@ import { SharedModule } from 'primeng/api';
 import { MessageService } from 'primeng/api';
 import { CUSTOM_PROVIDERS } from './core/providers/providers';
 import { SharedSpinnerModule } from './shared/components/spinners/shared-spinner.module';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,8 @@ import { SharedSpinnerModule } from './shared/components/spinners/shared-spinner
     ButtonModule,
     HttpClientModule,
     SharedModule,
+
+    ToastModule,
   ],
   providers: [MessageService, ...CUSTOM_PROVIDERS],
   bootstrap: [AppComponent],

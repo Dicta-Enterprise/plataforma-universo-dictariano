@@ -1,0 +1,91 @@
+
+.register-container {
+  background-color: #000;
+}
+
+.register-card {
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.register-logo {
+  width: 120px;
+  height: auto;
+}
+
+.register-title {
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.register-subtitle {
+  color: #b5b5b5;
+  font-size: 0.95rem;
+}
+
+.register-label {
+  color: #d1d1d1;
+  font-weight: 500;
+  font-size: 0.95rem; 
+  line-height: 1.2rem;  
+  margin-bottom: 0.5rem; 
+  display: block;        
+  width: 100%;
+}
+
+.register-input {
+  background-color: #111 !important;
+  color: #fff !important;
+  border-radius: 12px;
+  border: 1px solid transparent; 
+  padding: 0.75rem;
+  transition: all 0.2s;
+}
+
+.register-input:focus {
+  box-shadow: 0 0 0 2px #22d3ee;
+  outline: none;
+}
+
+:host ::ng-deep .p-password {
+  display: flex !important; 
+  width: 100% !important;
+}
+
+:host ::ng-deep .p-password input {
+  background-color: #111 !important;
+  color: #fff !important;
+  border-radius: 12px;
+  border: none;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+  width: 100% !important; 
+}
+
+:host ::ng-deep .p-password-reveal {
+  color: #9ca3af !important;
+  right: 1rem !important;
+}
+
+.register-input::placeholder,
+:host ::ng-deep .p-password input::placeholder {
+  color: #9ca3af;
+}
+
+.register-button {
+  background: linear-gradient(90deg, #2dd4bf, #22d3ee) !important;
+  border: none !important;
+  color: #000 !important;
+  font-weight: bold !important;
+  font-size: 1rem !important;
+  padding: 0.9rem !important;
+  border-radius: 14px !important;
+  margin-top: 1rem;
+}
+
+.register-button:hover {
+  background: linear-gradient(90deg, #22d3ee, #2dd4bf) !important;
+  transform: translateY(-1px);
+}
