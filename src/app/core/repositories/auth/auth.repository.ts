@@ -7,3 +7,4 @@ export interface AuthRepository {
   login(credentials: AuthCredentials): Observable<Login>;
   register(credentials: AuthCredentials): Observable<Register>;
 }
+

@@ -14,4 +14,5 @@ export abstract class AuthCredentials {
       password: casted['password'] as string,
     };
   }
+  
 }

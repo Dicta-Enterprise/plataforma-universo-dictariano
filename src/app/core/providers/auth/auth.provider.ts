@@ -8,3 +8,4 @@ export const CUSTOM_AUTH_PROVIDER: Provider[] = [
     useClass: AuthRepositoryImpl,
   },
 ];
+

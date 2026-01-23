@@ -26,6 +26,7 @@ export class Register extends AuthCredentials {
       confirmPassword: register.confirmPassword,
     };
   }
+  
 }
 
 

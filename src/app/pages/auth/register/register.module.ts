@@ -11,3 +11,4 @@ import { AuthThemeModule } from 'src/app/core/themes/auth/auth-primeng.module';
   ],
 })
 export class RegisterModule {}
+

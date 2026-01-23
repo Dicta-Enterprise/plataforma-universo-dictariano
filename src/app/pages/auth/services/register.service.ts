@@ -17,3 +17,4 @@ export class RegisterService {
     return this.authRepository.register(register);
   }
 }
+
