@@ -10,7 +10,6 @@ export class Register extends AuthCredentials {
     this.confirmPassword = register.confirmPassword || '';
   }
 
-  //
   static fromJson(register: unknown): Register {
     const casted = register as Record<string, unknown>;
     return new Register({
@@ -19,15 +18,12 @@ export class Register extends AuthCredentials {
     });
   }
 
-  static toJson(register: Register): any {
+  static toJson(register: Register): unknown {
     return {
-        //id: register.id,
       username: register.username,
       email: register.email,
       password: register.password,
       confirmPassword: register.confirmPassword,
-      //estado: register.estado,
-      //fechaCreacion: register.fechaCreacion,
     };
   }
 }

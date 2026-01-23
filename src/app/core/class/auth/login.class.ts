@@ -10,7 +10,7 @@ export class Login extends AuthCredentials {
     return new Login(AuthCredentials.FromJson(login));
   }
 
-  static toJson(login: Login): any {
+  static toJson(login: Login): unknown {
     return {
       email: login.email,
       password: login.password,
