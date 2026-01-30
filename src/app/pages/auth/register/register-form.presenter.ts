@@ -19,7 +19,7 @@ export class RegisterFormPresenter extends StepPresenter<Register> {
   public initForm(): void {
     this.username = new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]);
     this.email = new FormControl(null, [Validators.required, Validators.email]);
-    this.password = new FormControl(null, [Validators.required, Validators.minLength(8)]);
+    this.password = new FormControl(null, [Validators.required]);
     this.confirmPassword = new FormControl(null, [Validators.required, Validators.minLength(8)]);
   }
 
