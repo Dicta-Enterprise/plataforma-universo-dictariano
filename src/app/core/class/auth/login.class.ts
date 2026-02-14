@@ -1,6 +1,7 @@
 import { AuthCredentials } from './auth-credentials.class';
 
 export class Login extends AuthCredentials {
+  
 
   constructor(login: Partial<Login> = {}) {
     super(login);

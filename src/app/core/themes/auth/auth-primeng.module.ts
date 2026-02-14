@@ -8,6 +8,9 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { CheckboxModule } from 'primeng/checkbox';
+import { DividerModule } from 'primeng/divider';
+
 
 @NgModule({
   imports: [
@@ -18,6 +21,8 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     RippleModule,
     ToastModule,
+    CheckboxModule,
+    DividerModule,
   ],
   exports: [
     CommonModule,
@@ -27,6 +32,7 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     RippleModule,
     ToastModule,
+    CheckboxModule
   ],
   providers: [
     MessageService

@@ -30,7 +30,7 @@ export class RegisterFacade {
           this.register$.next(response);
 
           this.messageService.add({
-             key: 'global',
+            key: 'global',
             severity: 'success',
             summary: 'Registro exitoso',
             detail: 'Tu cuenta fue creada correctamente',
