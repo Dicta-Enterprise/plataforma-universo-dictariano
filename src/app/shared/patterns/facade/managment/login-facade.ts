@@ -7,7 +7,7 @@ import { Login } from 'src/app/core/class/auth/login.class';
 import { LoginService } from 'src/app/pages/auth/services/login.service';
 import { LoginResponse } from 'src/app/core/class/auth/login.response.class';
 import { TokenStorageService } from 'src/app/core/security/token-storage.service';
-
+import { AuthService } from 'src/app/pages/auth/services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,9 +19,9 @@ export class LoginFacade {
 
   constructor(
     private readonly loginService: LoginService,
-    private readonly tokenStorage: TokenStorageService,
     private readonly messageService: MessageService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly authService: AuthService
   ) {}
 
   iniciarSesion(login: Login) {
@@ -30,7 +30,7 @@ export class LoginFacade {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response: LoginResponse) => {
-          this.tokenStorage.setToken(response.accessToken);
+          this.authService.login(response.accessToken);
           this.login$.next(response);
 
           this.messageService.add({
