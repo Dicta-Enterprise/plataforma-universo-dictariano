@@ -1,1 +1,100 @@
-<p>register works!</p>
+<div class="register-container flex justify-content-center align-items-center min-h-screen">
+  <div class="register-card p-5 w-full sm:w-30rem">
+
+    <div class="flex flex-column align-items-center mb-4">
+      <img
+        src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
+        alt="Logo"
+        class="register-logo mb-3"
+      />
+      
+      <h2 class="register-title text-center">
+        Crea tu cuenta
+      </h2>
+      <span class="register-subtitle text-center">
+        Únete a la Plataforma Dictariana
+      </span>
+    </div>
+
+    <form [formGroup]="registerFormPresenter.Form">
+
+      <div class="field mb-3">
+        <label for="username" class="register-label">Username</label>
+        <input
+          id="username"
+          type="text"
+          pInputText
+          formControlName="username"
+          class="register-input w-full"
+          placeholder="Ingresa tu usuario"
+        />
+      </div>
+
+      <div class="field mb-3">
+        <label for="email" class="register-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          class="register-input w-full"
+          placeholder="Ingresa tu correo"
+        />
+      </div>
+
+      <div class="field mb-3">
+        <label for="password" class="register-label">Contraseña</label>
+        <p-password
+          id="password"
+          formControlName="password"
+          [toggleMask]="true"
+          class="w-full"
+          inputClass="register-input w-full"
+          placeholder="Ingresa tu contraseña"
+        ></p-password>
+        <small
+        class="p-error"
+        *ngIf="
+          registerFormPresenter.Form.errors?.['weakPassword'] &&
+          registerFormPresenter.Form.get('password')?.touched
+        "
+        >
+        La contraseña debe tener mayúscula, minúscula, número y símbolo (mínimo 8 caracteres)
+        </small>
+      </div>
+
+      <div class="field mb-4">
+        <label for="confirmPassword" class="register-label">Confirmar contraseña</label>
+        <p-password
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [toggleMask]="true"
+          class="w-full"
+          inputClass="register-input w-full"
+          placeholder="Confirma tu contraseña"
+        ></p-password>
+        <small
+        class="p-error"
+        *ngIf="
+          registerFormPresenter.Form.errors?.['passwordMismatch'] &&
+          (registerFormPresenter.Form.get('confirmPassword')?.dirty ||
+          registerFormPresenter.Form.get('confirmPassword')?.touched)
+        "
+        >
+        Las contraseñas no coinciden
+        </small>
+      </div>
+
+      <button
+        type="button"
+        pButton
+        pRipple
+        label="Registrarme"
+        icon="pi pi-user-plus"
+        class="register-button w-full"
+        (click)="submit()"
+        [disabled]="registerFormPresenter.Form.invalid"
+      ></button>
+    </form>
+  </div>
+</div>
