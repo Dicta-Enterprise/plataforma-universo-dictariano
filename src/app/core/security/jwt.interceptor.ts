@@ -9,28 +9,18 @@ import { Router } from '@angular/router';
 export class JwtInterceptor implements HttpInterceptor {
 
   constructor(
-    private tokenStorage: TokenStorageService,
     private router: Router
   ) {}
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const token = this.tokenStorage.getToken();
-
-    let authReq = req;
-
-    if (token) {
-      authReq = req.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
+    const authReq = req.clone({
+      withCredentials: true
+    })
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        const isLoginRequest = req.url.includes('/auth/login');
-        if (error.status === 401 && !isLoginRequest) {
-          this.tokenStorage.clearToken();
+        const isAuthEndPoint = req.url.includes('/auth/login');
+        if (error.status === 401 && !isAuthEndPoint) {
           this.router.navigate(['/login']);
         }
         return throwError(() => error);

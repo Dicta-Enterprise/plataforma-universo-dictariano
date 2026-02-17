@@ -1,38 +1,30 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { TokenStorageService } from 'src/app/core/security/token-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private loggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
+  private loggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this.loggedInSubject.asObservable();
 
   constructor(
-    private tokenStorage: TokenStorageService,
     private router: Router
   ) {}
 
-  private hasToken(): boolean {
-    return !!this.tokenStorage.getToken();
-  }
-
-  login(token: string): void {
-    this.tokenStorage.setToken(token);
+  login(): void {
     this.loggedInSubject.next(true);
   }
 
   logout(): void {
-    this.tokenStorage.clearToken();
     this.loggedInSubject.next(false);
     this.router.navigate(['/']);
   }
 
   isLoggedIn(): boolean {
-    return this.hasToken();
+    return this.loggedInSubject.value;
   }
 
   getUserImg(): string {

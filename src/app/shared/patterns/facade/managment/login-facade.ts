@@ -29,9 +29,9 @@ export class LoginFacade {
       .iniciarSesion(login)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response: LoginResponse) => {
-          this.authService.login(response.accessToken);
-          this.login$.next(response);
+        next: () => {
+          this.authService.login();
+          this.login$.next(null);
 
           this.messageService.add({
             key: 'global',
