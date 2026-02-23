@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,HttpErrorResponse} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { TokenStorageService } from './token-storage.service';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -19,9 +18,12 @@ export class JwtInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        const isAuthEndPoint = req.url.includes('/auth/login');
+        const isAuthEndPoint = 
+        req.url.includes('/auth/login') || 
+        req.url.includes('/auth/profile') || 
+        req.url.includes('/auth/google');
         if (error.status === 401 && !isAuthEndPoint) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/auth/login']);
         }
         return throwError(() => error);
       })

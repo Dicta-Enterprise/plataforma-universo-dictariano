@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
+import { AuthService } from './pages/auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,10 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class AppComponent implements OnInit {
   title = 'front-magment-universodicta';
-  constructor(private primengConfig: PrimeNGConfig) {}
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.primengConfig.setTranslation({
@@ -36,5 +40,6 @@ export class AppComponent implements OnInit {
       accept: 'Aceptar',
       reject: 'Cancelar',
     });
+    this.authService.checkSession();
   }
 }
