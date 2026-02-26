@@ -6,11 +6,12 @@ import { MessageService } from 'primeng/api';
 import { Login } from 'src/app/core/class/auth/login.class';
 import { LoginService } from 'src/app/pages/auth/services/login.service';
 import { LoginResponse } from 'src/app/core/class/auth/login.response.class';
-import { TokenStorageService } from 'src/app/core/security/token-storage.service';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class LoginFacade {
 
   login$ = new BehaviorSubject<LoginResponse | null>(null);

@@ -89,6 +89,19 @@
         [disabled]="loginFormPresenter.Invalid"
         >
       </button>
+      <button
+        type="button"
+        pButton
+        pRipple
+        label="Ingresar con Google"
+        icon="pi pi-google"
+        class="w-full py-3 text-lg font-semibold rounded-lg
+              bg-gradient-to-r from-red-400 to-pink-500 border-0 shadow-md 
+              text-white hover:from-pink-400 hover:to-red-500 
+              transition flex items-center justify-center gap-2"
+        (click)="loginWithGoogle()"
+        >
+      </button>
     </form>
   </div>
 </div>

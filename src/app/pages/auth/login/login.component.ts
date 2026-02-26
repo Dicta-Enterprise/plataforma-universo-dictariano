@@ -29,6 +29,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
   }
 
+  loginWithGoogle(): void {
+  window.location.href = 'http://localhost:3000/api/auth/google';
+  }
+
   ngOnDestroy(): void {
     this.loginFacade.destroy();
   }
