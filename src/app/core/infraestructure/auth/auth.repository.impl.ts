@@ -14,7 +14,7 @@ import { IGeneric } from '../../interfaces/genericas/IGeneric.interface';
 })
 export class AuthRepositoryImpl implements AuthRepository {
 
-  private base_url = environment.URL_BACKEND;
+  private base_url = environment.URL_BACKEND_AUTH;
 
   constructor(private httpClient: HttpClient) {}
 

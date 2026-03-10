@@ -17,12 +17,12 @@ const routes: Routes = [
     path: 'courses',
     loadChildren: () =>
       import('./pages/courses/courses.module').then((m) => m.CoursesModule),
-    canActivate: [AuthGuard],
   },
-  { path: 'cart', 
-    loadChildren: () => 
-    import('./pages/cart/cart.module').then(m => m.CartModule), 
-    canActivate: [AuthGuard]
+  {
+    path: 'cart',
+    loadChildren: () =>
+      import('./pages/cart/cart.module').then((m) => m.CartModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'about',
