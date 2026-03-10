@@ -40,6 +40,5 @@ export class AppComponent implements OnInit {
       accept: 'Aceptar',
       reject: 'Cancelar',
     });
-    this.authService.checkSession();
   }
 }

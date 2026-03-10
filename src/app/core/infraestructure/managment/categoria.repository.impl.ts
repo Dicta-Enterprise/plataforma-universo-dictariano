@@ -18,7 +18,8 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
   constructor(private httpClient: HttpClient) {}
 
   listarCategoriasService$(): Observable<CategoriaManagment[]> {
-    let url = `${this.base_url}categorias`;
+    const url = `${this.base_url}categorias`;
+
     return this.httpClient.get<IGenericArrays<CategoriaManagment>>(url).pipe(
       map((response: IGenericArrays<CategoriaManagment>) => {
         return response.data._value.map((categoria) => {
@@ -31,7 +32,7 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
   obtenerCategoriaService$(
     categoriaId: string
   ): Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias/${categoriaId}`;
+    const url = `${this.base_url}categorias/${categoriaId}`;
 
     return this.httpClient.get<IGeneric<CategoriaManagment>>(url).pipe(
       map((response) => {
@@ -44,7 +45,7 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
     categoria: CategoriaManagment,
     imagen: File
   ): Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias`;
+    const url = `${this.base_url}categorias`;
     const formData = new FormData();
     // Agregar campos del formulario
     formData.append('nombre', categoria.nombre);
@@ -66,7 +67,7 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
   editarCategoriaService$(
     categoria: CategoriaManagment
   ): Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias/${categoria.id}`;
+    const url = `${this.base_url}categorias/${categoria.id}`;
 
     return this.httpClient
       .patch<IGeneric<CategoriaManagment>>(url, categoria)
@@ -80,7 +81,7 @@ export class CategoriaRepositoryImpl implements CategoriaRepository {
   eliminarCategoriaService$(
     categoriaId: string
   ): Observable<CategoriaManagment> {
-    let url = `${this.base_url}categorias/${categoriaId}`;
+    const url = `${this.base_url}categorias/${categoriaId}`;
     return this.httpClient.delete<IGeneric<CategoriaManagment>>(url).pipe(
       map((response) => {
         return CategoriaManagment.fromJson(response.data._value);

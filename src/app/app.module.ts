@@ -49,12 +49,14 @@ import { ToastModule } from 'primeng/toast';
 
     ToastModule,
   ],
-  providers: [MessageService, ...CUSTOM_PROVIDERS,
+  providers: [
+    MessageService,
+    ...CUSTOM_PROVIDERS,
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: JwtInterceptor,
-    multi: true,
-  },
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

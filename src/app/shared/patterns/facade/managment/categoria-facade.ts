@@ -21,7 +21,6 @@ export class CategoriaFacade {
   listarCategorias() {
     this.categoriaService.listarCategoriasService$().subscribe({
       next: (response) => {
-        console.log(response);
         this.categorias$.next(response);
         this.alertService.showSuccess('Exito', 'Categorias cargadas');
       },
