@@ -9,15 +9,16 @@ export class Estandar {
     this.estado = standar.estado || true;
   }
 
-  static fromJson(data: any): Estandar {
+  static fromJson(data: unknown): Estandar {
+    const casted = data as Record<string, unknown>;
     return new Estandar({
-      id: data.id as number,
-      descripcion: data.descripcion as string,
-      estado: data.estado as boolean,
+      id: casted['id'] as number,
+      descripcion: casted['descripcion'] as string,
+      estado: casted['estado'] as boolean,
     });
   }
 
-  static toJson(standar: Estandar): any {
+  static toJson(standar: Estandar): unknown {
     return {
       id: standar.id,
       descripcion: standar.descripcion,

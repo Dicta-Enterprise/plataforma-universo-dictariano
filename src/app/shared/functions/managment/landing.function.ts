@@ -1,12 +1,12 @@
 import { FormGroup } from '@angular/forms';
-import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
+import { LandingPage } from 'src/app/core/class/models/landing-page/Landing.class';
 import { NewActivoState } from 'src/app/shared/enums';
 
 // Convierte un formulario en un objeto LandingPageManagment
-export const convertToLandingPageManagment = (
+export const convertToLandingPage = (
   landingForm: FormGroup
-): LandingPageManagment => {
-  const myLanding = new LandingPageManagment({
+): LandingPage => {
+  const myLanding = new LandingPage({
     titulo: landingForm.get('titulo')?.getRawValue(),
     descripcion: landingForm.get('descripcion')?.getRawValue(),
     contenido: landingForm.get('contenido')?.getRawValue() || [],
@@ -16,5 +16,5 @@ export const convertToLandingPageManagment = (
     color: landingForm.get('color')?.getRawValue()?.trim() || undefined,
   });
 
-  return LandingPageManagment.toJson(myLanding);
+  return LandingPage.toJson(myLanding);
 };

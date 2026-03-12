@@ -1,8 +1,8 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
-import { ProfesorManagment } from 'src/app/core/class/managment/managment';
-import { ProfesorManagmentService } from 'src/app/core/services/managment/profesor/profesor-managment.service';
+import { Profesor } from 'src/app/core/class/models';
+import { ProfesorService } from 'src/app/core/services/models/profesor/profesor.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 const VALUE_ACCESOR = {
@@ -24,7 +24,7 @@ export class CustomProfesorDropdownComponent
   profesorControl: FormControl;
   isLoading: boolean = false;
 
-  profesores: ProfesorManagment[] = [];
+  profesores: Profesor[] = [];
   @Input() label: string = 'Seleccione un Profesor';
 
   onChange: (value: any) => void = () => { };
@@ -34,7 +34,7 @@ export class CustomProfesorDropdownComponent
 
   constructor(
     private alertService: AlertService,
-    private profesorManagmentService: ProfesorManagmentService
+    private profesorService: ProfesorService
   ) {
     this.profesorControl = new FormControl(null);
   }
@@ -46,7 +46,7 @@ export class CustomProfesorDropdownComponent
   listarProfesores() {
     this.isLoading = true;
     this.subscription.add(
-      this.profesorManagmentService.listarProfesoresService$()
+      this.profesorService.listarProfesoresService$()
         .pipe(
           finalize(() => this.isLoading = false)
         )

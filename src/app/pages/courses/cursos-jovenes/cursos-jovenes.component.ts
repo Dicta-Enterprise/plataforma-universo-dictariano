@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriaManagment } from 'src/app/core/class/managment/categoria/Categoria-managment.class';
-import { CursoManagment } from 'src/app/core/class/managment/cursos/Cursos-managment.class';
-import { CategoriaFacade } from 'src/app/shared/patterns/facade/managment/categoria-facade';
-import { CursoFacade } from 'src/app/shared/patterns/facade/managment/curso-facade';
+import { Categoria } from 'src/app/core/class/models/categoria/Categoria.class';
+import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
+import { CategoriaFacade } from 'src/app/shared/patterns/facade/models/categoria-facade';
+import { CursoFacade } from 'src/app/shared/patterns/facade/models/curso-facade';
 
 @Component({
   selector: 'app-cursos-jovenes',
   templateUrl: './cursos-jovenes.component.html',
 })
 export class CursosJovenesComponent implements OnInit {
-  cursos: CursoManagment[] = [];
+  cursos: Cursos[] = [];
   cursos$ = this.cursoFacade.cursos$;
   categorias$ = this.categoriaFacade.categorias$;
   categoria_id = '';
@@ -19,14 +19,14 @@ export class CursosJovenesComponent implements OnInit {
 
   constructor(private readonly cursoFacade:CursoFacade, private readonly categoriaFacade: CategoriaFacade) {
     this.categorias_observable.subscribe(value => {
-      value.map((cat:CategoriaManagment) => {
+      value.map((cat:Categoria) => {
         if(cat.nombre.toLowerCase().replace('ñ','n') == 'jovenes'){
           this.categoria_id = cat.id;
         }
       });
     });
     this.cursos_observable.subscribe(value => {
-      this.cursos = value.filter((curso:CursoManagment) => curso.categoriaId == this.categoria_id);
+      this.cursos = value.filter((curso:Cursos) => curso.categoriaId == this.categoria_id);
     });
     
   }

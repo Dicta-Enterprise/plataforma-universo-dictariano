@@ -1,11 +1,11 @@
 import { FormGroup } from '@angular/forms';
-import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { Cursos } from 'src/app/core/class/models';
 import { ActivosState, NewActivoState } from 'src/app/shared/enums';
 
-export const convertToCursoManagment = (
+export const convertToCursos = (
   cursoForm: FormGroup
-): CursoManagment => {
-  const myCurso = new CursoManagment({
+): Cursos => {
+  const myCurso = new Cursos({
     nombre: cursoForm.get('nombre')?.getRawValue(),
     descripcion: cursoForm.get('descripcion')?.getRawValue(),
     fechaCreacion: new Date(),
@@ -24,5 +24,5 @@ export const convertToCursoManagment = (
     planetaId: cursoForm.get('planetaId')?.getRawValue(),
   });
 
-  return CursoManagment.toJson(myCurso);
+  return Cursos.toJson(myCurso);
 };

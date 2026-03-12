@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Subscription, take } from 'rxjs';
-import { ProfesorManagment } from 'src/app/core/class/managment/managment';
+import { Profesor } from 'src/app/core/class/models';
 import { createNuevoProfesorForm } from 'src/app/core/forms/managment/profesor.form';
-import { ProfesorManagmentService } from 'src/app/core/services/managment/profesor/profesor-managment.service';
+import { ProfesorService } from 'src/app/core/services/models/profesor/profesor.service';
 import { convertToProfesorManagment } from 'src/app/shared/functions/managment/profesor/profesor.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -20,7 +20,7 @@ export class NuevoProfesorComponent {
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() refreshProfesor: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  profesor = new ProfesorManagment();
+  profesor = new Profesor();
 
   selectedCountry: any;
 
@@ -29,7 +29,7 @@ export class NuevoProfesorComponent {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private profesorService: ProfesorManagmentService
+    private profesorService: ProfesorService
   ) {}
 
   ngOnInit(): void {}
@@ -87,7 +87,7 @@ export class NuevoProfesorComponent {
     }
   }
 
-  guardarProfesor(profesor: ProfesorManagment) {
+  guardarProfesor(profesor: Profesor) {
     this.isLoading = true;
     this.subscription.add(
       this.profesorService.crearProfesorService$(profesor)
@@ -107,7 +107,7 @@ export class NuevoProfesorComponent {
     );
   }
 
-  actualizarProfesor(profesor: ProfesorManagment) {
+  actualizarProfesor(profesor: Profesor) {
 
     console.log('Profe', profesor);
 

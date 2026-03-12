@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomCursosDropdownComponent } from './custom-cursos-dropdown/custom-cursos-dropdown.component';
 import { CustomPlanetasDropdownComponent } from './custom-planetas-dropdown/custom-planetas-dropdown.component';
 import { CustomCategoriaDropdownComponent } from './custom-categoria-dropdown/custom-categoria-dropdown.component';
-import { ManagmentPrimengModule } from '../../themes/managment/managment-primeng.module';
+import { ModelsPrimengModule } from '../../themes/models/models-primeng.module';
 import { CustomProfesorDropdownComponent } from './custom-profesor-dropdown/custom-profesor-dropdown.component';
 import { CustomIdiomaDropdownComponent } from './custom-idioma-dropdown/custom-idioma-dropdown.component';
 
@@ -16,7 +16,7 @@ import { CustomIdiomaDropdownComponent } from './custom-idioma-dropdown/custom-i
     CustomIdiomaDropdownComponent,
     CustomPlanetasDropdownComponent
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ManagmentPrimengModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ModelsPrimengModule],
   exports: [
     CustomCursosDropdownComponent,
     CustomCategoriaDropdownComponent,

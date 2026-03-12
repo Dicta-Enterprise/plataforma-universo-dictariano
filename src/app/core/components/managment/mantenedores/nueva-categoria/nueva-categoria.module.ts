@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NuevaCategoriaComponent } from './nueva-categoria.component';
-import { ManagmentPrimengModule } from 'src/app/core/themes/managment/managment-primeng.module';
+import { ModelsPrimengModule } from 'src/app/core/themes/models/models-primeng.module';
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -15,7 +15,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
   ],
   imports: [
     CommonModule,
-    ManagmentPrimengModule,
+    ModelsPrimengModule,
     SharedSpinnerModule,
     ReactiveFormsModule
   ],

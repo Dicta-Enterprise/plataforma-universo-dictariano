@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
-import { GalaxiaRepositoryImpl } from '../../infraestructure/managment/galaxia.repository.impl';
-import { GALAXIA_REPOSITORY } from '../../tokens/managment/galaxia.token';
+import { GalaxiaRepositoryImpl } from '../../infraestructure/models/galaxia.repository.impl';
+import { GALAXIA_REPOSITORY } from '../../tokens/models/galaxia.token';
 
 export const CUSTOM_GALAXIA_PROVIDER: Provider[] = [
   {

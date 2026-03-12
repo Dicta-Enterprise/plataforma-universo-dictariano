@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { createNuevaGalaxiaform } from 'src/app/core/forms/managment/galaxias.form';
-import { CategoriaManagment } from 'src/app/core/class/managment/managment';
-import { convertToGalaxiaManagment } from 'src/app/shared/functions/managment/galaxia.function';
-import { GalaxiaFacade } from 'src/app/shared/patterns/facade/managment/galaxia-facade';
-import { CategoriaFacade } from 'src/app/shared/patterns/facade/managment/categoria-facade';
+import { Categoria } from 'src/app/core/class/models';
+import { convertToGalaxias } from 'src/app/shared/functions/managment/galaxia.function';
+import { GalaxiaFacade } from 'src/app/shared/patterns/facade/models/galaxia-facade';
+import { CategoriaFacade } from 'src/app/shared/patterns/facade/models/categoria-facade';
 import { ItemImagen } from 'src/app/core/interfaces/genericas/IItemImagen.interface';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
@@ -43,7 +43,7 @@ export class NuevaGalaxiaComponent {
     this.galaxiaFacade.obtenerGalaxia(this.galaxiaId);
   }
 
-  onFileSelected(event: any, index: number, categoria: CategoriaManagment) {
+  onFileSelected(event: any, index: number, categoria: Categoria) {
     const file: File = event.files[0];
     if (!file) return;
 
@@ -64,7 +64,7 @@ export class NuevaGalaxiaComponent {
       return;
     }
 
-    const galaxia = convertToGalaxiaManagment(
+    const galaxia = convertToGalaxias(
       this.galaxiaForm,
       this.imagenPreviews
     );

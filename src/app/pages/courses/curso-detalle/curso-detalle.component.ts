@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Curso } from 'src/app/core/class/curso/curso.class';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/core/services/cart/cart.service';
-import { CursoManagment } from 'src/app/core/class/managment/cursos/Cursos-managment.class';
-import { CursoFacade } from 'src/app/shared/patterns/facade/managment/curso-facade';
+import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
+import { CursoFacade } from 'src/app/shared/patterns/facade/models/curso-facade';
 
 // (puedes importar tu servicio si más adelante quieres cargarlo de backend)
 
@@ -14,7 +14,7 @@ import { CursoFacade } from 'src/app/shared/patterns/facade/managment/curso-faca
 })
 export class CursoDetalleComponent implements OnInit {
   curso: Curso | undefined;
-  cursos: CursoManagment[] = [];
+  cursos: Cursos[] = [];
   cursos$ = this.cursoFacade.cursos$;
 
   cursos_observable = this.cursos$.asObservable();

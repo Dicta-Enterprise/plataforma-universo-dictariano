@@ -1,5 +1,5 @@
 
-export const CCOURSE_CONSTANT: any[] = [
+export const CCOURSE_CONSTANT: unknown[] = [
   {
     id: 'course001',
     name: 'Introducción a la Seguridad Digital',

@@ -1,0 +1,14 @@
+<div class="min-h-screen flex surface-ground">
+    <app-custom-sidebar
+    [menus]="menus"
+    ></app-custom-sidebar>
+  
+    <div class="min-h-screen flex flex-column relative flex-auto">
+      <!-- <app-custom-topbar></app-custom-topbar> -->
+  
+      <div class="px-4 flex bg-white flex-column flex-auto">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+  

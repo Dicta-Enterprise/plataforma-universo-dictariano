@@ -1,11 +1,11 @@
 import { FormGroup } from '@angular/forms';
-import { CategoriaManagment } from 'src/app/core/class/managment/managment';
+import { Categoria } from 'src/app/core/class/models';
 import { ActivosState } from '../../enums';
 
-export const convertToCategoriaManagment = (
+export const convertToCategorias = (
   categoriaForm: FormGroup
-): CategoriaManagment => {
-  const myCategoria = new CategoriaManagment({
+): Categoria => {
+  const myCategoria = new Categoria({
     nombre: categoriaForm.get('nombre')?.getRawValue(),
     descripcion: categoriaForm.get('descripcion')?.getRawValue(),
     estado: true,
@@ -13,5 +13,5 @@ export const convertToCategoriaManagment = (
     fechaActualizacion: new Date(),
   });
 
-  return CategoriaManagment.toJson(myCategoria);
+  return Categoria.toJson(myCategoria);
 };

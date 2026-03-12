@@ -9,10 +9,10 @@ import {
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { finalize, Subscription } from 'rxjs';
-import { CategoriaManagment } from 'src/app/core/class/managment/managment';
+import { Categoria } from 'src/app/core/class/models';
 import { createNuevaCategoriaForm } from 'src/app/core/forms/managment/categoria.form';
-import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
-import { convertToCategoriaManagment } from 'src/app/shared/functions/managment/categoria.function';
+import { CategoriaService } from 'src/app/core/services/models/categoria/categoria.service';
+import { convertToCategorias } from 'src/app/shared/functions/managment/categoria.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-nueva-categoria',
@@ -26,7 +26,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
   uploadedFiles: any[] = [];
   tempUrl: SafeUrl;
   isLoading: boolean = false;
-  categoria: CategoriaManagment = new CategoriaManagment();
+  categoria: Categoria = new Categoria();
   @Input() isNuevaCategoria: boolean = false;
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() refreshCategoria: EventEmitter<boolean> =
@@ -37,7 +37,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private readonly categoriaManagmentService: CategoriaManagmentService,
+    private readonly categoriaManagmentService: CategoriaService,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -77,7 +77,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
     this.categoriaForm.reset();
     this.selectedFile = new File([], '');
     this.uploadedFiles = [];
-    this.categoria = new CategoriaManagment();
+    this.categoria = new Categoria();
     this.categoriaId = '';
   }
 
@@ -87,7 +87,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const categoria = convertToCategoriaManagment(this.categoriaForm);
+    const categoria = convertToCategorias(this.categoriaForm);
 
     switch (this.categoriaId) {
       case '':
@@ -99,7 +99,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
     }
   }
 
-  guardarCategoria(categoria: CategoriaManagment) {
+  guardarCategoria(categoria: Categoria) {
     this.isLoading = true;
     this.subscription.add(
       this.categoriaManagmentService
@@ -121,7 +121,7 @@ export class NuevaCategoriaComponent implements OnInit, OnDestroy {
     );
   }
 
-  actualizarCategoria(categoria: CategoriaManagment) {
+  actualizarCategoria(categoria: Categoria) {
     this.isLoading = true;
 
     this.subscription.add(

@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Subscription, take } from 'rxjs';
-import { CategoriaManagment, CursoManagment } from 'src/app/core/class/managment/managment';
+import { Categoria, Cursos } from 'src/app/core/class/models';
 import { CCATEGORIES_CONSTANT, CLANGUAGE_CONSTANT, CPLANETS_CONSTANT, CPROFESSOR_CONSTANT } from 'src/app/core/constants/constants';
 import { createNuevoCursoForm } from 'src/app/core/forms/managment/cursos.form';
-import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
+import { CursosService } from 'src/app/core/services/models/cursos/cursos.service';
 import { Estandar } from 'src/app/shared/class/Estandar';
-import { convertToCursoManagment } from 'src/app/shared/functions/managment/cursos/cursos.function';
+import { convertToCursos } from 'src/app/shared/functions/managment/cursos/cursos.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { PlanetasManagmentService } from 'src/app/core/services/managment/planetas/planetas-managment.service';
+import { PlanetasService } from 'src/app/core/services/models/planetas/planetas.service';
 
 
 @Component({
@@ -24,12 +24,12 @@ export class NuevoCursoComponent {
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() refreshCursos: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  curso = new CursoManagment();//
+  curso = new Cursos();//
 
   cursoForm: FormGroup = createNuevoCursoForm(this.fb); 
 
-  constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosManagmentService,
-    private planetaManagmentService:PlanetasManagmentService,
+  constructor(private fb: FormBuilder, private alertService: AlertService, private cursoService: CursosService,
+    private planetaManagmentService:PlanetasService,
   ) {}
 
   ngOnInit(): void {}
@@ -75,7 +75,7 @@ export class NuevoCursoComponent {
       return;
     }
     
-    const curso = convertToCursoManagment(this.cursoForm);
+    const curso = convertToCursos(this.cursoForm);
 
     switch(this.cursoId){
       case '':
@@ -87,7 +87,7 @@ export class NuevoCursoComponent {
     }
   }
 
-  guardarCurso(curso: CursoManagment) {
+  guardarCurso(curso: Cursos) {
     this.isLoading = true;
     this.subscription.add(
       this.cursoService.crearCursoService$(curso)
@@ -108,7 +108,7 @@ export class NuevoCursoComponent {
   }
 
 
-  actualizarCurso(curso: CursoManagment) {
+  actualizarCurso(curso: Cursos) {
 
     console.log('Curso:', curso);
     

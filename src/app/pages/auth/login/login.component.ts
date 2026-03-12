@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginFormPresenter } from './login-form.presenter';
-import { LoginFacade } from 'src/app/shared/patterns/facade/managment/login-facade';
+import { LoginFacade } from 'src/app/shared/patterns/facade/models/login-facade';
 
 @Component({
   selector: 'app-login',

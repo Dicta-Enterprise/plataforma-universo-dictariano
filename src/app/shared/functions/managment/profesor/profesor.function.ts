@@ -1,11 +1,11 @@
 import { FormGroup } from "@angular/forms";
-import { ProfesorManagment } from "src/app/core/class/managment/managment";
+import { Profesor } from "src/app/core/class/models";
 import { NewActivoState } from "src/app/shared/enums";
 
 export const convertToProfesorManagment = (
     profesorForm: FormGroup
-): ProfesorManagment => {
-    const myProfesor = new ProfesorManagment({
+): Profesor => {
+    const myProfesor = new Profesor({
         nombre: profesorForm.get('nombre')?.getRawValue(),
         apellido: profesorForm.get('apellido')?.getRawValue(),
         email: profesorForm.get('email')?.getRawValue(),
@@ -17,5 +17,5 @@ export const convertToProfesorManagment = (
         fechaActualizacion: new Date(),
         fechaNacimiento: profesorForm.get('fechaNacimiento')?.getRawValue(),
     });
-    return ProfesorManagment.toJson(myProfesor);
+    return Profesor.toJson(myProfesor);
 };

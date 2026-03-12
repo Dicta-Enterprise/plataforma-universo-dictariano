@@ -1,11 +1,11 @@
 import { FormGroup } from '@angular/forms';
-import { IdiomaManagment } from 'src/app/core/class/managment/managment';
+import { Idioma } from 'src/app/core/class/models';
 import { NewActivoState } from '../../enums/activos.enum';
 
-export const convertToIdiomaManagment = (
+export const convertToIdioma = (
     idiomForm: FormGroup
-): IdiomaManagment => {
-    const myIdioma = new IdiomaManagment({
+): Idioma => {
+    const myIdioma = new Idioma({
         nombre: idiomForm.get('nombre')?.getRawValue(),
         descripcion: idiomForm.get('descripcion')?.getRawValue(),
         estado: NewActivoState.ACTIVO,
@@ -13,5 +13,5 @@ export const convertToIdiomaManagment = (
         fechaActualizacion: new Date(),
     });
 
-    return IdiomaManagment.toJson(myIdioma);
+    return Idioma.toJson(myIdioma);
 };

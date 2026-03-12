@@ -5,9 +5,9 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { finalize, map, Subscription } from 'rxjs';
-import { PlanetaManagment } from 'src/app/core/class/managment/managment';
+import { Planetas } from 'src/app/core/class/models';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { PlanetasManagmentService } from '../../../services/managment/planetas/planetas-managment.service';
+import { PlanetasService } from '../../../services/models/planetas/planetas.service';
 
 const VALUE_ACCESOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -28,7 +28,7 @@ export class CustomPlanetasDropdownComponent
   planetasControl: FormControl;
   isLoading: boolean = false;
 
-  planetas: PlanetaManagment[] = [];
+  planetas: Planetas[] = [];
   @Input() label: string = 'Planeta';
 
   onChange: (value: any) => void = () => { };
@@ -38,7 +38,7 @@ export class CustomPlanetasDropdownComponent
 
   constructor(
     private alertService: AlertService,
-    private planetasManagmentService: PlanetasManagmentService
+    private planetasService: PlanetasService
   ) {
     this.planetasControl = new FormControl(null);
   }
@@ -51,7 +51,7 @@ export class CustomPlanetasDropdownComponent
   listarPlanetas() {
     this.isLoading = true;
     this.subscription.add(
-      this.planetasManagmentService
+      this.planetasService
         .listarPlanetasService$()
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({

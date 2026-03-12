@@ -1,20 +1,20 @@
 import { ActivosState } from "src/app/shared/enums";
-import { CategoriaManagment } from "../../class/managment/managment";
+import { Categoria } from "../../class/models";
 
 
-export const CCATEGORIA_CONSTANT:CategoriaManagment[] = [
-    new CategoriaManagment({
+export const CCATEGORIA_CONSTANT:Categoria[] = [
+    new Categoria({
         id: '1',
         nombre: 'Padres',
-        estado: ActivosState.ACTIVO,
-        imagen: '',
+        estado: true, //ActivosState.ACTIVO
+        imagenUrl: '',
         fechaCreacion: new Date(),
     }),
-    new CategoriaManagment({
+    new Categoria({
         id: '1',
         nombre: 'Padres',
-        estado: ActivosState.INACTIVO,
-        imagen: '',
+        estado: false, //ActivosState.INACTIVO
+        imagenUrl: '',
         fechaCreacion: new Date(),
     })
 ];

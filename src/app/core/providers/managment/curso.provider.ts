@@ -1,6 +1,6 @@
 import { Provider } from '@angular/core';
-import { CURSO_REPOSITORY } from '../../tokens/managment/curso.token';
-import { CursoRepositoryImpl } from '../../infraestructure/managment/curso.repository.impl';
+import { CURSO_REPOSITORY } from '../../tokens/models/curso.token';
+import { CursoRepositoryImpl } from '../../infraestructure/models/curso.repository.impl';
 
 export const CUSTOM_CURSO_PROVIDER: Provider[] = [
   {

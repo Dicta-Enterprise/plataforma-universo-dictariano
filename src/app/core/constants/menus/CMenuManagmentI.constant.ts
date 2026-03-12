@@ -1,6 +1,6 @@
 import { IMenu } from '../../interfaces/interfaces';
 
-export const C_MENU_MANAGMENT_I: IMenu[] = [
+export const C_MENU_MODELS_I: IMenu[] = [
   {
     idMenu: 1,
     nombre: 'MANTENEDORES',

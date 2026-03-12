@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
-import { LandingPageManagment } from 'src/app/core/class/managment/landing-page/Landing-managment.class';
+import { LandingPage } from 'src/app/core/class/models/landing-page/Landing.class';
 import { createNuevaLandingForm } from 'src/app/core/forms/managment/landing-page.form';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { LandingPageManagmentService } from 'src/app/core/services/managment/landing-page/landing-managment.service';
-import { CPLANETAS_MANAGMENT } from '../../../../constants/managment/CLanding-managment.constants';
-import { convertToLandingPageManagment } from 'src/app/shared/functions/managment/landing.function';
+import { LandingPageService } from 'src/app/core/services/models/landing-page/landing.service';
+import { CPLANETAS_CONSTANT } from '../../../../constants/langing/CLanding.constants';
+import { convertToLandingPage } from 'src/app/shared/functions/managment/landing.function';
 
 // Este es el componente hijo, aqui se llaman a los servicios de obetener
 //  editar y crear.  
@@ -24,13 +24,13 @@ export class NuevaLandingComponent implements OnInit, OnDestroy {
   @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() refreshLanding: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  planetas = CPLANETAS_MANAGMENT;
+  planetas = CPLANETAS_CONSTANT;
   landingForm: FormGroup = createNuevaLandingForm(this.fb);
 
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private landingManagmentService: LandingPageManagmentService,
+    private landingManagmentService: LandingPageService,
   ) { }
 
   get contenidoControl(): FormControl {
@@ -78,7 +78,7 @@ export class NuevaLandingComponent implements OnInit, OnDestroy {
     }
 
     // Convierte los datos del formulario en un objeto LandingPageManagment
-    const landing = convertToLandingPageManagment(this.landingForm);
+    const landing = convertToLandingPage(this.landingForm);
 
     switch (this.landingId) {
       case '':
@@ -90,7 +90,7 @@ export class NuevaLandingComponent implements OnInit, OnDestroy {
     }
   }
 
-  guardarLandingPage(landing: LandingPageManagment) {
+  guardarLandingPage(landing: LandingPage) {
     this.isLoading = true;
     this.subscription.add(
       this.landingManagmentService
@@ -120,7 +120,7 @@ export class NuevaLandingComponent implements OnInit, OnDestroy {
     )
   }
 
-  actualizarLanding(landing: LandingPageManagment) {
+  actualizarLanding(landing: LandingPage) {
     this.isLoading = true;
     this.subscription.add(
       this.landingManagmentService

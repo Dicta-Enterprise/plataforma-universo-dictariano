@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
-import { IdiomaManagment } from 'src/app/core/class/managment/managment';
+import { Idioma } from 'src/app/core/class/models';
 import { createNuevoIdiomaform } from 'src/app/core/forms/managment/idioma.form';
-import { IdiomaManagmentService } from 'src/app/core/services/managment/idioma/idioma-managment.service';
-import { convertToIdiomaManagment } from 'src/app/shared/functions/managment/idioma.function';
+import { IdiomaService } from 'src/app/core/services/models/idioma/idioma.service';
+import { convertToIdioma } from 'src/app/shared/functions/managment/idioma.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class NuevoIdiomaComponent {
   constructor(
     private fb: FormBuilder,
     private alertService: AlertService,
-    private readonly idiomaManagmentService: IdiomaManagmentService
+    private readonly idiomaManagmentService: IdiomaService
   ) { }
 
   ngOnInit(): void { }
@@ -69,7 +69,7 @@ export class NuevoIdiomaComponent {
       return;
     }
 
-    const idioma = convertToIdiomaManagment(this.idiomaForm);
+    const idioma = convertToIdioma(this.idiomaForm);
 
     switch (this.idiomaId) {
       case '':
@@ -81,7 +81,7 @@ export class NuevoIdiomaComponent {
     }
   }
 
-  guardarIdioma(idioma: IdiomaManagment) {
+  guardarIdioma(idioma: Idioma) {
     this.isLoading = true;
     this.subscription.add(
       this.idiomaManagmentService
@@ -111,7 +111,7 @@ export class NuevoIdiomaComponent {
     );
   }
 
-  actualizarIdioma(idioma: IdiomaManagment) {
+  actualizarIdioma(idioma: Idioma) {
     this.isLoading = true;
 
     this.subscription.add(

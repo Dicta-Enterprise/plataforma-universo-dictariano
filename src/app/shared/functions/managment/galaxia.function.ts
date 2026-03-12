@@ -1,13 +1,13 @@
 import { FormGroup } from '@angular/forms';
-import { GalaxiaManagment } from 'src/app/core/class/managment/managment';
+import { Galaxias } from 'src/app/core/class/models';
 import { NewActivoState } from '../../enums/activos.enum';
 import { ItemImagen } from 'src/app/core/interfaces/genericas/IItemImagen.interface';
 
-export const convertToGalaxiaManagment = (
+export const convertToGalaxias = (
     galaxiaForm: FormGroup,
     itemImagen: ItemImagen[]
-): GalaxiaManagment => {
-    const myGalaxia = new GalaxiaManagment({
+): Galaxias => {
+    const myGalaxia = new Galaxias({
         nombre: galaxiaForm.get('nombre')?.getRawValue(),
         estado: NewActivoState.ACTIVO,        
         descripcion: galaxiaForm.get('descripcion')?.getRawValue(),
@@ -16,5 +16,5 @@ export const convertToGalaxiaManagment = (
         itemImagen: itemImagen,
     });
 
-    return GalaxiaManagment.toJson(myGalaxia);
+    return Galaxias.toJson(myGalaxia);
 };
