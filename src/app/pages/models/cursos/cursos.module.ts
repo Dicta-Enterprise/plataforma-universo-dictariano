@@ -8,7 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { HttpClientModule } from '@angular/common/http';
 import { CursosService } from 'src/app/core/services/models/cursos/cursos.service';
-import { NuevoCursoModule } from "../../../core/components/managment/mantenedores/nuevo-curso/nuevo-curso.module";
+import { NuevoCursoModule } from "../../../core/components/models/mantenedores/nuevo-curso/nuevo-curso.module";
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';

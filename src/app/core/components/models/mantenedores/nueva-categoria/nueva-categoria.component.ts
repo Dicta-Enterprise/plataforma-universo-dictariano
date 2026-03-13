@@ -10,9 +10,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { finalize, Subscription } from 'rxjs';
 import { Categoria } from 'src/app/core/class/models';
-import { createNuevaCategoriaForm } from 'src/app/core/forms/managment/categoria.form';
+import { createNuevaCategoriaForm } from 'src/app/core/forms/models/categoria.form';
 import { CategoriaService } from 'src/app/core/services/models/categoria/categoria.service';
-import { convertToCategorias } from 'src/app/shared/functions/managment/categoria.function';
+import { convertToCategorias } from 'src/app/shared/functions/models/categoria.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
 @Component({
   selector: 'app-nueva-categoria',

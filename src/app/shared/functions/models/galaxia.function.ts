@@ -16,5 +16,5 @@ export const convertToGalaxias = (
         itemImagen: itemImagen,
     });
 
-    return Galaxias.toJson(myGalaxia);
+    return myGalaxia;
 };

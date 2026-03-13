@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { createNuevaGalaxiaform } from 'src/app/core/forms/managment/galaxias.form';
+import { createNuevaGalaxiaform } from 'src/app/core/forms/models/galaxias.form';
 import { Categoria } from 'src/app/core/class/models';
-import { convertToGalaxias } from 'src/app/shared/functions/managment/galaxia.function';
+import { convertToGalaxias } from 'src/app/shared/functions/models/galaxia.function';
 import { GalaxiaFacade } from 'src/app/shared/patterns/facade/models/galaxia-facade';
 import { CategoriaFacade } from 'src/app/shared/patterns/facade/models/categoria-facade';
 import { ItemImagen } from 'src/app/core/interfaces/genericas/IItemImagen.interface';

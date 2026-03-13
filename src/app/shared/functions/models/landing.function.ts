@@ -2,7 +2,7 @@ import { FormGroup } from '@angular/forms';
 import { LandingPage } from 'src/app/core/class/models/landing-page/Landing.class';
 import { NewActivoState } from 'src/app/shared/enums';
 
-// Convierte un formulario en un objeto LandingPageManagment
+// Convierte un formulario en un objeto LandingPage
 export const convertToLandingPage = (
   landingForm: FormGroup
 ): LandingPage => {
@@ -16,5 +16,5 @@ export const convertToLandingPage = (
     color: landingForm.get('color')?.getRawValue()?.trim() || undefined,
   });
 
-  return LandingPage.toJson(myLanding);
+  return myLanding;
 };

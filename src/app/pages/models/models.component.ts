@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { C_MENU_MODELS_I as C_MENU_MODELS_I } from 'src/app/core/constants/menus/CMenuManagmentI.constant';
+import { C_MENU_MODELS_I as C_MENU_MODELS_I } from 'src/app/core/constants/menus/CMenuI.constant';
 import { IMenu } from 'src/app/core/interfaces/interfaces';
 
 @Component({

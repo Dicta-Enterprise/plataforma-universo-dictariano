@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
 import { Idioma } from 'src/app/core/class/models';
-import { createNuevoIdiomaform } from 'src/app/core/forms/managment/idioma.form';
+import { createNuevoIdiomaform } from 'src/app/core/forms/models/idioma.form';
 import { IdiomaService } from 'src/app/core/services/models/idioma/idioma.service';
-import { convertToIdioma } from 'src/app/shared/functions/managment/idioma.function';
+import { convertToIdioma } from 'src/app/shared/functions/models/idioma.function';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({

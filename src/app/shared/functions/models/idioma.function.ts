@@ -13,5 +13,5 @@ export const convertToIdioma = (
         fechaActualizacion: new Date(),
     });
 
-    return Idioma.toJson(myIdioma);
+    return myIdioma;
 };

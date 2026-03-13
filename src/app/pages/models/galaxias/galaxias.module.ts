@@ -4,7 +4,7 @@ import { GalaxiasComponent } from './galaxias.component';
 import { GalaxiasRoutingModule } from './galaxias-routing.module';
 import { ModelsPrimengModule } from 'src/app/core/themes/models/models-primeng.module';
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
-import { SharedMantenedoresModule } from 'src/app/core/components/managment/mantenedores/shared-mantenedores.module';
+import { SharedMantenedoresModule } from 'src/app/core/components/models/mantenedores/shared-mantenedores.module';
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';

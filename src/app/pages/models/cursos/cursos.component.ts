@@ -41,8 +41,8 @@ export class CursosComponent  implements OnInit, OnDestroy{
     private readonly cursosService: CursosService,
     private readonly confirmationService: ConfirmationService,
     private readonly alertService: AlertService,
-    private readonly categoriaManagmentService: CategoriaService,
-    private readonly planetaManagmentService: PlanetasService,
+    private readonly categoriaService: CategoriaService,
+    private readonly planetaService: PlanetasService,
   ) { }
 
   ngOnInit(): void {
@@ -52,8 +52,8 @@ export class CursosComponent  implements OnInit, OnDestroy{
   cargarDatosIniciales() {
     this.subscription.add(
       forkJoin({
-        categorias: this.categoriaManagmentService.listarCategoriasService$(),
-        planetas: this.planetaManagmentService.listarPlanetasService$()
+        categorias: this.categoriaService.listarCategoriasService$(),
+        planetas: this.planetaService.listarPlanetasService$()
       }).subscribe({
         next: ({ categorias, planetas }) => {
           this.categoriasMap = new Map(categorias.map(c => [c.id, c.nombre]));
@@ -163,7 +163,7 @@ export class CursosComponent  implements OnInit, OnDestroy{
   eliminarCurso() {
     if (!this.cursoAEliminar) return;
 
-    this.cursosService.eliminarCursoService$(this.cursoAEliminar.id).subscribe({
+    this.cursosService.eliminarCursoService$(this.cursoAEliminar.id.toString()).subscribe({
       next: () => {
         this.alertService.showSuccess('Curso eliminado', `El curso ha sido eliminado correctamente`);
         this.listarCursos();

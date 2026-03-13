@@ -1,6 +1,5 @@
 import { FormGroup } from '@angular/forms';
 import { Categoria } from 'src/app/core/class/models';
-import { ActivosState } from '../../enums';
 
 export const convertToCategorias = (
   categoriaForm: FormGroup
@@ -13,5 +12,5 @@ export const convertToCategorias = (
     fechaActualizacion: new Date(),
   });
 
-  return Categoria.toJson(myCategoria);
+  return myCategoria;
 };

@@ -4,7 +4,7 @@ import { LandingPageComponent } from './landing-page.component';
 import { LandingRoutingModule } from './landing-page-routing.module';
 import { ModelsPrimengModule } from 'src/app/core/themes/models/models-primeng.module';
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
-import { SharedMantenedoresModule } from 'src/app/core/components/managment/mantenedores/shared-mantenedores.module';
+import { SharedMantenedoresModule } from 'src/app/core/components/models/mantenedores/shared-mantenedores.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
 

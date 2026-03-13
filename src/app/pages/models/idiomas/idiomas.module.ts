@@ -6,7 +6,7 @@ import { ModelsPrimengModule } from 'src/app/core/themes/models/models-primeng.m
 import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { SharedDirectiveModule } from 'src/app/shared/directive/shared-directive.module';
-import { SharedMantenedoresModule } from 'src/app/core/components/managment/mantenedores/shared-mantenedores.module';
+import { SharedMantenedoresModule } from 'src/app/core/components/models/mantenedores/shared-mantenedores.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AlertService } from 'src/app/shared/services/alert.service';
 

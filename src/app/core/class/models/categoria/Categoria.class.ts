@@ -1,11 +1,9 @@
-import { ActivosState } from "src/app/shared/enums";
-
 export class Categoria {
   id: string;
   nombre: string;
   descripcion: string;
   imagenUrl: string;
-  estado: boolean; //ActivoState
+  estado: boolean;
   fechaCreacion: Date;
   fechaActualizacion: Date;
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/core/services/cart/cart.service';
 
 @Component({

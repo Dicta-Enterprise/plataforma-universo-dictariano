@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
 import { LandingPage } from 'src/app/core/class/models/landing-page/Landing.class';
-import { createNuevaLandingForm } from 'src/app/core/forms/managment/landing-page.form';
+import { createNuevaLandingForm } from 'src/app/core/forms/models/landing-page.form';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { LandingPageService } from 'src/app/core/services/models/landing-page/landing.service';
 import { CPLANETAS_CONSTANT } from '../../../../constants/langing/CLanding.constants';
-import { convertToLandingPage } from 'src/app/shared/functions/managment/landing.function';
+import { convertToLandingPage } from 'src/app/shared/functions/models/landing.function';
 
 // Este es el componente hijo, aqui se llaman a los servicios de obetener
 //  editar y crear.  
