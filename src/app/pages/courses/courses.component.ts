@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { CursosManagmentService } from 'src/app/core/services/managment/cursos/cursos-managment.service';
-import { CursoManagment } from 'src/app/core/class/managment/managment';
+import { CursosService } from 'src/app/core/services/models/cursos/cursos.service';
+import { Cursos } from 'src/app/core/class/models';
 
 @Component({
   selector: 'app-courses',
@@ -11,10 +11,10 @@ import { CursoManagment } from 'src/app/core/class/managment/managment';
 })
 export class CoursesComponent implements OnInit {
   private subscription: Subscription = new Subscription();
-  cursos: CursoManagment[] = [];
+  cursos: Cursos[] = [];
 
   constructor(
-    private readonly cursosService: CursosManagmentService,
+    private readonly cursosService: CursosService,
     private readonly alertService: AlertService,
   ) {}
 

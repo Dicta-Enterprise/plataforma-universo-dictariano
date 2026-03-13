@@ -1,7 +1,7 @@
 import { Component, Input, OnInit }   from '@angular/core';
-import { CursoFacade } from '../../patterns/facade/managment/curso-facade';
-import { CategoriaManagment, CursoManagment } from 'src/app/core/class/managment/managment';
-import { CategoriaFacade } from '../../patterns/facade/managment/categoria-facade';
+import { CursoFacade } from '../../patterns/facade/models/curso-facade';
+import { Categoria, Cursos } from 'src/app/core/class/models';
+import { CategoriaFacade } from '../../patterns/facade/models/categoria-facade';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class CourseCarouselComponent implements OnInit {
   @Input() primary_color = '#15b6cf';//color primario (el del titulo, parte del boton principal, sombra de la card y flechas)
   @Input() secondary_color = '#235E66';//color secundario (boton de compra y degradado en boton principal)
   
-  cursos: CursoManagment[] = [];
+  cursos: Cursos[] = [];
 
   responsiveOptions = [
     { breakpoint: '1400px', numVisible: 3, numScroll: 1 },
@@ -34,14 +34,14 @@ export class CourseCarouselComponent implements OnInit {
 
   constructor(private readonly cursoFacade:CursoFacade, private readonly categoriaFacade: CategoriaFacade) {
     this.categorias_observable.subscribe(() => {
-      this.categorias$.value.map((cat:CategoriaManagment) => {
+      this.categorias$.value.map((cat:Categoria) => {
         if(cat.nombre.toLowerCase().replace('ñ','n') == this.category){
           this.categoria_id = cat.id;
         }
       });
     });
     this.cursos_observable.subscribe(value => {
-      this.cursos = value.filter((curso:CursoManagment) => curso.categoriaId == this.categoria_id);
+      this.cursos = value.filter((curso:Cursos) => curso.categoriaId == this.categoria_id);
     });
     
   }

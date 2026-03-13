@@ -1,0 +1,188 @@
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { finalize, Subscription } from 'rxjs';
+import { Categoria } from 'src/app/core/class/models';
+import { createNuevaCategoriaForm } from 'src/app/core/forms/models/categoria.form';
+import { CategoriaService } from 'src/app/core/services/models/categoria/categoria.service';
+import { convertToCategorias } from 'src/app/shared/functions/models/categoria.function';
+import { AlertService } from 'src/app/shared/services/alert.service';
+@Component({
+  selector: 'app-nueva-categoria',
+  templateUrl: './nueva-categoria.component.html',
+  styleUrls: ['./nueva-categoria.component.css'],
+})
+export class NuevaCategoriaComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+  @Input() categoriaId: string;
+  selectedFile: File = new File([], '');
+  uploadedFiles: any[] = [];
+  tempUrl: SafeUrl;
+  isLoading: boolean = false;
+  categoria: Categoria = new Categoria();
+  @Input() isNuevaCategoria: boolean = false;
+  @Output() onHideEmit: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() refreshCategoria: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
+
+  categoriaForm: FormGroup = createNuevaCategoriaForm(this.fb);
+
+  constructor(
+    private fb: FormBuilder,
+    private alertService: AlertService,
+    private readonly categoriaManagmentService: CategoriaService,
+    private sanitizer: DomSanitizer
+  ) {}
+
+  ngOnInit(): void {}
+
+  onShow() {
+    if (this.categoriaId === '') return;
+
+    this.isLoading = true;
+
+    this.subscription.add(
+      this.categoriaManagmentService
+        .obtenerCategoriaService$(this.categoriaId)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.categoria = response;
+            this.categoriaForm.patchValue(response);
+          },
+          error: (error) => {
+            this.alertService.showError(
+              'Upss..',
+              'Ocurrio un error al obtener la categoria'
+            );
+          },
+        })
+    );
+  }
+
+  onHide() {
+    this.onHideEmit.emit(false);
+
+    this.clearComponents();
+  }
+
+  clearComponents() {
+    this.categoriaForm.reset();
+    this.selectedFile = new File([], '');
+    this.uploadedFiles = [];
+    this.categoria = new Categoria();
+    this.categoriaId = '';
+  }
+
+  crearCategoria() {
+    if (this.categoriaForm.invalid) {
+      this.alertService.showWarn('Ups..', 'Formulario incompleto');
+      return;
+    }
+
+    const categoria = convertToCategorias(this.categoriaForm);
+
+    switch (this.categoriaId) {
+      case '':
+        this.guardarCategoria(categoria);
+        break;
+      default:
+        this.actualizarCategoria(categoria);
+        break;
+    }
+  }
+
+  guardarCategoria(categoria: Categoria) {
+    this.isLoading = true;
+    this.subscription.add(
+      this.categoriaManagmentService
+        .crearCategoriaService$(categoria, this.selectedFile)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Categoria creada',
+              'Categoria creada con exito'
+            );
+            this.onHide();
+            this.refreshCategoria.emit(true);
+          },
+          error: ({ error }) => {
+            this.alertService.showError('Upss..', error.message);
+          },
+        })
+    );
+  }
+
+  actualizarCategoria(categoria: Categoria) {
+    this.isLoading = true;
+
+    this.subscription.add(
+      this.categoriaManagmentService
+        .editarCategoriaService$(categoria)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            this.alertService.showSuccess(
+              'Categoria actualizada',
+              'Categoria actualizada con exito'
+            );
+            this.onHide();
+            this.refreshCategoria.emit(true);
+          },
+          error: ({ error }) => {
+            this.alertService.showError('Upss..', error.message);
+          },
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  onUpload(event: any) {
+    if (this.uploadedFiles.length > 0) {
+      this.alertService.showWarn(
+        'Advertencia',
+        'Solo se permite subir un archivo.'
+      );
+      return;
+    }
+
+    this.selectedFile = event.files[0];
+    this.uploadedFiles.push(this.selectedFile);
+  }
+
+  onBasicUploadAuto(event: any) {
+    if (this.uploadedFiles.length > 0) {
+      this.alertService.showWarn(
+        'Advertencia',
+        'Solo se permite subir un archivo.'
+      );
+      return;
+    }
+
+    this.categoria.imagenUrl = URL.createObjectURL(event.files[0]);
+    this.tempUrl = this.sanitizer.bypassSecurityTrustUrl(
+      this.categoria.imagenUrl
+    );
+
+    this.selectedFile = event.files[0];
+    this.uploadedFiles.push(this.selectedFile);
+  }
+
+  deleteImageTemp() {
+    this.selectedFile = new File([], '');
+    this.uploadedFiles = [];
+    this.categoria.imagenUrl = '';
+    this.tempUrl = this.sanitizer.bypassSecurityTrustUrl('');
+  }
+}

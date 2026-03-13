@@ -5,8 +5,8 @@ import {
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
-import { CategoriaManagment } from 'src/app/core/class/managment/managment';
-import { CategoriaManagmentService } from 'src/app/core/services/managment/categoria/categoria-managment.service';
+import { Categoria } from 'src/app/core/class/models';
+import { CategoriaService } from 'src/app/core/services/models/categoria/categoria.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 const VALUE_ACCESOR = {
@@ -27,7 +27,7 @@ export class CustomCategoriaDropdownComponent
   categoriaControl: FormControl;
   isLoading: boolean = false;
 
-  categorias: CategoriaManagment[] = [];
+  categorias: Categoria[] = [];
   @Input() label: string = 'Seleccione una categoría';
 
   onChange: (value: any) => void = () => { };
@@ -37,7 +37,7 @@ export class CustomCategoriaDropdownComponent
 
   constructor(
     private alertService: AlertService,
-    private categoriaManagmentService: CategoriaManagmentService
+    private categoriaService: CategoriaService
   ) {
     this.categoriaControl = new FormControl(null);
   }
@@ -49,7 +49,7 @@ export class CustomCategoriaDropdownComponent
   listarCategorias() {
     this.isLoading = true;
     this.subscription.add(
-      this.categoriaManagmentService
+      this.categoriaService
         .listarCategoriasService$()
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({

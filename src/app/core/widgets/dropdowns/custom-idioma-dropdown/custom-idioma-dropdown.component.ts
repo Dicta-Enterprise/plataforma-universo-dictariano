@@ -1,8 +1,8 @@
 import { Component, forwardRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { finalize, Subscription } from 'rxjs';
-import { IdiomaManagment } from 'src/app/core/class/managment/managment';
-import { IdiomaManagmentService } from 'src/app/core/services/managment/idioma/idioma-managment.service';
+import { Idioma } from 'src/app/core/class/models';
+import { IdiomaService } from 'src/app/core/services/models/idioma/idioma.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 
 
@@ -24,7 +24,7 @@ export class CustomIdiomaDropdownComponent
   idiomaControl: FormControl;
   isLoading: boolean = false;
 
-  idiomas: IdiomaManagment[] = [];
+  idiomas: Idioma[] = [];
   @Input() label: string = 'Seleccione un Idioma';
 
   onChange: (value: any) => void = () => { };
@@ -34,7 +34,7 @@ export class CustomIdiomaDropdownComponent
 
   constructor(
     private alertService: AlertService,
-    private idiomaManagmentService: IdiomaManagmentService
+    private idiomaService: IdiomaService
   ) {
     this.idiomaControl = new FormControl(null);
   }
@@ -46,7 +46,7 @@ export class CustomIdiomaDropdownComponent
   listarIdiomas() {
     this.isLoading = true;
     this.subscription.add(
-      this.idiomaManagmentService
+      this.idiomaService
         .listarIdiomasService$()
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({

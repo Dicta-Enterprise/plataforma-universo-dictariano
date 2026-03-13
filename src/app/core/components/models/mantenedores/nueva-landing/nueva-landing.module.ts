@@ -1,0 +1,40 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NuevaLandingComponent } from './nueva-landing.component';
+import { ModelsPrimengModule } from 'src/app/core/themes/models/models-primeng.module';
+import { SharedSpinnerModule } from 'src/app/shared/components/spinners/shared-spinner.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { AlertService } from 'src/app/shared/services/alert.service';
+import { LandingPageService } from '../../../../services/models/landing-page/landing.service';
+import { ChipsModule } from 'primeng/chips';
+import { ChipEditorComponent } from './components/chip-editor/chip-editor/chip-editor.component';
+import { CustomDropdownsModule } from 'src/app/core/widgets/dropdowns/custom-dropdowns.module';
+
+
+// Es importante revisar la importancion de los modulos necesarios
+@NgModule({
+  declarations: [
+    NuevaLandingComponent,
+    ChipEditorComponent,
+  ],
+  imports: [
+    CommonModule,
+    ModelsPrimengModule,
+    SharedSpinnerModule,
+    ReactiveFormsModule,
+    ChipsModule,
+    FormsModule,
+    CustomDropdownsModule
+  ],
+  exports: [
+    NuevaLandingComponent
+  ],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    AlertService,
+    LandingPageService,
+  ]
+})
+export class NuevaLandingModule { }
