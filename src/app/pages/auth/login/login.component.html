@@ -34,7 +34,7 @@
         <small
           class="p-error"
           dictaErrorForm
-          [control]="loginFormPresenter.email">
+          [control]="loginFormPresenter.Form.get('email')">
         </small>
         
       </div>
@@ -51,7 +51,7 @@
         <small
           class="p-error"
           dictaErrorForm
-          [control]="loginFormPresenter.password">
+          [control]="loginFormPresenter.Form.get('password')">
         </small>
       </div>
 

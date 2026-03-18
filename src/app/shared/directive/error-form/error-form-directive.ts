@@ -1,5 +1,6 @@
 import { Directive, Input, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { Password } from 'primeng/password';
 
 @Directive({
   selector: '[dictaErrorForm]'
@@ -13,7 +14,7 @@ export class ErrorFormDirective implements OnInit {
   private errorMessages: Record<string, string> = {
     required: 'Este campo es obligatorio',
     email: 'Correo inválido',
-    minlength: 'Debe tener al menos 3 caracteres',
+    minlength: 'Debe tener al menos 8 caracteres',
     weakPassword: 'La contraseña debe tener mayúscula, minúscula, número y símbolo',
     passwordMismatch: 'Las contraseñas no coinciden'
   };
