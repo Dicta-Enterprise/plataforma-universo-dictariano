@@ -28,6 +28,11 @@
           class="register-input w-full"
           placeholder="Ingresa tu usuario"
         />
+        <small
+          class="p-error"
+          dictaErrorForm
+          [control]="registerFormPresenter.username">
+        </small>
       </div>
 
       <div class="field mb-3">
@@ -40,6 +45,11 @@
           class="register-input w-full"
           placeholder="Ingresa tu correo"
         />
+        <small
+          class="p-error"
+          dictaErrorForm
+          [control]="registerFormPresenter.email">
+        </small>
       </div>
 
       <div class="field mb-3">
@@ -53,13 +63,9 @@
           placeholder="Ingresa tu contraseña"
         ></p-password>
         <small
-        class="p-error"
-        *ngIf="
-          registerFormPresenter.Form.errors?.['weakPassword'] &&
-          registerFormPresenter.Form.get('password')?.touched
-        "
-        >
-        La contraseña debe tener mayúscula, minúscula, número y símbolo (mínimo 8 caracteres)
+          class="p-error"
+          dictaErrorForm
+          [control]="registerFormPresenter.Form.get('password')">
         </small>
       </div>
 
@@ -74,14 +80,9 @@
           placeholder="Confirma tu contraseña"
         ></p-password>
         <small
-        class="p-error"
-        *ngIf="
-          registerFormPresenter.Form.errors?.['passwordMismatch'] &&
-          (registerFormPresenter.Form.get('confirmPassword')?.dirty ||
-          registerFormPresenter.Form.get('confirmPassword')?.touched)
-        "
-        >
-        Las contraseñas no coinciden
+          class="p-error"
+          dictaErrorForm
+          [control]="registerFormPresenter.Form.get('confirmPassword')">
         </small>
       </div>
 
