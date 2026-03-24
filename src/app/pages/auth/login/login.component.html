@@ -31,16 +31,12 @@
           formControlName="email"
           class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
         />
-
-        <small class="p-error"
-          *ngIf="loginFormPresenter.email?.touched && loginFormPresenter.email?.errors?.['required']">
-          El email es requerido
+        <small
+          class="p-error"
+          dictaErrorForm
+          [control]="loginFormPresenter.Form.get('email')">
         </small>
-
-        <small class="p-error"
-          *ngIf="loginFormPresenter.email?.touched && loginFormPresenter.email?.errors?.['email']">
-          El email no es válido
-        </small>
+        
       </div>
       <div class="mb-4">
         <label for="password1" class="block text-gray-300 font-medium mb-1">Contraseña</label>
@@ -52,19 +48,10 @@
           formControlName="password"
           class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
         />
-
-        <small class="p-error"
-          *ngIf="
-            loginFormPresenter.password?.touched && 
-            loginFormPresenter.password?.errors?.['required']">
-          La contraseña es requerida
-        </small>
-
-        <small class="p-error"
-          *ngIf="
-            loginFormPresenter.password?.touched && 
-            loginFormPresenter.password?.errors?.['minlength']">
-          La contraseña debe tener mínimo 8 caracteres
+        <small
+          class="p-error"
+          dictaErrorForm
+          [control]="loginFormPresenter.Form.get('password')">
         </small>
       </div>
 
