@@ -36,20 +36,12 @@
           class="login-input w-full"
           placeholder="Ingresa tu Email"
         />
-
         <small
           class="p-error"
-          *ngIf="loginFormPresenter.email?.touched && loginFormPresenter.email?.errors?.['required']"
-        >
-          El email es requerido
+          dictaErrorForm
+          [control]="loginFormPresenter.Form.get('email')">
         </small>
-
-        <small
-          class="p-error"
-          *ngIf="loginFormPresenter.email?.touched && loginFormPresenter.email?.errors?.['email']"
-        >
-          El email no es válido
-        </small>
+        
       </div>
 
       <div class="field mb-3">
@@ -58,30 +50,12 @@
         <p-password
           id="password1"
           formControlName="password"
-          [toggleMask]="true"
-          class="w-full"
-          inputClass="login-input w-full"
-          placeholder="Ingresa tu contraseña"
-        ></p-password>
-
+          class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
+        />
         <small
           class="p-error"
-          *ngIf="
-            loginFormPresenter.password?.touched &&
-            loginFormPresenter.password?.errors?.['required']
-          "
-        >
-          La contraseña es requerida
-        </small>
-
-        <small
-          class="p-error"
-          *ngIf="
-            loginFormPresenter.password?.touched &&
-            loginFormPresenter.password?.errors?.['minlength']
-          "
-        >
-          La contraseña debe tener mínimo 8 caracteres
+          dictaErrorForm
+          [control]="loginFormPresenter.Form.get('password')">
         </small>
       </div>
 
