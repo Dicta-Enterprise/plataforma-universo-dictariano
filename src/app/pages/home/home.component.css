@@ -76,3 +76,49 @@
   animation: pulso 2s infinite;
 }
 
+@keyframes meteorito {
+  0% {
+    transform: translateX(-150px) translateY(-50px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(110vw) translateY(110vh);
+    opacity: 0;
+  }
+}
+
+.meteorito {
+  position: absolute;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(to right, rgba(255,255,255,0), #40E0D0);
+  border-radius: 50%;
+  top: 10%;
+  left: -120px;
+  animation: meteorito 3s linear infinite;
+  animation-delay: 4s;
+}
+
+.meteorito-2 {
+  position: absolute;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(to right, rgba(255,255,255,0), #F7C50F);
+  border-radius: 50%;
+  top: 30%;
+  left: -80px;
+  animation: meteorito 3s linear infinite;
+  animation-delay: 7s;
+}
+
+.meteorito-3 {
+  position: absolute;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(to right, rgba(255,255,255,0), #90EE90);
+  border-radius: 50%;
+  top: 60%;
+  left: -100px;
+  animation: meteorito 3s linear infinite;
+  animation-delay: 11s;
+}
