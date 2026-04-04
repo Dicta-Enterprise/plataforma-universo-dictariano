@@ -183,7 +183,7 @@
 
 <app-nuevo-curso
   [isNuevoCurso]="isNuevoCurso"
-  [cursoId]="curso.id"
+  [cursoId]="curso.id.toString()"
   (onHideEmit)="showNuevoCurso($event)"
   (refreshCursos)="listarCursos()"
 ></app-nuevo-curso>
