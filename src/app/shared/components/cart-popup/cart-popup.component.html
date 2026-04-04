@@ -1,0 +1,114 @@
+<ng-container *ngIf="showPopup$ | async">
+
+  <!-- Overlay -->
+  <div class="fixed top-0 left-0 w-full h-full z-4"
+     (click)="close()"
+     (keydown)="close()"
+     tabindex="0">
+  </div>
+
+  <!-- Dropdown -->
+  <div class="fixed z-5 border-round shadow-4 flex flex-column"
+       style="top: 56px; right: 1rem; width: 360px; max-width: 95vw; max-height: 80vh;
+              background: var(--color-grey-900); border: 1px solid var(--color-grey-300); padding: 20px;">
+
+    <!-- Header -->
+    <div class="flex justify-content-between align-items-center"
+         style="border-bottom: 1px solid var(--color-grey-700);">
+      <h3 class="sub-heading text-white m-0 flex align-items-center gap-2">
+        <i class="pi pi-shopping-cart"></i>
+        Mi Carrito ({{ (items$ | async)?.length }} items)
+      </h3>
+      <p-button icon="pi pi-times" class="btn-trash"
+                styleClass="p-button-text p-button-rounded p-button-sm"
+                [style]="{color: 'var(--color-green-500)'}"
+                (onClick)="close()"/>
+    </div>
+
+    <!-- Lista items -->
+    <div class="flex flex-column overflow-y-auto" style="max-height: 300px;">
+
+      <!-- Vacío -->
+      <div *ngIf="(items$ | async)?.length === 0"
+           class="flex flex-column align-items-center justify-content-center p-5 gap-3">
+        <i class="pi pi-shopping-cart" style="font-size: 2rem; color: var(--color-grey-300)"></i>
+        <span class="body-small" style="color: var(--color-grey-300)">Tu carrito está vacío</span>
+      </div>
+
+      <!-- Items -->
+      <div *ngFor="let curso of items$ | async; let last = last"
+          class="flex align-items-center gap-3 py-3 cart-item"
+          [style.border-bottom]="last ? 'none' : '1px solid var(--color-grey-700)'">
+
+        <img [src]="curso.imagen" [alt]="curso.nombre"
+            class="border-round flex-shrink-0"
+            style="width: 64px; height: 64px; object-fit: cover;"/>
+
+        <div class="flex flex-column flex-1 gap-1 min-w-0">
+          <div class="flex gap-2 flex-wrap">
+
+            <!-- Tag público -->
+            <span class="border-round px-2 py-1 label-2"
+                  [style]="{
+                    background: 'var(--color-grey-600)',
+                    border: '2px solid ' + getPublicoColor(curso.categoria),
+                    color: 'var(--color-grey-50)'
+                  }">
+              {{ curso.categoria || 'Público' }}
+            </span>
+
+            <!-- Tag galaxia -->
+            <span class="border-round px-2 py-1 label-2"
+                  style="background: var(--color-grey-600); color: var(--color-grey-50);">
+              Galaxia
+            </span>
+
+          </div>
+
+          <span class="body-strong"
+                [style.color]="getPublicoColor(curso.categoria)"
+                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{ curso.nombre }}
+          </span>
+
+          <span class="body-small text-white">
+            Col$ {{ curso.precio | number:'1.0-0' }}
+          </span>
+        </div>
+
+        <p-button icon="pi pi-trash" class="btn-trash"
+                  styleClass="p-button-text p-button-rounded p-button-sm"
+                  (onClick)="remove(curso.id)"/>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="flex flex-column gap-2 py-3"
+         style="border-top: 1px solid var(--color-grey-700);">
+
+      <div class="flex justify-content-between align-items-center mb-1">
+        <span class="body-base text-white">Total</span>
+        <span class="body-strong text-white">
+          Col$ {{ getTotal() | number:'1.0-0' }}
+        </span>
+      </div>
+
+      <p-button label="Ver el carrito"
+                class="w-full py-1" styleClass="w-full "
+                [style]="{ fontWeight: '100', textDecoration: 'underline' }"
+                (onClick)="irAlCarrito()"/>
+
+      <p-button label="Ir a pagar" icon="pi pi-credit-card"
+                class="w-full" styleClass="w-full"
+                [style]="{ 
+                  background: 'var(--color-green-500)',
+                  border: '2px solid var(--color-green-900)',
+                  borderRadius: '8px',
+                  padding: '5px',
+                  color: 'var(--color-grey-900)'
+                }"
+                (onClick)="irAPagar()"/>
+    </div>
+  </div>
+</ng-container>

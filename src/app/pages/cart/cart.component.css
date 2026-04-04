@@ -1,0 +1,90 @@
+
+/* Dataview */
+::ng-deep .p-dataview,
+::ng-deep .p-dataview-content {
+  background: #000000 !important;
+  color: var(--color-grey-50) !important;
+}
+
+::ng-deep .p-dataview{
+
+  border: 1px solid var(--color-grey-300) !important;
+  border-radius: 12px !important;
+  padding: 30px !important;
+}
+
+/* Separador entre items */
+::ng-deep .cart-item + .cart-item {
+  border-top: 1px solid var(--color-grey-700);
+}
+
+/* Boton eliminar - estado normal */
+::ng-deep .btn-trash .p-button {
+  color: var(--color-grey-50) !important;
+  background: transparent !important;
+  border: none !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+/* Boton eliminar - hover */
+::ng-deep .btn-trash .p-button:hover {
+  background: #ff0000 !important;
+  color: #fff !important;
+}
+
+/* Línea conectora */
+::ng-deep .p-steps .p-steps-item:before {
+  border-top: 2px solid var(--color-grey-500) !important;
+  top: 50% !important;
+}
+
+/* Círculo del número */
+::ng-deep .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+  background: var(--color-grey-700) !important;
+  color: var(--color-grey-50) !important;
+  border: 2px solid var(--color-grey-500) !important;
+}
+
+/* Step activo */
+::ng-deep .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-number {
+  background: var(--color-light-blue-200) !important;
+  color: var(--color-grey-900) !important;
+  border-color: var(--color-grey-200) !important;
+}
+
+/* Texto del step */
+::ng-deep .p-steps .p-steps-item .p-menuitem-link .p-steps-title {
+  color: var(--color-grey-300) !important;
+}
+
+/* Texto del step activo */
+::ng-deep .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-title {
+  color: var(--color-grey-50) !important;
+}
+
+/* Quitar fondo blanco del contenedor */
+::ng-deep .p-steps {
+  background: transparent !important;
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link {
+  background: transparent !important;
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .p-steps ul {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding-left: 1rem !important;
+    border-left: 2px solid var(--color-grey-500) !important;
+  }
+
+  ::ng-deep .p-steps .p-steps-item {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+  }
+
+  ::ng-deep .p-steps .p-steps-item:before {
+    display: none !important;
+  }
+}

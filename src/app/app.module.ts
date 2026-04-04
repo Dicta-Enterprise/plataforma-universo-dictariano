@@ -8,6 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { CartPopupComponent } from './shared/components/cart-popup/cart-popup.component';
 
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextModule } from 'primeng/inputtext';
@@ -30,6 +31,7 @@ import { ToastModule } from 'primeng/toast';
     NavBarComponent,
     FooterComponent,
     ActivoInactivoPipe,
+    CartPopupComponent,
   ],
   imports: [
     BrowserModule,

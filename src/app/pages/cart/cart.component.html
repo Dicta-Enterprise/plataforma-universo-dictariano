@@ -1,38 +1,115 @@
-<div class="max-w-3xl mx-auto mt-10 bg-gray-900 rounded-xl p-8 shadow-xl text-white">
-  <h1 class="text-3xl font-bold mb-6 flex items-center gap-2">
-    <i class="pi pi-shopping-cart text-emerald-400"></i>
-    Mi carrito
-  </h1>
+<div class="flex flex-column h-full p-4">
 
-  <div *ngIf="cart.items.length === 0" class="text-center text-gray-400 mb-4">
-    No hay cursos en tu carrito aún.
+  <!-- TÍTULO - ancho completo -->
+  <div class="w-full p-3" style="background: #000000">
+    <h2 class="title-page text-white flex align-items-center gap-2 m-0">
+      <i class="pi pi-shopping-cart" style="font-size: 2rem;"></i>
+      Mi Carrito ({{ cart.items.length }} items)
+    </h2>
   </div>
 
-  <div *ngIf="cart.items.length > 0" class="space-y-4 mb-6">
-    <div *ngFor="let curso of cart.items" class="flex items-center gap-4 bg-gray-800 rounded-lg p-4">
-      <img [src]="curso.imagen" alt="{{ curso.nombre }}" class="w-16 h-16 rounded object-cover" />
-      <div class="flex-1">
-        <div class="font-bold text-lg">{{ curso.nombre }}</div>
-        <div class="text-cyan-400 font-semibold">S/ {{ curso.precio | number:'1.2-2' }}</div>
+  <!-- CONTENIDO - dos columnas -->
+  <div class="flex flex-row flex-wrap flex-1">
+
+    <!-- 75% -->
+    <div class="w-full md:w-8 p-3">
+      <div class="card  mb-4">
+        <p-steps [model]="steps" [readonly]="true" [activeIndex]="0" />
       </div>
-      <button (click)="remove(curso.id)"
-        class="ml-2 bg-red-500 hover:bg-red-700 text-white px-3 py-2 rounded-full transition">
-        <i class="pi pi-trash"></i>
-      </button>
+      <p-dataView [value]="cart.items" layout="list">
+
+        <ng-template pTemplate="listItem" let-curso>
+          <div class="flex align-items-center gap-3 p-3 cart-item">
+
+            <img [src]="curso.imagen" [alt]="curso.nombre"
+              class="border-round flex-shrink-0"
+              style="width: clamp(48px, 10vw, 96px); height: clamp(48px, 10vw, 96px); object-fit: cover;"/>
+
+            <div class="flex flex-column flex-1 gap-1">
+              <div class="flex gap-2 flex-wrap">
+
+                <!-- Tag público -->
+                <span class="border-round px-2 py-1 label-2"
+                      [style]="{
+                        background: 'var(--color-grey-600)',
+                        border: '2px solid ' + getPublicoColor(curso.categoria),
+                        color: 'var(--color-grey-50)'
+                      }">
+                  {{ curso.categoria || 'Público' }}
+                </span>
+
+                <!-- Tag galaxia -->
+                <span class="border-round px-2 py-1 label-2"
+                      style="background: var(--color-grey-600); color: var(--color-grey-50);">
+                  Galaxia
+                </span>
+
+              </div>
+
+              <!-- Nombre del curso con color del público -->
+              <span class="body-strong" [style.color]="getPublicoColor(curso.categoria)">
+                {{ curso.nombre }}
+              </span>
+
+              <span class="body-small">Col$ {{ curso.precio | number:'1.0-0' }}</span>
+            </div>
+
+            <p-button icon="pi pi-trash" class="btn-trash"
+                      styleClass="p-button-text p-button-rounded p-button-m"
+                      (onClick)="remove(curso.id)"/>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="empty">
+          <div class="flex flex-column align-items-center justify-content-center p-5 gap-3">
+            <i class="pi pi-shopping-cart" style="font-size: 3rem; color: var(--color-grey-300)"></i>
+            <span class="body-base" style="color: var(--color-grey-300)">Tu carrito está vacío</span>
+          </div>
+        </ng-template>
+
+      </p-dataView>
     </div>
 
-    <div class="flex justify-between items-center mt-6 text-lg font-bold">
-      <span>Total:</span>
-      <span class="text-emerald-400 text-2xl">S/ {{ cart.getTotal() | number:'1.2-2' }}</span>
-    </div>
+    <!-- 25% -->
+    <div class="w-full md:w-4 p-3" >
+        
+      <p-card [style]="{ background: 'var(--color-grey-700)', borderRadius: '12px', padding: '0 10px' }">
+  
+        <div class="flex flex-column gap-3">
+          
+          <h3 class="text-white sub-heading m-0">Resumen de compra</h3>
 
-    <div class="flex gap-4 mt-4">
-      <button (click)="clear()" class="flex-1 bg-gray-700 hover:bg-gray-600 py-3 rounded-lg font-semibold transition">
-        Vaciar carrito
-      </button>
-      <button class="flex-1 bg-gradient-to-r from-cyan-400 to-emerald-400 hover:from-emerald-500 hover:to-cyan-500 text-black font-bold py-3 rounded-lg shadow">
-        Finalizar compra
-      </button>
+          <div class="flex justify-content-between w-full">
+            <span class="text-white body-base">Total</span>
+            <span class="text-white body-strong">
+              Col$ {{ cart.getTotal() | number:'1.0-0' }}
+            </span>
+          </div>
+
+          <p-button icon="pi pi-credit-card" label="Ir a pagar"
+                    class="w-full" styleClass="w-full"
+                    [style]="{ 
+                      background: 'var(--color-green-500)', 
+                      border: '2px solid var(--color-green-900)',
+                      borderRadius: '8px', padding: '5px'
+                    }"/>
+        </div>
+      </p-card>
     </div>
+  </div>
+
+  <!-- TÍTULO - ancho completo -->
+  <div class="w-full p-3" style="background: #000000">
+    <h2 class="heading text-white flex align-items-center gap-2 m-0">
+      Te podría interesar
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <ng-container *ngFor="let curso of cursosSugeridos">
+      <app-card-curso [curso]="curso" 
+                      bg_color="#141e30" 
+                      primary_color="#19315E" 
+                      secondary_color="#3b3b5f"/>
+    </ng-container>
+  </div>
   </div>
 </div>

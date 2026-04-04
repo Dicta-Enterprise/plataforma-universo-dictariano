@@ -1,0 +1,13 @@
+/* Boton eliminar - estado normal */
+::ng-deep .btn-trash .p-button {
+  color: var(--color-grey-50) !important;
+  background: transparent !important;
+  border: none !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+/* Boton eliminar - hover */
+::ng-deep .btn-trash .p-button:hover {
+  background: #ff0000 !important;
+  color: #fff !important;
+}
