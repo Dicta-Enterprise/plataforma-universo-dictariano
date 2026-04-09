@@ -12,13 +12,14 @@ export class UploadImageService {
 
   constructor(private httpClient: HttpClient) {}
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   uploadImage(file: File, folder: FolderState): Observable<any> {
-    let direccion = `${this.base_url}az-upload/upload/${folder}`;
+    const direccion = `${this.base_url}az-upload/upload/${folder}`;
 
     const formData = new FormData();
     formData.append('file', file, file.name);
-    console.log(direccion);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return this.httpClient.post<any>(direccion, formData, {
       reportProgress: true,
       observe: 'events',
