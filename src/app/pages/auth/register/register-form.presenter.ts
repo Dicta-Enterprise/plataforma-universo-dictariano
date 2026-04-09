@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { StepPresenter } from 'src/app/core/helpers/step.presenter';
+import { StepPresenter } from 'src/app/core/helpers/form/step.presenter';
 import { Register } from 'src/app/core/class/auth/register.class';
 import { PasswordValidator } from 'src/app/core/validators/password.validator';
-  @Injectable({
+@Injectable({
   providedIn: 'root',
 })
 export class RegisterFormPresenter extends StepPresenter<Register> {
@@ -17,21 +17,31 @@ export class RegisterFormPresenter extends StepPresenter<Register> {
   }
 
   public initForm(): void {
-    this.username = new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]);
+    this.username = new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(50),
+    ]);
     this.email = new FormControl(null, [Validators.required, Validators.email]);
     this.password = new FormControl(null, [Validators.required]);
-    this.confirmPassword = new FormControl(null, [Validators.required, Validators.minLength(8)]);
+    this.confirmPassword = new FormControl(null, [
+      Validators.required,
+      Validators.minLength(8),
+    ]);
   }
 
   public createForm(): void {
     this.initForm();
-    this.form = this.fb.group({
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      confirmPassword: this.confirmPassword,
-    }, {
+    this.form = this.fb.group(
+      {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        confirmPassword: this.confirmPassword,
+      },
+      {
         validators: PasswordValidator('password', 'confirmPassword'),
-      });
+      },
+    );
   }
 }
