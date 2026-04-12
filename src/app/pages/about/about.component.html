@@ -1,11 +1,35 @@
-<div class="bg-black-alpha-90 px-4 py-8 md:px-6 lg:px-8">
-  <div class="flex flex-wrap bg-black-alpha-90">
-    <div class="w-full bg-black-alpha-90 lg:w-6 px-4 py-2 md:px-6 lg:px-8">
-      <div class="text-4xl text-white mb-3 font-medium">
-        ¡Descubre mundos 3D llenos de aprendizaje y diversión para toda la
-        familia!
+<div class="px-4 py-8 md:px-6 lg:px-8" style="min-height: 100vh;
+     position: relative;
+     overflow: hidden;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+            url('https://images.pexels.com/photos/4497038/pexels-photo-4497038.jpeg'); 
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;">
+
+  <span class="estrella" style="top:10%; left:15%; animation-duration:2s;"></span>
+  <span class="estrella estrella-blanca" style="top:10%; left:15%; animation-duration:2s;"></span>
+  <span class="estrella estrella-turquesa" style="top:20%; left:40%; animation-duration:3s;"></span>
+  <span class="estrella estrella-amarilla" style="top:5%; left:70%; animation-duration:1.5s;"></span>
+  <span class="estrella estrella-verde" style="top:35%; left:85%; animation-duration:2.5s;"></span>
+  <span class="estrella estrella-turquesa" style="top:60%; left:25%; animation-duration:1.8s;"></span>
+  <span class="estrella estrella-amarilla" style="top:75%; left:60%; animation-duration:2.2s;"></span>
+  <span class="estrella estrella-verde" style="top:15%; left:55%; animation-duration:3.5s;"></span>
+  <span class="estrella estrella-blanca" style="top:50%; left:10%; animation-duration:1.3s;"></span>
+  <span class="estrella estrella-turquesa" style="top:80%; left:90%; animation-duration:2.8s;"></span>
+  <span class="estrella estrella-amarilla" style="top:45%; left:50%; animation-duration:1.6s;"></span>
+
+  <span class="meteorito"></span>
+  <span class="meteorito-2"></span>
+  <span class="meteorito-3"></span>
+
+
+  <div class="flex flex-wrap" style="align-items: center;">
+    <div class="w-full lg:w-6 px-4 py-2 md:px-6 lg:px-8">
+      <div class="text-6xl text-white mb-4 font-medium titulo-animado" style="font-family: 'Anton', sans-serif;">
+        Nuestra historia
       </div>
-      <p class="line-height-3 mt-0 mb-7 p-0 text-white-alpha-80 text-2xl">
+      <p class="line-height-3 mt-0 mb-7 p-0 text-white-alpha-80 text-2xl parrafo-animado">
         "Descubre la educación digital en impresionantes entornos 3D. Nuestros
         cursos interactivos para padres, niños y jóvenes te brindan las
         herramientas y conocimientos para navegar el mundo digital con confianza
@@ -13,16 +37,105 @@
         para una experiencia en línea segura. ¡Transforma tu aprendizaje y el de
         tu familia hoy mismo!"
       </p>
-
-      <div class="flex flex-wrap align-content-start justify-content-start">
-        <button
-          routerLink="/courses"
-          pButton
-          pRipple
-          label="Explorar Cursos"
-          class="bg-black-alpha-30 border-white hover:bg-white hover:text-black-alpha-90 text-2xl"
-        ></button>
-      </div>
+    </div>
+    <div class="col-10 lg:col-6 flex justify-content-center align-items-center">
+      <img src="https://i.postimg.cc/CL2zRx21/WORLD.png" alt="Mundo" class="globo-animado"
+        style="width: 200%; max-width: 1800rem; height: 870px;" />
     </div>
   </div>
+  <div class="w-full h-px bg-surface-200 dark:bg-surface-600"></div>
+  <section class="objetivo-section-container">
+    <div class="objetivo-container">
+      <div class="text-6xl text-white mb-4 font-medium" style="font-family: 'Anton', sans-serif;">
+        Nuestra objetivo principal
+      </div>
+      <p class="line-height-3 mt-0 mb-7 p-0 text-white-alpha-80 parrafo-objetivo">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      </p>
+    </div>
+  </section>
+
+  <section class="carousel-section-container">
+    <div class="carousel-container">
+      <p-carousel [value]="imagenes" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="4000">
+
+        <ng-template let-video pTemplate="item">
+          <div class="video-card">
+            <div class="video-container">
+              <img [src]="video.img" />
+            </div>
+
+            <h4 class="video-title">{{video.title}}</h4>
+            <p class="video-desc">{{video.desc}}</p>
+          </div>
+        </ng-template>
+
+      </p-carousel>
+    </div>
+  </section>
+
+  <section>
+    <div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20">
+      <div class="flex flex-col gap-4 items-center justify-center mb-12">
+        <div class="text-6xl text-white mb-4 font-medium" style="font-family: 'Anton', sans-serif;">
+          Cursos para todos
+        </div>
+        <div class="text-surface-500 dark:text-surface-400 text-lg text-center leading-normal">Lorem ipsum dolor sit,
+          amet consectetur adipisicing elit. Velit numquam eligendi quos.</div>
+      </div>
+
+      <div class="flex lg:flex-row flex-col gap-8 max-w-7xl mx-auto">
+        <div class="w-full flex-1 p-8 flex rounded-2xl flex-col bg-surface-0 dark:bg-surface-800 shadow-sm gap-6">
+          <div class="flex flex-col gap-2">
+            <h4 class="text-surface-900 dark:text-surface-0 font-medium text-xl leading-tight">Niños</h4>
+            <p class="text-surface-500 dark:text-surface-400 leading-normal">Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Quisquam distinctio eum cum. Voluptatibus eaque tenetur quis, nulla nemo, saepe aperiam
+              incidunt vel, odio necessitatibus velit laboriosam? Ullam minus tenetur quia.</p>
+          </div>
+
+          <div class="w-full h-px bg-surface-200 dark:bg-surface-600"></div>
+
+          <div class="flex flex-wrap align-content-start justify-content-start">
+            <button routerLink="/courses/ninos" pButton pRipple label="Explorar Cursos"
+              class="px-6 py-3 rounded font-semibold text-black shadow-[0_4px_0_0_black] hover:shadow-[0_0_10px_2px_#F7C50F] hover:translate-y-1 hover:bg-[#191919] hover:text-black bg-yellow-500 transition duration-300 home-btn-cta">Cursos</button>
+          </div>
+        </div>
+
+
+        <div class="w-full flex-1 p-8 flex rounded-2xl flex-col bg-surface-0 dark:bg-surface-800 shadow-sm gap-6">
+          <div class="flex flex-col gap-2">
+            <h4 class="text-surface-900 dark:text-surface-0 font-medium text-xl leading-tight">Jóvenes</h4>
+            <p class="text-surface-500 dark:text-surface-400 leading-normal">Lorem ipsum dolor, sit amet consectetur
+              adipisicing elit. Animi necessitatibus, reiciendis rem hic incidunt quibusdam ex provident qui delectus
+              possimus nesciunt accusamus dicta, officiis magnam ab harum mollitia voluptatum repudiandae.</p>
+          </div>
+
+          <div class="w-full h-px bg-surface-200 dark:bg-surface-600"></div>
+
+          <div class="flex flex-wrap align-content-start justify-content-start">
+            <button routerLink="/courses/jovenes" pButton pRipple label="Explorar Cursos"
+              class="px-6 py-3 rounded font-semibold text-black shadow-[0_4px_0_0_black] hover:shadow-[0_0_10px_2px_#F7C50F] hover:translate-y-1 hover:bg-[#191919] hover:text-black bg-yellow-500 transition duration-300 home-btn-cta">Cursos</button>
+          </div>
+        </div>
+
+
+        <div class="w-full flex-1 p-8 flex rounded-2xl flex-col bg-surface-0 dark:bg-surface-800 shadow-sm gap-6">
+          <div class="flex flex-col gap-2">
+            <h4 class="text-surface-900 dark:text-surface-0 font-medium text-xl leading-tight">Padres</h4>
+            <p class="text-surface-500 dark:text-surface-400 leading-normal">Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Ipsa ipsum nobis eum voluptas libero cupiditate incidunt asperiores animi assumenda
+              molestiae ratione tempora soluta eos amet atque unde, dolor quisquam ullam!</p>
+          </div>
+
+          <div class="w-full h-px bg-surface-200 dark:bg-surface-600"></div>
+
+          <div class="flex flex-wrap align-content-start justify-content-start">
+            <button routerLink="/courses/padres" pButton pRipple label="Explorar Cursos"
+              class="px-6 py-3 rounded font-semibold text-black shadow-[0_4px_0_0_black] hover:shadow-[0_0_10px_2px_#F7C50F] hover:translate-y-1 hover:bg-[#191919] hover:text-black bg-yellow-500 transition duration-300 home-btn-cta">Cursos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

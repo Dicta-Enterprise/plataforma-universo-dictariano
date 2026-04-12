@@ -53,7 +53,15 @@
         <ul
           class="list-none py-3 px-6 m-0 lg:px-0 lg:py-0 border-round shadow-0 lg:shadow-2 lg:absolute bg-gray-900 hidden origin-top w-full lg:w-15rem cursor-pointer lg:border-1 border-gray-800"
         >
-          <li routerLink="/courses"></li>
+          <li routerLink="/courses">
+            <a
+              pRipple
+              class="flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-yellow-500 transition-colors duration-200"
+            >
+              <i class="pi pi-user-plus mr-2"></i>
+              <span class="font-medium">Todos</span>
+            </a>
+          </li>
           <li routerLink="courses/padres">
             <a
               pRipple
