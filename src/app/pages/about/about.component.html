@@ -1,28 +1,380 @@
-<div class="bg-black-alpha-90 px-4 py-8 md:px-6 lg:px-8">
-  <div class="flex flex-wrap bg-black-alpha-90">
-    <div class="w-full bg-black-alpha-90 lg:w-6 px-4 py-2 md:px-6 lg:px-8">
-      <div class="text-4xl text-white mb-3 font-medium">
-        ¡Descubre mundos 3D llenos de aprendizaje y diversión para toda la
-        familia!
-      </div>
-      <p class="line-height-3 mt-0 mb-7 p-0 text-white-alpha-80 text-2xl">
-        "Descubre la educación digital en impresionantes entornos 3D. Nuestros
-        cursos interactivos para padres, niños y jóvenes te brindan las
-        herramientas y conocimientos para navegar el mundo digital con confianza
-        y seguridad. Sumérgete en aventuras educativas divertidas y esenciales
-        para una experiencia en línea segura. ¡Transforma tu aprendizaje y el de
-        tu familia hoy mismo!"
-      </p>
+<div class="about-page">
 
-      <div class="flex flex-wrap align-content-start justify-content-start">
-        <button
-          routerLink="/courses"
-          pButton
-          pRipple
-          label="Explorar Cursos"
-          class="bg-black-alpha-30 border-white hover:bg-white hover:text-black-alpha-90 text-2xl"
-        ></button>
+  <span class="estrella estrella-blanca" style="top:8%; left:12%; animation-duration:2s;"></span>
+  <span class="estrella estrella-turquesa" style="top:15%; left:38%; animation-duration:3s;"></span>
+  <span class="estrella estrella-amarilla" style="top:4%; left:72%; animation-duration:1.5s;"></span>
+  <span class="estrella estrella-verde" style="top:30%; left:88%; animation-duration:2.5s;"></span>
+  <span class="estrella estrella-turquesa" style="top:55%; left:22%; animation-duration:1.8s;"></span>
+  <span class="estrella estrella-amarilla" style="top:70%; left:62%; animation-duration:2.2s;"></span>
+  <span class="estrella estrella-blanca" style="top:45%; left:8%; animation-duration:1.3s;"></span>
+  <span class="estrella estrella-verde" style="top:80%; left:92%; animation-duration:2.8s;"></span>
+  <span class="estrella estrella-turquesa" style="top:20%; left:55%; animation-duration:3.5s;"></span>
+  <span class="estrella estrella-amarilla" style="top:60%; left:78%; animation-duration:1.6s;"></span>
+  <span class="estrella estrella-blanca" style="top:90%; left:30%; animation-duration:2.1s;"></span>
+  <span class="estrella estrella-verde" style="top:35%; left:48%; animation-duration:2.9s;"></span>
+  <span class="meteorito"></span>
+  <span class="meteorito-2"></span>
+  <span class="meteorito-3"></span>
+
+  <section class="about-hero">
+    <div class="about-hero__orbit about-hero__orbit--1"></div>
+    <div class="about-hero__orbit about-hero__orbit--2"></div>
+    <div class="about-hero__orbit about-hero__orbit--3"></div>
+    <div class="about-hero__content">
+      <h1 class="about-hero__title">
+        Acerca de<br>
+        <span class="about-hero__title-accent">Nosotros</span>
+      </h1>
+      <p class="about-hero__subtitle">
+        Somos una plataforma educativa que protege a familias en el mundo digital,
+        formando niños, jóvenes y padres con habilidades reales frente a los riesgos cibernéticos.
+      </p>
+      <div class="about-hero__stats">
+        <div class="about-hero__stat">
+          <span class="about-hero__stat-number" data-target="12000">100</span>
+          <span class="about-hero__stat-label">Familias protegidas</span>
+        </div>
+        <div class="about-hero__stat-divider"></div>
+        <div class="about-hero__stat">
+          <span class="about-hero__stat-number" data-target="48">200</span>
+          <span class="about-hero__stat-label">Cursos activos</span>
+        </div>
+        <div class="about-hero__stat-divider"></div>
+        <div class="about-hero__stat">
+          <span class="about-hero__stat-number" data-target="6">6</span>
+          <span class="about-hero__stat-label">Años de experiencia</span>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="about-hero__visual">
+      <div class="about-shield">
+        <div class="about-shield__ring about-shield__ring--outer"></div>
+        <div class="about-shield__ring about-shield__ring--mid"></div>
+        <div class="about-shield__ring about-shield__ring--inner"></div>
+        <div class="about-shield__core">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" class="about-shield__icon">
+            <path d="M32 6L8 16V34C8 47.3 18.7 59.9 32 62C45.3 59.9 56 47.3 56 34V16L32 6Z" fill="rgba(64,224,208,0.15)"
+              stroke="#40E0D0" stroke-width="2" />
+            <path d="M22 32L28 38L42 24" stroke="#F7C50F" stroke-width="3" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="about-shield__dot about-shield__dot--1"></div>
+        <div class="about-shield__dot about-shield__dot--2"></div>
+        <div class="about-shield__dot about-shield__dot--3"></div>
+        <div class="about-shield__dot about-shield__dot--4"></div>
+      </div>
+    </div>
+    <div class="about-hero__scroll-hint">
+      <span>Descubre más</span>
+      <div class="about-hero__scroll-arrow"></div>
+    </div>
+  </section>
+
+  <section class="about-mission">
+    <div class="about-section-header reveal-up">
+      <h2 class="about-section-title">Nuestra esencia</h2>
+      <p class="about-section-desc">Lo que nos impulsa cada día a construir un internet más seguro para todos.</p>
+    </div>
+    <div class="about-hex-row">
+
+      <div class="about-hex-wrap reveal-left" style="animation-delay:0.1s">
+        <div class="about-hex about-hex--teal">
+          <div class="about-hex__inner">
+            <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+              <circle cx="16" cy="16" r="14" stroke="#40E0D0" stroke-width="2" />
+              <path d="M16 8v8l5 3" stroke="#40E0D0" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span class="about-hex__label">Misión</span>
+          </div>
+        </div>
+        <div class="about-hex__card">
+          <h3>Misión</h3>
+          <p>Empoderar a niños, jóvenes y padres con herramientas digitales para navegar en línea con confianza,
+            previniendo el cyberbullying, los fraudes y los riesgos cibernéticos a través de educación accesible y
+            entretenida.</p>
+          <div class="about-hex__line about-hex__line--teal"></div>
+        </div>
+      </div>
+
+      <div class="about-hex-wrap reveal-up" style="animation-delay:0.25s">
+        <div class="about-hex about-hex--yellow">
+          <div class="about-hex__inner">
+            <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+              <path d="M16 3L20 12H30L22 18L25 28L16 22L7 28L10 18L2 12H12L16 3Z" stroke="#F7C50F" stroke-width="2"
+                stroke-linejoin="round" />
+            </svg>
+            <span class="about-hex__label">Visión</span>
+          </div>
+        </div>
+        <div class="about-hex__card">
+          <h3>Visión</h3>
+          <p>Ser la plataforma educativa digital de referencia en Latinoamérica, donde cada familia tenga acceso
+            a formación de calidad que los proteja y prepare para los desafíos del presente y futuro digital.</p>
+          <div class="about-hex__line about-hex__line--yellow"></div>
+        </div>
+      </div>
+
+      <div class="about-hex-wrap reveal-right" style="animation-delay:0.4s">
+        <div class="about-hex about-hex--green">
+          <div class="about-hex__inner">
+            <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
+              <circle cx="16" cy="10" r="6" stroke="#90EE90" stroke-width="2" />
+              <path d="M4 28c0-6.627 5.373-12 12-12s12 5.373 12 12" stroke="#90EE90" stroke-width="2"
+                stroke-linecap="round" />
+            </svg>
+            <span class="about-hex__label">Propósito</span>
+          </div>
+        </div>
+        <div class="about-hex__card">
+          <h3>Propósito</h3>
+          <p>Crear un ecosistema donde la tecnología sea aliada, no amenaza. Cada curso está diseñado por expertos en
+            seguridad digital y pedagogía, asegurando aprendizajes significativos para toda la familia.</p>
+          <div class="about-hex__line about-hex__line--green"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="about-values">
+    <div class="about-section-header reveal-up">
+      <h2 class="about-section-title">Nuestros Principios</h2>
+      <p class="about-section-desc">Los principios que guían cada decisión, cada curso y cada interacción.</p>
+    </div>
+    <div class="about-values-grid">
+      <div class="about-value-item reveal-up" style="animation-delay:0.05s">
+        <div class="about-value-item__number">01</div>
+        <div class="about-value-item__icon"><svg viewBox="0 0 28 28" fill="none" width="24" height="24">
+            <path d="M14 3L3 8v10l11 7 11-7V8L14 3Z" stroke="#40E0D0" stroke-width="1.8" stroke-linejoin="round" />
+            <path d="M14 3v17M3 8l11 5 11-5" stroke="#40E0D0" stroke-width="1.8" stroke-linecap="round" />
+          </svg></div>
+        <h4 class="about-value-item__title">Seguridad</h4>
+        <p class="about-value-item__desc">La protección digital de las familias está en el centro de todo lo que
+          hacemos.</p>
+      </div>
+      <div class="about-value-item reveal-up" style="animation-delay:0.15s">
+        <div class="about-value-item__number">02</div>
+        <div class="about-value-item__icon"><svg viewBox="0 0 28 28" fill="none" width="24" height="24">
+            <circle cx="14" cy="14" r="11" stroke="#F7C50F" stroke-width="1.8" />
+            <path d="M9 14l4 4 6-7" stroke="#F7C50F" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+        <h4 class="about-value-item__title">Confianza</h4>
+        <p class="about-value-item__desc">Construimos relaciones transparentes con nuestros usuarios y sus familias.</p>
+      </div>
+      <div class="about-value-item reveal-up" style="animation-delay:0.25s">
+        <div class="about-value-item__number">03</div>
+        <div class="about-value-item__icon"><svg viewBox="0 0 28 28" fill="none" width="24" height="24">
+            <path d="M14 4C9 4 5 8 5 13c0 3 1.5 5.5 4 7v4h10v-4c2.5-1.5 4-4 4-7 0-5-4-9-9-9Z" stroke="#90EE90"
+              stroke-width="1.8" stroke-linejoin="round" />
+            <path d="M10 24h8" stroke="#90EE90" stroke-width="1.8" stroke-linecap="round" />
+          </svg></div>
+        <h4 class="about-value-item__title">Innovación</h4>
+        <p class="about-value-item__desc">Experiencias educativas 3D e interactivas que hacen el aprendizaje
+          irresistible.</p>
+      </div>
+      <div class="about-value-item reveal-up" style="animation-delay:0.35s">
+        <div class="about-value-item__number">04</div>
+        <div class="about-value-item__icon"><svg viewBox="0 0 28 28" fill="none" width="24" height="24">
+            <path d="M14 25S4 18 4 11a10 10 0 0120 0c0 7-10 14-10 14Z" stroke="#40E0D0" stroke-width="1.8"
+              stroke-linejoin="round" />
+            <circle cx="14" cy="11" r="3" stroke="#40E0D0" stroke-width="1.8" />
+          </svg></div>
+        <h4 class="about-value-item__title">Inclusión</h4>
+        <p class="about-value-item__desc">Educación digital accesible para todas las familias, sin importar su contexto.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-team">
+    <div class="about-section-header reveal-up">
+      <h2 class="about-section-title">Nuestro equipo</h2>
+      <p class="about-section-desc">Pasa el cursor sobre cada tarjeta para conocer a nuestros expertos.</p>
+    </div>
+    <div class="about-team-grid">
+
+      <div class="about-flip-card reveal-up" style="animation-delay:0.1s">
+        <div class="about-flip-card__inner">
+          <div class="about-flip-card__front">
+            <div class="about-flip-card__img-wrap">
+              <img
+                src="https://gestion.pe/resizer/v2/U7MI47J5O5ABRNUJY5BOZNNR3Q.jpeg?auth=303832a547f946efac4402349382dcdde7d665a72f8c0027aee9b675fd0cbf8b&width=4160&height=2773&quality=75&smart=true"
+                alt="Persona 1" class="about-flip-card__img" loading="lazy" />
+              <div class="about-flip-card__img-overlay"></div>
+            </div>
+            <div class="about-flip-card__front-info">
+              <h4 class="about-flip-card__name">Persona 1</h4>
+              <p class="about-flip-card__role about-flip-card__role--teal">Fundadora</p>
+              <div class="about-flip-card__hint"><svg viewBox="0 0 16 16" fill="none" width="12" height="12">
+                  <path d="M8 2v12M2 8h12" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" />
+                </svg><span>Ver perfil</span></div>
+            </div>
+          </div>
+          <div class="about-flip-card__back about-flip-card__back--teal">
+            <div class="about-flip-card__back-avatar">P1</div>
+            <h4 class="about-flip-card__back-name">Persona 1</h4>
+            <p class="about-flip-card__back-role">Fundadora</p>
+            <p class="about-flip-card__back-bio">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti,
+              quia? Repudiandae culpa doloribus dolorum quas.</p>
+            <div class="about-flip-card__back-socials">
+              <a href="#" class="about-flip-card__social">in</a>
+              <a href="#" class="about-flip-card__social">X</a>
+              <a href="#" class="about-flip-card__social">@</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-flip-card reveal-up" style="animation-delay:0.2s">
+        <div class="about-flip-card__inner">
+          <div class="about-flip-card__front">
+            <div class="about-flip-card__img-wrap">
+              <img
+                src="https://cdn-3.expansion.mx/dims4/default/b98de46/2147483647/strip/true/crop/1600x1066+0+0/resize/800x533!/format/webp/quality/80/?url=https%3A%2F%2Fcdn-3.expansion.mx%2F3e%2F1d%2Fa3ccce854a84b5acabac11faf7c5%2Fwhatsapp-image-2026-02-24-at-9.52.53%20AM.jpeg"
+                alt="Persona 2" class="about-flip-card__img" loading="lazy" />
+              <div class="about-flip-card__img-overlay"></div>
+            </div>
+            <div class="about-flip-card__front-info">
+              <h4 class="about-flip-card__name">Persona 2</h4>
+              <p class="about-flip-card__role about-flip-card__role--yellow">Director de Contenido</p>
+              <div class="about-flip-card__hint"><svg viewBox="0 0 16 16" fill="none" width="12" height="12">
+                  <path d="M8 2v12M2 8h12" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" />
+                </svg><span>Ver perfil</span></div>
+            </div>
+          </div>
+          <div class="about-flip-card__back about-flip-card__back--yellow">
+            <div class="about-flip-card__back-avatar"
+              style="background:rgba(247,197,15,0.2);border-color:rgba(247,197,15,0.5)">P2</div>
+            <h4 class="about-flip-card__back-name">Persona 2</h4>
+            <p class="about-flip-card__back-role" style="color:#F7C50F">Director de Contenido</p>
+            <p class="about-flip-card__back-bio">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis iure
+              laboriosam, nam deserunt architecto omnis.</p>
+            <div class="about-flip-card__back-socials">
+              <a href="#" class="about-flip-card__social">in</a>
+              <a href="#" class="about-flip-card__social">X</a>
+              <a href="#" class="about-flip-card__social">@</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-flip-card reveal-up" style="animation-delay:0.3s">
+        <div class="about-flip-card__inner">
+          <div class="about-flip-card__front">
+            <div class="about-flip-card__img-wrap">
+              <img src="https://thumbs.dreamstime.com/b/mujer-6989598.jpg" alt="Persona 3" class="about-flip-card__img"
+                loading="lazy" />
+              <div class="about-flip-card__img-overlay"></div>
+            </div>
+            <div class="about-flip-card__front-info">
+              <h4 class="about-flip-card__name">Persona 3</h4>
+              <p class="about-flip-card__role about-flip-card__role--green">Ingeniera de Sistemas</p>
+              <div class="about-flip-card__hint"><svg viewBox="0 0 16 16" fill="none" width="12" height="12">
+                  <path d="M8 2v12M2 8h12" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" />
+                </svg><span>Ver perfil</span></div>
+            </div>
+          </div>
+          <div class="about-flip-card__back about-flip-card__back--green">
+            <div class="about-flip-card__back-avatar"
+              style="background:rgba(144,238,144,0.2);border-color:rgba(144,238,144,0.5)">P3</div>
+            <h4 class="about-flip-card__back-name">Persona 3</h4>
+            <p class="about-flip-card__back-role" style="color:#90EE90">Ingeniera de Sistemas</p>
+            <p class="about-flip-card__back-bio">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa
+              pariatur accusantium voluptate nam deleniti fugit?</p>
+            <div class="about-flip-card__back-socials">
+              <a href="#" class="about-flip-card__social">in</a>
+              <a href="#" class="about-flip-card__social">X</a>
+              <a href="#" class="about-flip-card__social">@</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-gallery reveal-up">
+    <div class="about-gallery__item about-gallery__item--tall">
+      <img src="https://blog.familiados.com/wp-content/uploads/2021/06/ninos-trabajando-con-ordenador.jpg"
+        alt="Niños aprendiendo" loading="lazy" />
+      <div class="about-gallery__caption">Cursos para niños</div>
+    </div>
+    <div class="about-gallery__col">
+      <div class="about-gallery__item">
+        <img src="https://queondaus.com/wp-content/uploads/2024/11/Generaciones-Digitales.webp" alt="Jóvenes digitales"
+          loading="lazy" />
+        <div class="about-gallery__caption">Jóvenes digitales</div>
+      </div>
+      <div class="about-gallery__item">
+        <img src="https://notipress.mx/img/content/5945.webp" alt="Padres conectados" loading="lazy" />
+        <div class="about-gallery__caption">Padres conectados</div>
+      </div>
+    </div>
+    <div class="about-gallery__item about-gallery__item--tall">
+      <img src="https://www.questionpro.com/blog/wp-content/uploads/2016/08/ventajas-de-trabajar-en-equipo.jpg"
+        alt="Equipo trabajando" loading="lazy" />
+      <div class="about-gallery__caption">Nuestro equipo</div>
+    </div>
+  </section>
+
+  <section class="about-cta-social reveal-up">
+    <div class="about-cta-social__glow"></div>
+    <div class="about-cta-social__glow about-cta-social__glow--2"></div>
+
+    <div class="about-cta-social__main">
+      <h2 class="about-cta__title">¿Listo para proteger a tu familia?</h2>
+      <p class="about-cta__desc">Únete a miles de familias que ya navegan el mundo digital con seguridad y confianza.
+      </p>
+      <div class="about-cta__actions">
+        <button routerLink="/courses" class="about-cta__btn about-cta__btn--primary">Explorar cursos</button>
+        <button routerLink="/contact" class="about-cta__btn about-cta__btn--secondary">Habla con nosotros</button>
+      </div>
+    </div>
+
+    <div class="about-cta-social__divider">
+      <span></span>
+      <p>Síguenos en redes</p>
+      <span></span>
+    </div>
+
+    <div class="about-socials__row">
+      <a href="#" class="about-social-btn about-social-btn--fb" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+        </svg>
+        <span>Facebook</span>
+      </a>
+      <a href="#" class="about-social-btn about-social-btn--ig" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+          <rect x="2" y="2" width="20" height="20" rx="5" />
+          <circle cx="12" cy="12" r="5" />
+          <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
+        </svg>
+        <span>Instagram</span>
+      </a>
+      <a href="#" class="about-social-btn about-social-btn--yt" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path
+            d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
+        </svg>
+        <span>YouTube</span>
+      </a>
+      <a href="#" class="about-social-btn about-social-btn--tw" aria-label="Twitter / X">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path
+            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+        </svg>
+        <span>Twitter / X</span>
+      </a>
+      <a href="#" class="about-social-btn about-social-btn--tk" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path
+            d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.3 6.3 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.17a8.16 8.16 0 004.77 1.52V7.25a4.85 4.85 0 01-1-.56z" />
+        </svg>
+        <span>TikTok</span>
+      </a>
+    </div>
+    <p class="about-cta-social__footer">© 2026 DictaColombia · Todos los derechos reservados</p>
+  </section>
 </div>
