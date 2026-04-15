@@ -3,6 +3,8 @@ import { MenuItem } from 'primeng/api';
 import { CartService } from 'src/app/core/services/cart/cart.service';
 import { CursoFacade } from 'src/app/shared/patterns/facade/models/curso-facade';
 import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
+import { Categoria } from 'src/app/core/class/models';
+import { CategoriaFacade } from 'src/app/shared/patterns/facade/models/categoria-facade';
 
 @Component({
   selector: 'app-cart',
@@ -12,10 +14,41 @@ import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
 export class CartComponent implements OnInit {
   steps: MenuItem[] = [];
   cursosSugeridos: Cursos[] = [];
+  categorias: Categoria[] = [];
+  categoryMap: Record<string, { label: string; color: string }> = {};
+  defaultCategory = {
+    label: 'Público',
+    color: '#33CCFF'
+  };
 
-  constructor(public cart: CartService, private cursoFacade: CursoFacade) {}
+  constructor(
+  public cart: CartService,
+  private cursoFacade: CursoFacade,
+  private categoriaFacade: CategoriaFacade
+  ) {}
 
   ngOnInit() {
+    this.categoriaFacade.listarCategorias();
+
+    this.categoriaFacade.categorias$.asObservable().subscribe(cats => {
+      this.categorias = cats;
+
+      cats.forEach(cat => {
+        const key = cat.nombre.toLowerCase().replace('ñ', 'n');
+
+        const colorMap: Record<string, string> = {
+          'ninos': '#33FF66',
+          'jovenes': 'rgb(255, 204, 0)',
+          'padres': '#33CCFF'
+        };
+
+        this.categoryMap[cat.id] = {
+          label: cat.nombre, // "Niños"
+          color: colorMap[key] || '#33CCFF'
+        };
+      });
+    });
+
     this.steps = [
       { label: 'Detalles del carrito' },
       { label: 'Inicia sesión' },
@@ -31,12 +64,4 @@ export class CartComponent implements OnInit {
     this.cart.removeFromCart(id);
   }
 
-  getPublicoColor(categoria: string): string {
-    const map: Record<string, string> = {
-      'Niños':   'var(--color-green-500)',
-      'Jóvenes': 'var(--color-yellow-500)',
-      'Padres':  'var(--color-light-blue-500)',
-    };
-    return map[categoria] ?? 'var(--color-light-blue-500)';
-  }
 }
