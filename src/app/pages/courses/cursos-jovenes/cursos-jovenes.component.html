@@ -2,7 +2,8 @@
   <h1 class="text-4xl font-bold mb-2 text-cyan-400">Cursos para Jóvenes</h1>
 </div>
 <div class="w-full flex flex-col items-center justify-center">
-  <p-progressSpinner *ngIf="cursos.length === 0" styleClass="w-4rem h-4rem"strokeWidth="4" animationDuration="1.6s" aria-label="Cargando"></p-progressSpinner>
+  <p-progressSpinner *ngIf="cursos.length === 0" styleClass="w-4rem h-4rem" strokeWidth="4" animationDuration="1.6s"
+    aria-label="Cargando"></p-progressSpinner>
 </div>
 <div class="grid 
     grid-cols-1 
@@ -13,6 +14,7 @@
     gap-6 
     px-4">
   <ng-container *ngFor="let curso of cursos">
-    <app-card-curso [curso]="curso" bg_color="#141e30" primary_color="#19315E" secondary_color="#3b3b5f"></app-card-curso>
+    <app-card-curso [curso]="curso" bg_color="#141e30" primary_color="rgb(255, 204, 0)" secondary_color="#b38f00">
+    </app-card-curso>
   </ng-container>
 </div>
