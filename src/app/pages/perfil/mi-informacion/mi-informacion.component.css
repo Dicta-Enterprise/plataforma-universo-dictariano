@@ -1,0 +1,28 @@
+:host ::ng-deep .p-password {
+  width: 100%;
+}
+
+:host ::ng-deep .p-password input {
+  width: 100%;
+}
+
+::ng-deep .p-accordion .p-accordion-toggle-icon {
+  color: rgb(11, 11, 11) !important;
+}
+
+::ng-deep .p-accordion .flex.align-items-center.gap-3 {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+::ng-deep .p-inputtext {
+  height: 42px !important;
+  padding: 0.6rem 0.75rem !important;
+  font-size: 0.95rem;
+}
+::ng-deep .flex.gap-3.flex-1 {
+  flex: 0 !important;
+}
+::ng-deep .flex.gap-3.flex-1 > div {
+  width: 320px; 
+}

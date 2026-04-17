@@ -1,1 +1,175 @@
-<p>mi-informacion works!</p>
+<div class="p-4 md:p-6">
+
+  <!-- Título -->
+  <div class="mb-5">
+    <h2 class="text-2xl font-bold m-0 text-900">Configuración</h2>
+  </div>
+
+  <div class="grid">
+    <div class="col-12 flex flex-column gap-4">
+
+      <!-- INFORMACIÓN PERSONAL -->
+      <p-accordion>
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <span style="color: rgb(0, 0, 0); font-weight: 600;">Información Personal</span>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <div style="background-color: #ffffff; padding: 1rem; border-radius: 0.5rem; " class="flex flex-column">
+              <div class="flex flex-column gap-4"></div>
+              <div class="flex align-items-center gap-3">
+                <p-avatar image="https://www.gravatar.com/avatar/?d=mp" shape="circle" size="xlarge"
+                  styleClass="shadow-2 flex-shrink-0">
+                </p-avatar>
+                <p-button label="Cambiar imagen"
+                  styleClass="p-button-outlined p-button-secondary p-button-sm flex-shrink-0 ml-3"
+                  (onClick)="fileInput.click()">
+                </p-button>
+
+                <input type="file" #fileInput accept="image/*" hidden />
+                <div class="flex flex-column md:flex-row gap-3"></div>
+                <div class="flex gap-3 flex-1" style="width: 180%;">
+                  <div>
+                    <label class="block text-sm font-medium mb-1" style="color: #9CA3AF;">Nombre Completo</label>
+                    <input pInputText class="w-full" style="min-width: 350px;" [(ngModel)]="nombre"
+                      placeholder="Nombre completo"
+                      style="background-color: #fdfdfd; border: 1px solid #3d3d3d; color: white; border-radius: 0.5rem;" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium mb-1" style="color: #9CA3AF;">E-Mail</label>
+                    <input pInputText class="w-full" [(ngModel)]="email" placeholder="example@email.com"
+                      style="background-color: #ffffff; border: 1px solid #3d3d3d; color: white; border-radius: 0.5rem;" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botón Guardar -->
+              <div class="flex justify-content-end mt-3">
+                <p-button label="Guardar" icon="pi pi-arrow-right" iconPos="right" styleClass="btn-primary px-4"
+                  [loading]="isLoadingPerfil" (onClick)="guardarPerfil()">
+                </p-button>
+              </div>
+            </div>
+          </ng-template>
+        </p-accordionTab>
+      </p-accordion>
+      
+      <p-card>
+        <div class="flex gap-3 w-full">
+          <!-- Contraseña anterior -->
+          <div class="flex flex-column flex-1">
+            <label class="block text-sm font-medium mb-2">Contraseña anterior</label>
+            <p-password [(ngModel)]="currentPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+              placeholder="Contraseña anterior">
+            </p-password>
+          </div>
+
+          <!-- Nueva contraseña -->
+          <div class="flex flex-column flex-1">
+            <label class="block text-sm font-medium mb-2">Nueva contraseña</label>
+            <p-password [(ngModel)]="newPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+              placeholder="Contraseña nueva">
+            </p-password>
+          </div>
+
+          <!-- Confirmar -->
+          <div class="flex flex-column flex-1">
+            <label class="block text-sm font-medium mb-2">Repetir contraseña</label>
+            <p-password [(ngModel)]="confirmPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+              placeholder="Repetir contraseña">
+            </p-password>
+
+            <!-- error -->
+            <small class="p-error" *ngIf="newPassword !== confirmPassword">
+              Las contraseñas no coinciden
+            </small>
+          </div>
+
+        </div>
+        <!-- Botón Guardar -->
+        <div class="flex justify-content-end mt-3">
+          <p-button label="Guardar" icon="pi pi-arrow-right" iconPos="right" styleClass="btn-primary px-4"
+            (onClick)="guardarPassword()">
+          </p-button>
+        </div>
+      </p-card>
+
+
+      <!-- CUENTAS ASOCIADAS Y DISPOSITIVOS -->
+      <div class="flex gap-3">
+        <div class="flex-1">
+          <p-card styleClass="border-round-lg shadow-2 h-full">
+            <ng-template pTemplate="header">
+              <div class="px-4 pt-4">
+                <h3 class="text-lg font-semibold m-0 text-900">Cuentas Asociadas</h3>
+                <p-divider></p-divider>
+              </div>
+            </ng-template>
+            <div class="flex flex-column gap-3">
+              <div class="flex align-items-center justify-content-between p-3 border-round surface-100">
+                <div class="flex align-items-center gap-3">
+                  <img src="https://www.google.com/favicon.ico" width="24" height="24" alt="Google" />
+                  <div>
+                    <p class="m-0 font-medium">Google</p>
+                    <p class="m-0 text-sm text-500"> example@email.com</p>
+                  </div>
+                </div>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+              </div>
+              <div class="flex align-items-center justify-content-between p-3 border-round surface-100">
+                <div class="flex align-items-center gap-3">
+                  <i class="pi pi-github text-2xl"></i>
+                  <div>
+                    <p class="m-0 font-medium">GitHub</p>
+                    <p class="m-0 text-sm text-500">ExampleUser</p>
+                  </div>
+                </div>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+              </div>
+            </div>
+          </p-card>
+        </div>
+
+        <div class="flex-1">
+          <p-card styleClass="border-round-lg shadow-2 h-full">
+            <ng-template pTemplate="header">
+              <div class="px-4 pt-4">
+                <h3 class="text-lg font-semibold m-0 text-900">Dispositivos</h3>
+                <p-divider></p-divider>
+              </div>
+            </ng-template>
+            <div class="flex flex-column gap-3">
+              <div class="flex align-items-center justify-content-between p-3 border-round surface-100">
+                <div class="flex align-items-center gap-3">
+                  <i class="pi pi-mobile text-2xl"></i>
+                  <div>
+                    <p class="m-0 font-medium">Samsung </p>
+                    <p class="m-0 text-sm text-500">Conectado </p>
+                  </div>
+                </div>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+              </div>
+              <div class="flex align-items-center justify-content-between p-3 border-round surface-100">
+                <div class="flex align-items-center gap-3">
+                  <i class="pi pi-tablet text-2xl"></i>
+                  <div>
+                    <p class="m-0 font-medium">iPad </p>
+                    <p class="m-0 text-sm text-500">Conectado </p>
+                  </div>
+                </div>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </div>
+
+      <!-- BOTÓN GUARDAR -->
+      <div class="flex justify-content-end">
+        <p-button label="Guardar cambios" icon="pi pi-check" styleClass="p-button-warning font-semibold px-5">
+        </p-button>
+      </div>
+
+    </div>
+  </div>
+</div>
