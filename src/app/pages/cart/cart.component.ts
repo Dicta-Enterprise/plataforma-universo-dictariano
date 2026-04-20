@@ -21,6 +21,8 @@ export class CartComponent implements OnInit {
     color: '#33CCFF'
   };
 
+  stars = [1, 2, 3, 4, 5];
+
   constructor(
   public cart: CartService,
   private cursoFacade: CursoFacade,
@@ -62,6 +64,12 @@ export class CartComponent implements OnInit {
 
   remove(id: number) {
     this.cart.removeFromCart(id);
+  }
+
+  getStarClass(rating: number, star: number) {
+    return star <= Math.round(rating)
+      ? 'pi pi-star-fill rating-star-filled'
+      : 'pi pi-star rating-star-empty';
   }
 
 }

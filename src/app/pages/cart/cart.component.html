@@ -34,7 +34,12 @@
                     [style.color]="(categoryMap[curso.categoriaId] || defaultCategory).color">
                 {{ curso.nombre }}
               </span>
-            
+              <div class="cart-item-rating flex align-items-center gap-1">
+                <ng-container *ngFor="let star of stars">
+                  <i [ngClass]="getStarClass(curso.rating, star)"></i>
+                </ng-container>
+                <span class="rating-value">{{ curso.rating | number:'1.1-1' }}</span>
+              </div>
               <span class="cart-item-precio">Col$ {{ curso.precio | number:'1.0-0' }}</span>
             </div>
             <p-button icon="pi pi-trash" class="btn-trash"

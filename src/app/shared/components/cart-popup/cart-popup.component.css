@@ -72,6 +72,24 @@
   text-overflow: ellipsis;
 }
 
+.cart-item-rating {
+  font-size: 0.9rem;
+  color: #ffcc00;
+}
+
+.rating-star-filled {
+  color: #ffcc00;
+}
+
+.rating-star-empty {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.rating-value {
+  font-size: 0.8125rem;
+  color: #c7c7c7;
+}
+
 .cart-item-precio {
   font-size: 0.875rem;
   font-weight: 400;
