@@ -1,4 +1,22 @@
-/* ─── Título ─────────────────────────────────────── */
+
+/* LAYOUT PRINCIPAL*/
+.cart-page-wrapper {
+  background-color: #272727;
+  min-height: 100vh;        
+  padding: 2rem 4rem;
+}
+
+.cart-inner {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.cart-inner .flex.flex-row.flex-wrap {
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+}
+
+/* TÍTULO*/
 .cart-title {
   font-size: 2rem;
   font-weight: 700;
@@ -8,16 +26,38 @@
   font-size: 2rem;
 }
 
-/* ─── Item de carrito ─────────────────────────────── */
+/* CONTEO */
+.cart-count {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 20px 0;
+}
+
+/* ITEMS DEL CARRITO */
 .cart-item-img {
   width: clamp(48px, 10vw, 96px);
   height: clamp(48px, 10vw, 96px);
   object-fit: cover;
 }
 
+.cart-item-datos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .cart-item-nombre {
+  flex: 1;
   font-size: 1rem;
   font-weight: 700;
+}
+
+.cart-item-precio {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
 }
 
 .cart-item-rating {
@@ -25,6 +65,12 @@
   color: #ffcc00;
 }
 
+.cart-item-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ESTRELLAS */
 .rating-star-filled {
   color: #ffcc00;
 }
@@ -38,13 +84,7 @@
   color: #c7c7c7;
 }
 
-.cart-item-precio {
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: #fff;
-}
-
-/* ─── Tags ────────────────────────────────────────── */
+/* TAGS*/
 .cart-tag {
   background: #545454;
   color: #efefef;
@@ -55,7 +95,47 @@
   font-weight: 600;
 }
 
-/* ─── Estado vacío ────────────────────────────────── */
+/* BOTONES */
+.btn-eliminar {
+  flex-shrink: 0;
+}
+
+.btn-desktop {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.btn-mobile {
+  display: none;
+}
+
+::ng-deep .btn-eliminar .p-button {
+  background: #FF0033 !important;
+  color: #efefef !important;
+  border: none !important;
+  padding: 8px !important;
+  line-height: 1 !important;
+  font-size: 0.8rem;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px !important;
+}
+
+::ng-deep .btn-eliminar .p-button:hover {
+  background: #ff0000 !important;
+  color: #fff !important;
+}
+
+::ng-deep .btn-pay.p-button {
+  background: #33ff66 !important;
+  border: 2px solid #156b2b !important;
+  border-radius: 8px !important;
+  padding: 5px 0px !important;
+  color: #272727 !important;
+}
+
+/* ESTADO VACÍO */
 .empty-cart-icon {
   font-size: 3rem;
   color: #929292;
@@ -67,7 +147,7 @@
   color: #929292;
 }
 
-/* ─── Resumen ─────────────────────────────────────── */
+/* RESUMEN DE COMPRA */
 .cart-summary-title {
   font-size: 1.125rem;
   font-weight: 600;
@@ -83,53 +163,25 @@
   font-weight: 700;
 }
 
-/* ─── Card resumen ────────────────────────────────── */
 ::ng-deep .summary-card.p-card {
   background: #414141 !important;
   border-radius: 12px !important;
   padding: 0 10px !important;
+  border: none;
 }
 
-/* ─── Botón pagar ─────────────────────────────────── */
-::ng-deep .btn-pay.p-button {
-  background: #33ff66 !important;
-  border: 2px solid #156b2b !important;
-  border-radius: 8px !important;
-  padding: 5px !important;
-  color: #272727 !important;
-}
-
-/* ─── Dataview ────────────────────────────────────── */
+/*  DATAVIEW*/
 ::ng-deep .p-dataview,
 ::ng-deep .p-dataview-content {
-  background: #000000 !important;
+  background: #272727 !important;
   color: #efefef !important;
 }
 
-::ng-deep .p-dataview {
-  border: 1px solid #929292 !important;
-  border-radius: 12px !important;
-  padding: 30px !important;
-}
-
-::ng-deep .cart-item + .cart-item {
+::ng-deep .cart-item {
   border-top: 1px solid #414141;
 }
 
-/* ─── Botón eliminar ──────────────────────────────── */
-::ng-deep .btn-trash .p-button {
-  color: #efefef !important;
-  background: transparent !important;
-  border: none !important;
-  transition: background 0.2s, color 0.2s !important;
-}
-
-::ng-deep .btn-trash .p-button:hover {
-  background: #ff0000 !important;
-  color: #fff !important;
-}
-
-/* ─── Steps ───────────────────────────────────────── */
+/* STEPS*/
 ::ng-deep .p-steps {
   background: transparent !important;
 }
@@ -163,10 +215,45 @@
   color: #efefef !important;
 }
 
+/* RESPONSIVE — MOBILE*/
+@media (max-width: 768px) {
 
+  .cart-page-wrapper {
+    padding: 1.5rem 1rem;
+  }
 
-/* ─── Steps responsive ────────────────────────────── */
-@media (max-width: 480px) {
+  .cart-inner .flex.flex-row.flex-wrap {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cart-item {
+    align-items: flex-start;
+  }
+
+  .cart-item-datos {
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .cart-item-nombre { order: 1; }
+  .cart-item-precio { order: 2; }
+
+  .cart-item-actions {
+    justify-content: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .btn-eliminar { order: 3; }
+
+  .btn-desktop { display: none; }
+
+  .btn-mobile {
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: flex-start;
+  }
+
   ::ng-deep .p-steps ul {
     flex-direction: column !important;
     align-items: flex-start !important;
