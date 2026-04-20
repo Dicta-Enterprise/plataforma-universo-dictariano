@@ -32,7 +32,9 @@
                 <!-- FILA 1: nombre + precio -->
                 <div class="cart-item-datos">
                   <span class="cart-item-nombre"
-                        [style.color]="(categoryMap[curso.categoriaId] || defaultCategory).color">
+                        [style.color]="(categoryMap[curso.categoriaId] || defaultCategory).color"
+                        [routerLink]="['/courses/detalle', curso.id]"
+                        style="cursor: pointer;">
                     {{ curso.nombre }}
                   </span>
 

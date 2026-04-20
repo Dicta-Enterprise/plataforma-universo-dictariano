@@ -114,11 +114,9 @@
         <span class="cart-total-label text-white">Total</span>
         <span class="cart-total-valor text-white">Col$ {{ getTotal() | number:'1.0-0' }}</span>
       </div>
-      <p-button label="Ver el carrito" class="w-full py-1 btn-ver" styleClass="w-full"
-                (onClick)="irAlCarrito()"/>
-      <p-button label="Ir a pagar" icon="pi pi-credit-card"
-                class="w-full btn-pay" styleClass="w-full"
-                (onClick)="irAPagar()"/>
+      <p-button label="Ir al carrito" icon="pi pi-shopping-cart"
+          class="w-full btn-pay" styleClass="w-full"
+          (onClick)="irAlCarrito()"/>
     </div>
 
   </div>
