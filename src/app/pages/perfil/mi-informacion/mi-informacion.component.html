@@ -1,8 +1,8 @@
-<div class="p-4 md:p-6">
+<div class="p-4 md:p-6" style="background-color: #272727; min-height: 100vh;">
 
   <!-- Título -->
   <div class="mb-5">
-    <h2 class="text-2xl font-bold m-0 text-900">Configuración</h2>
+    <h2 class="text-2xl font-bold m-0" style="color: #efefef;">Configuración</h2>
   </div>
 
   <div class="grid">
@@ -12,37 +12,99 @@
       <p-accordion>
         <p-accordionTab>
           <ng-template pTemplate="header">
-            <span style="color: rgb(0, 0, 0); font-weight: 600;">Información Personal</span>
+            <span style="color: #efefef; font-weight: 600;">Información Personal</span>
           </ng-template>
           <ng-template pTemplate="content">
-            <div style="background-color: #ffffff; padding: 1rem; border-radius: 0.5rem; " class="flex flex-column">
+            <div style="background-color: #414141; padding: 1rem; border-radius: 0.5rem; " class="flex flex-column">
               <div class="flex flex-column gap-4"></div>
               <div class="flex align-items-center gap-3">
-                <p-avatar image="https://www.gravatar.com/avatar/?d=mp" shape="circle" size="xlarge"
-                  styleClass="shadow-2 flex-shrink-0">
-                </p-avatar>
+                <div style="position: relative; display: inline-block;">
+                  <p-avatar [image]="imageUrl || 'https://www.gravatar.com/avatar/?d=mp'" shape="circle" size="xlarge"
+                    styleClass="shadow-2 flex-shrink-0">
+                  </p-avatar>
+                  <span (click)="mostrarAvatares = !mostrarAvatares" style="position: absolute; bottom: 0; right: 0;
+                    background-color: #374151; border-radius: 50%; padding: 4px;
+                    cursor: pointer; border: 2px solid #272727;">
+                    <i class="pi pi-camera" style="color: #ffffff; font-size: 0.75rem;"></i>
+                  </span>
+                </div>
                 <p-button label="Cambiar imagen"
-                  styleClass="p-button-outlined p-button-secondary p-button-sm flex-shrink-0 ml-3"
-                  (onClick)="fileInput.click()">
+                  styleClass="p-button-outlined p-button-secondary flex-shrink-0 px-4 py-2"
+                  [style]="{'color': '#efefef', 'border-color': '#efefef'}"
+                  (onClick)="mostrarAvatares = !mostrarAvatares">
                 </p-button>
-
-                <input type="file" #fileInput accept="image/*" hidden />
+                <!-- Selector de avatares -->
+                <div *ngIf="mostrarAvatares" class="flex gap-3 align-items-center">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" width="50" height="50"
+                    style="border-radius: 50%; cursor: pointer;"
+                    [style.border]="imageUrl === 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix' ? '2px solid #F7C50F' : '2px solid transparent'"
+                    (click)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix')" />
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Luna" width="50" height="50"
+                    style="border-radius: 50%; cursor: pointer;"
+                    [style.border]="imageUrl === 'https://api.dicebear.com/7.x/avataaars/svg?seed=Luna' ? '2px solid #F7C50F' : '2px solid transparent'"
+                    (click)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Luna')" />
+                </div>
                 <div class="flex flex-column md:flex-row gap-3"></div>
                 <div class="flex gap-3 flex-1" style="width: 180%;">
                   <div>
-                    <label class="block text-sm font-medium mb-1" style="color: #9CA3AF;">Nombre Completo</label>
-                    <input pInputText class="w-full" style="min-width: 350px;" [(ngModel)]="nombre"
-                      placeholder="Nombre completo"
-                      style="background-color: #fdfdfd; border: 1px solid #3d3d3d; color: white; border-radius: 0.5rem;" />
+                    <label class="block text-sm font-medium mb-1" style="color: #efefef;">Nombre Completo
+                      <i class="pi pi-lock ml-1" style="color: #6b7280;" pTooltip="El nombre no puede modificarse"
+                        tooltipPosition="top"></i>
+                    </label>
+                    <input pInputText class="w-full"
+                      style="background-color: #1f2937; border: 1px solid #374151; color: #ffffff; border-radius: 0.5rem;"
+                      [(ngModel)]="nombre" placeholder="Nombre completo" [disabled]="true" />
                   </div>
+
                   <div>
-                    <label class="block text-sm font-medium mb-1" style="color: #9CA3AF;">E-Mail</label>
+                    <label class="block text-sm font-medium mb-1" style="color: #9CA3AF;">E-Mail
+                      <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>
+                    </label>
                     <input pInputText class="w-full" [(ngModel)]="email" placeholder="example@email.com"
-                      style="background-color: #ffffff; border: 1px solid #3d3d3d; color: white; border-radius: 0.5rem;" />
+                      style="background-color: #fbfbfb; border: 1px solid #3d3d3d; color: rgb(0, 0, 0); border-radius: 0.5rem;" />
                   </div>
+
                 </div>
               </div>
 
+              <p-divider [style]="{'border-color': '#374151'}" styleClass="mt-3"></p-divider>
+              <!-- CONTRASEÑAS  -->
+              <div class="flex gap-3 w-full mt-2">
+
+                <!-- Contraseña anterior -->
+                <div class="flex flex-column flex-1">
+                  <label class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
+                    <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>Contraseña anterior
+                  </label>
+                  <p-password [(ngModel)]="currentPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+                    placeholder="Contraseña anterior">
+                  </p-password>
+                </div>
+
+                <!-- Nueva contraseña -->
+                <div class="flex flex-column flex-1">
+                  <label class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
+                    <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>Nueva contraseña
+                  </label>
+                  <p-password [(ngModel)]="newPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+                    placeholder="Contraseña nueva">
+                  </p-password>
+                </div>
+
+                <!-- Confirmar -->
+                <div class="flex flex-column flex-1">
+                  <label class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
+                    <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>Repetir contraseña
+                  </label>
+                  <p-password [(ngModel)]="confirmPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+                    placeholder="Repetir contraseña">
+                  </p-password>
+                  <small class="p-error" *ngIf="newPassword !== confirmPassword">
+                    Las contraseñas no coinciden
+                  </small>
+                </div>
+
+              </div>
               <!-- Botón Guardar -->
               <div class="flex justify-content-end mt-3">
                 <p-button label="Guardar" icon="pi pi-arrow-right" iconPos="right" styleClass="btn-primary px-4"
@@ -53,46 +115,6 @@
           </ng-template>
         </p-accordionTab>
       </p-accordion>
-      
-      <p-card>
-        <div class="flex gap-3 w-full">
-          <!-- Contraseña anterior -->
-          <div class="flex flex-column flex-1">
-            <label class="block text-sm font-medium mb-2">Contraseña anterior</label>
-            <p-password [(ngModel)]="currentPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
-              placeholder="Contraseña anterior">
-            </p-password>
-          </div>
-
-          <!-- Nueva contraseña -->
-          <div class="flex flex-column flex-1">
-            <label class="block text-sm font-medium mb-2">Nueva contraseña</label>
-            <p-password [(ngModel)]="newPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
-              placeholder="Contraseña nueva">
-            </p-password>
-          </div>
-
-          <!-- Confirmar -->
-          <div class="flex flex-column flex-1">
-            <label class="block text-sm font-medium mb-2">Repetir contraseña</label>
-            <p-password [(ngModel)]="confirmPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
-              placeholder="Repetir contraseña">
-            </p-password>
-
-            <!-- error -->
-            <small class="p-error" *ngIf="newPassword !== confirmPassword">
-              Las contraseñas no coinciden
-            </small>
-          </div>
-
-        </div>
-        <!-- Botón Guardar -->
-        <div class="flex justify-content-end mt-3">
-          <p-button label="Guardar" icon="pi pi-arrow-right" iconPos="right" styleClass="btn-primary px-4"
-            (onClick)="guardarPassword()">
-          </p-button>
-        </div>
-      </p-card>
 
 
       <!-- CUENTAS ASOCIADAS Y DISPOSITIVOS -->
@@ -101,7 +123,7 @@
           <p-card styleClass="border-round-lg shadow-2 h-full">
             <ng-template pTemplate="header">
               <div class="px-4 pt-4">
-                <h3 class="text-lg font-semibold m-0 text-900">Cuentas Asociadas</h3>
+                <h3 class="text-lg font-semibold m-0 text-900" style="color: #efefef;">Cuentas Asociadas</h3>
                 <p-divider></p-divider>
               </div>
             </ng-template>
@@ -114,7 +136,7 @@
                     <p class="m-0 text-sm text-500"> example@email.com</p>
                   </div>
                 </div>
-                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger px-4 py-2"></p-button>
               </div>
               <div class="flex align-items-center justify-content-between p-3 border-round surface-100">
                 <div class="flex align-items-center gap-3">
@@ -124,17 +146,17 @@
                     <p class="m-0 text-sm text-500">ExampleUser</p>
                   </div>
                 </div>
-                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger px-4 py-2"></p-button>
               </div>
             </div>
           </p-card>
         </div>
 
         <div class="flex-1">
-          <p-card styleClass="border-round-lg shadow-2 h-full">
+          <p-card styleClass="border-round-lg shadow-2" [style]="{'padding': '0'}">
             <ng-template pTemplate="header">
               <div class="px-4 pt-4">
-                <h3 class="text-lg font-semibold m-0 text-900">Dispositivos</h3>
+                <h3 class="text-lg font-semibold m-0 text-900" style="color: #efefef;">Dispositivos</h3>
                 <p-divider></p-divider>
               </div>
             </ng-template>
@@ -147,7 +169,7 @@
                     <p class="m-0 text-sm text-500">Conectado </p>
                   </div>
                 </div>
-                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger px-4 py-2"></p-button>
               </div>
               <div class="flex align-items-center justify-content-between p-3 border-round surface-100">
                 <div class="flex align-items-center gap-3">
@@ -157,17 +179,11 @@
                     <p class="m-0 text-sm text-500">Conectado </p>
                   </div>
                 </div>
-                <p-button label="Remover" styleClass="p-button-outlined p-button-danger p-button-sm"></p-button>
+                <p-button label="Remover" styleClass="p-button-outlined p-button-danger px-4 py-2"></p-button>
               </div>
             </div>
           </p-card>
         </div>
-      </div>
-
-      <!-- BOTÓN GUARDAR -->
-      <div class="flex justify-content-end">
-        <p-button label="Guardar cambios" icon="pi pi-check" styleClass="p-button-warning font-semibold px-5">
-        </p-button>
       </div>
 
     </div>

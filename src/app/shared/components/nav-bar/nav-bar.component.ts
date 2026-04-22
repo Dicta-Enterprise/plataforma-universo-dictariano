@@ -29,6 +29,7 @@ export class NavBarComponent implements OnInit {
         label: 'Ver perfil',
         icon: 'pi pi-user', // Icono de PrimeIcons
         //command: () => this.onViewProfile()
+        routerLink: '/perfil/mi-informacion'
       },
       {
         label: 'Ver mis compras',

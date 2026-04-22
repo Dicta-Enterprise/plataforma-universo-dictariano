@@ -16,6 +16,8 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
   userId: string = '';
   nombre: string = '';
   email: string = '';
+  imageUrl: string = '';
+  mostrarAvatares: boolean = false;
 
   // Contraseñas
   currentPassword: string = '';
@@ -23,6 +25,7 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
   confirmPassword: string = '';
 
   isLoadingPerfil: boolean = false;
+  perfilId: number = 0;
 
   constructor(
     private http: HttpClient,
@@ -34,37 +37,59 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
   }
 
   cargarPerfil() {
-    this.subscription.add(
-      this.http.get<any>(`${this.baseUrl}/auth/profile`, { withCredentials: true })
-      .subscribe({
-        next: (data) => {
-          this.userId = data.id || data.userId || '';
-          this.nombre = data.username || data.nombre || '';
-          this.email = data.email || '';
-        },
-        error: (err) => {
-          console.error('Error al cargar perfil:', err);
-        }
-      })
-    );
-  }
+  this.subscription.add(
+    this.http.get<any>(`${this.baseUrl}/auth/profile`, { withCredentials: true })
+    .subscribe({
+      next: (data) => {
+        this.userId = data.sub || '';
+        this.email = data.email || '';
+        // Jalar perfil completo
+        this.http.get<any>(`${this.baseUrl}/profile`, { withCredentials: true })
+        .subscribe({         
+          next: (res) => {
+            console.log('Respuesta perfil:', res);
+            const perfil = res.data[0];
+            if (perfil) {
+              this.perfilId = perfil.id;
+              this.nombre = perfil.nombre || '';
+              this.imageUrl = perfil.imageurl || '';
+            }
+          },
+          error: (err) => console.error('Error cargando perfil:', err)
+        });
+      },
+      error: (err) => console.error('Error al cargar perfil:', err)
+    })
+  );
+}
 
   guardarPerfil() {
-    if (!this.nombre || !this.email) {
-      this.alertService.showWarn('Ups..', 'Completa todos los campos');
-      return;
-    }
+    const body: any = {};
 
-    this.isLoadingPerfil = true;
-    this.subscription.add(
-      this.http.patch(`${this.baseUrl}/profile/${this.userId}`,
-        { nombre: this.nombre },
-        { withCredentials: true }
-      ).subscribe({
-        next: () => {
-          this.alertService.showSuccess('Éxito', 'Perfil actualizado correctamente');
-          this.isLoadingPerfil = false;
-        },
+  if (this.email) body.email = this.email;
+  if (this.newPassword && this.newPassword === this.confirmPassword) {
+    body.password = this.newPassword;
+  }
+  if (this.imageUrl) body.imageurl = this.imageUrl;
+
+  if (Object.keys(body).length === 0) {
+    this.alertService.showWarn('Ups..', 'No hay cambios para guardar');
+    return;
+  }
+
+  this.isLoadingPerfil = true;
+  this.subscription.add(
+    this.http.patch(`${this.baseUrl}/profile/${this.perfilId}`,
+      body,
+      { withCredentials: true }
+    ).subscribe({
+      next: () => {
+        this.alertService.showSuccess('Éxito', 'Datos actualizados correctamente');
+        this.isLoadingPerfil = false;
+        this.currentPassword = '';
+        this.newPassword = '';
+        this.confirmPassword = '';
+      },
         error: (err) => {
           this.alertService.showError('Error', 'No se pudo actualizar el perfil');
           this.isLoadingPerfil = false;
@@ -84,9 +109,13 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Pendiente: endpoint de cambiar contraseña en el backend
     this.alertService.showWarn('Pendiente', 'El backend aún no tiene este endpoint');
   }
+
+  seleccionarAvatar(url: string) {
+  this.imageUrl = url;
+  this.mostrarAvatares = false;
+}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
