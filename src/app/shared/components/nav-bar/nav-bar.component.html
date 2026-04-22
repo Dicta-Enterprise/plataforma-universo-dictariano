@@ -144,7 +144,7 @@
         </button>
         <p-avatar
           *ngIf="auth.isLoggedIn$ | async"
-          [image]="auth.getUserImg()"
+          [image]="(auth.userImg$ | async) ?? ''"
           shape="circle"
           size="large"
           (click)="menu.toggle($event)"

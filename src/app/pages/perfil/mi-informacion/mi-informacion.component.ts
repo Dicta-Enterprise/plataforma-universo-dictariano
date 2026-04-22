@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { AuthService } from 'src/app/pages/auth/services/auth.service';
 
 @Component({
   selector: 'app-mi-informacion',
@@ -29,7 +30,8 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
 
   constructor(
     private http: HttpClient,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
               this.perfilId = perfil.id;
               this.nombre = perfil.nombre || '';
               this.imageUrl = perfil.imageurl || '';
+              this.authService.updateUserImg(this.imageUrl);
             }
           },
           error: (err) => console.error('Error cargando perfil:', err)
@@ -84,6 +87,8 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
       { withCredentials: true }
     ).subscribe({
       next: () => {
+        console.log('Guardando imagen:', this.imageUrl);
+        this.authService.updateUserImg(this.imageUrl);
         this.alertService.showSuccess('Éxito', 'Datos actualizados correctamente');
         this.isLoadingPerfil = false;
         this.currentPassword = '';
@@ -115,6 +120,7 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
   seleccionarAvatar(url: string) {
   this.imageUrl = url;
   this.mostrarAvatares = false;
+  console.log('Avatar seleccionado:', url); // ← agrega
 }
 
   ngOnDestroy(): void {
