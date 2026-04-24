@@ -11,7 +11,6 @@ import { AuthService } from 'src/app/pages/auth/services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-
 export class LoginFacade {
 
   login$ = new BehaviorSubject<LoginResponse | null>(null);
@@ -25,13 +24,22 @@ export class LoginFacade {
     private readonly authService: AuthService
   ) {}
 
-  iniciarSesion(login: Login) {
+  // ── returnUrl es opcional: si no viene, va a '/' como antes ──────────────
+  iniciarSesion(login: Login, returnUrl: string = '/') {
     this.loginService
       .iniciarSesion(login)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: () => {
-          this.authService.login();
+        next: (response) => {
+          // Si tu LoginService devuelve el usuario en la respuesta,
+          // persístelo para que getCurrentUserId() funcione en PaymentComponent.
+          // Ajusta los campos según lo que devuelva tu backend:
+          if (response) {
+            this.authService.setSession(response as any);
+          } else {
+            this.authService.login();
+          }
+
           this.login$.next(null);
 
           this.messageService.add({
@@ -41,10 +49,11 @@ export class LoginFacade {
             detail: 'Bienvenido nuevamente',
           });
 
-          this.router.navigate(['/']);
+          // ← Redirige a donde el usuario quería ir (ej: /payment)
+          // en vez del '/' fijo de antes
+          this.router.navigateByUrl(returnUrl);
         },
         error: (error) => {
-
           const backendMessage = error?.error?.message;
 
           if (backendMessage === 'Credenciales inválidas') {

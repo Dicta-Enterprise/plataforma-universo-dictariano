@@ -1,0 +1,458 @@
+/* ── Variables ── */
+:host {
+  --bg:        #272727;
+  --surface:   #272727;
+  --surface2:  #272727;
+  --border:    rgba(255,255,255,0.08);
+  --accent:    #33ff66;
+  --accent-dk: #156b2b;
+  --text:      #efefef;
+  --muted:     rgba(255,255,255,0.45);
+  --error:     #ef4444;
+  --radius:    12px;
+}
+
+/* ══ CAMPO PCI — contenedor del iframe de Mercado Pago ══
+   El iframe de MP se inyecta dentro de este div.
+   Debe tener altura y borde visibles para que el iframe sea accesible. */
+.mp-field-container {
+  height: 40px;
+  background: rgba(255,255,255,0.06);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 1px 2px;
+  box-sizing: border-box;
+  /* El iframe interno de MP hereda el ancho del contenedor */
+  display: flex;
+  align-items: center;
+}
+
+.mp-field-container iframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Layout ── */
+.payment-layout {
+  background: #272727;
+  display: grid;
+  grid-template-columns: 35% 65%;
+  gap: 2rem;
+  margin: 0 auto;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .payment-layout {
+    grid-template-columns: 1fr;
+    padding: 1.5rem 1rem 3rem;
+  }
+  .payment-form-section { order: 1; }
+  .order-summary        { order: 2; }
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.cart-title {
+  font-weight: bold;
+  font-size: 18px;
+  padding-bottom: 30px;
+}
+
+.payment-page-wrapper {
+  padding: 2rem 4rem;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ── Stepper ── */
+.stepper-bar {
+  width: 100%;
+  background: #272727;
+  padding-bottom: 50px;
+}
+
+::ng-deep .stepper-bar .p-steps {
+  background: transparent !important;
+  margin: 0 auto;
+}
+
+::ng-deep .stepper-bar .p-steps .p-steps-item:before {
+  border-top: 2px solid #5c5c5c !important;
+  top: 50% !important;
+}
+
+::ng-deep .stepper-bar .p-steps .p-steps-item .p-menuitem-link {
+  background: transparent !important;
+}
+
+::ng-deep .stepper-bar .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+  background: #414141 !important;
+  color: #efefef !important;
+  border: 2px solid #5c5c5c !important;
+}
+
+::ng-deep .stepper-bar .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-number {
+  background: #33ff66 !important;
+  color: #272727 !important;
+  border-color: #156b2b !important;
+}
+
+::ng-deep .stepper-bar .p-steps .p-steps-item .p-menuitem-link .p-steps-title {
+  color: #929292 !important;
+}
+
+::ng-deep .stepper-bar .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-title {
+  color: #efefef !important;
+}
+
+/* ── Resumen del pedido ── */
+.order-summary {
+  background: #333333;
+  padding: 30px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.cart-item {
+  border-top: 1px solid #414141;
+  background: #333333;
+}
+
+.cart-item:first-child { border-top: none; }
+
+.cart-item-img {
+  width: clamp(48px, 10vw, 96px);
+  height: clamp(48px, 10vw, 96px);
+  object-fit: cover;
+}
+
+.cart-item-datos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-item-nombre {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cart-item-precio {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.cart-item-rating {
+  font-size: 0.9rem;
+  color: #ffcc00;
+}
+
+.rating-star-filled { color: #ffcc00; }
+.rating-star-empty  { color: rgba(255,255,255,0.35); }
+.rating-value {
+  font-size: 0.8125rem;
+  color: #c7c7c7;
+}
+
+.cart-tag {
+  background: #545454;
+  color: #efefef;
+  border-radius: 23px;
+  border: 2px solid transparent;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.summary-footer {
+  background: transparent;
+  border-top: 1px solid #414141;
+  padding: 1rem 0.5rem;
+  margin-top: 0;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 0.5rem;
+}
+
+.summary-row:last-child { margin-bottom: 0; }
+
+.total-row {
+  font-size: 1rem;
+  color: #efefef;
+  font-weight: 500;
+}
+
+.total-amount {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #efefef;
+}
+
+/* ── Sección formulario ── */
+.payment-form-section {
+  display: flex;
+  flex-direction: column;
+  background: #272727;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+}
+
+.payment-card {
+  background: var(--surface);
+  border: 0.5px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.hr {
+  border: none;
+  border-top: 0.5px solid rgba(255,255,255,0.08);
+  margin: 0;
+}
+
+.method-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.method-header:hover { background: rgba(255,255,255,0.03); }
+
+.method-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.radio-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+
+.radio-dot.active { border-color: #22c55e; }
+
+.radio-dot.active::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: block;
+}
+
+.method-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.method-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(255,255,255,0.6);
+}
+
+.form-body {
+  padding: 0 16px 16px;
+  border-top: 0.5px solid rgba(255,255,255,0.08);
+}
+
+.brands {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0 14px;
+  align-items: center;
+}
+
+.brands img {
+  height: 28px;
+  width: auto;
+  border-radius: 6px;
+  background: #fff;
+  padding: 4px 8px;
+  object-fit: contain;
+}
+
+.brand-placeholder {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+}
+
+.field { margin-bottom: 12px; }
+
+.field label {
+  display: block;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 5px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  height: 40px;
+  background: rgba(255,255,255,0.06);
+  border: 0.5px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: #fff;
+  font-family: inherit;
+  outline: none;
+  appearance: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.field input::placeholder { color: rgba(255,255,255,0.25); }
+
+.field input:focus,
+.field select:focus {
+  border-color: rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.06);
+}
+
+.field input.ng-invalid.ng-touched,
+.field select.ng-invalid.ng-touched {
+  border-color: var(--error);
+}
+
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+  cursor: pointer;
+}
+
+.field select option { background: #1a1a1a; color: #fff; }
+
+.error-msg {
+  font-size: 11px;
+  color: var(--error);
+  margin-top: 4px;
+  display: block;
+}
+
+.row { display: grid; gap: 10px; }
+.row.row-2 { grid-template-columns: 1fr 1fr; }
+.row.row-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  border-color: rgba(255,255,255,0.12) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ── p-dataView ── */
+::ng-deep .order-summary .p-dataview,
+::ng-deep .order-summary .p-dataview-content {
+  background: #333333 !important;
+  color: #efefef !important;
+}
+
+/* ── Feedback ── */
+.feedback-msg {
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-feedback {
+  background: rgba(239,68,68,0.12);
+  border: 0.5px solid rgba(239,68,68,0.3);
+  color: #f87171;
+}
+
+.success-feedback {
+  background: rgba(34,197,94,0.12);
+  border: 0.5px solid rgba(34,197,94,0.3);
+  color: #22c55e;
+}
+
+/* ── Botón pagar ── */
+.pay-btn {
+  width: 100%;
+  margin-top: 4px;
+  height: 48px;
+  background: #33ff66;
+  border: 2px solid #156b2b;
+  border-radius: 8px;
+  color: #272727;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.pay-btn:hover:not(:disabled) { background: #22e655; }
+.pay-btn:active:not(:disabled) { transform: scale(0.98); }
+
+.pay-btn:disabled {
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.3);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+.pay-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: #272727;
+}
+
+.pay-btn:disabled svg { stroke: rgba(255,255,255,0.3); }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; }

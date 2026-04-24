@@ -1,0 +1,219 @@
+<div class="payment-page-wrapper">
+
+  <div class="mb-5">
+    <h2 class="title text-white flex align-items-center gap-2 m-0">
+      Finalizar pago
+    </h2>
+  </div>
+
+  <div class="stepper-bar">
+    <p-steps [model]="steps" [readonly]="true" [activeIndex]="2" />
+  </div>
+
+  <div class="payment-layout">
+
+    <!-- ══ COLUMNA IZQUIERDA — Resumen ══ -->
+    <aside class="order-summary">
+      <p class="cart-title">Resumen de compra</p>
+      <p-dataView [value]="cart.items" layout="list">
+        <ng-template pTemplate="listItem" let-curso>
+          <div class="flex align-items-center gap-3 p-3 cart-item">
+            <img [src]="curso.imagen" [alt]="curso.nombre"
+                 class="cart-item-img border-round flex-shrink-0"/>
+            <div class="flex flex-column flex-1 gap-1">
+              <div class="cart-item-datos">
+                <span class="cart-item-nombre"
+                      [style.color]="(categoryMap[$any(curso).categoriaId] || defaultCategory).color">
+                  {{ curso.nombre }}
+                </span>
+                <span class="cart-item-precio">Col$ {{ curso.precio | number:'1.0-0' }}</span>
+              </div>
+              <div class="cart-item-rating flex align-items-center gap-1">
+                <ng-container *ngFor="let star of stars">
+                  <i [ngClass]="getStarClass(curso.rating, star)"></i>
+                </ng-container>
+                <span class="rating-value">{{ curso.rating | number:'1.1-1' }}</span>
+              </div>
+              <div class="flex gap-2 flex-wrap">
+                <span class="cart-tag"
+                      [style.border-color]="(categoryMap[$any(curso).categoriaId] || defaultCategory).color">
+                  {{ (categoryMap[$any(curso).categoriaId] || defaultCategory).label }}
+                </span>
+                <span class="cart-tag">Galaxia</span>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+      <div class="summary-footer">
+        <div class="summary-row total-row">
+          <span>Total ({{ cart.items.length }} {{ cart.items.length === 1 ? 'curso' : 'cursos' }})</span>
+          <span class="total-amount">Col$ {{ cart.getTotal() | number:'1.0-0' }}</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ══ COLUMNA DERECHA — Formulario ══ -->
+    <section class="payment-form-section">
+      <h3 class="section-title">Medios de pago</h3>
+
+      <!-- Selector de método -->
+      <div class="payment-card">
+        <div class="method-header" (click)="selectedMethod = 'credit'">
+          <div class="radio-dot" [class.active]="selectedMethod === 'credit'"></div>
+          <div class="method-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+          </div>
+          <span class="method-label">Tarjeta de crédito</span>
+        </div>
+        <hr class="hr">
+        <div class="method-header" (click)="selectedMethod = 'debit'">
+          <div class="radio-dot" [class.active]="selectedMethod === 'debit'"></div>
+          <div class="method-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+          </div>
+          <span class="method-label">Tarjeta de débito</span>
+        </div>
+      </div>
+
+      <!-- ══ CUERPO DEL FORMULARIO ══
+           CRÍTICO: los tres divs PCI deben estar SIEMPRE en el DOM,
+           nunca dentro de *ngIf. El *ngIf solo oculta los campos no-PCI
+           y el botón, pero los contenedores de los iframes deben existir
+           desde que el componente se renderiza por primera vez. -->
+      <div class="payment-card">
+        <div class="form-body">
+
+          <!-- Logos detectados vía binChange -->
+          <div class="brands">
+            <img *ngIf="cardBrand === 'visa'"
+                 src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/visa@2x--c41951c0.png"
+                 alt="Visa">
+            <img *ngIf="cardBrand === 'master'"
+                 src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/master-logo--c0ad6cc4.jpg"
+                 alt="Mastercard">
+            <span *ngIf="!cardBrand" class="brand-placeholder">Visa / Mastercard / Amex</span>
+          </div>
+
+          <!-- ── CAMPOS PCI — iframes de Mercado Pago ──
+               Estos <div> son montados por mp.fields.create().mount(id).
+               NUNCA los envuelvas en *ngIf.
+               NUNCA les pongas formControlName.
+               Los datos de tarjeta nunca pasan por Angular. -->
+          <div class="field">
+            <label>Número de tarjeta</label>
+            <div id="form-checkout__cardNumber" class="mp-field-container"></div>
+          </div>
+
+          <div class="row row-2">
+            <div class="field">
+              <label>Vencimiento</label>
+              <div id="form-checkout__expirationDate" class="mp-field-container"></div>
+            </div>
+            <div class="field">
+              <label>CVV</label>
+              <div id="form-checkout__securityCode" class="mp-field-container"></div>
+            </div>
+          </div>
+
+          <!-- ── CAMPOS NO-PCI — solo visibles al elegir método ── -->
+          <ng-container *ngIf="selectedMethod">
+            <form [formGroup]="paymentForm">
+
+              <div class="field">
+                <label>Nombre del titular</label>
+                <input formControlName="holder" placeholder="Como aparece en la tarjeta"
+                       [class.ng-invalid]="isInvalid('holder')"
+                       [class.ng-touched]="isInvalid('holder')">
+                <span class="error-msg" *ngIf="isInvalid('holder')">Requerido.</span>
+              </div>
+
+              <div class="field">
+                <label>Correo electrónico</label>
+                <input formControlName="email" placeholder="correo@ejemplo.com" type="email"
+                       [class.ng-invalid]="isInvalid('email')"
+                       [class.ng-touched]="isInvalid('email')">
+                <span class="error-msg" *ngIf="isInvalid('email')">Correo inválido.</span>
+              </div>
+
+              <div class="row row-2">
+                <div class="field">
+                  <label>Tipo de documento</label>
+                  <select formControlName="docType">
+                    <option *ngFor="let d of docTypes" [value]="d.id">{{ d.name }}</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Número de documento</label>
+                  <input formControlName="docNumber" placeholder="12345678"
+                         [class.ng-invalid]="isInvalid('docNumber')"
+                         [class.ng-touched]="isInvalid('docNumber')">
+                  <span class="error-msg" *ngIf="isInvalid('docNumber')">Requerido.</span>
+                </div>
+              </div>
+
+              <!-- Emisor — solo si la tarjeta lo requiere -->
+              <div class="field" *ngIf="requiresIssuer && issuers.length > 0">
+                <label>Banco emisor</label>
+                <select [(ngModel)]="selectedIssuerId" [ngModelOptions]="{standalone: true}">
+                  <option *ngFor="let iss of issuers" [value]="iss.id">{{ iss.name }}</option>
+                </select>
+              </div>
+
+              <!-- Cuotas — solo crédito, valores dinámicos desde getInstallments() -->
+              <div class="field" *ngIf="selectedMethod === 'credit' && installments.length > 0">
+                <label>Cuotas</label>
+                <select [(ngModel)]="selectedInstallments" [ngModelOptions]="{standalone: true}">
+                  <option *ngFor="let c of installments" [value]="c.installments">
+                    {{ c.recommended_message }}
+                  </option>
+                </select>
+              </div>
+
+            </form>
+          </ng-container>
+
+        </div>
+      </div>
+
+      <!-- Feedback -->
+      <div *ngIf="errorMessage" class="feedback-msg error-feedback">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        {{ errorMessage }}
+      </div>
+
+      <div *ngIf="successMessage" class="feedback-msg success-feedback">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        {{ successMessage }}
+      </div>
+
+      <!-- Botón pagar — solo visible al elegir método -->
+      <button *ngIf="selectedMethod"
+        class="pay-btn"
+        (click)="submit()"
+        [disabled]="paymentForm.invalid || isSubmitting">
+        <svg *ngIf="!isSubmitting" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+          <rect x="1" y="4" width="22" height="16" rx="2"/>
+          <line x1="1" y1="10" x2="23" y2="10"/>
+        </svg>
+        <svg *ngIf="isSubmitting" class="spin" viewBox="0 0 24 24" fill="none" stroke-width="2">
+          <circle cx="12" cy="12" r="10" stroke-dasharray="31.4" stroke-dashoffset="10"/>
+        </svg>
+        {{ isSubmitting ? 'Procesando...' : 'Pagar Col$ ' + (cart.getTotal() | number:'1.0-0') }}
+      </button>
+
+    </section>
+  </div>
+</div>

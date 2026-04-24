@@ -97,8 +97,13 @@
                 Col$ {{ cart.getTotal() | number:'1.0-0' }}
               </span>
             </div>
-            <p-button icon="pi pi-credit-card" label="Ir a pagar"
-                      class="w-full" styleClass="w-full btn-pay"/>
+            <p-button
+              icon="pi pi-credit-card"
+              label="Ir a pagar"
+              class="w-full"
+              styleClass="w-full btn-pay"
+              [routerLink]="['/payment']">
+            </p-button>
           </div>
         </p-card>
       </div>
