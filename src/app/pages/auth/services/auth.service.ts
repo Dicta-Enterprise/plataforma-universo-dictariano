@@ -10,11 +10,17 @@ export class AuthService {
   private loggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this.loggedInSubject.asObservable();
 
+  private userImgSubject = new BehaviorSubject<string>('https://randomuser.me/api/portraits/men/11.jpg');
+  public userImg$ = this.userImgSubject.asObservable();
+ 
   constructor(
     private router: Router,
     private authApiService: AuthApiService,
   ) {}
 
+  updateUserImg(url: string): void {
+    this.userImgSubject.next(url);
+  }
   checkSession(): void {
     this.authApiService.profile().subscribe({
       next: () => this.loggedInSubject.next(true),
@@ -40,6 +46,6 @@ export class AuthService {
   }
 
   getUserImg(): string {
-    return 'https://randomuser.me/api/portraits/men/11.jpg';
+    return this.userImgSubject.getValue();
   }
 }

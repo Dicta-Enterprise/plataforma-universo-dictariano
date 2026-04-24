@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ export class AuthService {
   private _isAuthenticated = false;
   private _userImg = '';
 
+  private userImgSubject = new BehaviorSubject<string>('https://randomuser.me/api/portraits/men/11.jpg');
+public userImg$ = this.userImgSubject.asObservable();
   constructor() {
     // Si ya tienes login real, aquí pondrías la lógica real
     // Para demo:
@@ -19,8 +22,12 @@ export class AuthService {
     return this._isAuthenticated;
   }
 
+  updateUserImg(url: string): void {
+  this.userImgSubject.next(url);
+}
+
   getUserImg(): string {
-    return this._userImg || 'https://randomuser.me/api/portraits/men/11.jpg'; // Placeholder
+    return this.userImgSubject.getValue(); // Placeholder
   }
 
   // Demo login/logout:

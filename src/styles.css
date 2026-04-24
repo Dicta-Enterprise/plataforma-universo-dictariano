@@ -100,3 +100,20 @@ body {
   margin-right: -3rem !important;
   margin-left: 2rem !important;
 }
+
+/* Botón Guardar*/
+.btn-primary {
+  background-color: #00C853 !important;
+  border-color: #00C853 !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  min-height: 48px !important;
+}
+
+.btn-primary:hover {
+  background-color: #00A843 !important;
+  border-color: #00A843 !important;
+}
