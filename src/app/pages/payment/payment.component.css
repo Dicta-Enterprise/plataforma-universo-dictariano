@@ -83,19 +83,19 @@
   margin: 0 auto;
 }
 
-::ng-deep .stepper-bar .p-steps .p-steps-item:before {
-  border-top: 2px solid #5c5c5c !important;
-  top: 50% !important;
-}
-
 ::ng-deep .stepper-bar .p-steps .p-steps-item .p-menuitem-link {
   background: transparent !important;
 }
 
+::ng-deep .stepper-bar .p-steps .p-steps-item:before {
+  border-top: 2px solid #33ff66 !important;
+  top: 50% !important;
+}
+
 ::ng-deep .stepper-bar .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
-  background: #414141 !important;
-  color: #efefef !important;
-  border: 2px solid #5c5c5c !important;
+  background: #33ff66 !important;
+  color: white !important;
+  border: 2px solid #156b2b !important;
 }
 
 ::ng-deep .stepper-bar .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-number {
@@ -105,7 +105,7 @@
 }
 
 ::ng-deep .stepper-bar .p-steps .p-steps-item .p-menuitem-link .p-steps-title {
-  color: #929292 !important;
+  color: #efefef !important; 
 }
 
 ::ng-deep .stepper-bar .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-title {
@@ -223,7 +223,7 @@
 
 .payment-card {
   background: var(--surface);
-  border: 0.5px solid rgba(255,255,255,0.1);
+  border: 0.7px solid #7d7d7d; /*grey-400*/
   border-radius: var(--radius);
   overflow: hidden;
   margin-bottom: 12px;
@@ -330,19 +330,18 @@
   width: 100%;
   height: 40px;
   background: rgba(255,255,255,0.06);
-  border: 0.5px solid rgba(255,255,255,0.12);
-  border-radius: 8px;
+  border: 0.5px solid #7d7d7d; /*grey-400*/
+  border-radius: 10px;
   padding: 0 10px;
-  font-size: 13px;
+  font-size: 14px;
   color: #fff;
-  font-family: inherit;
   outline: none;
   appearance: none;
   transition: border-color 0.15s;
   box-sizing: border-box;
 }
 
-.field input::placeholder { color: rgba(255,255,255,0.25); }
+.field input::placeholder { color: #7d7d7d; /*grey-400*/}
 
 .field input:focus,
 .field select:focus {
@@ -418,30 +417,27 @@
 
 /* ── Botón pagar ── */
 .pay-btn {
-  width: 100%;
+  padding: 12px;
   margin-top: 4px;
-  height: 48px;
-  background: #33ff66;
-  border: 2px solid #156b2b;
-  border-radius: 8px;
-  color: #272727;
-  font-size: 15px;
+  background: linear-gradient(90deg, #33FF66 0%, #2EE85D 100%);
+  border-radius: 10px;
+  color: #111111;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-family: inherit;
   transition: background 0.15s, transform 0.1s;
 }
 
-.pay-btn:hover:not(:disabled) { background: #22e655; }
+.pay-btn:hover:not(:disabled) { background: linear-gradient(90deg, #33FF66 0%, #24B548 100%);}
 .pay-btn:active:not(:disabled) { transform: scale(0.98); }
 
 .pay-btn:disabled {
-  background: rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.3);
+  background: #7d7d7d; /*grey-400*/
+  color: #cccccc; /*grey-100*/
   border-color: transparent;
   cursor: not-allowed;
 }
@@ -452,7 +448,22 @@
   stroke: #272727;
 }
 
-.pay-btn:disabled svg { stroke: rgba(255,255,255,0.3); }
+.pay-btn:disabled svg { stroke: #cccccc; } /*grey-100*/
 
 @keyframes spin { to { transform: rotate(360deg); } }
 .spin { animation: spin 1s linear infinite; }
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-title {
+  font-weight: 600;
+}
+
+.step-subtitle {
+  font-size: 12px;
+  color: #6b7280; /* gris */
+}

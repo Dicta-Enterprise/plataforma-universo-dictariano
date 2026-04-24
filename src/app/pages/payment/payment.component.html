@@ -90,15 +90,38 @@
       <div class="payment-card">
         <div class="form-body">
 
-          <!-- Logos detectados vía binChange -->
           <div class="brands">
+
+            <!-- 🔵 Cuando el usuario YA escribió tarjeta -->
             <img *ngIf="cardBrand === 'visa'"
-                 src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/visa@2x--c41951c0.png"
-                 alt="Visa">
+                src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/visa@2x--c41951c0.png"
+                alt="Visa">
+
             <img *ngIf="cardBrand === 'master'"
-                 src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/master-logo--c0ad6cc4.jpg"
-                 alt="Mastercard">
-            <span *ngIf="!cardBrand" class="brand-placeholder">Visa / Mastercard / Amex</span>
+                src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/master-logo--c0ad6cc4.jpg"
+                alt="Mastercard">
+
+            <img *ngIf="cardBrand === 'amex'"
+                src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/amex-logo--2b055765.jpg"
+                alt="American Express">
+
+            <img *ngIf="cardBrand === 'diners'"
+                src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/mla-payments-diners-icon--6e1ec6f0.png"
+                alt="Diners Club">
+
+            <img *ngIf="cardBrand === 'codensa'"
+                src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/codensa--b0897880.png"
+                alt="Codensa">
+
+            <!-- ⚪ Antes de escribir tarjeta -->
+            <ng-container *ngIf="!cardBrand">
+              <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/visa@2x--c41951c0.png" alt="Visa">
+              <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/master-logo--c0ad6cc4.jpg" alt="Mastercard">
+              <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/amex-logo--2b055765.jpg" alt="American Express">
+              <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/mla-payments-diners-icon--6e1ec6f0.png" alt="Diners Club">
+              <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/codensa--b0897880.png" alt="Codensa">
+            </ng-container>
+
           </div>
 
           <!-- ── CAMPOS PCI — iframes de Mercado Pago ──

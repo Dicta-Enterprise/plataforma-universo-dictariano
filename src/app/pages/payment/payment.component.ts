@@ -281,6 +281,7 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
         estado: 'PENDIENTE',
         detalleOrden,
         pago: {
+          idorden: 1,
           fechapago: new Date().toISOString(),
           monto: parseFloat(Math.floor(this.totalAmount).toFixed(2)), // 1154.00
           nombrepagante: form.holder,
