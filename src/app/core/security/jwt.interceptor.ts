@@ -12,16 +12,27 @@ export class JwtInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const authReq = req.clone({
-      withCredentials: true
-    })
+    const isAuthEndPoint = 
+      req.url.includes('/auth/login') || 
+      req.url.includes('/auth/register') ||
+      req.url.includes('/auth/profile') || 
+      req.url.includes('/auth/google');
+
+    let authReq = req;
+    const token = localStorage.getItem('userToken');
+    if (token && !isAuthEndPoint) {
+      authReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        },
+        withCredentials: true
+      });
+    } else {
+      authReq = req.clone({ withCredentials: true });
+    }
 
     return next.handle(authReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        const isAuthEndPoint = 
-        req.url.includes('/auth/login') || 
-        req.url.includes('/auth/profile') || 
-        req.url.includes('/auth/google');
         if (error.status === 401 && !isAuthEndPoint) {
           this.router.navigate(['/auth/login']);
         }

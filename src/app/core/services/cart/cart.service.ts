@@ -28,17 +28,43 @@ export class CartService {
 
   addToCart(curso: Curso) {
     if (!this.items.find(c => c.id === curso.id)) {
-      this.itemsSubject.next([...this.items, curso]);
+      const updated = [...this.items, curso];
+      this.itemsSubject.next(updated);
+      this.saveCartToLocalStorage(updated);
     }
     this.showPopupSubject.next(true);
   }
 
   removeFromCart(cursoId: number) {
-    this.itemsSubject.next(this.items.filter(c => c.id !== cursoId));
+    const updated = this.items.filter(c => c.id !== cursoId);
+    this.itemsSubject.next(updated);
+    this.saveCartToLocalStorage(updated);
   }
 
   clearCart() {
     this.itemsSubject.next([]);
+    this.clearCartFromLocalStorage();
+  }
+
+  saveCartToLocalStorage(items: Curso[]) {
+    localStorage.setItem('cartItems', JSON.stringify(items));
+  }
+  getCartFromLocalStorage(): Curso[] {
+    const data = localStorage.getItem('cartItems');
+    return data ? JSON.parse(data) : [];
+  }
+  loadCartFromLocalStorage() {
+    const items = this.getCartFromLocalStorage();
+    if (items && items.length > 0) {
+      this.itemsSubject.next(items);
+    }
+  }
+  clearCartFromLocalStorage() {
+    localStorage.removeItem('cartItems');
+  }
+
+  createOrUpdateCartForUser(idUsuario: number, cursos: { idcurso: string }[]) {
+    return this.createCarrito(idUsuario, cursos);
   }
 
   closePopup() {
