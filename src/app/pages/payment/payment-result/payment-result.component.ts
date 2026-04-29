@@ -18,8 +18,6 @@ export class PaymentResultComponent implements OnInit {
 
   stars = [1, 2, 3, 4, 5];
 
-  // Mismo categoryMap que en PaymentComponent
-  // (idealmente lo moverías a un servicio compartido)
   categoryMap: Record<string, { label: string; color: string }> = {};
   defaultCategory = { label: 'Público', color: '#33CCFF' };
 
@@ -32,32 +30,24 @@ export class PaymentResultComponent implements OnInit {
 
   ngOnInit() {
     this.loadCategorias();
-    // Lee query params
+
     this.route.queryParams.subscribe(params => {
       this.status = params['status'] === 'rejected' ? 'rejected' : 'success';
-      this.email  = params['email'] ?? '';
-      this.total  = Number(params['total']) || 0;
-      this.date   = params['date']
-        ? new Date(params['date']).toLocaleDateString('es-CO', {
-            day: '2-digit', month: '2-digit', year: 'numeric'
-          })
-        : '';
     });
 
-    // Lee items pasados por router state (disponibles solo en la carga inmediata)
-    const nav = this.router.getCurrentNavigation();
-    if (nav?.extras?.state?.['items']) {
-      this.items = nav.extras.state['items'];
-    } else {
-      // Fallback: si el usuario refresca la página, intenta recuperar desde sessionStorage
-      const stored = sessionStorage.getItem('payment_result_items');
-      if (stored) this.items = JSON.parse(stored);
-    }
+    const storedItems = sessionStorage.getItem('payment_result_items');
+    const storedEmail = sessionStorage.getItem('payment_result_email');
+    const storedTotal = sessionStorage.getItem('payment_result_total');
+    const storedDate  = sessionStorage.getItem('payment_result_date');
 
-    // Persiste en sessionStorage para el caso de refresh
-    if (this.items.length) {
-      sessionStorage.setItem('payment_result_items', JSON.stringify(this.items));
-    }
+    this.items = storedItems ? JSON.parse(storedItems) : [];
+    this.email = storedEmail ?? '';
+    this.total = storedTotal ? Number(storedTotal) : 0;
+    this.date  = storedDate
+      ? new Date(storedDate).toLocaleDateString('es-CO', {
+          day: '2-digit', month: '2-digit', year: 'numeric'
+        })
+      : '';
   }
 
   private loadCategorias() {
@@ -78,8 +68,6 @@ export class PaymentResultComponent implements OnInit {
     });
   }
 
-  // ── Helpers ──────────────────────────────────────────────
-
   get isSuccess() { return this.status === 'success'; }
 
   getStarClass(rating: number, star: number) {
@@ -90,16 +78,25 @@ export class PaymentResultComponent implements OnInit {
 
   goToCourses() {
     sessionStorage.removeItem('payment_result_items');
+    sessionStorage.removeItem('payment_result_email');
+    sessionStorage.removeItem('payment_result_total');
+    sessionStorage.removeItem('payment_result_date');
     this.router.navigate(['/mis-cursos']);
   }
 
   goToCart() {
     sessionStorage.removeItem('payment_result_items');
+    sessionStorage.removeItem('payment_result_email');
+    sessionStorage.removeItem('payment_result_total');
+    sessionStorage.removeItem('payment_result_date');
     this.router.navigate(['/cart']);
   }
 
   retryPayment() {
     sessionStorage.removeItem('payment_result_items');
+    sessionStorage.removeItem('payment_result_email');
+    sessionStorage.removeItem('payment_result_total');
+    sessionStorage.removeItem('payment_result_date');
     this.router.navigate(['/payment']);
   }
 }

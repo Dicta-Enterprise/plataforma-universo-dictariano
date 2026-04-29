@@ -295,27 +295,36 @@ export class PaymentComponent implements OnInit, OnDestroy {
           const estado = res?.data?.estadoOrden;
           const items  = [...this.cart.items];
           const total  = this.totalAmount;
+          const email  = this.paymentForm.value.email; // ← correo del formulario
+
+          // Persiste ANTES de limpiar el carrito
+          sessionStorage.setItem('payment_result_items', JSON.stringify(items));
+          sessionStorage.setItem('payment_result_email', email);
+          sessionStorage.setItem('payment_result_total', String(total));
+          sessionStorage.setItem('payment_result_date',  new Date().toISOString());
 
           if (estado === 'processed' || estado === 'COMPLETADO' || estado === 'processing') {
-            this.cart.clearCart();
+            this.cart.clearCart(); // ← recién aquí se limpia
             this.router.navigate(['payment', 'result'], {
-              queryParams: { status: 'success', email: form.email, total, date: new Date().toISOString() },
-              state: { items }
+              queryParams: { status: 'success' } // ya no necesitas pasar datos por query
             });
           } else {
             this.router.navigate(['payment', 'result'], {
-              queryParams: { status: 'rejected', total, date: new Date().toISOString() },
-              state: { items }
+              queryParams: { status: 'rejected' }
             });
           }
         },
         error: (err) => {
           this.isSubmitting = false;
           console.error('Error en la orden:', err);
+          // En error, los items aún están en el carrito, guárdalos igual
           sessionStorage.setItem('payment_result_items', JSON.stringify([...this.cart.items]));
+          sessionStorage.setItem('payment_result_total', String(this.totalAmount));
+          sessionStorage.setItem('payment_result_date',  new Date().toISOString());
           this.router.navigate(['payment', 'result'], {
-            queryParams: { status: 'rejected', total: this.totalAmount, date: new Date().toISOString() }
+            queryParams: { status: 'rejected' }
           });
+
         }
       });
 
