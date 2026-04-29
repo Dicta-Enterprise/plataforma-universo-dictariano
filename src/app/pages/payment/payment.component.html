@@ -17,7 +17,7 @@
       <p class="cart-title">Resumen de compra</p>
       <p-dataView [value]="cart.items" layout="list">
         <ng-template pTemplate="listItem" let-curso>
-          <div class="flex align-items-center gap-3 p-3 cart-item">
+          <div class="flex align-items-center gap-3 cart-item">
             <img [src]="curso.imagen" [alt]="curso.nombre"
                  class="cart-item-img border-round flex-shrink-0"/>
             <div class="flex flex-column flex-1 gap-1">
@@ -59,7 +59,7 @@
 
       <!-- Selector de método -->
       <div class="payment-card">
-        <div class="method-header" (click)="selectedMethod = 'credit'">
+        <div class="method-header" (click)="selectMethod('credit')">
           <div class="radio-dot" [class.active]="selectedMethod === 'credit'"></div>
           <div class="method-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -70,7 +70,7 @@
           <span class="method-label">Tarjeta de crédito</span>
         </div>
         <hr class="hr">
-        <div class="method-header" (click)="selectedMethod = 'debit'">
+        <div class="method-header" (click)="selectMethod('debit')">
           <div class="radio-dot" [class.active]="selectedMethod === 'debit'"></div>
           <div class="method-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -82,12 +82,7 @@
         </div>
       </div>
 
-      <!-- ══ CUERPO DEL FORMULARIO ══
-           CRÍTICO: los tres divs PCI deben estar SIEMPRE en el DOM,
-           nunca dentro de *ngIf. El *ngIf solo oculta los campos no-PCI
-           y el botón, pero los contenedores de los iframes deben existir
-           desde que el componente se renderiza por primera vez. -->
-      <div class="payment-card">
+      <div class="payment-card" *ngIf="selectedMethod">
         <div class="form-body">
 
           <div class="brands">
@@ -114,12 +109,19 @@
                 alt="Codensa">
 
             <!-- ⚪ Antes de escribir tarjeta -->
-            <ng-container *ngIf="!cardBrand">
+            <ng-container *ngIf="!cardBrand && selectedMethod === 'credit'">
+  <!-- crédito -->
               <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/visa@2x--c41951c0.png" alt="Visa">
               <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/master-logo--c0ad6cc4.jpg" alt="Mastercard">
               <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/amex-logo--2b055765.jpg" alt="American Express">
               <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/mla-payments-diners-icon--6e1ec6f0.png" alt="Diners Club">
               <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/codensa--b0897880.png" alt="Codensa">
+            </ng-container>
+            <ng-container *ngIf="!cardBrand && selectedMethod === 'debit'">
+  <!-- crédito -->
+              <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/visa@2x--c41951c0.png" alt="Visa">
+              <img src="https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/master-logo--c0ad6cc4.jpg" alt="Mastercard">
+              
             </ng-container>
 
           </div>
@@ -129,20 +131,24 @@
                NUNCA los envuelvas en *ngIf.
                NUNCA les pongas formControlName.
                Los datos de tarjeta nunca pasan por Angular. -->
-          <div class="field">
-            <label>Número de tarjeta</label>
-            <div id="form-checkout__cardNumber" class="mp-field-container"></div>
-          </div>
+          <div class="pci-wrapper" [class.hidden]="!selectedMethod">
 
-          <div class="row row-2">
             <div class="field">
-              <label>Vencimiento</label>
-              <div id="form-checkout__expirationDate" class="mp-field-container"></div>
+              <label>Número de Tarjeta</label>
+              <div id="form-checkout__cardNumber" class="mp-field-wrapper"></div>
             </div>
-            <div class="field">
-              <label>CVV</label>
-              <div id="form-checkout__securityCode" class="mp-field-container"></div>
+
+            <div class="row row-2">
+              <div class="field">
+                <label>Fecha de Caducidad</label>
+                <div id="form-checkout__expirationDate" class="mp-field-wrapper"></div>
+              </div>
+              <div class="field">
+                <label>Código de Seguridad</label>
+                <div id="form-checkout__securityCode" class="mp-field-wrapper"></div>
+              </div>
             </div>
+
           </div>
 
           <!-- ── CAMPOS NO-PCI — solo visibles al elegir método ── -->
@@ -158,7 +164,7 @@
               </div>
 
               <div class="field">
-                <label>Correo electrónico</label>
+                <label>Correo Electrónico</label>
                 <input formControlName="email" placeholder="correo@ejemplo.com" type="email"
                        [class.ng-invalid]="isInvalid('email')"
                        [class.ng-touched]="isInvalid('email')">
@@ -168,15 +174,17 @@
               <div class="row row-2">
                 <div class="field">
                   <label>Tipo de documento</label>
-                  <select formControlName="docType">
+                  <select formControlName="docType" (change)="onDocTypeChange($any($event.target).value)">
                     <option *ngFor="let d of docTypes" [value]="d.id">{{ d.name }}</option>
                   </select>
                 </div>
                 <div class="field">
                   <label>Número de documento</label>
                   <input formControlName="docNumber" placeholder="12345678"
-                         [class.ng-invalid]="isInvalid('docNumber')"
-                         [class.ng-touched]="isInvalid('docNumber')">
+                        [maxlength]="selectedDocType?.max_length ?? 20"
+                        inputmode="numeric"
+                        [class.ng-invalid]="isInvalid('docNumber')"
+                        [class.ng-touched]="isInvalid('docNumber')">
                   <span class="error-msg" *ngIf="isInvalid('docNumber')">Requerido.</span>
                 </div>
               </div>
@@ -190,13 +198,20 @@
               </div>
 
               <!-- Cuotas — solo crédito, valores dinámicos desde getInstallments() -->
-              <div class="field" *ngIf="selectedMethod === 'credit' && installments.length > 0">
+              <div class="field" *ngIf="selectedMethod === 'credit'">
                 <label>Cuotas</label>
-                <select [(ngModel)]="selectedInstallments" [ngModelOptions]="{standalone: true}">
+
+                <select *ngIf="installments.length > 0"
+                        [(ngModel)]="selectedInstallments"
+                        [ngModelOptions]="{standalone: true}">
                   <option *ngFor="let c of installments" [value]="c.installments">
                     {{ c.recommended_message }}
                   </option>
                 </select>
+
+                <small *ngIf="installments.length === 0" style="color: #888;">
+                  Ingresa tu tarjeta para ver las cuotas disponibles
+                </small>
               </div>
 
             </form>
@@ -213,13 +228,6 @@
           <line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
         {{ errorMessage }}
-      </div>
-
-      <div *ngIf="successMessage" class="feedback-msg success-feedback">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-        {{ successMessage }}
       </div>
 
       <!-- Botón pagar — solo visible al elegir método -->

@@ -13,9 +13,12 @@ import { PaymentFormPresenter } from './payment-form.presenter';
 import { PaymentApiService } from './services/payment-api.service';
 import { MercadoPagoFieldsService } from './services/mercadopago-fields.service';
 import { PAYMENT_REPOSITORY } from 'src/app/core/tokens/payment/payment.token';
+import { PaymentResultComponent } from './payment-result/payment-result.component';
 
 @NgModule({
-  declarations: [PaymentComponent],
+  declarations: [PaymentComponent,
+    PaymentResultComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

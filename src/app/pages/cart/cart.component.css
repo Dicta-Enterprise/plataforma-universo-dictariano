@@ -1,5 +1,21 @@
 
 /* LAYOUT PRINCIPAL*/
+.columnas{
+  background: #272727;
+  display: grid;
+  grid-template-columns: 1fr 35%;
+  gap: 2rem;
+  margin: 0;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .columnas {
+    grid-template-columns: 1fr;
+  }
+
+}
+
 .cart-page-wrapper {
   background-color: #272727;
   min-height: 100vh;        
@@ -20,6 +36,7 @@
 .cart-title {
   font-size: 2rem;
   font-weight: 700;
+  padding-bottom: 30px;
 }
 
 .cart-title-icon {

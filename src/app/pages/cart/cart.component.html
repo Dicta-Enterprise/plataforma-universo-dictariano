@@ -7,16 +7,18 @@
         <i class="pi pi-shopping-cart cart-title-icon"></i>
         Mi Carrito
       </h2>
+
+      <div class="card mb-4">
+          <p-steps [model]="steps" [readonly]="true" [activeIndex]="0" />
+        </div>
     </div>
 
     <!-- CONTENIDO - dos columnas -->
-    <div class="flex flex-row flex-wrap gap-3">
+    <div class="columnas">
 
       <!-- 75% -->
-      <div class="w-full md:w-8 pr-0 md:pr-3">
-        <div class="card mb-4">
-          <p-steps [model]="steps" [readonly]="true" [activeIndex]="0" />
-        </div>
+      <div class="w-full">
+        
 
         <p class="cart-count">
           {{ cart.items.length }} {{ cart.items.length === 1 ? 'curso' : 'cursos' }} en el carrito
@@ -87,7 +89,7 @@
       </div>
 
       <!-- 25% -->
-      <div class="w-full md:w-3">
+      <div class="w-full">
         <p-card styleClass="summary-card">
           <div class="flex flex-column gap-3">
             <h3 class="cart-summary-title text-white m-0">Resumen de compra</h3>

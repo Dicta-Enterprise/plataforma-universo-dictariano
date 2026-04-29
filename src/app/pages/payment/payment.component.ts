@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -14,37 +14,30 @@ import { CategoriaFacade } from 'src/app/shared/patterns/facade/models/categoria
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PaymentComponent implements OnInit, OnDestroy {
 
-  // ── Stepper ───────────────────────────────────────────────────────────────
   steps: MenuItem[] = [
     { label: 'Detalles del carrito' },
     { label: 'Inicia sesión' },
     { label: 'Proceder al pago' }
   ];
 
-  // ── Estado general ────────────────────────────────────────────────────────
   selectedMethod: 'credit' | 'debit' | null = null;
   selectedInstallments: number = 1;
   selectedIssuerId: string = '';
   isSubmitting = false;
   errorMessage = '';
-  successMessage = '';
 
-  // ── Formulario (solo campos NO-PCI) ───────────────────────────────────────
   paymentForm!: FormGroup;
 
-  // ── Mercado Pago SDK ──────────────────────────────────────────────────────
   mp: any;
   cardNumberElement: any;
   expirationDateElement: any;
   securityCodeElement: any;
 
-  // Indica si el SDK ya está listo para montar los iframes
   private mpReady = false;
 
-  // ── Datos dinámicos desde la API de MP ────────────────────────────────────
-  docTypes:     { id: string; name: string }[] = [];
+  docTypes:     { id: string; name: string; min_length: number; max_length: number }[] = [];
   issuers:      { id: string; name: string }[] = [];
   installments: { installments: number; recommended_message: string }[] = [];
 
@@ -52,10 +45,12 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
   cardBrand       = '';
   requiresIssuer  = false;
 
-  // ── Categorías ────────────────────────────────────────────────────────────
   categoryMap: Record<string, { label: string; color: string }> = {};
   defaultCategory = { label: 'Público', color: '#33CCFF' };
   stars = [1, 2, 3, 4, 5];
+
+  // Tipo de doc seleccionado — para limitar dígitos del input
+  selectedDocType: { min_length: number; max_length: number } | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -64,12 +59,8 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     public cart: CartService,
     private authService: AuthService,
     private categoriaFacade: CategoriaFacade,
-    private cdr: ChangeDetectorRef   // ← necesario para forzar detección después del SDK
+    private cdr: ChangeDetectorRef
   ) {}
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // LIFECYCLE
-  // ══════════════════════════════════════════════════════════════════════════
 
   async ngOnInit() {
     if (this.cart.items.length === 0) {
@@ -78,18 +69,7 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     this.loadCategorias();
     this.buildForm();
-
-    // Carga el SDK y los tipos de documento.
-    // NO se montan los iframes aquí porque el DOM todavía no existe.
     await this.initMercadoPago();
-  }
-
-  ngAfterViewInit() {
-    // El DOM ya está renderizado. Si el SDK terminó de cargar, monta los iframes.
-    // Si aún no terminó, el flag mpReady lo activará en initMercadoPago().
-    if (this.mpReady) {
-      this.mountPCIFields();
-    }
   }
 
   ngOnDestroy() {
@@ -97,10 +77,6 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     this.expirationDateElement?.unmount();
     this.securityCodeElement?.unmount();
   }
-
-  // ══════════════════════════════════════════════════════════════════════════
-  // INICIALIZACIÓN
-  // ══════════════════════════════════════════════════════════════════════════
 
   private buildForm() {
     this.paymentForm = this.fb.group({
@@ -117,79 +93,108 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
       environment.mercadoPagoPublicKey,
       { locale: 'es-CO' }
     );
-
     await this.loadIdentificationTypes();
-
-    // Marca el SDK como listo.
-    // Si ngAfterViewInit ya corrió (caso normal en async), monta ahora.
-    // Si no (SDK muy rápido), ngAfterViewInit lo montará al finalizar.
     this.mpReady = true;
-
-    if (document.getElementById('form-checkout__cardNumber')) {
-      this.mountPCIFields();
-    }
-    // Si los divs aún no existen (no debería ocurrir, pero por seguridad):
-    // ngAfterViewInit se encargará gracias al flag mpReady.
   }
 
-  // ── Tipos de documento ────────────────────────────────────────────────────
   private async loadIdentificationTypes() {
     try {
       const types = await this.mp.getIdentificationTypes();
       this.docTypes = types;
       if (types.length > 0) {
         this.paymentForm.get('docType')?.setValue(types[0].id);
+        this.selectedDocType = types[0];
+        this.updateDocValidation(types[0]);
       }
     } catch (e) {
       console.error('Error obteniendo tipos de documento:', e);
     }
   }
 
-  // ── Campos PCI — iframes de Mercado Pago ─────────────────────────────────
-  // PRE-CONDICIÓN: los tres <div> con los IDs correspondientes ya están en el DOM.
+  onDocTypeChange(selectedId: string) {
+    const selected = this.docTypes.find(t => t.id === selectedId);
+    if (selected) {
+      this.selectedDocType = selected;
+      this.updateDocValidation(selected);
+      this.paymentForm.get('docNumber')?.reset();
+    }
+  }
+
+  private updateDocValidation(docType: { min_length: number; max_length: number }) {
+    this.paymentForm.get('docNumber')?.setValidators([
+      Validators.required,
+      Validators.minLength(docType.min_length),
+      Validators.maxLength(docType.max_length),
+      Validators.pattern(/^\d+$/)
+    ]);
+    this.paymentForm.get('docNumber')?.updateValueAndValidity();
+  }
+
   private mountPCIFields() {
-    // Guarda contra doble mount (puede llamarse desde ngAfterViewInit e initMercadoPago)
     if (this.cardNumberElement) return;
 
     this.cardNumberElement = this.mp.fields
-      .create('cardNumber', { placeholder: '1234 5678 9012 3456' })
+      .create('cardNumber', { placeholder: '1234 5678 9012 3456', style: { color: '#ffffff', fontSize: '14px' }})
       .mount('form-checkout__cardNumber');
 
     this.expirationDateElement = this.mp.fields
-      .create('expirationDate', { placeholder: 'MM/YY' })
+      .create('expirationDate', { placeholder: 'MM/YY', style: { color: '#ffffff', fontSize: '14px' }})
       .mount('form-checkout__expirationDate');
 
     this.securityCodeElement = this.mp.fields
-      .create('securityCode', { placeholder: 'CVV' })
+      .create('securityCode', { placeholder: 'CVV', style: { color: '#ffffff', fontSize: '14px' }})
       .mount('form-checkout__securityCode');
 
-    // Listener binChange: se dispara cada vez que cambian los primeros 6 dígitos
-    this.cardNumberElement.on('binChange', async (data: { bin: string }) => {
-      const { bin } = data;
+    this.cardNumberElement.on('ready', () => {
+      this.attachFieldListeners(this.cardNumberElement, 'form-checkout__cardNumber');
+      this.cardNumberElement.on('binChange', async (data: { bin: string }) => {
+        const { bin } = data;
+        if (!bin) { this.resetCardState(); return; }
+        try {
+          const { results } = await this.mp.getPaymentMethods({ bin });
+          if (!results?.length) return;
+          const paymentMethod  = results[0];
+          this.paymentMethodId = paymentMethod.id;
+          this.cardBrand       = paymentMethod.id;
+          this.updatePCIFieldsSettings(paymentMethod);
+          await this.loadIssuers(paymentMethod, bin);
+          await this.loadInstallments(bin);
+          this.cdr.detectChanges();
+        } catch (e) { console.error('Error en binChange:', e); }
+      });
+    });
 
-      if (!bin) {
-        this.resetCardState();
-        return;
+    this.expirationDateElement.on('ready', () => {
+      this.attachFieldListeners(this.expirationDateElement, 'form-checkout__expirationDate');
+    });
+
+    this.securityCodeElement.on('ready', () => {
+      this.attachFieldListeners(this.securityCodeElement, 'form-checkout__securityCode');
+    });
+  }
+
+  private attachFieldListeners(fieldInstance: any, containerId: string) {
+    const el = document.getElementById(containerId);
+    if (!el) return;
+
+    fieldInstance.on('focus', () => el.classList.add('mp-field--focus'));
+
+    fieldInstance.on('blur', () => {
+      el.classList.remove('mp-field--focus');
+      el.classList.add('mp-field--blur');
+    });
+
+    fieldInstance.on('validityChange', (data: { errorMessages: { message: string; cause: string }[] }) => {
+      if (data.errorMessages.length > 0) {
+        el.classList.add('mp-field--invalid');
+        el.classList.remove('mp-field--valid');
+        fieldInstance.update({ invalid: true });
+      } else {
+        el.classList.remove('mp-field--invalid');
+        el.classList.add('mp-field--valid');
+        fieldInstance.update({ invalid: false });
       }
-
-      try {
-        const { results } = await this.mp.getPaymentMethods({ bin });
-        if (!results?.length) return;
-
-        const paymentMethod   = results[0];
-        this.paymentMethodId  = paymentMethod.id;
-        this.cardBrand        = paymentMethod.id;
-
-        this.updatePCIFieldsSettings(paymentMethod);
-        await this.loadIssuers(paymentMethod, bin);
-        await this.loadInstallments(bin);
-
-        // Fuerza detección de cambios porque estamos en una Promise fuera de Zone.js
-        this.cdr.detectChanges();
-
-      } catch (e) {
-        console.error('Error en binChange:', e);
-      }
+      this.cdr.detectChanges();
     });
   }
 
@@ -200,11 +205,9 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     this.securityCodeElement.update({ settings: settings[0].security_code });
   }
 
-  // ── Emisores ──────────────────────────────────────────────────────────────
   private async loadIssuers(paymentMethod: any, bin: string) {
     const needsIssuer = paymentMethod.additional_info_needed?.includes('issuer_id');
     this.requiresIssuer = needsIssuer;
-
     if (needsIssuer) {
       try {
         this.issuers = await this.mp.getIssuers({ paymentMethodId: paymentMethod.id, bin });
@@ -219,7 +222,6 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // ── Cuotas dinámicas ──────────────────────────────────────────────────────
   private async loadInstallments(bin: string) {
     try {
       const response = await this.mp.getInstallments({
@@ -227,11 +229,9 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
         bin,
         paymentTypeId: this.selectedMethod === 'credit' ? 'credit_card' : 'debit_card'
       });
-
-      this.installments = response?.[0]?.payer_costs ?? [];
+      this.installments = [...(response?.[0]?.payer_costs ?? [])];
       const one = this.installments.find(i => i.installments === 1);
       this.selectedInstallments = one?.installments ?? this.installments[0]?.installments ?? 1;
-
     } catch (e) {
       console.error('Error obteniendo cuotas:', e);
       this.installments = [];
@@ -248,19 +248,13 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedIssuerId     = '';
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // SUBMIT
-  // ══════════════════════════════════════════════════════════════════════════
-
   async submit() {
     if (!this.selectedMethod || this.paymentForm.invalid) {
       this.paymentForm.markAllAsTouched();
       return;
     }
-
-    this.isSubmitting   = true;
-    this.errorMessage   = '';
-    this.successMessage = '';
+    this.isSubmitting = true;
+    this.errorMessage = '';
     const form = this.paymentForm.value;
 
     try {
@@ -282,15 +276,15 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
         detalleOrden,
         pago: {
           idorden: 1,
-          fechapago: new Date().toISOString(),
-          monto: parseFloat(Math.floor(this.totalAmount).toFixed(2)), // 1154.00
+          fechapago:     new Date().toISOString(),
+          monto:         parseFloat(Math.floor(this.totalAmount).toFixed(2)),
           nombrepagante: form.holder,
-          emailpagante: form.email,
-          moneda: 'COP',
-          metodopago: this.paymentMethodId || 'master',
-          tipotarjeta: this.selectedMethod === 'credit' ? 'credit_card' : 'debit_card',
-          token: cardToken.id,
-          cuotas: this.selectedMethod === 'debit' ? 1 : this.selectedInstallments,
+          emailpagante:  form.email,
+          moneda:        'COP',
+          metodopago:    this.paymentMethodId || 'master',
+          tipotarjeta:   this.selectedMethod === 'credit' ? 'credit_card' : 'debit_card',
+          token:         cardToken.id,
+          cuotas:        this.selectedMethod === 'debit' ? 1 : this.selectedInstallments,
           processing_mode: 'automatic',
         }
       };
@@ -298,19 +292,30 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
       this.http.post(`${environment.URL_BACKEND_TRANSACTION}orders`, body).subscribe({
         next: (res: any) => {
           this.isSubmitting = false;
-          const estado = res?.data?.estadoOrden; // ← agregar .data
+          const estado = res?.data?.estadoOrden;
+          const items  = [...this.cart.items];
+          const total  = this.totalAmount;
 
-          if (estado === 'processed' || estado === 'COMPLETADO') {
-            this.successMessage = '¡Pago exitoso! Revisa tu correo.';
+          if (estado === 'processed' || estado === 'COMPLETADO' || estado === 'processing') {
             this.cart.clearCart();
-            setTimeout(() => this.router.navigate(['/mis-cursos']), 2000);
-          } else if (estado === 'processing') {
-            this.successMessage = 'Pago en proceso. Te notificaremos por correo cuando se confirme.';
-            this.cart.clearCart();
-            setTimeout(() => this.router.navigate(['/mis-cursos']), 3000);
+            this.router.navigate(['payment', 'result'], {
+              queryParams: { status: 'success', email: form.email, total, date: new Date().toISOString() },
+              state: { items }
+            });
           } else {
-            this.errorMessage = 'Pago no aprobado por la entidad bancaria. Intenta con otra tarjeta.';
+            this.router.navigate(['payment', 'result'], {
+              queryParams: { status: 'rejected', total, date: new Date().toISOString() },
+              state: { items }
+            });
           }
+        },
+        error: (err) => {
+          this.isSubmitting = false;
+          console.error('Error en la orden:', err);
+          sessionStorage.setItem('payment_result_items', JSON.stringify([...this.cart.items]));
+          this.router.navigate(['payment', 'result'], {
+            queryParams: { status: 'rejected', total: this.totalAmount, date: new Date().toISOString() }
+          });
         }
       });
 
@@ -321,26 +326,26 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // HELPERS
-  // ══════════════════════════════════════════════════════════════════════════
-
   get totalAmount(): number {
-    const total = this.cart.items.reduce(
-      (sum: number, item: any) => sum + Math.floor(item.precio), 0
+    return parseFloat(
+      this.cart.items.reduce((sum: number, item: any) => sum + Math.floor(item.precio), 0).toFixed(2)
     );
-    return parseFloat(total.toFixed(2)); // ej: 1154.00
   }
 
   isInvalid(field: string): boolean {
     const ctrl = this.paymentForm.get(field);
-    return !!(ctrl && ctrl.invalid && ctrl.touched);
+    return !!(ctrl?.invalid && ctrl?.touched);
   }
 
   getStarClass(rating: number, star: number) {
-    return star <= Math.round(rating)
-      ? 'pi pi-star-fill rating-star-filled'
-      : 'pi pi-star rating-star-empty';
+    return star <= Math.round(rating) ? 'pi pi-star-fill rating-star-filled' : 'pi pi-star rating-star-empty';
+  }
+
+  selectMethod(method: 'credit' | 'debit') {
+    this.selectedMethod = method;
+    if (this.mpReady && !this.cardNumberElement) {
+      setTimeout(() => this.mountPCIFields(), 0);
+    }
   }
 
   private loadCategorias() {
@@ -353,13 +358,8 @@ export class PaymentComponent implements OnInit, AfterViewInit, OnDestroy {
           'jovenes': 'rgb(255, 204, 0)',
           'padres':  '#33CCFF'
         };
-        this.categoryMap[cat.id] = {
-          label: cat.nombre,
-          color: colorMap[key] || '#33CCFF'
-        };
+        this.categoryMap[cat.id] = { label: cat.nombre, color: colorMap[key] || '#33CCFF' };
       });
     });
   }
-
-  
 }
