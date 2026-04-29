@@ -8,16 +8,15 @@
         Mi Carrito
       </h2>
     </div>
-
-    <!-- CONTENIDO - dos columnas -->
-    <div class="flex flex-row flex-wrap gap-3">
-
-      <!-- 75% -->
-      <div class="w-full md:w-8 pr-0 md:pr-3">
-        <div class="card mb-4">
+    <div class="card mb-4">
           <p-steps [model]="steps" [readonly]="true" [activeIndex]="0" />
         </div>
 
+    <!-- CONTENIDO - dos columnas -->
+    <div class="contenido-layout">
+
+      <!-- 65% -->
+      <div>
         <p class="cart-count">
           {{ cart.items.length }} {{ cart.items.length === 1 ? 'curso' : 'cursos' }} en el carrito
         </p>
@@ -86,8 +85,8 @@
         </p-dataView>
       </div>
 
-    <!-- 25% -->
-    <div class="w-full md:w-4">
+    <!-- 35% -->
+    <div>
       <p-card styleClass="summary-card">
         <div class="flex flex-column gap-3">
           <h3 class="cart-summary-title text-white m-0">Resumen de compra</h3>
@@ -98,8 +97,8 @@
             </span>
           </div>
           <p-button icon="pi pi-credit-card" label="Ir a pagar"
-                    class="w-full" styleClass="w-full btn-pay"/>
-                    (onClick)="enviarCarrito()"
+                    class="w-full" styleClass="w-full btn-pay"
+                    (onClick)="enviarCarrito()"/>
         </div>
       </p-card>
     </div>

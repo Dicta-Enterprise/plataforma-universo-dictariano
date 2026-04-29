@@ -6,6 +6,13 @@
   padding: 2rem 4rem;
 }
 
+.contenido-layout {
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 35%;
+  gap: 2rem;
+}
+
 .cart-inner {
   margin: 0 auto;
   width: 100%;
@@ -30,7 +37,7 @@
 .cart-count {
   font-size: 1.5rem;
   font-weight: 500;
-  padding: 20px 0;
+  padding-bottom: 20px;
 }
 
 /* ITEMS DEL CARRITO */
@@ -110,16 +117,16 @@
 }
 
 ::ng-deep .btn-eliminar .p-button {
-  background: #FF0033 !important;
+  background: #414141 !important;
   color: #efefef !important;
   border: none !important;
-  padding: 8px !important;
+  padding: 10px !important;
   line-height: 1 !important;
   font-size: 0.8rem;
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  border-radius: 6px !important;
+  border-radius: 10px !important;
 }
 
 ::ng-deep .btn-eliminar .p-button:hover {
@@ -128,11 +135,14 @@
 }
 
 ::ng-deep .btn-pay.p-button {
-  background: #33ff66 !important;
-  border: 2px solid #156b2b !important;
-  border-radius: 8px !important;
+  background: linear-gradient(180deg, #33FF66 0%, #2EE85D 100%) !important;
+  border-radius: 10px !important;
   padding: 5px 0px !important;
   color: #272727 !important;
+}
+
+::ng-deep .btn-pay.p-button:hover {
+  background: linear-gradient(180deg, #33FF66 0%, #24B548 100%) !important;
 }
 
 /* ESTADO VACÍO */
@@ -165,7 +175,7 @@
 
 ::ng-deep .summary-card.p-card {
   background: #414141 !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   padding: 0 10px !important;
   border: none;
 }
@@ -217,6 +227,9 @@
 
 /* RESPONSIVE — MOBILE*/
 @media (max-width: 768px) {
+  .contenido-layout {
+    grid-template-columns: 1fr;
+  }
 
   .cart-page-wrapper {
     padding: 1.5rem 1rem;

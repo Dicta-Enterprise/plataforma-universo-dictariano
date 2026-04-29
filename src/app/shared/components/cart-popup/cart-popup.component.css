@@ -23,7 +23,7 @@
   max-width: 95vw;
   max-height: 90vh;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 10px;
   background: #272727;
   border: 1px solid #929292;
   padding: 20px;
@@ -184,9 +184,12 @@
 
 /* ─── Botón pagar ─────────────────────────────────── */
 ::ng-deep .btn-pay .p-button {
-  background: #33ff66 !important;
-  border: 2px solid #156b2b !important;
+  background: linear-gradient(180deg, #33FF66 0%, #2EE85D 100%) !important;
   border-radius: 10px !important;
   padding: 5px !important;
   color: #272727 !important;
+}
+
+::ng-deep .btn-pay .p-button:hover {
+  background: linear-gradient(180deg, #33FF66 0%, #24B548 100%) !important;
 }
