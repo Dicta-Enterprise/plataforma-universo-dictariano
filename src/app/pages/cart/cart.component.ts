@@ -23,11 +23,13 @@ export class CartComponent implements OnInit {
 
   stars = [1, 2, 3, 4, 5];
 
+  idUsuario = 1;
+
   constructor(
-  public cart: CartService,
-  private cursoFacade: CursoFacade,
-  private categoriaFacade: CategoriaFacade
-  ) {}
+    public cart: CartService,
+    private cursoFacade: CursoFacade,
+    private categoriaFacade: CategoriaFacade
+  ) { }
 
   ngOnInit() {
     this.categoriaFacade.listarCategorias();
@@ -70,6 +72,19 @@ export class CartComponent implements OnInit {
     return star <= Math.round(rating)
       ? 'pi pi-star-fill rating-star-filled'
       : 'pi pi-star rating-star-empty';
+  }
+
+  enviarCarrito() {
+    const cursos = this.cart.items.map(curso => ({ idcurso: String(curso.id) }));
+    this.cart.createCarrito(this.idUsuario, cursos).subscribe({
+      next: () => {
+        alert('Carrito guardado en el backend');
+      },
+      error: () => {
+        alert('Error al guardar el carrito');
+      }
+    });
+
   }
 
 }

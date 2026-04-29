@@ -1,11 +1,15 @@
 <div class="card-curso my-5">
-  <div class="card-inner" [style.--dynamic-hover-color]="primary_color"
-    [style.--dynamic-hover-color-sec]="secondary_color">
-
+  <div
+    class="card-inner"
+    [style.--dynamic-hover-color]="primary_color"
+    [style.--dynamic-hover-color-sec]="secondary_color"
+  >
     <div class="card-face card-front">
-      <img [src]="curso.imagen.startsWith('https') 
-          ? curso.imagen 
-          : '/assets/loaders/bottle-loader.gif'" alt="Curso banner" class="curso-image-full" />
+      <img
+        [src]="curso.imagen.startsWith('https') ? curso.imagen : '/assets/loaders/bottle-loader.gif'"
+        alt="Curso banner"
+        class="curso-image-full"
+      />
       <div class="card-overlay"></div>
 
       <div class="card-rating">
@@ -27,7 +31,6 @@
 
     <div class="card-face card-back" [style.background]="'#1f1f1f'">
       <div class="card-back-inner">
-
         <div class="card-back-header-modern">
           <div class="header-left">
             <h2 class="curso-back-titulo">{{ curso.nombre }}</h2>
@@ -36,10 +39,13 @@
 
           <div class="header-right">
             <div class="img-circular-container">
-              <img [src]="curso.imagen.startsWith('https') 
-                ? curso.imagen 
-                : '/assets/loaders/bottle-loader.gif'" class="img-circular" />
+              <img
+                [src]="curso.imagen.startsWith('https') ? curso.imagen : '/assets/loaders/bottle-loader.gif'"
+                class="img-circular"
+                [alt]="'Imagen de ' + curso.nombre"
+              />
             </div>
+
             <div class="rating-stars-container">
               <i class="pi pi-star-fill"></i>
               <i class="pi pi-star-fill"></i>
@@ -77,16 +83,17 @@
           </div>
 
           <div class="card-back-footer">
-            <a class="link-ver-mas" (click)="irADetalle()"><u>Ver más...</u></a>
-            <button class="btn-carrito-moderno" (click)="agregarAlCarrito()">
+            <button type="button" class="link-ver-mas mb-2" (click)="irADetalle()">
+              <u>Ver más...</u>
+            </button>
+
+            <button class="btn-carrito-moderno w-full" (click)="agregarAlCarrito()">
               <i class="pi pi-shopping-cart"></i>
               <span>Agregar al carrito</span>
             </button>
           </div>
         </div>
-
       </div>
     </div>
-
   </div>
 </div>

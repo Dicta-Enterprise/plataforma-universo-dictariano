@@ -86,23 +86,22 @@
         </p-dataView>
       </div>
 
-      <!-- 25% -->
-      <div class="w-full md:w-3">
-        <p-card styleClass="summary-card">
-          <div class="flex flex-column gap-3">
-            <h3 class="cart-summary-title text-white m-0">Resumen de compra</h3>
-            <div class="flex justify-content-between w-full">
-              <span class="cart-summary-label text-white">Total</span>
-              <span class="cart-summary-total text-white">
-                Col$ {{ cart.getTotal() | number:'1.0-0' }}
-              </span>
-            </div>
-            <p-button icon="pi pi-credit-card" label="Ir a pagar"
-                      class="w-full" styleClass="w-full btn-pay"/>
+    <!-- 25% -->
+    <div class="w-full md:w-4">
+      <p-card styleClass="summary-card">
+        <div class="flex flex-column gap-3">
+          <h3 class="cart-summary-title text-white m-0">Resumen de compra</h3>
+          <div class="flex justify-content-between w-full">
+            <span class="cart-summary-label text-white">Total</span>
+            <span class="cart-summary-total text-white">
+              Col$ {{ cart.getTotal() | number:'1.0-0' }}
+            </span>
           </div>
-        </p-card>
-      </div>
-
+          <p-button icon="pi pi-credit-card" label="Ir a pagar"
+                    class="w-full" styleClass="w-full btn-pay"/>
+                    (onClick)="enviarCarrito()"
+        </div>
+      </p-card>
     </div>
 
   </div>

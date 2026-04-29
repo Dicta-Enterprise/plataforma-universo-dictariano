@@ -1,4 +1,12 @@
-/* ─── Overlay ─────────────────────────────────────── */
+
+.cart-popup .overflow-y-auto {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.cart-popup .overflow-y-auto::-webkit-scrollbar {
+  display: none; 
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -8,7 +16,6 @@
   z-index: 4;
 }
 
-/* ─── Popup container ─────────────────────────────── */
 .cart-popup {
   top: 56px;
   right: 1rem;
@@ -22,7 +29,7 @@
   padding: 20px;
 }
 
-/* ─── Header ──────────────────────────────────────── */
+
 .cart-popup-header {
   border-bottom: 1px solid #414141;
 }
@@ -32,12 +39,12 @@
   font-weight: 600;
 }
 
-/* ─── Footer ──────────────────────────────────────── */
+
 .cart-popup-footer {
   border-top: 1px solid #414141;
 }
 
-/* ─── Total ───────────────────────────────────────── */
+
 .cart-total-label {
   font-size: 1rem;
   font-weight: 400;
@@ -48,7 +55,7 @@
   font-weight: 700;
 }
 
-/* ─── Item ────────────────────────────────────────── */
+
 .cart-item {
   border-bottom: 1px solid #414141;
 }

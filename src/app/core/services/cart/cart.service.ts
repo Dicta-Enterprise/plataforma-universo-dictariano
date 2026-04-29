@@ -1,17 +1,29 @@
 import { Injectable } from '@angular/core';
 import { Curso } from 'src/app/core/class/curso/curso.class';
 import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private itemsSubject = new BehaviorSubject<Curso[]>([]);
   private showPopupSubject = new BehaviorSubject<boolean>(false);
-  
+
   items$ = this.itemsSubject.asObservable();
   showPopup$ = this.showPopupSubject.asObservable();
 
+  constructor(private http: HttpClient) {}
+
   get items(): Curso[] {
     return this.itemsSubject.value;
+  }
+
+  createCarrito(idUsuario: number, cursos: { idcurso: string }[]) {
+    const body = {
+      idUsuario,
+      cursos
+    };
+    return this.http.post(environment.URL_BACKEND_CARRITO + 'carrito', body);
   }
 
   addToCart(curso: Curso) {
