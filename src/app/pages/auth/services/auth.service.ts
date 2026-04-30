@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthApiService } from './auth-api.service';
+import { IJwtPayload } from 'src/app/core/interfaces/auth/IAuth.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,8 @@ import { AuthApiService } from './auth-api.service';
 export class AuthService {
   private loggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this.loggedInSubject.asObservable();
+  private userSubject = new BehaviorSubject<IJwtPayload | null>(null);
+  public user$ = this.userSubject.asObservable();
 
   constructor(
     private router: Router,
@@ -17,9 +20,20 @@ export class AuthService {
 
   checkSession(): void {
     this.authApiService.profile().subscribe({
-      next: () => this.loggedInSubject.next(true),
-      error: () => this.loggedInSubject.next(false),
+      next: (user: IJwtPayload) => {
+        this.userSubject.next(user);
+        this.loggedInSubject.next(true);
+      },
+      error: () => {
+        this.loggedInSubject.next(false);
+        this.userSubject.next(null);
+      },
     });
+  }
+
+  getUserId(): string | null {
+    const user = this.userSubject.value;
+    return user?.sub ?? null;
   }
 
   login(): void {
@@ -42,4 +56,6 @@ export class AuthService {
   getUserImg(): string {
     return 'https://randomuser.me/api/portraits/men/11.jpg';
   }
+
+
 }

@@ -76,10 +76,6 @@ export class CartPopupComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
-  irAPagar() {
-    // TODO: implementar pago
-  }
-
   getCategory(categoriaId?: string) {
     return this.categoryMap[categoriaId ?? ''] ?? this.defaultCategory;
   }
