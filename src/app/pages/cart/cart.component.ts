@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/pages/auth/services/auth.service';
 import { CursoFacade } from 'src/app/shared/patterns/facade/models/curso-facade';
 import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
 import { CategoriaFacade, CategoriaUI } from 'src/app/shared/patterns/facade/models/categoria-facade';
+import { ProfesorFacade, ProfesorUI } from 'src/app/shared/patterns/facade/models/profesor-facade';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -25,6 +26,7 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(
     public cart: CartService,
     public categoriaFacade: CategoriaFacade,
+    public profesorFacade: ProfesorFacade,
     private authService: AuthService,
     private cursoFacade: CursoFacade,
     private router: Router
@@ -38,6 +40,7 @@ export class CartComponent implements OnInit, OnDestroy {
     ];
 
     this.categoriaFacade.listarCategorias();
+    this.profesorFacade.listarProfesores();
 
     this.cursoFacade.listarCursos();
     this.cursoFacade.cursos$
@@ -70,6 +73,10 @@ export class CartComponent implements OnInit, OnDestroy {
 
   getCategory(categoriaId?: string): CategoriaUI {
     return this.categoriaFacade.getCategoryById(categoriaId ?? '');
+  }
+
+  getProfesor(profesorId?: string): ProfesorUI {
+    return this.profesorFacade.getProfesorById(profesorId ?? '');
   }
 
   getStarClass(rating: number, star: number): string {

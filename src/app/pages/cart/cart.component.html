@@ -24,7 +24,7 @@
         <p-dataView [value]="cart.items" layout="list">
 
           <ng-template pTemplate="listItem" let-curso>
-            <div class="flex align-items-center gap-3 p-3 cart-item">
+            <div class="flex align-items-start gap-3 p-3 cart-item">
               <img [src]="curso.imagen" [alt]="curso.nombre" class="cart-item-img border-round flex-shrink-0"/>
               <div class="flex flex-column flex-1 gap-1">
 
@@ -47,7 +47,18 @@
                   </span>
                 </div>
 
-                <!-- rating -->
+                <!-- Profesor -->
+                <span class="cart-item-profesor">
+                  <i class="pi pi-user cart-item-profesor-icon"></i>
+                  {{ getProfesor(curso.profesorId).nombreCompleto }}
+                </span>
+
+                <!-- Descripción -->
+                <p class="cart-item-descripcion">
+                  {{ curso.descripcion }}
+                </p>
+
+                <!-- Rating -->
                 <div class="cart-item-rating flex align-items-center gap-1">
                   <ng-container *ngFor="let star of stars">
                     <i [ngClass]="getStarClass(curso.rating, star)"></i>
@@ -55,7 +66,7 @@
                   <span class="rating-value">{{ curso.rating | number:'1.1-1' }}</span>
                 </div>
 
-                <!-- tags -->
+                <!-- Tags -->
                 <div class="flex gap-2 flex-wrap">
                   <span class="cart-tag"
                         [style.border-color]="getCategory(curso.categoriaId).color">

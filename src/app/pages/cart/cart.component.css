@@ -102,6 +102,32 @@
   font-weight: 600;
 }
 
+/* PROFESOR */
+.cart-item-profesor {
+  font-size: 0.8125rem;
+  color: #c7c7c7;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+ 
+.cart-item-profesor-icon {
+  font-size: 0.75rem;
+  color: #929292;
+}
+ 
+/* DESCRIPCIÓN */
+.cart-item-descripcion {
+  font-size: 0.8125rem;
+  color: #929292;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* BOTONES */
 .btn-eliminar {
   flex-shrink: 0;
