@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Curso } from 'src/app/core/class/curso/curso.class';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
-import { tap } from 'rxjs/operators';
-import { ICarritoResponse, ICursoCarritoPayload, IEliminarCarritoResponse } from '../../interfaces/cart/ICart.interface';
+import { switchMap, tap, catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Curso } from 'src/app/core/class/curso/curso.class';
+import { ICarritoResponse, ICursoCarritoPayload } from '../../interfaces/cart/ICart.interface';
+import { CartStorageService } from './cart-storage.service';
+import { CartApiService } from './cart-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private itemsSubject = new BehaviorSubject<Curso[]>(this.getCartFromLocalStorage());
+  private itemsSubject = new BehaviorSubject<Curso[]>(this.storage.getItems());
   private showPopupSubject = new BehaviorSubject<boolean>(false);
+
   private carritoId: number | null = null;
   private isLoggedIn = false;
   private currentUserId: number | null = null;
@@ -17,50 +19,38 @@ export class CartService {
   items$ = this.itemsSubject.asObservable();
   showPopup$ = this.showPopupSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private storage: CartStorageService,
+    private api: CartApiService
+  ) {}
 
   get items(): Curso[] {
     return this.itemsSubject.value;
-  }
-
-  setUserSession(isLogged: boolean, userId: number | null): void {
-    this.isLoggedIn = isLogged;
-    this.currentUserId = userId;
-    if (!isLogged) {
-      this.carritoId = null;
-    } else if (userId) {
-      // Recuperar carritoId de localStorage si existe
-      const saved = this.getSavedCarritoIdForUser(userId);
-      if (saved) this.carritoId = saved;
-    }
-  }
-
-  setCarritoId(id: number): void {
-    this.carritoId = id;
   }
 
   getCarritoId(): number | null {
     return this.carritoId;
   }
 
-  saveCartToLocalStorage(items: Curso[]): void {
-    localStorage.setItem('cartItems', JSON.stringify(items));
+  getTotal(): number {
+    return this.items.reduce((acc, curr) => acc + (curr.precio || 0), 0);
   }
 
-  getCartFromLocalStorage(): Curso[] {
-    const data = localStorage.getItem('cartItems');
-    return data ? JSON.parse(data) : [];
-  }
+  setUserSession(isLogged: boolean, userId: number | null): void {
+    this.isLoggedIn = isLogged;
+    this.currentUserId = userId;
 
-  loadCartFromLocalStorage(): void {
-    const items = this.getCartFromLocalStorage();
-    if (items.length > 0) {
-      this.itemsSubject.next(items);
+    if (!isLogged) {
+      this.carritoId = null;
+    } else if (userId) {
+      const saved = this.storage.getCarritoId(userId);
+      if (saved) this.carritoId = saved;
     }
   }
 
-  clearCartFromLocalStorage(): void {
-    localStorage.removeItem('cartItems');
+  saveCarritoIdForUser(userId: number, carritoId: number): void {
+    this.storage.saveCarritoId(userId, carritoId);
+    this.carritoId = carritoId;
   }
 
   addToCart(curso: Curso): void {
@@ -68,33 +58,17 @@ export class CartService {
       this.showPopupSubject.next(true);
       return;
     }
-
-    const updated = [...this.items, curso];
-    this.itemsSubject.next(updated);
-
-    if (this.isLoggedIn && this.carritoId) {
-      this.patchCarrito([{ idcurso: String(curso.id) }], []).subscribe();
-    } else {
-      this.saveCartToLocalStorage(updated);
-    }
-
+    this.updateItems([...this.items, curso]);
     this.showPopupSubject.next(true);
   }
 
   removeFromCart(cursoId: number): void {
-    const updated = this.items.filter(c => c.id !== cursoId);
-    this.itemsSubject.next(updated);
-
-    if (this.isLoggedIn && this.carritoId) {
-      this.patchCarrito([], [String(cursoId)]).subscribe();
-    } else {
-      this.saveCartToLocalStorage(updated);
-    }
+    this.updateItems(this.items.filter(c => c.id !== cursoId));
   }
 
   clearCart(): void {
     this.itemsSubject.next([]);
-    this.clearCartFromLocalStorage();
+    this.storage.clearItems();
     this.carritoId = null;
   }
 
@@ -102,70 +76,57 @@ export class CartService {
     this.showPopupSubject.next(false);
   }
 
-  getTotal(): number {
-    return this.items.reduce((acc, curr) => acc + (curr.precio || 0), 0);
-  }
+  syncAfterLogin(userId: number): Observable<ICarritoResponse | null> {
+    const localItems = this.storage.getItems();
+    const cursos: ICursoCarritoPayload[] = localItems.map(c => ({ idcurso: String(c.id) }));
 
-  crearCarrito(idUsuario: number, cursos: ICursoCarritoPayload[]): Observable<ICarritoResponse> {
-    return this.http.post<ICarritoResponse>(`${environment.URL_BACKEND_CARRITO}carrito`, { idUsuario, cursos });
-  }
+    return this.api.getCarritoByUsuarioId(userId).pipe(
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 404) return of(null);
+        throw err; 
+      }),
+      switchMap(backendCart => {
+        if (backendCart?.id) {
+          this.saveCarritoIdForUser(userId, backendCart.id);
+          if (cursos.length === 0) return of(backendCart);
 
-  patchCarrito(cursosAgregar: ICursoCarritoPayload[], cursosEliminar: string[]): Observable<ICarritoResponse | null> {
-    if (!this.carritoId) return of(null);
-    return this.http.patch<ICarritoResponse>(`${environment.URL_BACKEND_CARRITO}carrito`, {
-      carritoId: this.carritoId,
-      cursosAgregar,
-      cursosEliminar
-    });
-  }
+          const backendIds = new Set(backendCart.cursos);
+          const nuevos = cursos.filter(c => !backendIds.has(c.idcurso));
+          if (nuevos.length === 0) return of(backendCart);
 
-  getCarritoById(carritoId: number): Observable<ICarritoResponse> {
-    return this.http.get<ICarritoResponse>(`${environment.URL_BACKEND_CARRITO}carrito/${carritoId}`);
-  }
-
-  deleteCarritoByUsuario(idUsuario: number): Observable<IEliminarCarritoResponse> {
-    return this.http.delete<IEliminarCarritoResponse>(`${environment.URL_BACKEND_CARRITO}carrito/${idUsuario}`);
-  }
-
-  syncAfterLogin(idUsuario: number): Observable<ICarritoResponse | null > {
-    const localItems = this.getCartFromLocalStorage();
-    const cursos = localItems.map(c => ({ idcurso: String(c.id) }));
-
-    const savedCarritoId = this.getSavedCarritoIdForUser(idUsuario);
-
-    if (savedCarritoId) {
-      this.carritoId = savedCarritoId;
-      if (cursos.length === 0) return of(null);
-      return this.patchCarrito(cursos, []);
-    } else {
-      if (cursos.length === 0) return of(null);
-      return this.crearCarrito(idUsuario, cursos);
-    }
-  }
-
-  saveCarritoIdForUser(idUsuario: number, carritoId: number): void {
-    localStorage.setItem(`carritoId_${idUsuario}`, String(carritoId));
-    this.carritoId = carritoId;
-  }
-
-  private getSavedCarritoIdForUser(idUsuario: number): number | null {
-    const val = localStorage.getItem(`carritoId_${idUsuario}`);
-    return val ? parseInt(val, 10) : null;
-  }
-
-  ensureCarritoId(idUsuario: number): Observable<ICarritoResponse | null > {
-    const savedId = this.getSavedCarritoIdForUser(idUsuario);
-    if (savedId) {
-      this.carritoId = savedId;
-      return of(null);
-    }
-    // No tenemos carritoId, crear carrito vacío para obtenerlo
-    return this.crearCarrito(idUsuario, []).pipe(
-      tap((res: ICarritoResponse) => {
-        if (res?.id) {
-          this.saveCarritoIdForUser(idUsuario, res.id);
+          return this.api.patchCarrito(backendCart.id, nuevos, []);
         }
+
+        if (cursos.length === 0) return of(null);
+        return this.api.crearCarrito(userId, cursos);
+      }),
+      tap(res => {
+        if (res?.id) this.saveCarritoIdForUser(userId, res.id);
       })
     );
+  }
+
+  private updateItems(items: Curso[]): void {
+    const previous = this.items;
+    this.itemsSubject.next(items);
+    this.storage.saveItems(items); 
+    if (this.isLoggedIn && this.carritoId) {
+      const prevIds = new Set(previous.map(c => String(c.id)));
+      const currIds = new Set(items.map(c => String(c.id)));
+
+      const added = items
+        .filter(c => !prevIds.has(String(c.id)))
+        .map(c => ({ idcurso: String(c.id) }));
+      const removed = previous
+        .filter(c => !currIds.has(String(c.id)))
+        .map(c => String(c.id));
+
+      this.api.patchCarrito(this.carritoId, added, removed).subscribe({
+        error: () => {
+          this.itemsSubject.next(previous);
+          this.storage.saveItems(previous);
+        },
+      });
+    }
   }
 }
