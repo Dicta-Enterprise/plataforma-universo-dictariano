@@ -117,3 +117,7 @@ body {
   background-color: #00A843 !important;
   border-color: #00A843 !important;
 }
+
+#app-sidebar-11 {
+  border-right: none !important;
+}

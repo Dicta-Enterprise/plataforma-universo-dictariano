@@ -1,0 +1,10 @@
+a:hover {
+  background-color: transparent !important;
+}
+.border-top-1 {
+  border-color: #111827 !important;
+}
+:host ::ng-deep a:hover {
+  background-color: #414141 !important;
+  border-radius: 12px;
+}
