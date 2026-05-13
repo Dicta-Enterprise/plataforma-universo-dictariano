@@ -4,6 +4,7 @@ import { filter, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthApiService } from './auth-api.service';
 import { CartService } from 'src/app/core/services/cart/cart.service';
+import { CartStorageService } from 'src/app/core/services/cart/cart-storage.service';
 import { IJwtPayload } from 'src/app/core/interfaces/auth/IAuth.interface';
 
 @Injectable({
@@ -19,7 +20,8 @@ export class AuthService {
   constructor(
     private router: Router,
     private authApiService: AuthApiService,
-    private cartService: CartService
+    private cartService: CartService,
+    private cartStorage: CartStorageService
   ) {}
 
   checkSession(): void {
@@ -49,6 +51,7 @@ export class AuthService {
 
       const userId = parseInt(user.sub, 10);
       this.cartService.setUserSession(true, userId);
+      this.cartStorage.clearExpiration();
       this.cartService.syncAfterLogin(userId).pipe(take(1)).subscribe({
         next: res => {
           if (res?.id) this.cartService.saveCarritoIdForUser(userId, res.id);
@@ -67,6 +70,7 @@ export class AuthService {
         this.loggedInSubject.next(false);
         this.userSubject.next(null);
         this.cartService.setUserSession(false, null);
+        this.cartStorage.restoreExpiration();
         this.router.navigate(['/auth/login']);
       },
     });

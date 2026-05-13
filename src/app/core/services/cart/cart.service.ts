@@ -9,7 +9,7 @@ import { CartApiService } from './cart-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
-  private itemsSubject = new BehaviorSubject<Curso[]>(this.storage.getItems());
+  private itemsSubject = new BehaviorSubject<Curso[]>(this.loadInitialItems());
   private showPopupSubject = new BehaviorSubject<boolean>(false);
 
   private carritoId: number | null = null;
@@ -83,7 +83,7 @@ export class CartService {
     return this.api.getCarritoByUsuarioId(userId).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 404) return of(null);
-        throw err; 
+        throw err;
       }),
       switchMap(backendCart => {
         if (backendCart?.id) {
@@ -106,10 +106,19 @@ export class CartService {
     );
   }
 
+  private loadInitialItems(): Curso[] {
+    if (this.storage.isExpired()) {
+      this.storage.clearItems();
+      return [];
+    }
+    return this.storage.getItems();
+  }
+
   private updateItems(items: Curso[]): void {
     const previous = this.items;
     this.itemsSubject.next(items);
-    this.storage.saveItems(items); 
+    this.storage.saveItems(items);
+
     if (this.isLoggedIn && this.carritoId) {
       const prevIds = new Set(previous.map(c => String(c.id)));
       const currIds = new Set(items.map(c => String(c.id)));
