@@ -17,6 +17,9 @@ export class AuthService {
   private userSubject = new BehaviorSubject<IJwtPayload | null>(null);
   public user$ = this.userSubject.asObservable();
 
+  private userImgSubject = new BehaviorSubject<string>('https://randomuser.me/api/portraits/men/11.jpg');
+  public userImg$ = this.userImgSubject.asObservable();
+ 
   constructor(
     private router: Router,
     private authApiService: AuthApiService,
@@ -24,6 +27,9 @@ export class AuthService {
     private cartStorage: CartStorageService
   ) {}
 
+  updateUserImg(url: string): void {
+    this.userImgSubject.next(url);
+  }
   checkSession(): void {
     this.authApiService.profile().subscribe({
       next: (user: IJwtPayload) => {
@@ -81,6 +87,6 @@ export class AuthService {
   }
 
   getUserImg(): string {
-    return 'https://randomuser.me/api/portraits/men/11.jpg';
+    return this.userImgSubject.getValue();
   }
 }
