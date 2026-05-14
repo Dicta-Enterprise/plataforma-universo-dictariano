@@ -1,14 +1,13 @@
-<div class="min-h-screen flex surface-ground">
+<div class="flex" style="background-color: #212121; min-height: 100vh; overflow: hidden; align-items: flex-start;">
   <app-custom-sidebar
   [menus]="menus"
   ></app-custom-sidebar>
 
-  <div class="min-h-screen flex flex-column relative flex-auto">
-    <app-custom-topbar></app-custom-topbar>
+  <div class="min-h-screen flex flex-column relative flex-auto" style="background-color: #212121;">
 
     <div class="flex flex-column flex-auto">
       <div
-        class="border-2 border-dashed surface-border border-round surface-section flex-auto"
+        class="flex-auto"
       >
         <router-outlet></router-outlet>
       </div>
