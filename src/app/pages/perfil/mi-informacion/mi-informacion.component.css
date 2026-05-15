@@ -7,6 +7,8 @@
   .p-accordion .p-accordion-content {
     background-color: #414141 !important;
     border-color: #4b5563 !important;
+    border-bottom-left-radius: 10px !important;  
+    border-bottom-right-radius: 10px !important; 
   }
   .p-card {
     background-color: #414141 !important;
@@ -16,7 +18,7 @@
     background-color: #414141 !important;
   }
   .surface-100 {
-    background-color: #7d7d7d !important;
+    background-color: #5C5C5C !important;
   }
   .text-900, .text-500 {
     color: #ffffff !important;
@@ -44,4 +46,11 @@
 
 :host ::ng-deep .p-card .p-card-content {
   padding: 0 !important;
+}
+
+:host ::ng-deep .p-password input {
+  background-color: #5c5c5c !important;
+  border: 1px solid #374151 !important;
+  color: #ffffff !important;
+  border-radius: 0.5rem !important;
 }
