@@ -10,7 +10,7 @@ interface CartSnapshot {
 export class CartStorageService {
   private readonly CART_KEY = 'cartItems';
   private readonly CARRITO_ID_PREFIX = 'carritoId_';
-  private readonly TTL_MINUTES = 2;
+  private readonly TTL_DAYS = 3;
 
   getItems(): Curso[] {
     try {
@@ -46,7 +46,7 @@ export class CartStorageService {
     const snapshot = this.getSnapshot();
     if (!snapshot) return false;
     if (snapshot.savedAt === null) return false;
-    const ttlMs = this.TTL_MINUTES * 60 * 1000;
+    const ttlMs = this.TTL_DAYS * 24 * 60 * 60 * 1000;
     return Date.now() - snapshot.savedAt > ttlMs;
   }
 
@@ -57,6 +57,10 @@ export class CartStorageService {
   getCarritoId(userId: number): number | null {
     const val = localStorage.getItem(`${this.CARRITO_ID_PREFIX}${userId}`);
     return val ? parseInt(val, 10) : null;
+  }
+
+  clearCarritoId(userId: number): void {
+    localStorage.removeItem(`${this.CARRITO_ID_PREFIX}${userId}`);
   }
 
   saveCarritoId(userId: number, carritoId: number): void {

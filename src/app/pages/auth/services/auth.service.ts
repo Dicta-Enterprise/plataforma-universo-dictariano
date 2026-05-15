@@ -78,10 +78,14 @@ export class AuthService {
   logout(): void {
     this.authApiService.logout().subscribe({
       next: () => {
+        const userId = this.getUserId(); // obtén el id antes de limpiar
         this.loggedInSubject.next(false);
         this.userSubject.next(null);
         this.cartService.setUserSession(false, null);
         this.cartStorage.restoreExpiration();
+        if (userId) {
+          this.cartStorage.clearCarritoId(parseInt(userId, 10));
+        }
         this.router.navigate(['/auth/login']);
       },
     });
