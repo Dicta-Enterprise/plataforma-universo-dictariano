@@ -76,9 +76,12 @@ export class CartService {
     this.showPopupSubject.next(false);
   }
 
-  syncAfterLogin(userId: number): Observable<ICarritoResponse | null> {
+  syncAfterLogin(
+    userId: number,
+    cursosResolver: (ids: string[]) => Observable<Curso[]>
+  ): Observable<ICarritoResponse | null> {
     const localItems = this.storage.getItems();
-    const cursos: ICursoCarritoPayload[] = localItems.map(c => ({ idcurso: String(c.id) }));
+    const localCursos: ICursoCarritoPayload[] = localItems.map(c => ({ idcurso: String(c.id) }));
 
     return this.api.getCarritoByUsuarioId(userId).pipe(
       catchError((err: HttpErrorResponse) => {
@@ -88,21 +91,34 @@ export class CartService {
       switchMap(backendCart => {
         if (backendCart?.id) {
           this.saveCarritoIdForUser(userId, backendCart.id);
-          if (cursos.length === 0) return of(backendCart);
 
           const backendIds = new Set(backendCart.cursos);
-          const nuevos = cursos.filter(c => !backendIds.has(c.idcurso));
-          if (nuevos.length === 0) return of(backendCart);
+          const nuevos = localCursos.filter(c => !backendIds.has(c.idcurso));
 
-          return this.api.patchCarrito(backendCart.id, nuevos, []);
+          const mergedIds = [...backendCart.cursos, ...nuevos.map(c => c.idcurso)];
+
+          if (nuevos.length > 0) {
+            return this.api.patchCarrito(backendCart.id, nuevos, []).pipe(
+              switchMap(() => cursosResolver(mergedIds))
+            );
+          }
+
+          return cursosResolver([...backendCart.cursos]);
         }
 
-        if (cursos.length === 0) return of(null);
-        return this.api.crearCarrito(userId, cursos);
+        if (localCursos.length === 0) return of([]);
+        return this.api.crearCarrito(userId, localCursos).pipe(
+          tap(res => { if (res?.id) this.saveCarritoIdForUser(userId, res.id); }),
+          switchMap(() => cursosResolver(localItems.map(c => String(c.id))))
+        );
       }),
-      tap(res => {
-        if (res?.id) this.saveCarritoIdForUser(userId, res.id);
-      })
+      tap((cursos) => {
+        if (Array.isArray(cursos) && cursos.length >= 0) {
+          this.itemsSubject.next(cursos as Curso[]);
+          this.storage.saveItems(cursos as Curso[]);
+        }
+      }),
+      switchMap(() => of(null)) 
     );
   }
 
