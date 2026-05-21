@@ -22,7 +22,8 @@
                   <p-avatar [image]="imageUrl || 'https://www.gravatar.com/avatar/?d=mp'" shape="circle" size="xlarge"
                     styleClass="shadow-2 flex-shrink-0">
                   </p-avatar>
-                  <span (click)="mostrarAvatares = !mostrarAvatares" style="position: absolute; bottom: 0; right: 0;
+                  <span (click)="mostrarAvatares = !mostrarAvatares" (keydown.enter)="mostrarAvatares = !mostrarAvatares" 
+                  tabindex="0" role="button" style="position: absolute; bottom: 0; right: 0;
                     background-color: #374151; border-radius: 50%; padding: 4px;
                     cursor: pointer; border: 2px solid #272727;">
                     <i class="pi pi-camera" style="color: #ffffff; font-size: 0.75rem;"></i>
@@ -34,32 +35,34 @@
                 </p-button>
                 <!-- Selector de avatares -->
                 <div *ngIf="mostrarAvatares" class="flex gap-3 align-items-center">
-                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" width="50" height="50"
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar Felix" width="50" height="50" tabindex="0" role="button"
                     style="border-radius: 50%; cursor: pointer;"
                     [style.border]="imageUrl === 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix' ? '2px solid #F7C50F' : '2px solid transparent'"
-                    (click)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix')" />
-                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Luna" width="50" height="50"
+                    (click)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix')"
+                    (keydown.enter)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix')" />
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Luna" alt="Avatar Luna" width="50" height="50" tabindex="0" role="button"
                     style="border-radius: 50%; cursor: pointer;"
                     [style.border]="imageUrl === 'https://api.dicebear.com/7.x/avataaars/svg?seed=Luna' ? '2px solid #F7C50F' : '2px solid transparent'"
-                    (click)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Luna')" />
+                    (click)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Luna')" 
+                    (keydown.enter)="seleccionarAvatar('https://api.dicebear.com/7.x/avataaars/svg?seed=Luna')"/>
                 </div>
                 <div class="flex flex-column md:flex-row gap-3"></div>
                 <div class="flex flex-column md:flex-row gap-3 w-full">
                   <div class="w-full md:w-6">
-                    <label class="block text-sm font-medium mb-1" style="color: #9CA3AF;">Nombre Completo
+                    <label for="nombre" class="block text-sm font-medium mb-1" style="color: #9CA3AF;">Nombre Completo
                       <i class="pi pi-lock ml-1" style="color: #6b7280;" pTooltip="El nombre no puede modificarse"
                         tooltipPosition="top"></i>
                     </label>
-                    <input pInputText class="w-full"
+                    <input id="nombre" pInputText class="w-full"
                       style="background-color: #1f2937; border: 1px solid #374151; color: #ffffff; border-radius: 0.5rem;"
                       [(ngModel)]="nombre" placeholder="Nombre completo" [disabled]="true" />
                   </div>
 
                   <div class="w-full md:w-6">
-                    <label class="block text-sm font-medium mb-1" style="color: #9CA3AF;">E-Mail
+                    <label for="email" class="block text-sm font-medium mb-1" style="color: #9CA3AF;">E-Mail
                       <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>
                     </label>
-                    <input pInputText class="w-full" [(ngModel)]="email" placeholder="example@email.com"
+                    <input id="email" pInputText class="w-full" [(ngModel)]="email" placeholder="example@email.com"
                       style="background-color: #5c5c5c; border: 1px solid #3d3d3d; color: #cccccc; border-radius: 0.5rem;" />
                   </div>
 
@@ -72,30 +75,30 @@
 
                 <!-- Contraseña anterior -->
                 <div class="flex flex-column flex-1" style="min-width: 180px;">
-                  <label class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
+                  <label for="currentPassword" class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
                     <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>Contraseña anterior
                   </label>
-                  <p-password [(ngModel)]="currentPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+                  <p-password inputId="currentPassword" [(ngModel)]="currentPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
                     placeholder="Contraseña anterior">
                   </p-password>
                 </div>
 
                 <!-- Nueva contraseña -->
                 <div class="flex flex-column flex-1" style="min-width: 180px;">
-                  <label class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
+                  <label for="newPassword" class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
                     <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>Nueva contraseña
                   </label>
-                  <p-password [(ngModel)]="newPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+                  <p-password inputId="newPassword" [(ngModel)]="newPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
                     placeholder="Contraseña nueva">
                   </p-password>
                 </div>
 
                 <!-- Confirmar -->
                 <div class="flex flex-column flex-1" style="min-width: 180px;">
-                  <label class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
+                  <label for="confirmPassword" class="block text-sm font-medium mb-2" style="color: #9CA3AF;">
                     <i class="pi pi-pencil mr-1" style="color: #60a5fa;"></i>Repetir contraseña
                   </label>
-                  <p-password [(ngModel)]="confirmPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
+                  <p-password inputId="confirmPassword" [(ngModel)]="confirmPassword" [toggleMask]="true" class="w-full" inputClass="w-full"
                     placeholder="Repetir contraseña">
                   </p-password>
                   <small class="p-error" *ngIf="newPassword !== confirmPassword">

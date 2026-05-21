@@ -101,6 +101,6 @@ export class NavBarComponent implements OnInit {
     alert('Ir a perfil (aquí va tu lógica)');
   }
   logout(): void {
-  this.auth.logout();
-}
+    this.auth.logout();
+  }
 }

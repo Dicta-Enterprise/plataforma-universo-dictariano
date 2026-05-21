@@ -23,13 +23,20 @@ import { MessageService } from 'primeng/api';
 import { CUSTOM_PROVIDERS } from './core/providers/providers';
 import { SharedSpinnerModule } from './shared/components/spinners/shared-spinner.module';
 import { ToastModule } from 'primeng/toast';
+import { CartPopupModule } from './shared/components/cart-popup/cart-popup.module';
+import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
+import { BlankLayoutComponent } from './shared/layouts/blank-layout/blank-layout.component';
+import { CheckoutNavbarComponent } from './shared/components/checkout-navbar/checkout-navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
+    CheckoutNavbarComponent,
     FooterComponent,
     ActivoInactivoPipe,
+    MainLayoutComponent, 
+    BlankLayoutComponent, 
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,7 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     HttpClientModule,
     SharedModule,
-
+    CartPopupModule,
     ToastModule,
   ],
   providers: [

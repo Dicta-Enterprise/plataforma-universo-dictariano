@@ -1,0 +1,311 @@
+
+/* LAYOUT PRINCIPAL*/
+.cart-page-wrapper {
+  background-color: #272727;
+  min-height: 100vh;        
+  padding: 2rem 4rem;
+}
+
+.contenido-layout {
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 35%;
+  gap: 2rem;
+}
+
+.cart-inner {
+  margin: 0 auto;
+  width: 100%;
+}
+
+.cart-inner .flex.flex-row.flex-wrap {
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+}
+
+/* TÍTULO*/
+.cart-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.cart-title-icon {
+  font-size: 2rem;
+}
+
+/* CONTEO */
+.cart-count {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding-bottom: 20px;
+}
+
+/* ITEMS DEL CARRITO */
+.cart-item-img {
+  width: clamp(48px, 10vw, 96px);
+  height: clamp(48px, 10vw, 96px);
+  object-fit: cover;
+}
+
+.cart-item-datos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cart-item-nombre {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cart-item-precio {
+  flex-shrink: 0;
+  margin-left: auto;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.cart-item-rating {
+  font-size: 0.9rem;
+  color: #ffcc00;
+}
+
+.cart-item-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ESTRELLAS */
+.rating-star-filled {
+  color: #ffcc00;
+}
+
+.rating-star-empty {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.rating-value {
+  font-size: 0.8125rem;
+  color: #c7c7c7;
+}
+
+/* TAGS*/
+.cart-tag {
+  background: #545454;
+  color: #efefef;
+  border-radius: 23px;
+  border: 2px solid transparent;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+/* PROFESOR */
+.cart-item-profesor {
+  font-size: 0.8125rem;
+  color: #c7c7c7;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+ 
+.cart-item-profesor-icon {
+  font-size: 0.75rem;
+  color: #929292;
+}
+ 
+/* DESCRIPCIÓN */
+.cart-item-descripcion {
+  font-size: 0.8125rem;
+  color: #929292;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* BOTONES */
+.btn-eliminar {
+  flex-shrink: 0;
+}
+
+.btn-desktop {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.btn-mobile {
+  display: none;
+}
+
+::ng-deep .btn-eliminar .p-button {
+  background: #414141 !important;
+  color: #efefef !important;
+  border: none !important;
+  padding: 10px !important;
+  line-height: 1 !important;
+  font-size: 0.8rem;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px !important;
+}
+
+::ng-deep .btn-eliminar .p-button:hover {
+  background: #ff0000 !important;
+  color: #fff !important;
+}
+
+::ng-deep .btn-pay.p-button {
+  background: linear-gradient(180deg, #33FF66 0%, #2EE85D 100%) !important;
+  border-radius: 10px !important;
+  padding: 5px 0px !important;
+  color: #272727 !important;
+}
+
+::ng-deep .btn-pay.p-button:hover {
+  background: linear-gradient(180deg, #33FF66 0%, #24B548 100%) !important;
+}
+
+/* ESTADO VACÍO */
+.empty-cart-icon {
+  font-size: 3rem;
+  color: #929292;
+}
+
+.empty-cart-text {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #929292;
+}
+
+/* RESUMEN DE COMPRA */
+.cart-summary-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cart-summary-label {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.cart-summary-total {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+::ng-deep .summary-card.p-card {
+  background: #414141 !important;
+  border-radius: 10px !important;
+  padding: 0 10px !important;
+  border: none;
+}
+
+/*  DATAVIEW*/
+::ng-deep .p-dataview,
+::ng-deep .p-dataview-content {
+  background: #272727 !important;
+  color: #efefef !important;
+}
+
+::ng-deep .cart-item {
+  border-top: 1px solid #414141;
+}
+
+/* STEPS*/
+::ng-deep .p-steps {
+  background: transparent !important;
+}
+
+::ng-deep .p-steps .p-steps-item:before {
+  border-top: 2px solid #5c5c5c !important;
+  top: 50% !important;
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link {
+  background: transparent !important;
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link .p-steps-number {
+  background: #414141 !important;
+  color: #efefef !important;
+  border: 2px solid #5c5c5c !important;
+}
+
+::ng-deep .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-number {
+  background: #33ff66 !important;
+  color: #272727 !important;
+  border-color: #156b2b !important;
+}
+
+::ng-deep .p-steps .p-steps-item .p-menuitem-link .p-steps-title {
+  color: #929292 !important;
+}
+
+::ng-deep .p-steps .p-steps-item.p-highlight .p-menuitem-link .p-steps-title {
+  color: #efefef !important;
+}
+
+/* RESPONSIVE — MOBILE*/
+@media (max-width: 768px) {
+  .contenido-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cart-page-wrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .cart-inner .flex.flex-row.flex-wrap {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cart-item {
+    align-items: flex-start;
+  }
+
+  .cart-item-datos {
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .cart-item-nombre { order: 1; }
+  .cart-item-precio { order: 2; }
+
+  .cart-item-actions {
+    justify-content: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .btn-eliminar { order: 3; }
+
+  .btn-desktop { display: none; }
+
+  .btn-mobile {
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: flex-start;
+  }
+
+  ::ng-deep .p-steps ul {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding-left: 1rem !important;
+    border-left: 2px solid #5c5c5c !important;
+  }
+
+  ::ng-deep .p-steps .p-steps-item {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+  }
+
+  ::ng-deep .p-steps .p-steps-item:before {
+    display: none !important;
+  }
+}

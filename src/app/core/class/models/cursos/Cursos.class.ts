@@ -20,6 +20,7 @@ export class Cursos {
   profesorId: string;
   idiomaId: string; 
   planetaId: string; 
+  rating: number;
   beneficios: Beneficios[];
 
   constructor(cursos: Partial<Cursos> = {}) {
@@ -40,6 +41,7 @@ export class Cursos {
     this.categoriaId = cursos.categoriaId ?? '';
     this.idiomaId = cursos.idiomaId ?? '';
     this.planetaId = cursos.planetaId ?? '';
+    this.rating = cursos.rating ?? 0;
     this.beneficios = cursos.beneficios ?? [new Beneficios('','')];
   }
 
@@ -63,11 +65,12 @@ export class Cursos {
       categoriaId: casted['categoriaId'] as string,
       idiomaId: casted['idiomaId'] as string,
       planetaId: casted['planetaId'] as string,
+      rating: (casted['rating'] as number) ?? 0,
       beneficios: casted['beneficios'] as Beneficios[],
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   static toJson(cursos: Cursos): unknown {
     return {
       //id: cursoManagment.id,
@@ -88,6 +91,7 @@ export class Cursos {
       categoria: cursos.categoria,
       idiomaId: cursos.idiomaId,
       planetaId: cursos.planetaId,
+      rating: cursos.rating,
       beneficios: cursos.beneficios,
     };
   }

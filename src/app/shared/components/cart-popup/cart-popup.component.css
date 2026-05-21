@@ -1,0 +1,195 @@
+
+.cart-popup .overflow-y-auto {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.cart-popup .overflow-y-auto::-webkit-scrollbar {
+  display: none; 
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+}
+
+.cart-popup {
+  top: 56px;
+  right: 1rem;
+  width: 360px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #272727;
+  border: 1px solid #929292;
+  padding: 20px;
+}
+
+
+.cart-popup-header {
+  border-bottom: 1px solid #414141;
+}
+
+.cart-popup-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+
+.cart-popup-footer {
+  border-top: 1px solid #414141;
+}
+
+
+.cart-total-label {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.cart-total-valor {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+
+.cart-item {
+  border-bottom: 1px solid #414141;
+}
+
+.cart-item-last {
+  border-bottom: none;
+}
+
+.cart-item-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.cart-item-nombre {
+  font-size: 1rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cart-item-rating {
+  font-size: 0.9rem;
+  color: #ffcc00;
+}
+
+.rating-star-filled {
+  color: #ffcc00;
+}
+
+.rating-star-empty {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.rating-value {
+  font-size: 0.8125rem;
+  color: #c7c7c7;
+}
+
+.cart-item-precio {
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+/* ─── Tags ────────────────────────────────────────── */
+.cart-tag {
+  background: #545454;
+  color: #efefef;
+  border-radius: 23px;
+  border: 2px solid transparent;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+/* ─── Vacío ───────────────────────────────────────── */
+.empty-cart-icon {
+  font-size: 2rem;
+  color: #929292;
+}
+
+.empty-cart-text {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #929292;
+}
+
+/* ─── Recomendaciones ─────────────────────────────── */
+.cart-recommendations {
+  border-top: 1px solid #414141;
+}
+
+.cart-recommendations-title {
+  font-size: 1rem;
+  font-weight: 700;
+  border-bottom: 1px solid #414141;
+}
+
+/* ─── Botón cerrar ────────────────────────────────── */
+::ng-deep .btn-close .p-button {
+  width: 36px !important;
+  color: #33ff66 !important;
+}
+
+/* ─── Botón eliminar ──────────────────────────────── */
+::ng-deep .btn-trash .p-button {
+  color: #efefef !important;
+  background: #545454 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  width: 36px !important;
+  height: 100% !important;
+  min-height: 64px !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+::ng-deep .btn-trash .p-button:hover {
+  background: #ff0000 !important;
+  color: #fff !important;
+}
+
+/* ─── Botón agregar ───────────────────────────────── */
+::ng-deep .btn-add .p-button {
+  color: #efefef !important;
+  background: #545454 !important;
+  border: none !important;
+  border-radius: 10px !important;
+  width: 36px !important;
+  height: 100% !important;
+  min-height: 64px !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+
+::ng-deep .btn-add .p-button:hover {
+  background: #33ff66 !important;
+  color: #272727 !important;
+}
+
+/* ─── Botón ver carrito ───────────────────────────── */
+::ng-deep .btn-ver .p-button {
+  font-weight: 100 !important;
+  text-decoration: underline !important;
+}
+
+/* ─── Botón pagar ─────────────────────────────────── */
+::ng-deep .btn-pay .p-button {
+  background: linear-gradient(180deg, #33FF66 0%, #2EE85D 100%) !important;
+  border-radius: 10px !important;
+  padding: 5px !important;
+  color: #272727 !important;
+}
+
+::ng-deep .btn-pay .p-button:hover {
+  background: linear-gradient(180deg, #33FF66 0%, #24B548 100%) !important;
+}

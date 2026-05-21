@@ -5,23 +5,20 @@ import { RegisterService } from 'src/app/pages/auth/services/register.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class RegisterFacade {
-
   register$ = new BehaviorSubject<Register>(new Register());
-
   private destroy$ = new Subject<void>();
 
   constructor(
     private readonly registerService: RegisterService,
     private readonly messageService: MessageService,
     private readonly router: Router
-  ) { }
+  ) {}
 
-  registrarUsuario(register: Register) {
+  registrarUsuario(register: Register): void {
     this.registerService
       .registrarUsuario(register)
       .pipe(takeUntil(this.destroy$))
@@ -39,7 +36,6 @@ export class RegisterFacade {
           this.router.navigate(['/auth/login']);
         },
         error: (error) => {
-
           const backendMessage = error?.error?.message;
 
           if (backendMessage === 'El correo ya está registrado') {
@@ -49,7 +45,6 @@ export class RegisterFacade {
               summary: 'Correo no válido',
               detail: 'El correo ya está registrado.',
             });
-
             return;
           }
 
@@ -68,5 +63,3 @@ export class RegisterFacade {
     this.destroy$.complete();
   }
 }
-
-

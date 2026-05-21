@@ -17,7 +17,7 @@ export class ProfesorService {
   constructor(private httpClient: HttpClient) {}
 
   listarProfesoresService$(): Observable<Profesor[]> {
-    let url = `${this.base_url}profesor`;
+    const url = `${this.base_url}profesores`;
     return this.httpClient.get<IGenericArrays<Profesor>>(url).pipe(
       map((response: IGenericArrays<Profesor>) => {
         return response.data._value.map((curso) => {
@@ -28,7 +28,7 @@ export class ProfesorService {
   }
 
   obtenerProfesorService$(id: string): Observable<Profesor> {
-    let url = `${this.base_url}profesor/${id}`;
+    const url = `${this.base_url}profesores/${id}`;
     return this.httpClient.get<IGeneric<Profesor>>(url).pipe(
       map((response) => {
         return Profesor.fromJson(response.data);
@@ -39,7 +39,7 @@ export class ProfesorService {
   crearProfesorService$(
     profesor: Profesor
   ): Observable<Profesor> {
-    let url = `${this.base_url}profesor`;
+    const url = `${this.base_url}profesores`;
     return this.httpClient
       .post<IGeneric<Profesor>>(url, profesor)
       .pipe(
@@ -53,7 +53,7 @@ export class ProfesorService {
     id: string,
     profesor: Partial<Profesor>
   ): Observable<Profesor> {
-    let url = `${this.base_url}profesor/${id}`;
+    const url = `${this.base_url}profesores/${id}`;
     return this.httpClient
       .patch<IGeneric<Profesor>>(url, profesor)
       .pipe(
@@ -64,8 +64,6 @@ export class ProfesorService {
   }
 
   eliminarProfesorService$(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.base_url}profesor/${id}`);
+    return this.httpClient.delete<void>(`${this.base_url}profesores/${id}`);
   }
-
-  listarDropdownProfesoresService$() {}
 }

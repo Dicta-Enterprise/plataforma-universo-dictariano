@@ -1,15 +1,16 @@
 .card-curso {
   perspective: 1000px;
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin: 1rem 0;
 }
 
 .card-inner {
   position: relative;
-  height: 680px;
+  height: 650px; 
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
-  border-radius: 30px;
+  border-radius: 16px;
+  border: 1px solid #929292;
+  background: #272727;
 }
 
 .card-curso:hover .card-inner {
@@ -19,7 +20,7 @@
 .card-face {
   position: absolute;
   inset: 0;
-  border-radius: 30px;
+  border-radius: 16px;
   overflow: hidden;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -42,27 +43,29 @@
 .card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.85) 0%,
-      rgba(0, 0, 0, 0.15) 50%,
-      transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.15) 50%,
+    transparent 100%
+  );
 }
 
 .card-rating {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 14px;
+  left: 14px;
 }
 
 .card-bottom {
   position: absolute;
-  bottom: 20px;
-  left: 16px;
-  right: 16px;
+  bottom: 16px;
+  left: 14px;
+  right: 14px;
 }
 
 .curso-title-sm {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.2;
   color: #fff;
@@ -72,25 +75,25 @@
   background-color: rgba(100, 94, 94, 0.5);
   border: 2px solid rgb(161, 159, 159);
   color: white;
-  padding: 4px 12px;
+  padding: 4px 10px;
   border-radius: 50px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   backdrop-filter: blur(4px);
 }
 
 .rating-icon {
   color: #f1c40f;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .custom-tag {
-  padding: 4px 12px;
+  padding: 4px 10px;
   border-radius: 50px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: white;
 }
@@ -106,7 +109,6 @@
 
 .card-back {
   transform: rotateY(180deg);
-  border: 1px;
   color: #fff;
 }
 
@@ -115,7 +117,7 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .card-back-header-modern {
@@ -123,7 +125,7 @@
   justify-content: space-between;
   align-items: stretch;
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .header-left {
@@ -131,25 +133,24 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 118px;
-  padding-right: 15px;
+  height: 95px;
+  padding-right: 10px;
 }
 
 .curso-back-titulo {
   position: absolute;
-  top: 45px;
+  top: 38px;
   left: 0;
-  right: 110px;
+  right: 95px;
   transform: translateY(-50%);
-
-  font-size: 1.4rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: var(--dynamic-hover-color);
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .precio-texto {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
   margin: 0;
@@ -160,12 +161,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 110px;
+  height: 92px;
 }
 
 .img-circular-container {
-  width: 90px;
-  height: 90px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -179,10 +180,10 @@
 
 .rating-stars-container {
   display: flex;
-  gap: 3px;
+  gap: 2px;
   color: #f1c40f;
-  font-size: 0.8rem;
-  margin-top: 10px;
+  font-size: 0.7rem;
+  margin-top: 6px;
 }
 
 .card-back-content {
@@ -192,53 +193,53 @@
 }
 
 .curso-back-desc {
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.78rem;
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: left;
 }
 
 .beneficios-title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   color: var(--dynamic-hover-color);
 }
 
 .features-grid-modern {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-bottom: 1.5rem;
+  gap: 8px;
+  margin-bottom: 1rem;
 }
 
 .feature-card {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 12px 5px;
+  border-radius: 12px;
+  padding: 8px 4px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 8px;
+  gap: 6px;
   transition: transform 0.3s ease;
 }
 
 .feature-card:hover {
   background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .feature-card i {
-  font-size: 1.3rem;
+  font-size: 1rem;
   color: var(--dynamic-hover-color);
 }
 
 .feature-card span {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #fff;
   font-weight: 500;
   line-height: 1.1;
@@ -247,43 +248,38 @@
 .card-back-footer {
   margin-top: auto;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-  padding-bottom: 0.5rem;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .link-ver-mas {
-  flex: 0 0 30%;
-  font-size: 0.95rem;
+  font-size: 0.82rem;
   color: #fff;
   text-decoration: underline;
   cursor: pointer;
   font-weight: 500;
   text-align: center;
+  width: 100%;
+  display: block;
 }
 
 .btn-carrito-moderno {
-  flex: 1;
-  padding: 12px;
-  border-radius: 15px;
+  width: 100%;
+  padding: 9px;
+  border-radius: 14px;
   background: var(--dynamic-hover-color);
   border: 2px solid var(--dynamic-hover-color-sec);
   color: #000;
   font-weight: 700;
+  font-size: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.btn-carrito-moderno:hover {
-  transform: translateY(-3px);
-  filter: brightness(1.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  margin-bottom: 0;
 }
 
 @media (hover: hover) {
@@ -294,4 +290,24 @@
 
 .card-curso.flipped .card-inner {
   transform: rotateY(180deg);
+}
+
+
+@media (max-width: 768px) {
+  .card-inner {
+    height: 540px;
+  }
+
+  .curso-back-titulo {
+    font-size: 1rem;
+  }
+
+  .curso-back-desc {
+    font-size: 0.74rem;
+  }
+
+  .btn-carrito-moderno {
+    font-size: 0.82rem;
+    gap: 12px;
+  }
 }
