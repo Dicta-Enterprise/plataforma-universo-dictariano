@@ -1,4 +1,4 @@
-
+﻿
 .cart-popup .overflow-y-auto {
   scrollbar-width: none; 
   -ms-overflow-style: none; 
@@ -23,7 +23,7 @@
   max-width: 95vw;
   max-height: 90vh;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 16px;
   background: #272727;
   border: 1px solid #929292;
   padding: 20px;
@@ -70,7 +70,6 @@
   object-fit: cover;
   border-radius: 10px;
 }
-
 .cart-item-nombre {
   font-size: 1rem;
   font-weight: 700;
@@ -102,7 +101,7 @@
   font-weight: 400;
 }
 
-/* ─── Tags ────────────────────────────────────────── */
+/* â”€â”€â”€ Tags â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .cart-tag {
   background: #545454;
   color: #efefef;
@@ -113,7 +112,7 @@
   font-weight: 600;
 }
 
-/* ─── Vacío ───────────────────────────────────────── */
+/* â”€â”€â”€ VacÃ­o â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .empty-cart-icon {
   font-size: 2rem;
   color: #929292;
@@ -125,7 +124,7 @@
   color: #929292;
 }
 
-/* ─── Recomendaciones ─────────────────────────────── */
+/* â”€â”€â”€ Recomendaciones â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .cart-recommendations {
   border-top: 1px solid #414141;
 }
@@ -136,13 +135,13 @@
   border-bottom: 1px solid #414141;
 }
 
-/* ─── Botón cerrar ────────────────────────────────── */
+/* â”€â”€â”€ BotÃ³n cerrar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 ::ng-deep .btn-close .p-button {
   width: 36px !important;
   color: #33ff66 !important;
 }
 
-/* ─── Botón eliminar ──────────────────────────────── */
+/* â”€â”€â”€ BotÃ³n eliminar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 ::ng-deep .btn-trash .p-button {
   color: #efefef !important;
   background: #545454 !important;
@@ -159,7 +158,7 @@
   color: #fff !important;
 }
 
-/* ─── Botón agregar ───────────────────────────────── */
+/* â”€â”€â”€ BotÃ³n agregar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 ::ng-deep .btn-add .p-button {
   color: #efefef !important;
   background: #545454 !important;
@@ -176,13 +175,13 @@
   color: #272727 !important;
 }
 
-/* ─── Botón ver carrito ───────────────────────────── */
+/* â”€â”€â”€ BotÃ³n ver carrito â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 ::ng-deep .btn-ver .p-button {
   font-weight: 100 !important;
   text-decoration: underline !important;
 }
 
-/* ─── Botón pagar ─────────────────────────────────── */
+/* â”€â”€â”€ BotÃ³n pagar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 ::ng-deep .btn-pay .p-button {
   background: linear-gradient(180deg, #33FF66 0%, #2EE85D 100%) !important;
   border-radius: 10px !important;
@@ -193,3 +192,5 @@
 ::ng-deep .btn-pay .p-button:hover {
   background: linear-gradient(180deg, #33FF66 0%, #24B548 100%) !important;
 }
+
+

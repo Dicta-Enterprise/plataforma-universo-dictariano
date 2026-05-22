@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+﻿import { Component, Input } from '@angular/core';
 import { Curso } from 'src/app/core/class/curso/curso.class';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/core/services/cart/cart.service';
@@ -36,6 +36,15 @@ export class CardCursoComponent{
   }
 
 
+  public truncateWords(text: string, maxWords = 20): string {
+    const value = (text ?? '').trim();
+    if (!value) return '';
+
+    const words = value.split(/\s+/);
+    if (words.length <= maxWords) return value;
+
+    return words.slice(0, maxWords).join(' ') + '…';
+  }
   irADetalle() {
     // Solo navega si el curso existe y tiene id
     if (this.curso && this.curso.id) {
@@ -44,7 +53,7 @@ export class CardCursoComponent{
   }
   agregarAlCarrito() {
     this.cart.addToCart(this.curso);
-    // Opcional: notificación o feedback
+    // Opcional: notificaciÃ³n o feedback
   }
   getCursoCarrito(){
     this.cantidad_en_carrito = 0;
@@ -56,3 +65,4 @@ export class CardCursoComponent{
     return this.cantidad_en_carrito;
   }
 }
+

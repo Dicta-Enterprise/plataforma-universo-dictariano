@@ -1,11 +1,14 @@
-.card-curso {
+﻿.card-curso {
+  width: 100%;
+  max-width: min(360px, 95vw);
+  margin: 1rem auto;
   perspective: 1000px;
-  margin: 1rem 0;
 }
+
 
 .card-inner {
   position: relative;
-  height: 650px; 
+  height: min(90vh, 650px);
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
   border-radius: 16px;
@@ -120,70 +123,73 @@
   padding: 1rem;
 }
 
-.card-back-header-modern {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+.card-back-banner {
   position: relative;
-  margin-bottom: 0.8rem;
+  height: 170px;
+  margin: -1rem -1rem 0.8rem -1rem;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
-.header-left {
-  flex: 1;
+.curso-back-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.precio-pill {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  background: var(--dynamic-hover-color, rgba(181, 255, 206, 0.95));
+  color: #0a0a0a;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+.card-back-title {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  height: 95px;
-  padding-right: 10px;
+  gap: 10px;
+  margin-bottom: 0.5rem; 
 }
 
 .curso-back-titulo {
-  position: absolute;
-  top: 38px;
-  left: 0;
-  right: 95px;
-  transform: translateY(-50%);
-  font-size: 1.15rem;
-  font-weight: 800;
+  position: static;
+  transform: none;
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 900;
   color: var(--dynamic-hover-color);
   line-height: 1.15;
 }
 
-.precio-texto {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #fff;
-  margin: 0;
-}
-
-.header-right {
+.card-back-rating {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 92px;
-}
-
-.img-circular-container {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-}
-
-.img-circular {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 10px; 
+  margin-bottom: 0.2rem;
 }
 
 .rating-stars-container {
   display: flex;
   gap: 2px;
   color: #f1c40f;
-  font-size: 0.7rem;
-  margin-top: 6px;
+  font-size: 0.85rem;
+}
+
+.rating-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+}
+
+.rating-link {
+  color: rgba(255, 255, 255, 0.8);
+  margin-left: 6px;
 }
 
 .card-back-content {
@@ -193,11 +199,15 @@
 }
 
 .curso-back-desc {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   line-height: 1.4;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1rem;
+  margin-bottom: 5px; 
   text-align: left;
+}
+
+.beneficios-section {
+  margin-top: auto;
 }
 
 .beneficios-title {
@@ -207,6 +217,7 @@
   margin-bottom: 0.8rem;
   color: var(--dynamic-hover-color);
 }
+
 
 .features-grid-modern {
   display: grid;
@@ -219,7 +230,8 @@
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 8px 4px;
+    padding: 20px 4px;
+    min-height: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -246,14 +258,14 @@
 }
 
 .card-back-footer {
-  margin-top: auto;
+  margin-top: 8px; 
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
 .link-ver-mas {
-  font-size: 0.82rem;
+  font-size: 1rem;
   color: #fff;
   text-decoration: underline;
   cursor: pointer;
@@ -311,3 +323,22 @@
     gap: 12px;
   }
 }
+
+.link-ver-mas-inline {
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.link-ver-mas-inline:hover {
+  color: #fff;
+}
+
+
+
+
+
+
+
+

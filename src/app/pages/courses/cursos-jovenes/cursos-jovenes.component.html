@@ -1,20 +1,21 @@
-<div class="text-center mb-8 mt-5">
-  <h1 class="text-4xl font-bold mb-2 text-cyan-400">Cursos para Jóvenes</h1>
+﻿<div class="text-center mb-8 mt-5">
+  <h1 class="text-4xl font-bold mb-2 text-cyan-400">Cursos para JÃ³venes</h1>
 </div>
 <div class="w-full flex flex-col items-center justify-center">
   <p-progressSpinner *ngIf="cursos.length === 0" styleClass="w-4rem h-4rem" strokeWidth="4" animationDuration="1.6s"
     aria-label="Cargando"></p-progressSpinner>
 </div>
 <div class="grid 
-    grid-cols-1 
+    justify-items-center grid-cols-1 
     sm:grid-cols-1
     md:grid-cols-2 
     lg:grid-cols-3 
-    xl:grid-cols-4
-    gap-6 
+    xl:grid-cols-3
+    gap-8
     px-4">
   <ng-container *ngFor="let curso of cursos">
     <app-card-curso [curso]="curso" bg_color="#141e30" primary_color="rgb(255, 204, 0)" secondary_color="#b38f00">
     </app-card-curso>
   </ng-container>
 </div>
+

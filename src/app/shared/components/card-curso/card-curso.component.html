@@ -1,4 +1,4 @@
-<div class="card-curso my-5">
+﻿<div class="card-curso my-5">
   <div
     class="card-inner"
     [style.--dynamic-hover-color]="primary_color"
@@ -6,7 +6,14 @@
   >
     <div class="card-face card-front">
       <img
-        [src]="curso.imagen.startsWith('https') ? curso.imagen : '/assets/loaders/bottle-loader.gif'"
+        *ngIf="curso.imagen"
+        [src]="curso.imagen"
+        alt="Curso banner"
+        class="curso-image-full"
+      />
+      <img
+        *ngIf="!curso.imagen"
+        src="/assets/img/placeholder.webp"
         alt="Curso banner"
         class="curso-image-full"
       />
@@ -31,43 +38,51 @@
 
     <div class="card-face card-back" [style.background]="'#1f1f1f'">
       <div class="card-back-inner">
-        <div class="card-back-header-modern">
-          <div class="header-left">
-            <h2 class="curso-back-titulo">{{ curso.nombre }}</h2>
-            <div class="precio-texto">Col $ {{ curso.precio }}</div>
+      <div class="card-back-banner">
+        <img
+          [src]="curso.imagen.startsWith('https') ? curso.imagen : '/assets/loaders/bottle-loader.gif'"
+          class="curso-back-image"
+          [alt]="'Imagen de ' + curso.nombre"
+        />
+        <div class="precio-pill">Col$ {{ curso.precio }}</div>
+      </div>
+
+      <div class="card-back-title">
+        <h2 class="curso-back-titulo">{{ curso.nombre }}</h2>
+
+        <div class="card-back-rating">
+          <div class="rating-stars-container">
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i>
           </div>
-
-          <div class="header-right">
-            <div class="img-circular-container">
-              <img
-                [src]="curso.imagen.startsWith('https') ? curso.imagen : '/assets/loaders/bottle-loader.gif'"
-                class="img-circular"
-                [alt]="'Imagen de ' + curso.nombre"
-              />
-            </div>
-
-            <div class="rating-stars-container">
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-            </div>
+          <div class="rating-text">
+            <strong>5.0</strong>
+            <span class="rating-link">(Ver reseñas)</span>
           </div>
         </div>
+      </div>
 
-        <div class="card-back-content">
+      <div class="card-back-content">
           <p class="curso-back-desc">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam voluptatum, fuga quasi cupiditate minima
-            fugiat assumenda nesciunt illo minus reiciendis, placeat hic sapiente sed magnam est necessitatibus cum
-            excepturi alias neque. Cumque, pariatur. Harum tenetur laborum voluptatum libero, eligendi, repellendus, eum
-            accusantium ad enim omnis quos ducimus? Sint animi iure rem? Amet voluptatem quasi rerum ullam nobis
-            corrupti qui odio eum vero maxime. Quia, at!
+            {{ truncateWords(curso.descripcion, 20) }}
+            <a
+              class="link-ver-mas-inline"
+              href="#"
+              aria-label="Ver más sobre este curso"
+              (click)="$event.preventDefault(); irADetalle()"
+              (keydown.enter)="$event.preventDefault(); irADetalle()"
+              (keydown.space)="$event.preventDefault(); irADetalle()"
+            >
+              <u>Ver más...</u>
+            </a>
           </p>
+          <div class="beneficios-section">
+            <h2 class="beneficios-title">Beneficios</h2>
 
-          <h2 class="beneficios-title">Beneficios</h2>
-
-          <div class="features-grid-modern">
+            <div class="features-grid-modern">
             <div class="feature-card">
               <i class="pi pi-eye"></i>
               <span>Conciencia Crítica</span>
@@ -81,12 +96,9 @@
               <span>Inclusión Real</span>
             </div>
           </div>
+          </div>
 
           <div class="card-back-footer">
-            <button type="button" class="link-ver-mas mb-2" (click)="irADetalle()">
-              <u>Ver más...</u>
-            </button>
-
             <button class="btn-carrito-moderno w-full" (click)="agregarAlCarrito()">
               <i class="pi pi-shopping-cart"></i>
               <span>Agregar al carrito</span>
@@ -97,3 +109,13 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
