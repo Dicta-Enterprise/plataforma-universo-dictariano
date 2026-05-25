@@ -1,5 +1,4 @@
-import { Component, Input } from '@angular/core';
-import { Menu } from '../../class/Menu.class';
+import { Component, Input, HostListener, OnInit } from '@angular/core';
 import { IMenu } from 'src/app/core/interfaces/interfaces';
 
 
@@ -8,12 +7,43 @@ import { IMenu } from 'src/app/core/interfaces/interfaces';
   templateUrl: './custom-sidebar.component.html',
   styleUrls: ['./custom-sidebar.component.css'],
 })
-export class CustomSidebarComponent {
+export class CustomSidebarComponent implements OnInit {
   @Input() menus: IMenu[] = [];
 
-  active: boolean = false;
+  active = false;
 
+  sidebarVisible = false;
+  isMobile = false;
+
+  ngOnInit() {
+    this.checkScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    this.isMobile = window.innerWidth < 768;
+    if (!this.isMobile) {
+      this.sidebarVisible = true;
+    } else {
+      this.sidebarVisible = false;
+    }
+  }
+
+  toggleSidebar() {
+    this.sidebarVisible = !this.sidebarVisible;
+  }
+
+  closeSidebar() {
+    this.sidebarVisible = false;
+  }
+  
   toggleTheme() {
     this.active = !this.active;
   }
+
+  
 }

@@ -1,4 +1,12 @@
-/* ─── Overlay ─────────────────────────────────────── */
+
+.cart-popup .overflow-y-auto {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+.cart-popup .overflow-y-auto::-webkit-scrollbar {
+  display: none; 
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -8,7 +16,6 @@
   z-index: 4;
 }
 
-/* ─── Popup container ─────────────────────────────── */
 .cart-popup {
   top: 56px;
   right: 1rem;
@@ -16,13 +23,12 @@
   max-width: 95vw;
   max-height: 90vh;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 10px;
   background: #272727;
   border: 1px solid #929292;
   padding: 20px;
 }
 
-/* ─── Header ──────────────────────────────────────── */
 .cart-popup-header {
   border-bottom: 1px solid #414141;
 }
@@ -32,12 +38,10 @@
   font-weight: 600;
 }
 
-/* ─── Footer ──────────────────────────────────────── */
 .cart-popup-footer {
   border-top: 1px solid #414141;
 }
 
-/* ─── Total ───────────────────────────────────────── */
 .cart-total-label {
   font-size: 1rem;
   font-weight: 400;
@@ -48,7 +52,6 @@
   font-weight: 700;
 }
 
-/* ─── Item ────────────────────────────────────────── */
 .cart-item {
   border-bottom: 1px solid #414141;
 }
@@ -177,9 +180,12 @@
 
 /* ─── Botón pagar ─────────────────────────────────── */
 ::ng-deep .btn-pay .p-button {
-  background: #33ff66 !important;
-  border: 2px solid #156b2b !important;
+  background: linear-gradient(180deg, #33FF66 0%, #2EE85D 100%) !important;
   border-radius: 10px !important;
   padding: 5px !important;
   color: #272727 !important;
+}
+
+::ng-deep .btn-pay .p-button:hover {
+  background: linear-gradient(180deg, #33FF66 0%, #24B548 100%) !important;
 }

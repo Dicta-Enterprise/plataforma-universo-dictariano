@@ -1,0 +1,56 @@
+:host ::ng-deep {
+  .p-accordion .p-accordion-header-link {
+    background-color: #414141 !important;
+    color: #ffffff !important;
+    border-color: #414141 !important;
+  }
+  .p-accordion .p-accordion-content {
+    background-color: #414141 !important;
+    border-color: #4b5563 !important;
+    border-bottom-left-radius: 10px !important;  
+    border-bottom-right-radius: 10px !important; 
+  }
+  .p-card {
+    background-color: #414141 !important;
+    color: #ffffff !important;
+  }
+  .p-card .p-card-body {
+    background-color: #414141 !important;
+  }
+  .surface-100 {
+    background-color: #5C5C5C !important;
+  }
+  .text-900, .text-500 {
+    color: #ffffff !important;
+  }
+  .p-password {
+    width: 100%;
+  }
+  .p-password input {
+    width: 100%;
+  }
+  .p-inputtext {
+    height: 42px !important;
+    padding: 0.6rem 0.75rem !important;
+    font-size: 0.95rem;
+  }
+}
+
+::ng-deep .p-accordion .p-accordion-toggle-icon {
+  color: #ffffff !important;
+}
+
+:host ::ng-deep .p-card .p-card-body {
+  padding: 0.75rem !important;
+}
+
+:host ::ng-deep .p-card .p-card-content {
+  padding: 0 !important;
+}
+
+:host ::ng-deep .p-password input {
+  background-color: #5c5c5c !important;
+  border: 1px solid #374151 !important;
+  color: #ffffff !important;
+  border-radius: 0.5rem !important;
+}

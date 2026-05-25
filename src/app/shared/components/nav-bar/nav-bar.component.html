@@ -133,7 +133,7 @@
             </span>
           </ng-container>
         </a>
-        <app-cart-popup></app-cart-popup>
+        
       </li>
       
       <ng-container>
@@ -146,7 +146,7 @@
         </button>
         <p-avatar
           *ngIf="auth.isLoggedIn$ | async"
-          [image]="auth.getUserImg()"
+          [image]="(auth.userImg$ | async) ?? ''"
           shape="circle"
           size="large"
           (click)="menu.toggle($event)"
@@ -168,5 +168,5 @@
       </ng-container>
     </ul>
   </div>
-
+  <app-cart-popup></app-cart-popup>
 </div>

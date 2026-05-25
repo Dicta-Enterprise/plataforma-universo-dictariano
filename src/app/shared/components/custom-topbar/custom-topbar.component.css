@@ -1,0 +1,15 @@
+:host ::ng-deep .topbar-wrapper {
+  background-color: #272727 !important;
+  border-color: #272727 !important;
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .topbar-wrapper ul.surface-section {
+  background-color: #272727 !important;
+  border-color: #272727 !important;
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .topbar-wrapper.border-bottom-1 {
+  border-bottom: 1px solid #272727 !important;
+}

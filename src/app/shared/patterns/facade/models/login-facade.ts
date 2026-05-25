@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
 import { Login } from 'src/app/core/class/auth/login.class';
@@ -12,34 +11,22 @@ import { AuthService } from 'src/app/pages/auth/services/auth.service';
   providedIn: 'root',
 })
 export class LoginFacade {
-
   login$ = new BehaviorSubject<LoginResponse | null>(null);
-
   private destroy$ = new Subject<void>();
 
   constructor(
     private readonly loginService: LoginService,
     private readonly messageService: MessageService,
-    private readonly router: Router,
     private readonly authService: AuthService
   ) {}
 
-  // ── returnUrl es opcional: si no viene, va a '/' como antes ──────────────
-  iniciarSesion(login: Login, returnUrl: string = '/') {
+  iniciarSesion(login: Login): void {
     this.loginService
       .iniciarSesion(login)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (response) => {
-          // Si tu LoginService devuelve el usuario en la respuesta,
-          // persístelo para que getCurrentUserId() funcione en PaymentComponent.
-          // Ajusta los campos según lo que devuelva tu backend:
-          if (response) {
-            this.authService.setSession(response as any);
-          } else {
-            this.authService.login();
-          }
-
+        next: () => {
+          this.authService.login();
           this.login$.next(null);
 
           this.messageService.add({
@@ -48,10 +35,6 @@ export class LoginFacade {
             summary: 'Inicio de sesión exitoso',
             detail: 'Bienvenido nuevamente',
           });
-
-          // ← Redirige a donde el usuario quería ir (ej: /payment)
-          // en vez del '/' fijo de antes
-          this.router.navigateByUrl(returnUrl);
         },
         error: (error) => {
           const backendMessage = error?.error?.message;

@@ -1,7 +1,8 @@
 <div
-class="flex justify-content-between align-items-center px-5 surface-0 border-bottom-1 surface-border relative lg:static"
-style="height: 60px"
+  class="topbar-wrapper flex justify-content-between align-items-center px-5 surface-0 border-bottom-1 surface-border relative lg:static"
+  style="height: 60px"
 >
+
 <div class="flex">
   <a
     pRipple
@@ -29,21 +30,23 @@ style="height: 60px"
   <i class="pi pi-ellipsis-v text-2xl"></i>
 </a>
 <ul
-  class="list-none p-0 m-0 hidden lg:flex lg:align-items-center select-none lg:flex-row surface-section border-1 lg:border-none surface-border right-0 top-100 z-1 shadow-2 lg:shadow-none absolute lg:static"
->
-  <li>
+class="list-none p-0 m-0 hidden lg:flex lg:align-items-center select-none lg:flex-row surface-section border-1 lg:border-none surface-border right-0 top-100 shadow-2 lg:shadow-none lg:static"
+  style="position: relative; z-index: 0;">
+  <li class="mr-2">
     <a
       pRipple
-      class="flex p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-duration-150 transition-colors"
+      class="cursor-pointer inline-flex align-items-center justify-content-center border-circle border-2 transition-colors transition-duration-150"
+      style="width: 40px; height: 40px; background-color: #1e3a5f; border-color: #ffffff; color: #ffffff;"
     >
-      <i class="pi pi-inbox text-base lg:text-2xl mr-2 lg:mr-0"></i>
-      <span class="block lg:hidden font-medium">Inbox</span>
+      <i class="pi pi-inbox text-xl"></i>
     </a>
   </li>
   <li>
     <a
-      pRipple
-      class="flex p-3 lg:px-3 lg:py-2 align-items-center text-600 hover:text-900 hover:surface-100 font-medium border-round cursor-pointer transition-duration-150 transition-colors"
+     pRipple
+      class="cursor-pointer inline-flex align-items-center justify-content-center border-circle border-2 transition-colors transition-duration-150"
+      style="width: 40px; height: 40px; background-color: #1e3a5f; border-color: #ffffff; color: #ffffff;"
+    
     >
       <i
         class="pi pi-bell text-base lg:text-2xl mr-2 lg:mr-0"

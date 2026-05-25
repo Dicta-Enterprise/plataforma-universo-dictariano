@@ -1,25 +1,16 @@
 
 /* LAYOUT PRINCIPAL*/
-.columnas{
-  background: #272727;
-  display: grid;
-  grid-template-columns: 1fr 35%;
-  gap: 2rem;
-  margin: 0;
-  align-items: start;
-}
-
-@media (max-width: 900px) {
-  .columnas {
-    grid-template-columns: 1fr;
-  }
-
-}
-
 .cart-page-wrapper {
   background-color: #272727;
   min-height: 100vh;        
   padding: 2rem 4rem;
+}
+
+.contenido-layout {
+  padding-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 35%;
+  gap: 2rem;
 }
 
 .cart-inner {
@@ -36,7 +27,6 @@
 .cart-title {
   font-size: 2rem;
   font-weight: 700;
-  padding-bottom: 30px;
 }
 
 .cart-title-icon {
@@ -47,7 +37,7 @@
 .cart-count {
   font-size: 1.5rem;
   font-weight: 500;
-  padding: 20px 0;
+  padding-bottom: 20px;
 }
 
 /* ITEMS DEL CARRITO */
@@ -112,6 +102,32 @@
   font-weight: 600;
 }
 
+/* PROFESOR */
+.cart-item-profesor {
+  font-size: 0.8125rem;
+  color: #c7c7c7;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+ 
+.cart-item-profesor-icon {
+  font-size: 0.75rem;
+  color: #929292;
+}
+ 
+/* DESCRIPCIÓN */
+.cart-item-descripcion {
+  font-size: 0.8125rem;
+  color: #929292;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* BOTONES */
 .btn-eliminar {
   flex-shrink: 0;
@@ -127,16 +143,16 @@
 }
 
 ::ng-deep .btn-eliminar .p-button {
-  background: #FF0033 !important;
+  background: #414141 !important;
   color: #efefef !important;
   border: none !important;
-  padding: 8px !important;
+  padding: 10px !important;
   line-height: 1 !important;
   font-size: 0.8rem;
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  border-radius: 6px !important;
+  border-radius: 10px !important;
 }
 
 ::ng-deep .btn-eliminar .p-button:hover {
@@ -145,11 +161,14 @@
 }
 
 ::ng-deep .btn-pay.p-button {
-  background: #33ff66 !important;
-  border: 2px solid #156b2b !important;
-  border-radius: 8px !important;
+  background: linear-gradient(180deg, #33FF66 0%, #2EE85D 100%) !important;
+  border-radius: 10px !important;
   padding: 5px 0px !important;
   color: #272727 !important;
+}
+
+::ng-deep .btn-pay.p-button:hover {
+  background: linear-gradient(180deg, #33FF66 0%, #24B548 100%) !important;
 }
 
 /* ESTADO VACÍO */
@@ -166,7 +185,7 @@
 
 /* RESUMEN DE COMPRA */
 .cart-summary-title {
-  font-size: 1.125rem;
+  font-size: 16px;
   font-weight: 600;
 }
 
@@ -176,13 +195,13 @@
 }
 
 .cart-summary-total {
-  font-size: 1rem;
+  font-size: 32px;
   font-weight: 700;
 }
 
 ::ng-deep .summary-card.p-card {
   background: #414141 !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   padding: 0 10px !important;
   border: none;
 }
@@ -234,6 +253,9 @@
 
 /* RESPONSIVE — MOBILE*/
 @media (max-width: 768px) {
+  .contenido-layout {
+    grid-template-columns: 1fr;
+  }
 
   .cart-page-wrapper {
     padding: 1.5rem 1rem;
