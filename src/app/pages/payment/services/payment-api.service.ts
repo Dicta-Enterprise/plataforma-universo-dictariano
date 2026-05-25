@@ -15,7 +15,7 @@ export class PaymentApiService implements PaymentRepository {
   crearOrden(request: CrearOrdenRequest): Observable<CrearOrdenResponse> {
     return this.http
       .post<{ data: CrearOrdenResponse }>(
-        `${environment.URL_BACKEND_TRANSACTION}orders`,
+        `${environment.URL_BACKEND_CARRITO}orders`,
         request
       )
       .pipe(map(res => res.data));

@@ -324,7 +324,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       }));
 
       const body = {
-        idusuario: this.authService.getCurrentUserId() || 1,
+        idusuario: parseInt(this.authService.getUserId() ?? '0', 10),
         estado: 'PENDIENTE',
         detalleOrden,
         pago: {
@@ -342,7 +342,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
         }
       };
 
-      this.http.post<OrderResponse>(`${environment.URL_BACKEND_TRANSACTION}orders`, body).subscribe({
+      this.http.post<OrderResponse>(`${environment.URL_BACKEND_CARRITO}orders`, body).subscribe({
         next: (res) => {
           this.isSubmitting = false;
           const estado = res?.data?.estadoOrden;

@@ -12,14 +12,16 @@ import { IJwtPayload } from 'src/app/core/interfaces/auth/IAuth.interface';
   providedIn: 'root',
 })
 export class AuthService {
-  private loggedInSubject = new BehaviorSubject<boolean>(false);
-  public isLoggedIn$ = this.loggedInSubject.asObservable();
 
   private userSubject = new BehaviorSubject<IJwtPayload | null>(null);
   public user$ = this.userSubject.asObservable();
+  public isLoggedIn$ = this.user$.pipe(map(user => !!user)); 
 
   private userImgSubject = new BehaviorSubject<string>('https://randomuser.me/api/portraits/men/11.jpg');
   public userImg$ = this.userImgSubject.asObservable();
+
+  private sessionCheckedSubject = new BehaviorSubject<boolean>(false);
+  public sessionChecked$ = this.sessionCheckedSubject.asObservable();
 
   constructor(
     private router: Router,
@@ -33,16 +35,20 @@ export class AuthService {
     this.userImgSubject.next(url);
   }
 
-  checkSession(): void {
-    this.authApiService.profile().subscribe({
-      next: (user: IJwtPayload) => {
-        this.userSubject.next(user);
-        this.loggedInSubject.next(true);
-      },
-      error: () => {
-        this.loggedInSubject.next(false);
-        this.userSubject.next(null);
-      },
+  checkSession(): Promise<void> {
+    return new Promise(resolve => {
+      this.authApiService.profile().subscribe({
+        next: (user: IJwtPayload) => {
+          this.userSubject.next(user);
+          this.sessionCheckedSubject.next(true);
+          resolve();
+        },
+        error: () => {
+          this.userSubject.next(null);
+          this.sessionCheckedSubject.next(true);
+          resolve();
+        },
+      });
     });
   }
 
@@ -56,7 +62,6 @@ export class AuthService {
       take(1)
     ).subscribe(user => {
       this.userSubject.next(user);
-      this.loggedInSubject.next(true);
 
       const userId = parseInt(user.sub, 10);
       this.cartService.setUserSession(true, userId);
@@ -69,49 +74,32 @@ export class AuthService {
 
       this.cartService.syncAfterLogin(userId, cursosResolver).pipe(take(1)).subscribe();
 
-      const returnUrl = sessionStorage.getItem('returnUrl') || '/';
-      sessionStorage.removeItem('returnUrl');
+      const returnUrl = this.router.routerState.snapshot.root.queryParams['returnUrl'] || '/';
       this.router.navigate([returnUrl]);
     });
   }
 
   logout(): void {
-    this.authApiService.logout().subscribe({
-      next: () => {
-        const userId = this.getUserId(); // obtén el id antes de limpiar
-        this.loggedInSubject.next(false);
-        this.userSubject.next(null);
-        this.cartService.setUserSession(false, null);
-        this.cartStorage.restoreExpiration();
-        if (userId) {
-          this.cartStorage.clearCarritoId(parseInt(userId, 10));
-        }
-        this.router.navigate(['/auth/login']);
-      },
-    });
+    const userId = this.getUserId();
+
+    this.userSubject.next(null);
+    this.sessionCheckedSubject.next(false); 
+    this.cartService.setUserSession(false, null);
+    this.cartStorage.restoreExpiration();
+    if (userId) {
+      this.cartStorage.clearCarritoId(parseInt(userId, 10));
+    }
+
+    this.authApiService.logout().subscribe();
+    
+    this.router.navigate(['/auth/login']);
   }
 
   isLoggedIn(): boolean {
-    return this.loggedInSubject.value;
+    return !!this.userSubject.value;
   }
 
   getUserImg(): string {
     return this.userImgSubject.getValue();
-  }
-
-  setSession(user: { id?: number; idusuario?: number; token?: string; img?: string }): void {
-    localStorage.setItem('userData', JSON.stringify(user));
-    this.loggedInSubject.next(true);
-  }
-
-  getCurrentUserId(): number {
-    try {
-      const raw = localStorage.getItem('userData');
-      if (!raw) return 0;
-      const user = JSON.parse(raw);
-      return user.id ?? user.idusuario ?? 0;
-    } catch {
-      return 0;
-    }
   }
 }
