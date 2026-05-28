@@ -349,6 +349,11 @@
 .btn-danger:hover  { background: linear-gradient(90deg, #FF0033 0%, #B50024 100%); }
 .btn-danger:active { transform: scale(0.98); }
 
+.status-icon.pending {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
 /* ══ RESPONSIVE ══ */
 @media (max-width: 600px) {
   .result-page { padding: 2rem 1rem 3rem; }

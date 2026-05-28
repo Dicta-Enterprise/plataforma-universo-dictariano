@@ -44,7 +44,7 @@ interface ValidityChangeData {
 }
 
 interface OrderResponse {
-  data?: { estadoOrden?: string };
+  data?: { estadoOrden?: string, estadoDetalle?: string };
 }
 
 interface MpInstance {
@@ -345,29 +345,44 @@ export class PaymentComponent implements OnInit, OnDestroy {
       this.http.post<OrderResponse>(`${environment.URL_BACKEND_CARRITO}orders`, body).subscribe({
         next: (res) => {
           this.isSubmitting = false;
-          const estado = res?.data?.estadoOrden;
+          const estadoOrden   = res?.data?.estadoOrden;    
+          const estadoDetalle = res?.data?.estadoDetalle ?? ''; 
+
           const items = [...this.cart.items];
-          const total  = this.totalAmount;
-          const email  = (this.paymentForm.value as { email: string }).email;
+          const total = this.totalAmount;
+          const email = (this.paymentForm.value as { email: string }).email;
 
-          sessionStorage.setItem('payment_result_items', JSON.stringify(items));
-          sessionStorage.setItem('payment_result_email', email);
-          sessionStorage.setItem('payment_result_total', String(total));
-          sessionStorage.setItem('payment_result_date',  new Date().toISOString());
+          sessionStorage.setItem('payment_result_items',   JSON.stringify(items));
+          sessionStorage.setItem('payment_result_email',   email);
+          sessionStorage.setItem('payment_result_total',   String(total));
+          sessionStorage.setItem('payment_result_date',    new Date().toISOString());
+          sessionStorage.setItem('payment_result_estado',  estadoDetalle || estadoOrden || '');
 
-          if (estado === 'processed' || estado === 'COMPLETADO' || estado === 'processing') {
+          if (estadoOrden === 'processed') {
             this.cart.clearCart();
             this.router.navigate(['payment', 'result'], { queryParams: { status: 'success' } });
+          } else if (estadoOrden === 'pending' || estadoOrden === 'action_required' || estadoOrden === 'processing') {
+            this.router.navigate(['payment', 'result'], {
+              queryParams: { status: 'pending', reason: estadoDetalle || estadoOrden }
+            });
           } else {
-            this.router.navigate(['payment', 'result'], { queryParams: { status: 'rejected' } });
+            this.router.navigate(['payment', 'result'], {
+              queryParams: { status: 'rejected', reason: estadoDetalle || estadoOrden }
+            });
           }
         },
-        error: () => {
+        error: (err) => {
           this.isSubmitting = false;
-          sessionStorage.setItem('payment_result_items', JSON.stringify([...this.cart.items]));
-          sessionStorage.setItem('payment_result_total', String(this.totalAmount));
-          sessionStorage.setItem('payment_result_date',  new Date().toISOString());
-          this.router.navigate(['payment', 'result'], { queryParams: { status: 'rejected' } });
+          const estadoError = err?.error?.data?.estadoDetalle
+                          ?? err?.error?.data?.estadoOrden
+                          ?? 'unknown';
+          sessionStorage.setItem('payment_result_items',  JSON.stringify([...this.cart.items]));
+          sessionStorage.setItem('payment_result_total',  String(this.totalAmount));
+          sessionStorage.setItem('payment_result_date',   new Date().toISOString());
+          sessionStorage.setItem('payment_result_estado', estadoError);
+          this.router.navigate(['payment', 'result'], {
+            queryParams: { status: 'rejected', reason: estadoError }
+          });
         }
       });
 

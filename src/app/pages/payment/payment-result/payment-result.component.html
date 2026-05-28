@@ -2,33 +2,38 @@
 
   <!-- ══ HEADER de estado ══ -->
   <div class="status-header">
-    <div class="status-icon" [class.success]="isSuccess" [class.rejected]="!isSuccess">
-      <!-- Checkmark -->
+    <div class="status-icon"
+         [class.success]="isSuccess"
+         [class.pending]="isPending"
+         [class.rejected]="isRejected">
+
+      <!-- Checkmark – aprobado -->
       <svg *ngIf="isSuccess" viewBox="0 0 24 24" fill="none"
-           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
         <polyline points="20 6 9 17 4 12"/>
       </svg>
-      <!-- X -->
-      <svg *ngIf="!isSuccess" viewBox="0 0 24 24" fill="none"
-           stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
+
+      <!-- Reloj – pendiente -->
+      <svg *ngIf="isPending" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+
+      <!-- X – rechazado -->
+      <svg *ngIf="isRejected" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6"  x2="6"  y2="18"/>
+        <line x1="6"  y1="6"  x2="18" y2="18"/>
       </svg>
     </div>
 
-    <h1 class="status-title">
-      {{ isSuccess ? 'Pago realizado con éxito' : 'No se pudo procesar el pago' }}
-    </h1>
-
-    <ng-container *ngIf="isSuccess">
-      <p class="status-sub">Gracias por tu compra</p>
-      <p class="status-sub">Tus cursos ya están disponibles en tu cuenta</p>
-    </ng-container>
-
-    <ng-container *ngIf="!isSuccess">
-      <p class="status-sub">No se realizó ningún cargo</p>
-      <p class="status-sub">Puedes intentar nuevamente o usar otro método de pago</p>
-    </ng-container>
+    <h1 class="status-title">{{ statusInfo.title }}</h1>
+    <p  class="status-sub">{{ statusInfo.subtitle }}</p>
+    <p  class="status-sub">{{ statusInfo.hint }}</p>
   </div>
 
   <!-- ══ RESUMEN DE COMPRA ══ -->
@@ -39,7 +44,6 @@
       <span class="summary-card-date">{{ date }}</span>
     </div>
 
-    <!-- Lista de ítems -->
     <div class="items-list">
       <div *ngFor="let curso of items; let first = first"
            class="cart-item" [class.first]="first">
@@ -70,7 +74,6 @@
       </div>
     </div>
 
-    <!-- Total -->
     <div class="summary-footer">
       <div class="summary-row total-row">
         <span>Total ({{ items.length }} {{ items.length === 1 ? 'curso' : 'cursos' }})</span>
@@ -81,7 +84,8 @@
 
   <!-- ══ FOOTER de acción ══ -->
   <div class="action-footer">
-    <!-- Éxito: mensaje de factura + botón -->
+
+    <!-- Éxito -->
     <ng-container *ngIf="isSuccess">
       <div class="email-notice">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"
@@ -95,29 +99,45 @@
           <p class="email-hint">(Revisa tu bandeja de entrada o spam)</p>
         </div>
       </div>
-      <button class="btn-primary" (click)="goToCourses()">
-        Ir a mis cursos
-      </button>
+      <button class="btn-primary" (click)="goToCourses()">Ir a mis cursos</button>
     </ng-container>
 
-    <!-- Rechazo: warning + botones -->
-    <ng-container *ngIf="!isSuccess">
+    <!-- Pendiente -->
+    <ng-container *ngIf="isPending">
+      <div class="email-notice">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <polyline points="2,4 12,13 22,4"/>
+        </svg>
+        <div>
+          <p>Te notificaremos el resultado a:</p>
+          <strong>{{ email || 'tu correo registrado' }}</strong>
+          <p class="email-hint">(Revisa tu bandeja de entrada o spam)</p>
+        </div>
+      </div>
+      <button class="btn-secondary" (click)="goToHome()">Volver al inicio</button>
+    </ng-container>
+
+    <!-- Rechazado -->
+    <ng-container *ngIf="isRejected">
       <div class="rejection-notice">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"
              stroke-linecap="round" stroke-linejoin="round">
           <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="9"  x2="12"   y2="13"/>
           <line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>
         <div>
-          <p class="rejection-title">Tu pago fue rechazado</p>
-          <p class="rejection-sub">Intenta nuevamente o usa otro método.</p>
+          <p class="rejection-title">No se realizó ningún cargo a tu tarjeta.</p>
+          <p class="rejection-sub">{{ statusInfo.hint }}</p>
         </div>
       </div>
       <div class="btn-row">
         <button class="btn-danger"    (click)="retryPayment()">Reintentar pago</button>
+        <button class="btn-secondary" (click)="goToCart()">Volver al carrito</button>
       </div>
     </ng-container>
-  </div>
 
+  </div>
 </div>
