@@ -58,7 +58,7 @@
           </div>
           <div class="cart-item-rating">
             <ng-container *ngFor="let star of stars">
-              <i [ngClass]="getStarClass(curso.rating, star)"></i>
+              <i [ngClass]="getStarClass(curso.rating ?? 0, star)"></i>
             </ng-container>
             <span class="rating-value">{{ curso.rating | number:'1.1-1' }}</span>
             <span class="rating-count">({{ curso.valoraciones ?? 0 }} valoraciones)</span>

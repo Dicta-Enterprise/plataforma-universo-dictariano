@@ -11,12 +11,12 @@ export interface MpStatusInfo {
 }
 export interface PaymentResultItem {
   id: string | number;
-  title: string;
-  description?: string;
-  price: number;
+  nombre: string;
+  precio: number;
   rating?: number;
-  categoryId?: string;
-  imageUrl?: string;
+  valoraciones?: number;
+  categoriaId: string;
+  imagen?: string;
 }
 
 @Component({
@@ -210,7 +210,7 @@ export class PaymentResultComponent implements OnInit {
   get isRejected() { return this.statusInfo?.category === 'rejected'; }
 
   getStarClass(rating: number, star: number) {
-    return star <= Math.round(rating)
+    return star <= Math.round(rating ?? 0)
       ? 'pi pi-star-fill rating-star-filled'
       : 'pi pi-star rating-star-empty';
   }

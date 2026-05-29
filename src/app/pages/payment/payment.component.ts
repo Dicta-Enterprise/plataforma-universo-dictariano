@@ -341,7 +341,8 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
       }));
 
       const body = {
-        idusuario: parseInt(this.authService.getUserId() ?? '0', 10),
+        //idusuario: parseInt(this.authService.getUserId() ?? '0', 10),
+        idusuario: 1,
         estado: 'PENDIENTE',
         detalleOrden,
         pago: {
