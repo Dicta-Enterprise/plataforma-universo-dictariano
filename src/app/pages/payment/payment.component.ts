@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -44,7 +44,9 @@ interface ValidityChangeData {
 }
 
 interface OrderResponse {
-  data?: { estadoOrden?: string, estadoDetalle?: string };
+  statusCode?: number;
+  data?: PagoResultado;
+  message?: string;
 }
 
 interface MpInstance {
@@ -58,6 +60,17 @@ interface MpInstance {
   };
 }
 
+interface PagoResultado {
+  estadoOrden?: string;
+  estadoDetalle?: string;
+  ordenId?: number;
+  ordenMpId?: string;
+  pagoMpId?: string;
+  montoPagado?: string;
+  fechaCreacion?: string;
+  nrcompra?: number | null;
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 @Component({
@@ -65,7 +78,7 @@ interface MpInstance {
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent implements OnInit, OnDestroy {
+export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   steps: MenuItem[] = [
     { label: 'Detalles del carrito' },
@@ -73,11 +86,14 @@ export class PaymentComponent implements OnInit, OnDestroy {
     { label: 'Proceder al pago' }
   ];
 
+  isProcessing = false;
   selectedMethod: 'credit' | 'debit' | null = null;
   selectedInstallments = 1;
   selectedIssuerId = '';
   isSubmitting = false;
   errorMessage = '';
+
+  private pendingMount = false;
 
   paymentForm!: FormGroup;
 
@@ -307,6 +323,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       return;
     }
     this.isSubmitting = true;
+    this.isProcessing = true; // ← activa overlay
     this.errorMessage = '';
     const form = this.paymentForm.value as { holder: string; email: string; docType: string; docNumber: string };
 
@@ -344,45 +361,25 @@ export class PaymentComponent implements OnInit, OnDestroy {
 
       this.http.post<OrderResponse>(`${environment.URL_BACKEND_CARRITO}orders`, body).subscribe({
         next: (res) => {
-          this.isSubmitting = false;
-          const estadoOrden   = res?.data?.estadoOrden;    
-          const estadoDetalle = res?.data?.estadoDetalle ?? ''; 
-
-          const items = [...this.cart.items];
-          const total = this.totalAmount;
-          const email = (this.paymentForm.value as { email: string }).email;
-
-          sessionStorage.setItem('payment_result_items',   JSON.stringify(items));
-          sessionStorage.setItem('payment_result_email',   email);
-          sessionStorage.setItem('payment_result_total',   String(total));
-          sessionStorage.setItem('payment_result_date',    new Date().toISOString());
-          sessionStorage.setItem('payment_result_estado',  estadoDetalle || estadoOrden || '');
-
-          if (estadoOrden === 'processed') {
-            this.cart.clearCart();
-            this.router.navigate(['payment', 'result'], { queryParams: { status: 'success' } });
-          } else if (estadoOrden === 'pending' || estadoOrden === 'action_required' || estadoOrden === 'processing') {
-            this.router.navigate(['payment', 'result'], {
-              queryParams: { status: 'pending', reason: estadoDetalle || estadoOrden }
-            });
-          } else {
-            this.router.navigate(['payment', 'result'], {
-              queryParams: { status: 'rejected', reason: estadoDetalle || estadoOrden }
-            });
-          }
+          // Solo llega aquí con 201 (aprobado) o 202 (pendiente)
+          this.guardarSessionYNavegar(res.data, res.statusCode === 202 ? 'pending' : 'success');
         },
         error: (err) => {
-          this.isSubmitting = false;
-          const estadoError = err?.error?.data?.estadoDetalle
-                          ?? err?.error?.data?.estadoOrden
-                          ?? 'unknown';
-          sessionStorage.setItem('payment_result_items',  JSON.stringify([...this.cart.items]));
-          sessionStorage.setItem('payment_result_total',  String(this.totalAmount));
-          sessionStorage.setItem('payment_result_date',   new Date().toISOString());
-          sessionStorage.setItem('payment_result_estado', estadoError);
-          this.router.navigate(['payment', 'result'], {
-            queryParams: { status: 'rejected', reason: estadoError }
-          });
+          // 402 rechazado, 400 bad request, 502 error MP, 500 error interno
+          const data        = err?.error?.data;
+          const statusCode  = err?.error?.statusCode ?? err?.status;
+          const estadoDetalle = data?.estadoDetalle ?? data?.estadoOrden ?? 'unknown';
+
+          this.guardarSession(data);
+
+          if (statusCode === 402) {
+            this.navegar('rejected', estadoDetalle);
+          } else {
+            // error de infraestructura, no de pago
+            this.errorMessage = 'Ocurrió un error al procesar el pago. Intenta nuevamente.';
+            this.isProcessing = false;
+            this.isSubmitting = false;
+          }
         }
       });
 
@@ -390,6 +387,7 @@ export class PaymentComponent implements OnInit, OnDestroy {
       this.isSubmitting = false;
       this.errorMessage = 'No se pudo procesar la tarjeta. Verifica los datos.';
     }
+    
   }
 
   get totalAmount(): number {
@@ -412,7 +410,20 @@ export class PaymentComponent implements OnInit, OnDestroy {
   selectMethod(method: 'credit' | 'debit') {
     this.selectedMethod = method;
     if (this.mpReady && !this.cardNumberElement) {
-      setTimeout(() => this.mountPCIFields(), 0);
+      this.pendingMount = true; 
+    }
+  }
+
+
+
+  ngAfterViewChecked() {
+    if (this.pendingMount && this.selectedMethod && !this.cardNumberElement) {
+      const el = document.getElementById('form-checkout__cardNumber');
+      if (el) {           
+        this.pendingMount = false;
+        this.mountPCIFields();
+        this.cdr.detectChanges();
+      }
     }
   }
 
@@ -429,5 +440,29 @@ export class PaymentComponent implements OnInit, OnDestroy {
         this.categoryMap[cat.id] = { label: cat.nombre, color: colorMap[key] || '#33CCFF' };
       });
     });
+  }
+
+  private guardarSession(data?: PagoResultado) {
+    sessionStorage.setItem('payment_result_items', JSON.stringify([...this.cart.items]));
+    sessionStorage.setItem('payment_result_email', this.paymentForm.value.email);
+    sessionStorage.setItem('payment_result_total', String(this.totalAmount));
+    sessionStorage.setItem('payment_result_date',  new Date().toISOString());
+    sessionStorage.setItem('payment_result_estado', data?.estadoDetalle ?? data?.estadoOrden ?? '');
+  }
+
+  private navegar(status: 'success' | 'pending' | 'rejected', reason?: string) {
+    setTimeout(() => {
+      this.isProcessing = false;
+      if (status === 'success') this.cart.clearCart();
+      this.router.navigate(['payment', 'result'], {
+        queryParams: reason ? { status, reason } : { status }
+      });
+    }, 2000);
+  }
+
+  private guardarSessionYNavegar(data: PagoResultado | undefined, status: 'success' | 'pending') {
+    this.isSubmitting = false;
+    this.guardarSession(data);
+    this.navegar(status, data?.estadoDetalle ?? data?.estadoOrden);
   }
 }

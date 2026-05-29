@@ -49,120 +49,73 @@ export class PaymentResultComponent implements OnInit {
     // ── Pendientes ───────────────────────────────────────────────────────────
     'in_process': {
       category: 'pending',
-      title: 'Autorización requerida por tu banco',
-      subtitle: 'Tu banco necesita que autorices este pago manualmente.',
-      hint: 'Llama al número del dorso de tu tarjeta para autorizar el cobro y luego reintenta.'
-    },
-    'pending_contingency': {
-      category: 'pending',
-      title: 'Pago en revisión',
-      subtitle: 'El banco está procesando la transacción.',
-      hint: 'Puede tardar hasta 2 días hábiles. No repitas el pago.'
-    },
-    'pending_review_manual': {
-      category: 'pending',
-      title: 'Pago en revisión manual',
-      subtitle: 'Tu pago está siendo revisado por nuestro equipo de seguridad.',
-      hint: 'Te notificaremos el resultado en hasta 2 días hábiles.'
-    },
-    'pending_waiting_payment': {
-      category: 'pending',
-      title: 'Esperando confirmación de pago',
-      subtitle: 'Aún no hemos recibido la confirmación de tu banco.',
-      hint: 'Si ya realizaste el pago, espera unos minutos y revisa tu correo.'
-    },
-    'pending_waiting_transfer': {
-      category: 'pending',
-      title: 'Transferencia pendiente',
-      subtitle: 'Estamos esperando que se complete la transferencia.',
-      hint: 'Verifica el estado en la app de tu banco.'
+      title: 'Pago pendiente de confirmación',
+      subtitle: 'Tu pago está siendo revisado.',
+      hint: 'Te notificaremos por correo cuando se confirme. No repitas el pago.'
     },
 
-    // ── Rechazados ───────────────────────────────────────────────────────────
-    'cc_rejected_insufficient_amount': {
-      category: 'rejected',
-      title: 'Saldo insuficiente',
-      subtitle: 'Tu tarjeta no tiene fondos suficientes para este pago.',
-      hint: 'Recarga tu tarjeta o usa otro método de pago.'
-    },
-    'cc_rejected_bad_filled_security_code': {
-      category: 'rejected',
-      title: 'Código de seguridad incorrecto',
-      subtitle: 'El CVV ingresado no coincide con el de tu tarjeta.',
-      hint: 'Verifica el código de 3 dígitos al dorso de tu tarjeta e intenta de nuevo.'
-    },
-    'cc_rejected_bad_filled_date': {
-      category: 'rejected',
-      title: 'Fecha de vencimiento incorrecta',
-      subtitle: 'La fecha ingresada no es válida o tu tarjeta está vencida.',
-      hint: 'Revisa la fecha de vencimiento e intenta de nuevo.'
-    },
-    'cc_rejected_bad_filled_other': {
-      category: 'rejected',
-      title: 'Datos de tarjeta incorrectos',
-      subtitle: 'Hay un error en los datos del formulario.',
-      hint: 'Revisa todos los campos e intenta nuevamente.'
-    },
-    'cc_rejected_call_for_authorize': {
+    // ── Rechazados — Orders API ─────────────────────────────────────────────
+    'required_call_for_authorize': {
       category: 'rejected',
       title: 'Autorización requerida',
       subtitle: 'Tu banco necesita que autorices este pago manualmente.',
       hint: 'Llama al número del dorso de tu tarjeta para autorizar el cobro y luego reintenta.'
     },
-    'cc_rejected_card_disabled': {
+    'insufficient_amount': {
       category: 'rejected',
-      title: 'Tarjeta deshabilitada',
-      subtitle: 'Tu tarjeta no está activa para pagos en línea.',
-      hint: 'Actívala desde la app de tu banco o llama a servicio al cliente.'
+      title: 'Saldo insuficiente',
+      subtitle: 'Tu tarjeta no tiene fondos suficientes para este pago.',
+      hint: 'Recarga tu tarjeta o usa otro método de pago.'
     },
-    'cc_rejected_card_type_not_allowed': {
+    'bad_filled_card_data': {
       category: 'rejected',
-      title: 'Tipo de tarjeta no permitido',
-      subtitle: 'Esta tarjeta no está habilitada para este tipo de transacción.',
-      hint: 'Prueba con una tarjeta de crédito o débito diferente.'
+      title: 'Datos de tarjeta incorrectos',
+      subtitle: 'El código de seguridad, fecha de vencimiento u otro dato no es válido.',
+      hint: 'Verifica todos los datos de tu tarjeta e intenta de nuevo.'
     },
-    'cc_rejected_duplicated_payment': {
-      category: 'rejected',
-      title: 'Pago duplicado',
-      subtitle: 'Ya existe un pago idéntico registrado recientemente.',
-      hint: 'Verifica si el pago anterior fue procesado antes de volver a intentarlo.'
-    },
-    'cc_rejected_high_risk': {
-      category: 'rejected',
-      title: 'Pago rechazado por seguridad',
-      subtitle: 'El pago fue bloqueado por nuestros sistemas de prevención de fraude.',
-      hint: 'Comunícate con tu banco o intenta con otra tarjeta.'
-    },
-    'cc_rejected_invalid_installments': {
+    'invalid_installments': {
       category: 'rejected',
       title: 'Cuotas no válidas',
       subtitle: 'El número de cuotas seleccionado no está disponible para esta tarjeta.',
       hint: 'Selecciona un número de cuotas diferente e intenta nuevamente.'
     },
-    'cc_rejected_max_attempts': {
+    'processing_error': {
+      category: 'rejected',
+      title: 'Error de procesamiento',
+      subtitle: 'Ocurrió un error al procesar el pago. Puede ser un pago duplicado.',
+      hint: 'Verifica si el pago anterior fue procesado antes de volver a intentarlo.'
+    },
+    'card_disabled': {
+      category: 'rejected',
+      title: 'Tarjeta deshabilitada',
+      subtitle: 'Tu tarjeta no está activa para pagos en línea.',
+      hint: 'Actívala desde la app de tu banco o llama a servicio al cliente.'
+    },
+    'invalid_card_token': {
+      category: 'rejected',
+      title: 'Tipo de tarjeta no permitido',
+      subtitle: 'Esta tarjeta no está habilitada para este tipo de transacción.',
+      hint: 'Prueba con una tarjeta de crédito o débito diferente.'
+    },
+    'max_attempts_exceeded': {
       category: 'rejected',
       title: 'Límite de intentos alcanzado',
       subtitle: 'Superaste el número máximo de intentos permitidos.',
       hint: 'Espera unos minutos antes de intentar nuevamente o usa otra tarjeta.'
     },
-    'cc_rejected_other_reason': {
+    'rejected_by_issuer': {
       category: 'rejected',
-      title: 'Pago rechazado',
-      subtitle: 'Tu banco rechazó el pago sin especificar el motivo.',
+      title: 'Pago rechazado por el banco',
+      subtitle: 'Tu banco no autorizó esta transacción.',
       hint: 'Comunícate con tu banco para obtener más información o usa otra tarjeta.'
     },
-    'rejected_by_bank': {
+    'failed': {
       category: 'rejected',
-      title: 'Rechazado por el banco',
-      subtitle: 'Tu banco no autorizó esta transacción.',
-      hint: 'Comunícate con tu banco o usa otro método de pago.'
-    },
-    'rejected_insufficient_data': {
-      category: 'rejected',
-      title: 'Datos insuficientes',
-      subtitle: 'Faltan datos necesarios para procesar el pago.',
-      hint: 'Verifica que todos los campos estén completos e intenta de nuevo.'
-    },
+      title: 'Pago fallido',
+      subtitle: 'No se pudo procesar el pago.',
+      hint: 'Intenta nuevamente o usa otro método de pago.'
+    }
+
   };
 
   private readonly SUCCESS_DEFAULT: MpStatusInfo = {
@@ -224,7 +177,7 @@ export class PaymentResultComponent implements OnInit {
     const storedTotal = sessionStorage.getItem('payment_result_total');
     const storedDate  = sessionStorage.getItem('payment_result_date');
 
-    this.items = storedItems ? JSON.parse(storedItems) : [];
+    this.items = storedItems ? (JSON.parse(storedItems) as PaymentResultItem[]) : [];
     this.email = storedEmail ?? '';
     this.total = storedTotal ? Number(storedTotal) : 0;
     this.date  = storedDate
