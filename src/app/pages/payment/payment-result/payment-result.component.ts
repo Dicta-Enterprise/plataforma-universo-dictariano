@@ -55,66 +55,67 @@ export class PaymentResultComponent implements OnInit {
     },
 
     // ── Rechazados — Orders API ─────────────────────────────────────────────
+
     'required_call_for_authorize': {
       category: 'rejected',
       title: 'Autorización requerida',
-      subtitle: 'Tu banco necesita que autorices este pago manualmente.',
+      subtitle: 'Se requiere una llamada para autorizar el pago.',
       hint: 'Llama al número del dorso de tu tarjeta para autorizar el cobro y luego reintenta.'
     },
     'insufficient_amount': {
       category: 'rejected',
       title: 'Saldo insuficiente',
-      subtitle: 'Tu tarjeta no tiene fondos suficientes para este pago.',
+      subtitle: 'El saldo disponible no es suficiente para cubrir el monto de la transacción.',
       hint: 'Recarga tu tarjeta o usa otro método de pago.'
     },
     'bad_filled_card_data': {
       category: 'rejected',
       title: 'Datos de tarjeta incorrectos',
-      subtitle: 'El código de seguridad, fecha de vencimiento u otro dato no es válido.',
-      hint: 'Verifica todos los datos de tu tarjeta e intenta de nuevo.'
+      subtitle: 'La transacción falló debido a datos de la tarjeta completados incorrectamente.',
+      hint: 'Verifica el número de tarjeta, CVV y fecha de vencimiento e intenta de nuevo.'
     },
     'invalid_installments': {
       category: 'rejected',
       title: 'Cuotas no válidas',
-      subtitle: 'El número de cuotas seleccionado no está disponible para esta tarjeta.',
+      subtitle: 'La transacción falló debido a cuotas inválidas.',
       hint: 'Selecciona un número de cuotas diferente e intenta nuevamente.'
     },
     'processing_error': {
       category: 'rejected',
       title: 'Error de procesamiento',
-      subtitle: 'Ocurrió un error al procesar el pago. Puede ser un pago duplicado.',
-      hint: 'Verifica si el pago anterior fue procesado antes de volver a intentarlo.'
+      subtitle: 'La transacción falló debido a un error de procesamiento.',
+      hint: 'Si el problema persiste, comunícate con soporte e indica el número de tu orden.'
     },
     'card_disabled': {
       category: 'rejected',
       title: 'Tarjeta deshabilitada',
-      subtitle: 'Tu tarjeta no está activa para pagos en línea.',
-      hint: 'Actívala desde la app de tu banco o llama a servicio al cliente.'
+      subtitle: 'La transacción falló debido a que la tarjeta está desactivada. Esto puede ocurrir cuando la tarjeta ha sido bloqueada o desactivada por el emisor.',
+      hint: 'Comunícate con tu banco para conocer el estado de tu tarjeta o usa otra tarjeta.'
     },
     'invalid_card_token': {
       category: 'rejected',
-      title: 'Tipo de tarjeta no permitido',
-      subtitle: 'Esta tarjeta no está habilitada para este tipo de transacción.',
-      hint: 'Prueba con una tarjeta de crédito o débito diferente.'
+      title: 'Token de tarjeta inválido',
+      subtitle: 'La transacción falló debido a un token de tarjeta inválido.',
+      hint: 'Verifica los datos e intenta de nuevo. Si persiste, usa otra tarjeta.'
     },
     'max_attempts_exceeded': {
       category: 'rejected',
       title: 'Límite de intentos alcanzado',
-      subtitle: 'Superaste el número máximo de intentos permitidos.',
+      subtitle: 'La transacción falló debido a que se excedió el número máximo de intentos.',
       hint: 'Espera unos minutos antes de intentar nuevamente o usa otra tarjeta.'
     },
     'rejected_by_issuer': {
       category: 'rejected',
       title: 'Pago rechazado por el banco',
-      subtitle: 'Tu banco no autorizó esta transacción.',
+      subtitle: 'La transacción falló debido a un rechazo por parte del emisor de la tarjeta.',
       hint: 'Comunícate con tu banco para obtener más información o usa otra tarjeta.'
     },
     'failed': {
       category: 'rejected',
       title: 'Pago fallido',
-      subtitle: 'No se pudo procesar el pago.',
+      subtitle: 'No se pudo completar la transacción.',
       hint: 'Intenta nuevamente o usa otro método de pago.'
-    }
+    },
 
   };
 

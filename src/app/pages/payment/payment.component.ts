@@ -323,7 +323,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
       return;
     }
     this.isSubmitting = true;
-    this.isProcessing = true; // ← activa overlay
+    this.isProcessing = true;
     this.errorMessage = '';
     const form = this.paymentForm.value as { holder: string; email: string; docType: string; docNumber: string };
 
@@ -341,8 +341,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
       }));
 
       const body = {
-        //idusuario: parseInt(this.authService.getUserId() ?? '0', 10),
-        idusuario: 1,
+        idusuario: parseInt(this.authService.getUserId() ?? '0', 10),
         estado: 'PENDIENTE',
         detalleOrden,
         pago: {
@@ -357,6 +356,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
           token:         cardToken.id,
           cuotas:        this.selectedMethod === 'debit' ? 1 : this.selectedInstallments,
           processing_mode: 'automatic',
+          //numeroDocumento: form.docNumber,
         }
       };
 
