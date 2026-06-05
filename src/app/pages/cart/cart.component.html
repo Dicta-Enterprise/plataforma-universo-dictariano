@@ -107,8 +107,9 @@
               </span>
             </div>
             <p-button icon="pi pi-credit-card" label="Ir a pagar"
-                      class="w-full" styleClass="w-full btn-pay"
-                      [routerLink]="['/payment']"/>
+          class="w-full" styleClass="w-full btn-pay"
+          [disabled]="cart.items.length === 0"
+          (onClick)="onCheckout()"/>
           </div>
         </p-card>
       </div>

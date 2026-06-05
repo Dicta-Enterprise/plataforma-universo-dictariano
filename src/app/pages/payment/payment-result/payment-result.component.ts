@@ -151,6 +151,7 @@ export class PaymentResultComponent implements OnInit {
     this.loadCategorias();
     this.resolveStatus();
     this.loadSessionData();
+    this.clearSession();
   }
 
   private resolveStatus() {

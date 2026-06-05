@@ -294,7 +294,7 @@
 }
 
 /* ── Botones ── */
-.btn-primary {
+.btn-primario {
   padding: 12px 32px;
   background: linear-gradient(90deg, #33FF66 0%, #2EE85D 100%);
   border: none;
@@ -306,9 +306,8 @@
   transition: background 0.15s, transform 0.1s;
   min-width: 200px;
 }
-
-.btn-primary:hover { background: linear-gradient(90deg, #33FF66 0%, #24B548 100%); }
-.btn-primary:active { transform: scale(0.98); }
+.btn-primario:hover { background: linear-gradient(90deg, #33FF66 0%, #24B548 100%); }
+.btn-primario:active { transform: scale(0.98); }
 
 .btn-row {
   display: flex;
