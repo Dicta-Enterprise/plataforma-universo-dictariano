@@ -62,6 +62,7 @@ export class AuthService {
       take(1)
     ).subscribe(user => {
       this.userSubject.next(user);
+      this.sessionCheckedSubject.next(true);
 
       const userId = parseInt(user.sub, 10);
       this.cartService.setUserSession(true, userId);
