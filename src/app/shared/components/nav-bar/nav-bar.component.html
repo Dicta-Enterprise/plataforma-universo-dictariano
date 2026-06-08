@@ -1,8 +1,45 @@
+<!-- BARRA DE CATEGORÍAS - solo visible en móvil -->
+<div class="lg:hidden flex align-items-center justify-content-center gap-1 py-2 px-4"
+  style="background-color: #272727; border-bottom: 1px solid #374151; height: 50px;">
+
+  <a routerLink="courses/padres" pRipple
+     routerLinkActive="text-yellow-400 shadow-[0_1px_0_0_#ffcc00] outline-transparent"
+    #rla="routerLinkActive"
+    class="flex align-items-center gap-1 text-gray-400 hover:text-yellow-400 hover:shadow-[0_1px_0_0_#ffcc00] shadow-[0_0_0_0_#ffcc00] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+    [style]="!rla.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #ffcc00 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
+    <i class="pi pi-heart text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''"></i>
+    <span class="text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''">Padres</span>
+</a>
+
+  <span class="text-gray-600">|</span>
+
+  <a routerLink="courses/jovenes" pRipple
+     routerLinkActive="text-cyan-400 shadow-[0_1px_0_0_#33ccff] outline-transparent"
+    #rlaJovenes="routerLinkActive"
+    class="flex align-items-center gap-1 text-gray-400 hover:text-cyan-400 hover:shadow-[0_1px_0_0_#33ccff] shadow-[0_0_0_0_#33ccff] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+    [style]="!rlaJovenes.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #33ccff 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
+    <i class="pi pi-send text-sm" [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"></i>
+    <span class="text-sm" [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''">Jóvenes</span>
+</a>
+
+  <span class="text-gray-600">|</span>
+
+  <a routerLink="/courses/ninos" pRipple
+    routerLinkActive="text-green-400 shadow-[0_1px_0_0_#2ee85d] outline-transparent"
+    #rlaNinos="routerLinkActive"
+    class="flex align-items-center gap-1 text-gray-400 hover:text-green-400 hover:shadow-[0_1px_0_0_#2ee85d] shadow-[0_0_0_0_#2ee85d] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+    [style]="!rlaNinos.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #2ee85d 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
+    <i class="pi pi-star text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"></i>
+    <span class="text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''">Niños</span>
+</a>
+
+</div>
+
 <div
-  class="bg-gradient-to-tr from-[rgba(26,38,57,0.3)] to-[rgba(31,88,186,0.3)] py-2 px-4 shadow-2 flex align-items-center justify-content-between relative lg:static border-bottom-1 border-none"
-  style="min-height: 56px"
+  class="py-2 px-4 shadow-2 flex align-items-center justify-content-between relative lg:static border-bottom-1 border-none"
+  style="min-height: 56px; background-color: #272727;"
 >
-  <a href="">
+  <a routerLink="/">
     <img
       src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
       alt="Image"
@@ -10,18 +47,20 @@
       class="h-8 w-auto mr-2 lg:mr-4"
     />
   </a>
-  <a
-    pRipple
-    class="cursor-pointer block lg:hidden text-gray-400"
-    pStyleClass="@next"
-    enterClass="hidden"
-    leaveToClass="hidden"
-    [hideOnOutsideClick]="true"
-  >
-    <i class="pi pi-bars text-2xl"></i>
-  </a>
+
+<!-- Menú móvil: Home y Mundo 3D -->
+<div class="flex lg:hidden align-items-center gap-2 flex-1 justify-content-center">
+  <a href="http://localhost:3000" target="_blank" pRipple
+  class="flex align-items-center font-medium cursor-pointer transition duration-200"
+    style="color: #b4b4b4; background-color: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 8px 12px; gap: 8px; text-decoration: none; white-space:nowrap; justify-content:center;">
+    <i class="pi pi-globe mr-1"  style="font-size: 0.85rem;"></i>
+  <span class="text-sm">Mundo 3D</span>
+</a>
+</div>
+
   <div
-    class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 top-100 z-1 shadow-2 lg:shadow-none border-1 lg:border-none bg-[rgba(15,23,42,.5)] backdrop-blur-md"
+    class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 top-100 z-1 shadow-2 lg:shadow-none border-1 lg:border-none"
+    style="background-color: #272727;"
   >
     <ul
       class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row gap-2"
@@ -91,15 +130,6 @@
           </li>
         </ul>
       </li>
-      <li routerLink="/about">
-        <a
-          pRipple
-          class="flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] transition font-medium border-round cursor-pointer duration-200"
-        >
-          <i class="pi pi-calendar mr-2"></i>
-          <span>Acerca de Nosotros</span>
-        </a>
-      </li>
       <!-- Cambiar localhost:3000 por el link real cuando esté disponible -->
       <li>
         <a 
@@ -155,15 +185,46 @@
         >
         </p-avatar>
 
-        <p-menu
+        
+      </ng-container>
+    </ul>
+  </div>
+  <!-- Carrito y perfil móvil -->
+<div class="flex lg:hidden align-items-center gap-2">
+  <a pRipple [routerLink]="['/cart']" *ngIf="auth.isLoggedIn$ | async"
+    class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2">
+    <i class="pi pi-shopping-cart text-xl"></i>
+    <ng-container *ngIf="count$ | async as count">
+      <span *ngIf="count > 0"
+        class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5">
+        {{ count }}
+      </span>
+    </ng-container>
+  </a>
+  <button
+    class="px-3 py-1 rounded font-semibold text-black shadow-[0_4px_0_0_black] bg-yellow-500 transition duration-300"
+    routerLink="/auth/login"
+    *ngIf="!(auth.isLoggedIn$ | async)">
+    Login
+  </button>
+  <p-avatar
+    *ngIf="auth.isLoggedIn$ | async"
+    [image]="(auth.userImg$ | async) ?? ''"
+    shape="circle"
+    size="large"
+    (click)="menu.toggle($event)"
+    styleClass="user-avatar-button my-1 mx-2"
+    class="block cursor-pointer"
+    aria-haspopup="true"
+    aria-controls="user_menu_popup">
+  </p-avatar>
+</div>
+<p-menu
           #menu
           [model]="userItems"
           [popup]="true"
           id="user_menu_popup"
-          styleClass="lg:-translate-x-[5rem] lg:-translate-y-[0] -translate-y-[3rem]"
+          
         >
         </p-menu>
-      </ng-container>
-    </ul>
-  </div>
 </div>
