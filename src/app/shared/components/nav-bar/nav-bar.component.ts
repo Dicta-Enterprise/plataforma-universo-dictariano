@@ -40,6 +40,7 @@ export class NavBarComponent implements OnInit {
         label: 'Ver mis cursos',
         icon: 'pi pi-book', // Icono de PrimeIcons
         //command: () => this.onViewMyCourses()
+        routerLink: '/my-courses'
       },
       {
         label: 'Cerrar sesión',
