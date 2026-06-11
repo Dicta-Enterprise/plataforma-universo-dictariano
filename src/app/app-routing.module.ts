@@ -30,6 +30,10 @@ const routes: Routes = [
         path: 'perfil',
         loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilModule),
       },
+      {
+        path: 'my-courses',
+        loadChildren: () => import('./pages/my-courses/my-courses.module').then(m => m.MyCoursesModule),
+      },
     ]
   },
 
@@ -56,4 +60,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

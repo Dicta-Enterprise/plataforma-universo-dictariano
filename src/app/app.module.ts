@@ -36,7 +36,7 @@ import { CheckoutNavbarComponent } from './shared/components/checkout-navbar/che
     FooterComponent,
     ActivoInactivoPipe,
     MainLayoutComponent, 
-    BlankLayoutComponent, 
+    BlankLayoutComponent,  
   ],
   imports: [
     BrowserModule,
