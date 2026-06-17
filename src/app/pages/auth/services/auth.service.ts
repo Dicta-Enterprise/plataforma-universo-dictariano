@@ -40,11 +40,18 @@ export class AuthService {
       this.authApiService.profile().subscribe({
         next: (user: IJwtPayload) => {
           this.userSubject.next(user);
+
+          const userId = parseInt(user.sub, 10);
+          this.cartService.setUserSession(true, userId);
+
           this.sessionCheckedSubject.next(true);
           resolve();
         },
         error: () => {
           this.userSubject.next(null);
+
+          this.cartService.setUserSession(false, null);
+
           this.sessionCheckedSubject.next(true);
           resolve();
         },

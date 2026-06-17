@@ -135,6 +135,27 @@ export class CartService {
     this.itemsSubject.next(items);
     this.storage.saveItems(items);
 
+    if (this.isLoggedIn && !this.carritoId && this.currentUserId) {
+
+      const cursos = items.map(c => ({
+        idcurso: String(c.id)
+      }));
+
+      this.api.crearCarrito(this.currentUserId, cursos)
+        .subscribe({
+          next: (res) => {
+            if (res?.id) {
+              this.saveCarritoIdForUser(
+            this.currentUserId!,
+            res.id
+              );
+            }
+          }
+        });
+
+      return;
+    }
+
     if (this.isLoggedIn && this.carritoId) {
       const prevIds = new Set(previous.map(c => String(c.id)));
       const currIds = new Set(items.map(c => String(c.id)));
