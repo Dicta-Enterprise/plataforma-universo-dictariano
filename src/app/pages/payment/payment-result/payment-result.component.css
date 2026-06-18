@@ -1,0 +1,364 @@
+/* ── Variables (mismo sistema que payment) ── */
+:host {
+  --bg:        #272727;
+  --surface:   #333333;
+  --border:    rgba(255,255,255,0.08);
+  --border-muted: #414141;
+  --accent:    #33ff66;
+  --error:     #FF0033;
+  --text:      #efefef;
+  --muted:     #5C5C5C;
+  --radius:    12px;
+}
+
+/* ══ PAGE WRAPPER ══ */
+.result-page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 50px 4rem;
+  gap: 2rem;
+}
+
+/* ══ STATUS HEADER ══ */
+.status-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.status-icon {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.status-icon.success {
+  border-color: var(--accent);
+}
+
+.status-icon.rejected {
+  border-color: var(--error);
+}
+
+.status-icon svg {
+  width: 128px;
+  height: 100px;
+}
+
+.status-icon.success svg { stroke: var(--accent); }
+.status-icon.rejected svg { stroke: var(--error); }
+
+.status-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.status-sub {
+  font-size: 20px;
+  color: var(--text);
+  margin: 0;
+}
+.status-sub:last-child {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+/* ══ SUMMARY CARD ══ */
+.summary-card {
+  width: 100%;
+  max-width: 1000px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.summary-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  
+}
+
+.summary-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.summary-card-date {
+  font-size: 18px;
+  color: var(--text);
+}
+
+/* ── Items list ── */
+.items-list {
+  padding: 0 1.5rem;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border-muted);
+}
+
+.cart-item.first {
+  border-top: 1px solid var(--border-muted);
+}
+
+.cart-item-img {
+    max-width: 100px;
+  width: 12%;
+  height: 100%;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.cart-item-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.3rem;
+}
+
+.cart-item-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.cart-item-nombre {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.cart-item-precio {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.cart-item-rating {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+}
+
+.rating-star-filled { color: #ffcc00; }
+.rating-star-empty  { color: rgba(255,255,255,0.25); }
+
+.rating-value {
+  font-size: 12px;
+  color: #c7c7c7;
+  margin-left: 2px;
+}
+
+.rating-count {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.cart-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cart-tag {
+  background: #545454;
+  color: var(--text);
+  border-radius: 23px;
+  border: 2px solid transparent;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── Summary footer ── */
+.summary-footer {
+  padding: 1rem 1.5rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-row {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.total-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ══ ACTION FOOTER ══ */
+.action-footer {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* ── Éxito: notice de email ── */
+.email-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.email-notice svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--text);
+  flex-shrink: 0;
+}
+
+.email-notice p {
+  margin: 0;
+}
+
+.email-notice strong {
+  display: block;
+  color: var(--text);
+  font-size: 16px;
+  margin: 2px 0;
+}
+
+.email-hint {
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ── Rechazo: warning ── */
+.rejection-notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  color: var(--text);
+}
+
+.rejection-notice svg {
+  width: 32px;
+  height: 32px;
+  stroke: var(--text);
+}
+
+.rejection-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.rejection-sub {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ── Botones ── */
+.btn-primario {
+  padding: 12px 32px;
+  background: linear-gradient(90deg, #33FF66 0%, #2EE85D 100%);
+  border: none;
+  border-radius: 10px;
+  color: #111111;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  min-width: 200px;
+}
+.btn-primario:hover { background: linear-gradient(90deg, #33FF66 0%, #24B548 100%); }
+.btn-primario:active { transform: scale(0.98); }
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-secondary {
+  padding: 11px 24px;
+  background: transparent;
+  border: 1px solid #7d7d7d;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.btn-secondary:hover {
+  border-color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.04);
+}
+
+.btn-danger {
+  padding: 11px 24px;
+  background: var(--error);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-danger:hover  { background: linear-gradient(90deg, #FF0033 0%, #B50024 100%); }
+.btn-danger:active { transform: scale(0.98); }
+
+.status-icon.pending {
+  border-color: #f59e0b;
+  color: #f59e0b;
+}
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 600px) {
+  .result-page { padding: 2rem 1rem 3rem; }
+  .status-title { font-size: 22px; }
+  .summary-card-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .cart-item-img { width: 56px; height: 40px; }
+  .total-amount { font-size: 16px; }
+}
+
