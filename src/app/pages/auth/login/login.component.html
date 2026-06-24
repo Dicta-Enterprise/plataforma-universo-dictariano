@@ -1,35 +1,40 @@
-<div class="min-h-screen flex items-center justify-center bg-black">
-  <div class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-md">
-    <div class="flex flex-col items-center mb-6">
+<div class="login-container flex justify-content-center align-items-center min-h-screen">
+  <div class="login-card p-5 w-full sm:w-30rem">
+
+    <div class="flex flex-column align-items-center mb-4">
       <img
         src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
-        alt="Image"
-        class="w-24 h-24 md:w-32 md:h-32 mb-3"
+        alt="Logo"
+        class="login-logo mb-3"
       />
-      <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 text-center">
+
+      <h2 class="login-title text-center">
         Bienvenido a tu Plataforma Dictariana
       </h2>
-      <div class="text-gray-400 text-center">
+
+      <span class="login-subtitle text-center">
         No tienes una cuenta?
-        <a 
-        routerLink="/auth/register"
-        class="font-semibold text-blue-400 hover:underline ml-1 cursor-pointer">
-        Crea una ahora!</a>
-      </div>
+        <a routerLink="/auth/register" class="login-link">
+          Crea una ahora!
+        </a>
+      </span>
     </div>
-  
-    <form 
+
+    <form
       [formGroup]="loginFormPresenter.Form"
-      (ngSubmit)="submit()">
-      <div class="mb-4">
-        <label for="email1" class="block text-gray-300 font-medium mb-1">Email</label>
+      (ngSubmit)="submit()"
+    >
+
+      <div class="field mb-3">
+        <label for="email1" class="login-label">Email</label>
+
         <input
-          id="email1"
-          type="text"
-          placeholder="Ingresa tu Email"
+          id="email"
+          type="email"
           pInputText
           formControlName="email"
-          class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
+          class="login-input w-full"
+          placeholder="Ingresa tu Email"
         />
         <small
           class="p-error"
@@ -38,13 +43,12 @@
         </small>
         
       </div>
-      <div class="mb-4">
-        <label for="password1" class="block text-gray-300 font-medium mb-1">Contraseña</label>
-        <input
+
+      <div class="field mb-3">
+        <label for="password1" class="login-label">Contraseña</label>
+
+        <p-password
           id="password1"
-          type="password"
-          placeholder="Ingresa tu Contraseña"
-          pInputText
           formControlName="password"
           class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
         />
@@ -55,12 +59,24 @@
         </small>
       </div>
 
-      <div class="flex items-center justify-between mb-6 text-sm">
-        <label class="flex items-center text-gray-300">
-          <p-checkbox id="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
-          Recuérdame
-        </label>
-        <a class="text-blue-400 hover:underline cursor-pointer">Olvidaste la Contraseña?</a>
+      <div class="flex align-items-center justify-content-between mb-4">
+
+        <div class="flex align-items-center">
+          <p-checkbox
+            inputId="rememberme"
+            [binary]="true"
+            styleClass="mr-2"
+          ></p-checkbox>
+
+          <label for="rememberme" class="login-label">
+            Recuérdame
+          </label>
+        </div>
+
+        <a class="login-link cursor-pointer">
+          Olvidaste la Contraseña?
+        </a>
+
       </div>
 
       <button
@@ -69,26 +85,20 @@
         pRipple
         label="Ingresar"
         icon="pi pi-user"
-        class="w-full py-3 text-lg font-semibold rounded-lg
-              bg-gradient-to-r from-teal-400 to-cyan-500 border-0 shadow-md 
-              text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black 
-              transition mb-4 flex items-center justify-center gap-2"
+        class="login-button w-full mb-3"
         [disabled]="loginFormPresenter.Invalid"
-        >
-      </button>
+      ></button>
+
       <button
         type="button"
         pButton
         pRipple
         label="Ingresar con Google"
         icon="pi pi-google"
-        class="w-full py-3 text-lg font-semibold rounded-lg
-              bg-gradient-to-r from-red-400 to-pink-500 border-0 shadow-md 
-              text-white hover:from-pink-400 hover:to-red-500 
-              transition flex items-center justify-center gap-2"
+        class="login-google-button w-full"
         (click)="loginWithGoogle()"
-        >
-      </button>
+      ></button>
+
     </form>
   </div>
 </div>
