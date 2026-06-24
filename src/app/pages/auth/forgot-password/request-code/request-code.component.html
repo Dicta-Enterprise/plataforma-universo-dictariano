@@ -1,0 +1,41 @@
+<div class="forgot-container flex justify-content-center align-items-center min-h-screen">
+  <div class="forgot-card p-5 w-full sm:w-30rem">
+
+    <div class="flex flex-column align-items-center mb-4">
+      <img src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
+           alt="Logo" class="forgot-logo mb-3"/>
+      <h2 class="forgot-title text-center">¿Olvidaste tu contraseña?</h2>
+      <span class="forgot-subtitle text-center">
+        Ingresa tu correo y te enviaremos un código de verificación.
+      </span>
+    </div>
+
+    <form [formGroup]="presenter.Form" (ngSubmit)="submit()">
+      <div class="field mb-3">
+        <label for="email" class="forgot-label">Email</label>
+        <input id="email" type="text" pInputText formControlName="email"
+              placeholder="Ingresa tu correo"
+              class="forgot-input w-full"/>
+        <small class="p-error" dictaErrorForm [control]="presenter.Form.get('email')"></small>
+
+        <!-- Mensaje explícito de formato inválido -->
+        <small class="p-error"
+          *ngIf="presenter.Form.get('email')?.hasError('email') && presenter.Form.get('email')?.touched">
+          Ingresa un correo electrónico válido (ejemplo&#64;dominio.com)
+        </small>
+      </div>
+
+      <button type="submit" pButton pRipple
+              label="Enviar código"
+              icon="pi pi-send"
+              [loading]="(facade.loading$ | async) ?? false"
+              [disabled]="presenter.Invalid"
+              class="forgot-button w-full">
+      </button>
+    </form>
+
+    <div class="text-center mt-4">
+      <a routerLink="/auth/login" class="forgot-link">← Volver al inicio de sesión</a>
+    </div>
+  </div>
+</div>

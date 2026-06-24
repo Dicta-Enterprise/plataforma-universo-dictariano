@@ -56,11 +56,14 @@
       </div>
 
       <div class="flex items-center justify-between mb-6 text-sm">
-        <label class="flex items-center text-gray-300">
-          <p-checkbox id="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
+        <label for="rememberme" class="flex items-center text-gray-300">
+          <p-checkbox inputId="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
           Recuérdame
         </label>
-        <a class="text-blue-400 hover:underline cursor-pointer">Olvidaste la Contraseña?</a>
+        <a routerLink="/auth/forgot-password"
+          class="text-blue-400 hover:underline cursor-pointer">
+          Olvidaste la Contraseña?
+        </a>
       </div>
 
       <button

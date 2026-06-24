@@ -1,0 +1,49 @@
+<div class="forgot-container flex justify-content-center align-items-center min-h-screen">
+  <div class="forgot-card p-5 w-full sm:w-30rem">
+
+    <div class="flex flex-column align-items-center mb-4">
+      <img src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
+           alt="Logo" class="forgot-logo mb-3"/>
+      <h2 class="forgot-title text-center">Ingresa el código</h2>
+      <span class="forgot-subtitle text-center">
+        Revisa tu correo e ingresa el código de 6 dígitos.
+      </span>
+    </div>
+
+    <!-- Temporizador -->
+    <div class="flex flex-column align-items-center mb-4">
+      <div class="timer-circle" [class.timer-expired]="timerExpired">
+        <span class="timer-text" [class.timer-text-expired]="timerExpired">
+          {{ timerFormateado }}
+        </span>
+      </div>
+      <span *ngIf="timerExpired" class="text-red-400 text-sm text-center">
+        El código ha expirado.
+      </span>
+    </div>
+
+    <form [formGroup]="presenter.Form" (ngSubmit)="submit()">
+      <div class="field mb-3">
+        <label for="code" class="forgot-label">Código de verificación</label>
+        <input id="code" type="text" pInputText formControlName="code"
+              placeholder="000000" maxlength="6"
+              class="code-input w-full"/>
+        <small class="p-error" dictaErrorForm [control]="presenter.Form.get('code')"></small>
+      </div>
+
+      <button type="submit" pButton pRipple
+              label="Verificar código"
+              icon="pi pi-check"
+              [loading]="(facade.loading$ | async) ?? false"
+              [disabled]="presenter.Invalid || timerExpired"
+              class="forgot-button w-full">
+      </button>
+    </form>
+
+    <div class="text-center mt-4">
+      <a routerLink="/auth/forgot-password/request-code" class="forgot-link">
+        ¿No recibiste el código? Solicitar otro
+      </a>
+    </div>
+  </div>
+</div>
