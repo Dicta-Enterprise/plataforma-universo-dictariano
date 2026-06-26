@@ -1,7 +1,7 @@
 import { Directive, Input, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { Password } from 'primeng/password';
 
+/* eslint-disable @angular-eslint/directive-selector */
 @Directive({
   selector: '[dictaErrorForm]'
 })
@@ -14,6 +14,7 @@ export class ErrorFormDirective implements OnInit {
   private errorMessages: Record<string, string> = {
     required: 'Este campo es obligatorio',
     email: 'Correo inválido',
+    pattern: 'Correo inválido',
     minlength: 'Debe tener al menos 8 caracteres',
     weakPassword: 'La contraseña debe tener mayúscula, minúscula, número y símbolo',
     passwordMismatch: 'Las contraseñas no coinciden'
@@ -27,6 +28,9 @@ export class ErrorFormDirective implements OnInit {
       this.updateError();
     });
 
+    this.control.valueChanges?.subscribe(() => {
+      this.updateError();
+    });
     this.updateError();
   }
 
@@ -37,14 +41,14 @@ export class ErrorFormDirective implements OnInit {
     if (this.control.touched && this.control.invalid) {
       const errors = this.control.errors;
     
-    if (!errors) return;
+      if (!errors) return;
 
-    if (errors['minlength']) {
-      const requiredLength = errors['minlength'].requiredLength;
-      this.el.nativeElement.innerText =
+      if (errors['minlength']) {
+        const requiredLength = errors['minlength'].requiredLength;
+        this.el.nativeElement.innerText =
         `Debe tener al menos ${requiredLength} caracteres`;
-      return;
-    }
+        return;
+      }
       const firstError = Object.keys(errors)[0];
       const message = this.errorMessages[firstError];
 

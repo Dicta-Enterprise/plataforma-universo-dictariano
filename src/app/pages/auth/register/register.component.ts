@@ -28,6 +28,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.registerFormPresenter.Value
     );
   }
+  
+  loginWithGoogle(): void {
+    window.location.href = 'http://localhost:3000/api/auth/google';
+  }
 
   ngOnDestroy(): void {
     this.registerFacade.destroy();

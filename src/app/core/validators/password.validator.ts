@@ -11,21 +11,25 @@ export function PasswordValidator(
   return (form: AbstractControl): ValidationErrors | null => {
     const password = form.get(passwordKey)?.value;
     const confirmPassword = form.get(confirmPasswordKey)?.value;
+    const confirmControl = form.get(confirmPasswordKey);
+    const passwordControl = form.get(passwordKey);
 
-    if (!password || !confirmPassword) {
+    if (!password || !confirmPassword) return null;
+
+    if (!passwordRegex.test(password)) {
+      passwordControl?.setErrors({ weakPassword: true }); 
       return null;
+    } else {
+      passwordControl?.setErrors(null);
     }
 
-    if (password && !passwordRegex.test(password)) {
-      return { weakPassword: true };
-    }
-
-    if (password && confirmPassword && password !== confirmPassword) {
-      return { passwordMismatch: true };
+    if (password !== confirmPassword) {
+      confirmControl?.setErrors({ passwordMismatch: true }); 
+      return null;
+    } else {
+      confirmControl?.setErrors(null);
     }
 
     return null;
   };
 }
-
-

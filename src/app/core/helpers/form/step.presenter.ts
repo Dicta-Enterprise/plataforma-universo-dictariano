@@ -35,6 +35,7 @@ export class StepPresenter<T extends Record<string, any>> {
   MarkAllAsTouched(): void {
     Object.values(this.form.controls).forEach((control) => {
       control.markAsTouched();
+      control.updateValueAndValidity(); 
     });
   }
 }
