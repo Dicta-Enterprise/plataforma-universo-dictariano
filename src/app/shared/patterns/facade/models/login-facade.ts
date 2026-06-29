@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
 import { Login } from 'src/app/core/class/auth/login.class';
@@ -11,21 +10,17 @@ import { AuthService } from 'src/app/pages/auth/services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-
 export class LoginFacade {
-
   login$ = new BehaviorSubject<LoginResponse | null>(null);
-
   private destroy$ = new Subject<void>();
 
   constructor(
     private readonly loginService: LoginService,
     private readonly messageService: MessageService,
-    private readonly router: Router,
     private readonly authService: AuthService
   ) {}
 
-  iniciarSesion(login: Login) {
+  iniciarSesion(login: Login): void {
     this.loginService
       .iniciarSesion(login)
       .pipe(takeUntil(this.destroy$))
@@ -40,11 +35,8 @@ export class LoginFacade {
             summary: 'Inicio de sesión exitoso',
             detail: 'Bienvenido nuevamente',
           });
-
-          this.router.navigate(['/']);
         },
         error: (error) => {
-
           const backendMessage = error?.error?.message;
 
           if (backendMessage === 'Credenciales inválidas') {

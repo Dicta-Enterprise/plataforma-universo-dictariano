@@ -4,6 +4,7 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,14 +15,22 @@ export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
   userItems: MenuItem[];
   count$: Observable<number>;
+  searchQuery = '';
+  searchVisible = false;
 
   constructor(
      private cart: CartService,
-     public auth: AuthService 
+     public auth: AuthService,
+     private router: Router
   ) {
     this.count$ = cart.items$.pipe(map(items => items.length));
   }
   
+  buscar() {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/courses'], { queryParams: { q: this.searchQuery } });
+    }
+  }
   
   ngOnInit(): void {
     this.userItems = [
@@ -40,6 +49,7 @@ export class NavBarComponent implements OnInit {
         label: 'Ver mis cursos',
         icon: 'pi pi-book', // Icono de PrimeIcons
         //command: () => this.onViewMyCourses()
+        routerLink: '/my-courses'
       },
       {
         label: 'Cerrar sesión',
@@ -101,6 +111,6 @@ export class NavBarComponent implements OnInit {
     alert('Ir a perfil (aquí va tu lógica)');
   }
   logout(): void {
-  this.auth.logout();
-}
+    this.auth.logout();
+  }
 }

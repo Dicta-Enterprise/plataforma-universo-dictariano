@@ -1,7 +1,7 @@
-<!-- BARRA DE CATEGORÍAS - solo visible en móvil -->
-<div class="lg:hidden flex align-items-center justify-content-center gap-1 py-2 px-4"
+<!-- BARRA DE CATEGORÍAS - visible siempre -->
+<div class="flex align-items-center justify-content-between gap-1 lg:gap-4 py-2 px-4"
   style="background-color: #272727; border-bottom: 1px solid #374151; height: 50px;">
-
+<div class="flex align-items-center gap-1 lg:gap-4 flex-1 justify-content-center">
   <a routerLink="courses/padres" pRipple
      routerLinkActive="text-yellow-400 shadow-[0_1px_0_0_#ffcc00] outline-transparent"
     #rla="routerLinkActive"
@@ -9,7 +9,7 @@
     [style]="!rla.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #ffcc00 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
     <i class="pi pi-heart text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''"></i>
     <span class="text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''">Padres</span>
-</a>
+  </a>
 
   <span class="text-gray-600">|</span>
 
@@ -20,7 +20,7 @@
     [style]="!rlaJovenes.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #33ccff 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
     <i class="pi pi-send text-sm" [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"></i>
     <span class="text-sm" [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''">Jóvenes</span>
-</a>
+  </a>
 
   <span class="text-gray-600">|</span>
 
@@ -31,200 +31,109 @@
     [style]="!rlaNinos.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #2ee85d 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
     <i class="pi pi-star text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"></i>
     <span class="text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''">Niños</span>
-</a>
-
+  </a>
+</div>
+  <!-- Buscador derecha -->
+<div class="flex align-items-center ml-auto">
+  <!-- Desktop -->
+  <span class="p-input-icon-left hidden lg:block">
+  <i class="pi pi-search" style="color: #e8002e;"></i>
+  <input type="text" pInputText placeholder="Buscar cursos..."
+    [(ngModel)]="searchQuery" (keyup.enter)="buscar()"
+    style="background-color: #3a3a3a; border: 1px solid #5c5c5c !important; color: #fff; border-radius: 10px; padding-left: 2.5rem; width: 300px;"/>
+</span>
+  <!-- Móvil: solo ícono -->
+  <span class="flex lg:hidden" (click)="searchVisible = !searchVisible" style="cursor: pointer;">
+    <i class="pi pi-search" style="color: #e8002e; font-size: 0.9rem;"></i>
+  </span>
+</div>
 </div>
 
-<div
-  class="py-2 px-4 shadow-2 flex align-items-center justify-content-between relative lg:static border-bottom-1 border-none"
-  style="min-height: 56px; background-color: #272727;"
->
+<div *ngIf="searchVisible"
+  class="flex lg:hidden"
+  style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background-color: #272727; padding: 12px 16px; border-bottom: 1px solid #374151;">
+  <span class="p-input-icon-left" style="width: 100%;">
+    <i class="pi pi-search" style="color: #e8002e;"></i>
+    <input type="text" pInputText placeholder="Buscar cursos..."
+      [(ngModel)]="searchQuery"
+      (keyup.enter)="buscar(); searchVisible = false"
+      (blur)="searchVisible = false"
+      autofocus
+      style="background-color: #3a3a3a; border: 1px solid #5c5c5c; color: #fff; border-radius: 10px; padding-left: 2.5rem; width: 100%;"/>
+  </span>
+  <button (click)="searchVisible = false"
+    style="background: none; border: none; color: #fff; cursor: pointer; margin-left: 8px; font-size: 1.2rem;">
+    <i class="pi pi-times"></i>
+  </button>
+</div>
+
+<!-- NAVBAR CON LOGO -->
+<div class="flex align-items-center justify-content-between px-4 py-2"
+  style="background-color: #272727; min-height: 56px;">
+
+  <!-- Logo -->
   <a routerLink="/">
     <img
-      src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
-      alt="Image"
-      height="40"
-      class="h-8 w-auto mr-2 lg:mr-4"
+      src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
+      alt="Logo Mundo Dictariano"
+      style="height: 40px; width: auto; object-fit: contain;"
     />
   </a>
 
-<!-- Menú móvil: Home y Mundo 3D -->
-<div class="flex lg:hidden align-items-center gap-2 flex-1 justify-content-center">
-  <a href="http://localhost:3000" target="_blank" pRipple
-  class="flex align-items-center font-medium cursor-pointer transition duration-200"
-    style="color: #b4b4b4; background-color: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 8px 12px; gap: 8px; text-decoration: none; white-space:nowrap; justify-content:center;">
-    <i class="pi pi-globe mr-1"  style="font-size: 0.85rem;"></i>
-  <span class="text-sm">Mundo 3D</span>
-</a>
-</div>
-
-  <div
-    class="align-items-center flex-grow-1 justify-content-between hidden lg:flex absolute lg:static w-full left-0 top-100 z-1 shadow-2 lg:shadow-none border-1 lg:border-none"
-    style="background-color: #272727;"
-  >
-    <ul
-      class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row gap-2"
-    >
-      <li routerLink="/">
-        <a
-          pRipple
-          class="flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-yellow-400 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
-        >
-          <i class="pi pi-home mr-2"></i>
-          <span>Home</span>
-        </a>
-      </li>
-      <li>
-        <a
-          pRipple
-          class="flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-yellow-400 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
-          pStyleClass="@next"
-          enterClass="hidden"
-          enterActiveClass="scalein"
-          leaveToClass="hidden"
-          leaveActiveClass="fadeout"
-          [hideOnOutsideClick]="true"
-        >
-          <i class="pi pi-users mr-2"></i>
-          <span>Cursos</span>
-          <i class="pi pi-angle-down ml-auto lg:ml-3"></i>
-        </a>
-        <ul
-          class="list-none py-3 px-6 m-0 lg:px-0 lg:py-0 border-round shadow-0 lg:shadow-2 lg:absolute bg-gray-900 hidden origin-top w-full lg:w-15rem cursor-pointer lg:border-1 border-gray-800"
-        >
-          <li routerLink="/courses">
-            <a
-              pRipple
-              class="flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-yellow-500 transition-colors duration-200"
-            >
-              <i class="pi pi-user-plus mr-2"></i>
-              <span class="font-medium">Todos</span>
-            </a>
-          </li>
-          <li routerLink="courses/padres">
-            <a
-              pRipple
-              class="flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-yellow-500 transition-colors duration-200"
-            >
-              <i class="pi pi-user-plus mr-2"></i>
-              <span class="font-medium">Padres</span>
-            </a>
-          </li>
-          <li routerLink="courses/jovenes">
-            <a
-              pRipple
-              class="flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-yellow-500 transition-colors duration-200"
-            >
-              <i class="pi pi-user-plus mr-2"></i>
-              <span class="font-medium">Jóvenes</span>
-            </a>
-          </li>
-          <li routerLink="/courses/ninos">
-            <a
-              pRipple
-              class="flex p-3 align-items-center text-gray-400 hover:text-white hover:bg-yellow-500 transition-colors duration-200"
-            >
-              <i class="pi pi-user-plus mr-2"></i>
-              <span class="font-medium">Niños</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <!-- Cambiar localhost:3000 por el link real cuando esté disponible -->
-      <li>
-        <a 
-          pRipple
-          href="http://localhost:3000" 
-          target="_blank"
-          class="flex px-6 p-3 lg:px-3 lg:py-2 align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] transition font-medium border-round cursor-pointer duration-200"
-        >
-          <i class="pi pi-globe mr-2"></i>
-          <span>Mundo Dictariano 3D</span>
-        </a>
-      </li>
-    </ul>
-    <ul
-      class="list-none p-0 m-0 flex lg:align-items-center select-none flex-column lg:flex-row"
-    >
-      <li *ngIf="auth.isLoggedIn$ | async">
-        <a
-          pRipple
-          [routerLink]="['/cart']"
-          class="relative flex px-6 p-3 lg:px-3 lg:py-2 items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] transition font-medium border-round cursor-pointer duration-200"
-          aria-label="Carrito"
-        >
-          <i class="pi pi-shopping-cart text-2xl"></i>
-          <ng-container *ngIf="count$ | async as count">
-            <span
-              *ngIf="count > 0"
-              class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5"
-            >
-              {{ count }}
-            </span>
-          </ng-container>
-        </a>
-      </li>
-      <ng-container>
-        <button
-          class="px-4 py-1 rounded font-semibold text-black mx-3 lg:my-1 my-4 shadow-[0_4px_0_0_black] hover:shadow-[0_0_10px_2px_#F7C50F] hover:translate-y-0.5 hover:border-yellow-500 hover:border-[0px] bg-yellow-500 hover:bg-[#191919] hover:text-black transition duration-300"
-          routerLink="/auth/login"
-          *ngIf="!(auth.isLoggedIn$ | async)"
-        >
-          Login
-        </button>
-        <p-avatar
-          *ngIf="auth.isLoggedIn$ | async"
-          [image]="(auth.userImg$ | async) ?? ''"
-          shape="circle"
-          size="large"
-          (click)="menu.toggle($event)"
-          styleClass="user-avatar-button lg:my-2 my-3 lg:mx-4 mx-10"
-          class="block cursor-pointer hover:scale-105 transition duration-200 *:hover:shadow-[0_0_5px_0px_#F7C50F]"
-          aria-haspopup="true"
-          aria-controls="user_menu_popup"
-        >
-        </p-avatar>
-
-        
-      </ng-container>
-    </ul>
-  </div>
-  <!-- Carrito y perfil móvil -->
-<div class="flex lg:hidden align-items-center gap-2">
-  <a pRipple [routerLink]="['/cart']" *ngIf="auth.isLoggedIn$ | async"
-    class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2">
-    <i class="pi pi-shopping-cart text-xl"></i>
-    <ng-container *ngIf="count$ | async as count">
-      <span *ngIf="count > 0"
-        class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5">
-        {{ count }}
-      </span>
-    </ng-container>
+  <!-- Links centrales -->
+<ul class="list-none p-0 m-0 flex align-items-center gap-2 flex-1 ml-3">
+  
+  <li>
+  <a pRipple href="http://localhost:3000" target="_blank"
+    class="flex px-3 py-2 align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
+    style="white-space: nowrap;">
+    <i class="pi pi-globe mr-2"></i>
+    <span>Mundo 3D</span>
   </a>
-  <button
-    class="px-3 py-1 rounded font-semibold text-black shadow-[0_4px_0_0_black] bg-yellow-500 transition duration-300"
-    routerLink="/auth/login"
-    *ngIf="!(auth.isLoggedIn$ | async)">
-    Login
-  </button>
-  <p-avatar
-    *ngIf="auth.isLoggedIn$ | async"
-    [image]="(auth.userImg$ | async) ?? ''"
-    shape="circle"
-    size="large"
-    (click)="menu.toggle($event)"
-    styleClass="user-avatar-button my-1 mx-2"
-    class="block cursor-pointer"
-    aria-haspopup="true"
-    aria-controls="user_menu_popup">
-  </p-avatar>
+</li>
+</ul>
+
+  <!-- Derecha: carrito + login/avatar -->
+  <div class="flex align-items-center gap-2">
+    <a pRipple [routerLink]="['/cart']"
+      class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2">
+      <i class="pi pi-shopping-cart text-xl"></i>
+      <ng-container *ngIf="count$ | async as count">
+        <span *ngIf="count > 0"
+          class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5">
+          {{ count }}
+        </span>
+      </ng-container>
+    </a>
+
+    <button
+      class="px-4 py-1 rounded font-semibold text-black shadow-[0_4px_0_0_black] hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300"
+      style="border-radius: 10px;"
+      routerLink="/auth/login"
+      *ngIf="(auth.isLoggedIn$ | async) === false">
+      Login
+    </button>
+
+    <p-avatar
+      *ngIf="auth.isLoggedIn$ | async"
+      [image]="(auth.userImg$ | async) ?? ''"
+      shape="circle"
+      size="large"
+      (click)="menu.toggle($event)"
+      styleClass="user-avatar-button"
+      class="block cursor-pointer hover:scale-105 transition duration-200"
+      aria-haspopup="true"
+      aria-controls="user_menu_popup">
+    </p-avatar>
+  </div>
+
 </div>
+
 <p-menu
-          #menu
-          [model]="userItems"
-          [popup]="true"
-          id="user_menu_popup"
-          
-        >
-        </p-menu>
-</div>
+  #menu
+  [model]="userItems"
+  [popup]="true"
+  id="user_menu_popup"
+  appendTo="body">
+</p-menu>
+<app-cart-popup></app-cart-popup>

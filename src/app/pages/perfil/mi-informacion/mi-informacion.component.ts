@@ -14,19 +14,19 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
   private readonly baseUrl = 'http://localhost:3000/api';
 
   // Datos del perfil
-  userId: string = '';
-  nombre: string = '';
-  email: string = '';
-  imageUrl: string = '';
-  mostrarAvatares: boolean = false;
+  userId = '';
+  nombre = '';
+  email = '';
+  imageUrl = '';
+  mostrarAvatares = false;
 
   // Contraseñas
-  currentPassword: string = '';
-  newPassword: string = '';
-  confirmPassword: string = '';
+  currentPassword = '';
+  newPassword = '';
+  confirmPassword = '';
 
-  isLoadingPerfil: boolean = false;
-  perfilId: number = 0;
+  isLoadingPerfil = false;
+  perfilId = 0;
 
   constructor(
     private http: HttpClient,
@@ -39,63 +39,67 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
   }
 
   cargarPerfil() {
-  this.subscription.add(
-    this.http.get<any>(`${this.baseUrl}/auth/profile`, { withCredentials: true })
-    .subscribe({
-      next: (data) => {
-        this.userId = data.sub || '';
-        this.email = data.email || '';
-        // Jalar perfil completo
-        this.http.get<any>(`${this.baseUrl}/profile`, { withCredentials: true })
-        .subscribe({         
-          next: (res) => {
-            console.log('Respuesta perfil:', res);
-            const perfil = res.data[0];
-            if (perfil) {
-              this.perfilId = perfil.id;
-              this.nombre = perfil.nombre || '';
-              this.imageUrl = perfil.imageurl || '';
-              this.authService.updateUserImg(this.imageUrl);
-            }
+    this.subscription.add(
+      this.http.get<Record<string, unknown>>(`${this.baseUrl}/auth/profile`, { withCredentials: true })
+        .subscribe({
+          next: (data) => {
+            this.userId = String(data['sub'] || '');
+            this.email = String(data['email'] || '');
+            // Jalar perfil completo
+            this.http.get<Record<string, unknown>>(`${this.baseUrl}/profile`, { withCredentials: true })
+              .subscribe({         
+                next: (res) => {
+            
+                  const perfiles = res['data'] as Record<string, unknown>[];
+                  const perfil = perfiles?.[0];
+                  if (perfil) {
+                    this.perfilId = Number(perfil['id'] || 0);
+                    this.nombre = String(perfil['nombre'] || '');
+                    this.imageUrl = String(perfil['imageurl'] || '');
+                    this.authService.updateUserImg(this.imageUrl);
+                  }
+                },
+                error: () => {
+                  this.alertService.showError('Error', 'No se pudo cargar el perfil');
+                }
+              });
           },
-          error: (err) => console.error('Error cargando perfil:', err)
-        });
-      },
-      error: (err) => console.error('Error al cargar perfil:', err)
-    })
-  );
-}
+          error: () => {
+            this.alertService.showError('Error', 'No se pudo obtener los datos del perfil');
+          }
+        })
+    );
+  }
 
   guardarPerfil() {
-    const body: any = {};
+    const body: Record<string, string> = {};
 
-  if (this.email) body.email = this.email;
-  if (this.newPassword && this.newPassword === this.confirmPassword) {
-    body.password = this.newPassword;
-  }
-  if (this.imageUrl) body.imageurl = this.imageUrl;
+    if (this.email) body['email'] = this.email;
+    if (this.newPassword && this.newPassword === this.confirmPassword) {
+      body['password'] = this.newPassword;
+    }
+    if (this.imageUrl) body['imageurl'] = this.imageUrl;
 
-  if (Object.keys(body).length === 0) {
-    this.alertService.showWarn('Ups..', 'No hay cambios para guardar');
-    return;
-  }
+    if (Object.keys(body).length === 0) {
+      this.alertService.showWarn('Ups..', 'No hay cambios para guardar');
+      return;
+    }
 
-  this.isLoadingPerfil = true;
-  this.subscription.add(
-    this.http.patch(`${this.baseUrl}/profile/${this.perfilId}`,
-      body,
-      { withCredentials: true }
-    ).subscribe({
-      next: () => {
-        console.log('Guardando imagen:', this.imageUrl);
-        this.authService.updateUserImg(this.imageUrl);
-        this.alertService.showSuccess('Éxito', 'Datos actualizados correctamente');
-        this.isLoadingPerfil = false;
-        this.currentPassword = '';
-        this.newPassword = '';
-        this.confirmPassword = '';
-      },
-        error: (err) => {
+    this.isLoadingPerfil = true;
+    this.subscription.add(
+      this.http.patch(`${this.baseUrl}/profile/${this.perfilId}`,
+        body,
+        { withCredentials: true }
+      ).subscribe({
+        next: () => {
+          this.authService.updateUserImg(this.imageUrl);
+          this.alertService.showSuccess('Éxito', 'Datos actualizados correctamente');
+          this.isLoadingPerfil = false;
+          this.currentPassword = '';
+          this.newPassword = '';
+          this.confirmPassword = '';
+        },
+        error: () => {
           this.alertService.showError('Error', 'No se pudo actualizar el perfil');
           this.isLoadingPerfil = false;
         }
@@ -118,10 +122,9 @@ export class MiInformacionComponent implements OnInit, OnDestroy {
   }
 
   seleccionarAvatar(url: string) {
-  this.imageUrl = url;
-  this.mostrarAvatares = false;
-  console.log('Avatar seleccionado:', url); // ← agrega
-}
+    this.imageUrl = url;
+    this.mostrarAvatares = false;
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

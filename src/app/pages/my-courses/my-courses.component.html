@@ -1,0 +1,53 @@
+<div style="padding: 2rem; background-color: #121212; min-height: 100vh; color: white;">
+
+  <h1 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem;">Mis Cursos</h1>
+
+  <div style="display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap;">
+    <button
+      *ngFor="let filtro of filtros"
+      (click)="filtroActivo = filtro.value"
+      [style.background]="filtroActivo === filtro.value ? '#F5C518' : '#2a2a2a'"
+      [style.color]="filtroActivo === filtro.value ? '#000' : '#fff'"
+      style="border: none; padding: 0.4rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: 600;">
+      {{ filtro.label }}
+    </button>
+  </div>
+
+   <!-- Recientes -->
+  <ng-container *ngIf="filtroActivo === 'recientes'">
+    <h2 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Compras Recientes</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div style="width: 280px;" *ngFor="let curso of getCursosRecientes()">
+        <app-card-curso [curso]="curso" primary_color="#F5C518" secondary_color="#e0a800"></app-card-curso>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="filtroActivo === 'todos' || filtroActivo === 'ninos'">
+    <h2 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Cursos para Niños</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div style="width: 280px;" *ngFor="let curso of getCursosPor('ninos')">
+        <app-card-curso [curso]="curso" primary_color="#F5C518" secondary_color="#e0a800"></app-card-curso>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="filtroActivo === 'todos' || filtroActivo === 'jovenes'">
+    <h2 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Cursos para Jóvenes</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div style="width: 280px;" *ngFor="let curso of getCursosPor('jovenes')">
+        <app-card-curso [curso]="curso" primary_color="#4CAF50" secondary_color="#388E3C"></app-card-curso>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="filtroActivo === 'todos' || filtroActivo === 'padres'">
+    <h2 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem;">Cursos para Padres</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+      <div style="width: 280px;" *ngFor="let curso of getCursosPor('padres')">
+        <app-card-curso [curso]="curso" primary_color="#2196F3" secondary_color="#1565C0"></app-card-curso>
+      </div>
+    </div>
+  </ng-container>
+
+</div>

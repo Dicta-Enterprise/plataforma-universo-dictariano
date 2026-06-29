@@ -1,7 +1,7 @@
 <button 
   *ngIf="isMobile && !sidebarVisible" 
   (click)="toggleSidebar()"
-  style="position: absolute; top: 4.5rem; left: 1rem; z-index: 1000; background: #212121; border: none; color: white; padding: 0.5rem 0.75rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
+  style="position: absolute; top: 9rem; left: 1rem; z-index: 1000; background: #212121; border: none; color: white; padding: 0.5rem 0.75rem; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);"
 >
   <i class="pi pi-bars" style="font-size: 1.25rem;"></i>
 </button>
@@ -10,6 +10,8 @@
 <div 
   *ngIf="isMobile && sidebarVisible" 
   (click)="closeSidebar()"
+  (keydown.enter)="closeSidebar()"
+  tabindex="0"
   style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001;">
 </div>
 
@@ -21,7 +23,7 @@
   [style.alignSelf]="isMobile ? 'auto' : 'flex-start'"
   [style.top]="isMobile ? '60px' : '0'"
   [style.left]="isMobile ? '0' : 'auto'"
-  [style.height]="isMobile ? 'calc(100% - 60px)' : '100vh'"
+  [style.height]="isMobile ? 'calc(100% - 50px)' : '100vh'"
 
   [style.zIndex]="isMobile ? '1002' : '1'"
   [style.transform]="isMobile ? (sidebarVisible ? 'translateX(0)' : 'translateX(-100%)') : 'none'"
@@ -146,6 +148,8 @@
     >
       <a
         (click)="toggleTheme()"
+        (keydown.enter)="toggleTheme()"
+        tabindex="0"
         pRipple
         class="cursor-pointer inline-flex align-items-center justify-content-center border-2 surface-border hover:surface-100 text-600 transition-colors transition-duration-150 border-circle"
         [ngClass]="

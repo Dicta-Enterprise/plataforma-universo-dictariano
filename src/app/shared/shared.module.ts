@@ -12,11 +12,10 @@ import { BadgeModule } from 'primeng/badge';
 import { SharedPipeModule } from './pipes/shared-pipe.module';
 
 
-
 @NgModule({
   declarations: [
     CardCursoComponent,
-    CourseCarouselComponent
+    CourseCarouselComponent,
   ],
   imports: [
     CommonModule,
@@ -27,12 +26,12 @@ import { SharedPipeModule } from './pipes/shared-pipe.module';
     ProgressSpinnerModule,
     RouterModule,
     BadgeModule,
-    SharedPipeModule
+    SharedPipeModule,
   ],
   exports: [
     CardCursoComponent,
     CourseCarouselComponent,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
   ]
 })
 export class SharedModule { }

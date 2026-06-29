@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { IJwtPayload } from 'src/app/core/interfaces/auth/IAuth.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +25,7 @@ export class AuthApiService {
     );
   }
 
-  profile() {
-    return this.http.get(`${this.baseUrl}/profile`, { withCredentials: true });
+  profile(): Observable<IJwtPayload> {
+    return this.http.get<IJwtPayload>(`${this.baseUrl}/profile`, { withCredentials: true });
   }
 }
