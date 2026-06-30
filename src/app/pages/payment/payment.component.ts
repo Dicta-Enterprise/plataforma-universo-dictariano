@@ -362,16 +362,14 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
 
       this.http.post<OrderResponse>(`${environment.URL_BACKEND_CARRITO}orders`, body).subscribe({
         next: (res) => {
-          // Solo llega aquí con 201 (aprobado) o 202 (pendiente)
           this.guardarSessionYNavegar(res.data, res.statusCode === 202 ? 'pending' : 'success');
         },
         error: (err) => {
-          // 402 rechazado, 400 bad request, 502 error MP, 500 error interno
-          const data        = err?.error?.data;
-          const statusCode  = err?.error?.statusCode ?? err?.status;
-          const estadoDetalle = data?.estadoDetalle ?? data?.estadoOrden ?? 'unknown';
+          const body        = err?.error;
+          const statusCode  = body?.statusCode ?? err?.status;
+          const estadoDetalle = body?.mpStatusDetail ?? body?.mpStatus ?? 'failed';
 
-          this.guardarSession(data);
+          this.guardarSession({ estadoDetalle });
 
           if (statusCode === 402) {
             this.navegar('rejected', estadoDetalle);

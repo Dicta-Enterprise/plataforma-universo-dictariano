@@ -42,14 +42,10 @@ export class CartService {
 
     if (!isLogged) {
       this.carritoId = null;
-    } else if (userId) {
-      const saved = this.storage.getCarritoId(userId);
-      if (saved) this.carritoId = saved;
     }
   }
 
-  saveCarritoIdForUser(userId: number, carritoId: number): void {
-    this.storage.saveCarritoId(userId, carritoId);
+  saveCarritoId(carritoId: number): void {
     this.carritoId = carritoId;
   }
 
@@ -76,12 +72,19 @@ export class CartService {
     this.showPopupSubject.next(false);
   }
 
+  private buildPayload(curso: Curso): ICursoCarritoPayload {
+    return {
+      idcurso: String(curso.id),
+      nombrecurso: curso.nombre,
+    };
+  }
+
   syncAfterLogin(
     userId: number,
     cursosResolver: (ids: string[]) => Observable<Curso[]>
   ): Observable<ICarritoResponse | null> {
     const localItems = this.storage.getItems();
-    const localCursos: ICursoCarritoPayload[] = localItems.map(c => ({ idcurso: String(c.id) }));
+    const localCursos: ICursoCarritoPayload[] = localItems.map(c => this.buildPayload(c));
 
     return this.api.getCarritoByUsuarioId(userId).pipe(
       catchError((err: HttpErrorResponse) => {
@@ -90,12 +93,12 @@ export class CartService {
       }),
       switchMap(backendCart => {
         if (backendCart?.id) {
-          this.saveCarritoIdForUser(userId, backendCart.id);
+          this.saveCarritoId(backendCart.id);
 
-          const backendIds = new Set(backendCart.cursos);
+          const backendIds = new Set(backendCart.cursos.map(c => c.idcurso));
           const nuevos = localCursos.filter(c => !backendIds.has(c.idcurso));
 
-          const mergedIds = [...backendCart.cursos, ...nuevos.map(c => c.idcurso)];
+          const mergedIds = [...backendCart.cursos.map(c => c.idcurso), ...nuevos.map(c => c.idcurso)];
 
           if (nuevos.length > 0) {
             return this.api.patchCarrito(backendCart.id, nuevos, []).pipe(
@@ -103,12 +106,12 @@ export class CartService {
             );
           }
 
-          return cursosResolver([...backendCart.cursos]);
+          return cursosResolver(backendCart.cursos.map(c => c.idcurso));
         }
 
         if (localCursos.length === 0) return of([]);
         return this.api.crearCarrito(userId, localCursos).pipe(
-          tap(res => { if (res?.id) this.saveCarritoIdForUser(userId, res.id); }),
+          tap(res => { if (res?.id) this.saveCarritoId(res.id); }),
           switchMap(() => cursosResolver(localItems.map(c => String(c.id))))
         );
       }),
@@ -137,22 +140,22 @@ export class CartService {
 
     if (this.isLoggedIn && !this.carritoId && this.currentUserId) {
 
-      const cursos = items.map(c => ({
-        idcurso: String(c.id)
-      }));
+      const cursos = items.map(c => this.buildPayload(c));
 
       this.api.crearCarrito(this.currentUserId, cursos)
         .subscribe({
           next: (res) => {
             if (res?.id) {
-              this.saveCarritoIdForUser(
-            this.currentUserId!,
-            res.id
+              this.saveCarritoId(
+                res.id
               );
             }
-          }
+          },
+          error: () => {
+            this.itemsSubject.next(previous);
+            this.storage.saveItems(previous);
+          },
         });
-
       return;
     }
 
@@ -162,7 +165,7 @@ export class CartService {
 
       const added = items
         .filter(c => !prevIds.has(String(c.id)))
-        .map(c => ({ idcurso: String(c.id) }));
+        .map(c => this.buildPayload(c));
       const removed = previous
         .filter(c => !currIds.has(String(c.id)))
         .map(c => String(c.id));
