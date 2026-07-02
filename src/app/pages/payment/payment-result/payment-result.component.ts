@@ -32,8 +32,6 @@ export class PaymentResultComponent implements OnInit {
   date  = '';
   items: PaymentResultItem[] = [];
   stars = [1, 2, 3, 4, 5];
-  categoryMap: Record<string, { label: string; color: string }> = {};
-  defaultCategory = { label: 'Público', color: '#33CCFF' };
 
   // Valores de status_detail que MP devuelve en transactions.payments[0].status_detail
   private readonly STATUS_MAP: Record<string, MpStatusInfo> = {
@@ -143,12 +141,12 @@ export class PaymentResultComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private categoriaFacade: CategoriaFacade,
+    public categoriaFacade: CategoriaFacade,
     public cart: CartService
   ) {}
 
   ngOnInit() {
-    this.loadCategorias();
+    this.categoriaFacade.listarCategorias();
     this.resolveStatus();
     this.loadSessionData();
     this.clearSession();
@@ -189,24 +187,6 @@ export class PaymentResultComponent implements OnInit {
       : '';
   }
 
-  private loadCategorias() {
-    this.categoriaFacade.listarCategorias();
-    this.categoriaFacade.categorias$.asObservable().subscribe(cats => {
-      cats.forEach(cat => {
-        const key = cat.nombre.toLowerCase().replace('ñ', 'n');
-        const colorMap: Record<string, string> = {
-          'ninos':   '#33FF66',
-          'jovenes': 'rgb(255, 204, 0)',
-          'padres':  '#33CCFF'
-        };
-        this.categoryMap[cat.id] = {
-          label: cat.nombre,
-          color: colorMap[key] || '#33CCFF'
-        };
-      });
-    });
-  }
-
   get isSuccess()  { return this.statusInfo?.category === 'success';  }
   get isPending()  { return this.statusInfo?.category === 'pending';  }
   get isRejected() { return this.statusInfo?.category === 'rejected'; }
@@ -223,7 +203,7 @@ export class PaymentResultComponent implements OnInit {
       'payment_result_estado'].forEach(k => sessionStorage.removeItem(k));
   }
 
-  goToCourses()  { this.clearSession(); this.router.navigate(['/mis-cursos']); }
+  goToCourses()  { this.clearSession(); this.router.navigate(['/my-courses']); }
   goToCart()     { this.clearSession(); this.router.navigate(['/cart']);       }
   retryPayment() { this.clearSession(); this.router.navigate(['/payment']);    }
   goToHome() { this.clearSession(); this.router.navigate(['/home']); }
