@@ -64,7 +64,7 @@ export class CartComponent implements OnInit, OnDestroy {
       this.router.navigate(['/auth/register']);
       return;
     }
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/payment']);
   }
 
   remove(id: number): void {

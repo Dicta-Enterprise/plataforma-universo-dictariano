@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RegisterFormPresenter } from './register-form.presenter';
 import { RegisterFacade } from 'src/app/shared/patterns/facade/models/register-facade';
 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,6 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.registerFormPresenter.MarkAllAsTouched();
       return;
     }
+
 
     this.registerFacade.registrarUsuario(
       this.registerFormPresenter.Value
