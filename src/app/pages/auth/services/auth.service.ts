@@ -40,18 +40,16 @@ export class AuthService {
       this.authApiService.profile().subscribe({
         next: (user: IJwtPayload) => {
           this.userSubject.next(user);
-
           const userId = parseInt(user.sub, 10);
           this.cartService.setUserSession(true, userId);
-
+          this.cartStorage.clearExpiration(); 
           this.sessionCheckedSubject.next(true);
           resolve();
         },
         error: () => {
           this.userSubject.next(null);
-
           this.cartService.setUserSession(false, null);
-
+          this.cartStorage.restoreExpiration(); 
           this.sessionCheckedSubject.next(true);
           resolve();
         },
@@ -73,14 +71,19 @@ export class AuthService {
 
       const userId = parseInt(user.sub, 10);
       this.cartService.setUserSession(true, userId);
-      this.cartStorage.clearExpiration();
 
       const cursosResolver = (ids: string[]) =>
         this.cursosService.listarCursosService$().pipe(
           map(todos => todos.filter(c => ids.includes(String(c.id))))
         );
 
-      this.cartService.syncAfterLogin(userId, cursosResolver).pipe(take(1)).subscribe();
+      this.cartService.syncAfterLogin(userId, cursosResolver)
+        .pipe(take(1))
+        .subscribe({
+          complete: () => {
+            this.cartStorage.clearExpiration(); 
+          }
+        });
 
       const returnUrl = this.router.routerState.snapshot.root.queryParams['returnUrl'] || '/';
       this.router.navigate([returnUrl]);
@@ -88,15 +91,10 @@ export class AuthService {
   }
 
   logout(): void {
-    const userId = this.getUserId();
-
     this.userSubject.next(null);
     this.sessionCheckedSubject.next(false); 
     this.cartService.setUserSession(false, null);
     this.cartStorage.restoreExpiration();
-    if (userId) {
-      this.cartStorage.clearCarritoId(parseInt(userId, 10));
-    }
 
     this.authApiService.logout().subscribe();
     

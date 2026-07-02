@@ -9,7 +9,6 @@ interface CartSnapshot {
 @Injectable({ providedIn: 'root' })
 export class CartStorageService {
   private readonly CART_KEY = 'cartItems';
-  private readonly CARRITO_ID_PREFIX = 'carritoId_';
   private readonly TTL_DAYS = 3;
 
   getItems(): Curso[] {
@@ -52,19 +51,6 @@ export class CartStorageService {
 
   clearItems(): void {
     localStorage.removeItem(this.CART_KEY);
-  }
-
-  getCarritoId(userId: number): number | null {
-    const val = localStorage.getItem(`${this.CARRITO_ID_PREFIX}${userId}`);
-    return val ? parseInt(val, 10) : null;
-  }
-
-  clearCarritoId(userId: number): void {
-    localStorage.removeItem(`${this.CARRITO_ID_PREFIX}${userId}`);
-  }
-
-  saveCarritoId(userId: number, carritoId: number): void {
-    localStorage.setItem(`${this.CARRITO_ID_PREFIX}${userId}`, String(carritoId));
   }
 
   private getSnapshot(): CartSnapshot | null {

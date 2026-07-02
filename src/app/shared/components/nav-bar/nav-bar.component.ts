@@ -4,6 +4,7 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,14 +15,22 @@ export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
   userItems: MenuItem[];
   count$: Observable<number>;
+  searchQuery = '';
+  searchVisible = false;
 
   constructor(
      private cart: CartService,
-     public auth: AuthService 
+     public auth: AuthService,
+     private router: Router
   ) {
     this.count$ = cart.items$.pipe(map(items => items.length));
   }
   
+  buscar() {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/courses'], { queryParams: { q: this.searchQuery } });
+    }
+  }
   
   ngOnInit(): void {
     this.userItems = [
