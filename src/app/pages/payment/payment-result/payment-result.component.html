@@ -51,7 +51,7 @@
         <div class="cart-item-info">
           <div class="cart-item-top">
             <span class="cart-item-nombre"
-                  [style.color]="(categoryMap[curso.categoriaId] || defaultCategory).color">
+                  [style.color]="categoriaFacade.getCategoryById(curso.categoriaId).color">
               {{ curso.nombre }}
             </span>
             <span class="cart-item-precio">Col$ {{ curso.precio | number:'1.0-0' }}</span>
@@ -65,8 +65,8 @@
           </div>
           <div class="cart-tags">
             <span class="cart-tag"
-                  [style.border-color]="(categoryMap[curso.categoriaId] || defaultCategory).color">
-              {{ (categoryMap[curso.categoriaId] || defaultCategory).label }}
+                  [style.border-color]="categoriaFacade.getCategoryById(curso.categoriaId).color">
+              {{ categoriaFacade.getCategoryById(curso.categoriaId).label }}
             </span>
             <span class="cart-tag">Galaxia</span>
           </div>

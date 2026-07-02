@@ -113,8 +113,6 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
   cardBrand       = '';
   requiresIssuer  = false;
 
-  categoryMap: Record<string, { label: string; color: string }> = {};
-  defaultCategory = { label: 'Público', color: '#33CCFF' };
   stars = [1, 2, 3, 4, 5];
 
   selectedDocType: { min_length: number; max_length: number } | null = null;
@@ -125,7 +123,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
     private router: Router,
     public cart: CartService,
     private authService: AuthService,
-    private categoriaFacade: CategoriaFacade,
+    public categoriaFacade: CategoriaFacade,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -134,7 +132,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
       this.router.navigate(['/cart']);
       return;
     }
-    this.loadCategorias();
+    this.categoriaFacade.listarCategorias();
     this.buildForm();
     await this.initMercadoPago();
   }
@@ -424,21 +422,6 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
         this.cdr.detectChanges();
       }
     }
-  }
-
-  private loadCategorias() {
-    this.categoriaFacade.listarCategorias();
-    this.categoriaFacade.categorias$.asObservable().subscribe(cats => {
-      cats.forEach(cat => {
-        const key = cat.nombre.toLowerCase().replace('ñ', 'n');
-        const colorMap: Record<string, string> = {
-          'ninos':   '#33FF66',
-          'jovenes': 'rgb(255, 204, 0)',
-          'padres':  '#33CCFF'
-        };
-        this.categoryMap[cat.id] = { label: cat.nombre, color: colorMap[key] || '#33CCFF' };
-      });
-    });
   }
 
   private guardarSession(data?: PagoResultado) {
