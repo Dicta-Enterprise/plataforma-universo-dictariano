@@ -28,6 +28,7 @@ import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.co
 import { BlankLayoutComponent } from './shared/layouts/blank-layout/blank-layout.component';
 import { CheckoutNavbarComponent } from './shared/components/checkout-navbar/checkout-navbar.component';
 
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +56,8 @@ import { CheckoutNavbarComponent } from './shared/components/checkout-navbar/che
     SharedModule,
     CartPopupModule,
     ToastModule,
+
+    FormsModule,
   ],
   providers: [
     MessageService,
