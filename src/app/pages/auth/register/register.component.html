@@ -1,32 +1,52 @@
-<div class="register-container flex justify-content-center align-items-center min-h-screen">
-  <div class="register-card p-5 w-full sm:w-30rem">
+<div class="min-h-screen flex items-center justify-center bg-black">
+  <div class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-md">
 
-    <div class="flex flex-column align-items-center mb-4">
+    <div class="flex flex-col items-center mb-6">
       <img
-        src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
+        src="https://res.cloudinary.com/djwspay9f/image/upload/v1782180945/Mesa_de_trabajo_1_x72aap.png"
         alt="Logo"
-        class="register-logo mb-3"
+        class="w-24 h-24 md:w-32 md:h-32 mb-3"
       />
-      
-      <h2 class="register-title text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-2 text-center">
         Crea tu cuenta
       </h2>
-      <span class="register-subtitle text-center">
+      <span class="text-gray-400 text-center">
         Únete a la Plataforma Dictariana
       </span>
+      <div class="text-gray-400 text-center mt-2">
+        ¿Ya tienes una cuenta?
+        <a 
+          routerLink="/auth/login"
+          class="font-semibold text-blue-400 hover:underline ml-1 cursor-pointer">
+          Inicia sesión aquí!
+        </a>
+      </div>
+      <button
+        type="button"
+        pButton
+        pRipple
+        label="Ingresar"
+        icon="pi pi-google"
+        class="w-1/2 py-3 text-xs font-semibold rounded-lg
+              bg-gradient-to-r from-zinc-500 to-zinc-800 border-0 shadow-md 
+              text-white hover:from-pink-400 hover:to-red-500 
+              transition flex items-center justify-center gap-2
+              mt-5"
+        (click)="loginWithGoogle()">
+      </button>
     </div>
 
     <form [formGroup]="registerFormPresenter.Form">
 
-      <div class="field mb-3">
-        <label for="username" class="register-label">Username</label>
+      <div class="mb-4">
+        <label for="username" class="block text-gray-300 font-medium mb-1">Username</label>
         <input
           id="username"
           type="text"
           pInputText
           formControlName="username"
-          class="register-input w-full"
           placeholder="Ingresa tu usuario"
+          class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
         />
         <small
           class="p-error"
@@ -35,15 +55,15 @@
         </small>
       </div>
 
-      <div class="field mb-3">
-        <label for="email" class="register-label">Email</label>
+      <div class="mb-4">
+        <label for="email" class="block text-gray-300 font-medium mb-1">Email</label>
         <input
           id="email"
           type="email"
           pInputText
           formControlName="email"
-          class="register-input w-full"
           placeholder="Ingresa tu correo"
+          class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
         />
         <small
           class="p-error"
@@ -52,14 +72,15 @@
         </small>
       </div>
 
-      <div class="field mb-3">
-        <label for="password" class="register-label">Contraseña</label>
+      <div class="mb-4">
+        <label for="password" class="block text-gray-300 font-medium mb-1">Contraseña</label>
         <p-password
           id="password"
           formControlName="password"
           [toggleMask]="true"
-          class="w-full"
-          inputClass="register-input w-full"
+          class="w-full block"
+          styleClass="w-full"
+          inputStyleClass="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
           placeholder="Ingresa tu contraseña"
         ></p-password>
         <small
@@ -69,14 +90,15 @@
         </small>
       </div>
 
-      <div class="field mb-4">
-        <label for="confirmPassword" class="register-label">Confirmar contraseña</label>
+      <div class="mb-6">
+        <label for="confirmPassword" class="block text-gray-300 font-medium mb-1">Confirmar contraseña</label>
         <p-password
           id="confirmPassword"
           formControlName="confirmPassword"
           [toggleMask]="true"
-          class="w-full"
-          inputClass="register-input w-full"
+          class="w-full block"
+          styleClass="w-full"
+          inputStyleClass="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
           placeholder="Confirma tu contraseña"
         ></p-password>
         <small
@@ -85,6 +107,23 @@
           [control]="registerFormPresenter.Form.get('confirmPassword')">
         </small>
       </div>
+   
+<div class="flex items-center justify-between mb-6 text-sm">
+  <span class="flex items-center text-gray-300">
+    <p-checkbox 
+      id="termsofuse" 
+      [binary]="true" 
+      styleClass="mr-2"
+      formControlName="acceptTerms">
+    </p-checkbox>
+
+  </span>
+  <a routerLink="/auth/privacy-policy" class="text-blue-400 hover:underline cursor-pointer">
+        Aceptar política de privacidad y tratamiento de datos
+  </a>
+</div>
+
+      
 
       <button
         type="button"
@@ -92,10 +131,15 @@
         pRipple
         label="Registrarme"
         icon="pi pi-user-plus"
-        class="register-button w-full"
+        class="w-full py-3 text-lg font-semibold rounded-lg
+              bg-gradient-to-r from-teal-400 to-cyan-500 border-0 shadow-md 
+              text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black 
+              transition mb-4 flex items-center justify-center gap-2"
         (click)="submit()"
-        [disabled]="registerFormPresenter.Form.invalid"
-      ></button>
+        [disabled]="registerFormPresenter.Form.invalid">
+      </button>
+
     </form>
+
   </div>
 </div>

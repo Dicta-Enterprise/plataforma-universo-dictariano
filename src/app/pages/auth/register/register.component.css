@@ -1,7 +1,10 @@
 
 .register-container {
-  background-color: #000;
+  min-height: 200px;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
 }
+
 
 .register-card {
   background: rgba(0, 0, 0, 0.8);
@@ -36,9 +39,10 @@
 }
 
 .register-input {
+  width: 100% !important;
   background-color: #111 !important;
   color: #fff !important;
-  border-radius: 12px;
+  border-radius: 2px;
   border: 1px solid transparent; 
   padding: 0.75rem;
   transition: all 0.2s;
@@ -57,7 +61,7 @@
 :host ::ng-deep .p-password input {
   background-color: #111 !important;
   color: #fff !important;
-  border-radius: 12px;
+  border-radius: 2px;
   border: none;
   padding: 0.75rem;
   font-size: 0.95rem;

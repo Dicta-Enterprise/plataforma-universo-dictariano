@@ -11,6 +11,7 @@ export class RegisterFormPresenter extends StepPresenter<Register> {
   public email!: FormControl;
   public password!: FormControl;
   public confirmPassword!: FormControl;
+  public acceptTerms!: FormControl;
 
   constructor(private readonly fb: FormBuilder) {
     super();
@@ -22,13 +23,22 @@ export class RegisterFormPresenter extends StepPresenter<Register> {
       Validators.minLength(3),
       Validators.maxLength(50),
     ]);
-    this.email = new FormControl(null, [Validators.required, Validators.email]);
+    
+    this.email = new FormControl(null, [
+      Validators.required,
+      Validators.email,
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) 
+    ]);
     this.password = new FormControl(null, [Validators.required]);
     this.confirmPassword = new FormControl(null, [
       Validators.required,
       Validators.minLength(8),
     ]);
+
+    this.acceptTerms = new FormControl(false, [Validators.requiredTrue]);
   }
+
+
 
   public createForm(): void {
     this.initForm();
@@ -38,6 +48,7 @@ export class RegisterFormPresenter extends StepPresenter<Register> {
         email: this.email,
         password: this.password,
         confirmPassword: this.confirmPassword,
+        acceptTerms: this.acceptTerms, 
       },
       {
         validators: PasswordValidator('password', 'confirmPassword'),

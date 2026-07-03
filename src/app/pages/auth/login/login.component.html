@@ -2,7 +2,7 @@
   <div class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-md">
     <div class="flex flex-col items-center mb-6">
       <img
-        src="https://dictacolombia.com/wp-content/uploads/2022/10/logo-yellow.webp"
+        src="https://res.cloudinary.com/djwspay9f/image/upload/v1782180945/Mesa_de_trabajo_1_x72aap.png"
         alt="Image"
         class="w-24 h-24 md:w-32 md:h-32 mb-3"
       />
@@ -16,6 +16,20 @@
         class="font-semibold text-blue-400 hover:underline ml-1 cursor-pointer">
         Crea una ahora!</a>
       </div>
+            <button
+        type="button"
+        pButton
+        pRipple
+        label="Ingresar"
+        icon="pi pi-google"
+        class="w-1/2 py-3 text-xs font-semibold rounded-lg
+              bg-gradient-to-r from-zinc-500 to-zinc-800 border-0 shadow-md 
+              text-white hover:from-pink-400 hover:to-red-500 
+              transition flex items-center justify-center gap-2
+              mt-5"
+        (click)="loginWithGoogle()"
+        >
+      </button>
     </div>
   
     <form 
@@ -56,14 +70,11 @@
       </div>
 
       <div class="flex items-center justify-between mb-6 text-sm">
-        <label for="rememberme" class="flex items-center text-gray-300">
-          <p-checkbox inputId="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
+        <span class="flex items-center text-gray-300">
+          <p-checkbox id="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
           Recuérdame
-        </label>
-        <a routerLink="/auth/forgot-password"
-          class="text-blue-400 hover:underline cursor-pointer">
-          Olvidaste la Contraseña?
-        </a>
+        </span>
+        <a class="text-blue-400 hover:underline cursor-pointer">Olvidaste la Contraseña?</a>
       </div>
 
       <button
@@ -79,19 +90,7 @@
         [disabled]="loginFormPresenter.Invalid"
         >
       </button>
-      <button
-        type="button"
-        pButton
-        pRipple
-        label="Ingresar con Google"
-        icon="pi pi-google"
-        class="w-full py-3 text-lg font-semibold rounded-lg
-              bg-gradient-to-r from-red-400 to-pink-500 border-0 shadow-md 
-              text-white hover:from-pink-400 hover:to-red-500 
-              transition flex items-center justify-center gap-2"
-        (click)="loginWithGoogle()"
-        >
-      </button>
+
     </form>
   </div>
 </div>
