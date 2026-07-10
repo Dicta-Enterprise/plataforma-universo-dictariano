@@ -108,20 +108,33 @@
         </small>
       </div>
    
-<div class="flex items-center justify-between mb-6 text-sm">
-  <span class="flex items-center text-gray-300">
-    <p-checkbox 
-      id="termsofuse" 
-      [binary]="true" 
-      styleClass="mr-2"
-      formControlName="acceptTerms">
-    </p-checkbox>
+      <div class="flex items-center gap-3 mb-6 text-sm">
+        <p-checkbox
+          id="termsofuse"
+          [binary]="true"
+          styleClass="mr-2"
+          formControlName="acceptTerms">
+        </p-checkbox>
+        <span class="text-gray-400">
+          He leído y acepto la
+          <a
+            class="text-blue-400 hover:underline cursor-pointer"
+            tabindex="0"
+            (click)="abrirPolitica()"
+            (keyup.enter)="abrirPolitica()">
+            Política de Privacidad y Tratamiento de Datos
+          </a>
+        </span>
+      </div>
 
-  </span>
-  <a routerLink="/auth/privacy-policy" class="text-blue-400 hover:underline cursor-pointer">
-        Aceptar política de privacidad y tratamiento de datos
-  </a>
-</div>
+      <small *ngIf="!politicaLeida" class="text-yellow-400 text-xs block mb-4">
+        <i class="pi pi-info-circle mr-1"></i>
+        Debes leer la Política de Privacidad hasta el final para habilitar la aceptación.
+      </small>
+      <small *ngIf="politicaLeida && !registerFormPresenter.Form.get('acceptTerms')?.value" class="text-green-400 text-xs block mb-4">
+        <i class="pi pi-check-circle mr-1"></i>
+        Lectura completada. Puedes marcar la casilla para aceptar.
+      </small>
 
       
 
@@ -142,4 +155,10 @@
     </form>
 
   </div>
+
+  <!-- Modal Política de Privacidad -->
+  <app-privacy-policy-modal
+    [(visible)]="mostrarModal"
+    (politicaLeida)="onPoliticaLeida()">
+  </app-privacy-policy-modal>
 </div>

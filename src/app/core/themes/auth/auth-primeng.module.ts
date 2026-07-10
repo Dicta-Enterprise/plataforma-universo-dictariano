@@ -10,6 +10,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DividerModule } from 'primeng/divider';
+import { DialogModule } from 'primeng/dialog';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 
 @NgModule({
@@ -23,6 +25,8 @@ import { DividerModule } from 'primeng/divider';
     ToastModule,
     CheckboxModule,
     DividerModule,
+    DialogModule,      
+    ScrollPanelModule, 
   ],
   exports: [
     CommonModule,
@@ -32,7 +36,9 @@ import { DividerModule } from 'primeng/divider';
     ButtonModule,
     RippleModule,
     ToastModule,
-    CheckboxModule
+    CheckboxModule,
+    DialogModule,
+    ScrollPanelModule,
   ],
   providers: [
     MessageService
