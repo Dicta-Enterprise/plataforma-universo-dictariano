@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';         
+import { CheckboxModule } from 'primeng/checkbox';
 import { PaymentComponent } from './payment.component';
 import { PaymentRoutingModule } from './payment-routing.module';
 import { CardModule } from 'primeng/card';
@@ -21,7 +23,9 @@ import { PaymentResultComponent } from './payment-result/payment-result.componen
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,         
+    FormsModule,
+    RouterModule,
+    CheckboxModule,
     PaymentRoutingModule,
     StepsModule,
     CommonModule,

@@ -8,23 +8,25 @@ import { filter, map, take } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
   constructor(
     private router: Router,
     private authService: AuthService
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
     return this.authService.sessionChecked$.pipe(
-      filter(checked => checked === true), 
+      filter((checked) => checked === true),
       take(1),
       map(() => {
         if (this.authService.isLoggedIn()) {
           return true;
         }
-        this.router.navigate(['/auth/register'], {
-          queryParams: { returnUrl: state.url }
-        });
+        sessionStorage.setItem('returnUrl', state.url);
+
+        this.router.navigate(['/auth/register']);
         return false;
       })
     );

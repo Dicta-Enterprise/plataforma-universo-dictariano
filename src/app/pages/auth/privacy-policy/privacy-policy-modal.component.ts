@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output,ViewChild, ElementRef } from '@a
 @Component({
   selector: 'app-privacy-policy-modal',
   templateUrl: './privacy-policy-modal.component.html',
+  styleUrls: ['./privacy-policy-modal.component.css'], 
 })
 export class PrivacyPolicyModalComponent {
   @Input() visible = false;
@@ -11,11 +12,12 @@ export class PrivacyPolicyModalComponent {
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   leida = false;
+  progreso = 0;
 
   onScroll(event: Event): void {
     const el = event.target as HTMLElement;
-    const llegóAlFinal = el.scrollHeight - el.scrollTop <= el.clientHeight + 50;
-    if (llegóAlFinal && !this.leida) {
+    this.progreso = Math.round((el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100);
+    if (this.progreso >= 95 && !this.leida) {
       this.leida = true;
       this.politicaLeida.emit();
     }

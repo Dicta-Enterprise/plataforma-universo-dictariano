@@ -35,10 +35,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   submit(): void {
-    if (this.registerFormPresenter.Invalid) {
+    if (!this.politicaLeida) {
+      return;
+    }
+
+    if (this.registerFormPresenter.Form.invalid) {
       this.registerFormPresenter.MarkAllAsTouched();
       return;
     }
+
     this.registerFacade.registrarUsuario(this.registerFormPresenter.Value);
   }
 

@@ -24,7 +24,7 @@ export class VerifyEmailComponent implements OnInit, OnDestroy {
   }
 
   iniciarTimer(): void {
-    const EXPIRACION_MS = 1 * 60 * 1000; // 1 minutos
+    const EXPIRACION_MS = 10 * 60 * 1000; // 10 minutos
     const sentAt = sessionStorage.getItem('verifyCodeSentAt');
 
     if (sentAt) {

@@ -34,6 +34,10 @@ const routes: Routes = [
         path: 'my-courses',
         loadChildren: () => import('./pages/my-courses/my-courses.module').then(m => m.MyCoursesModule),
       },
+      {
+        path: 'terms-conditions',  // 👈
+        loadChildren: () => import('./pages/payment/terms_conditions/terms-conditions.module').then(m => m.TermsConditionsModule),
+      },
     ]
   },
 

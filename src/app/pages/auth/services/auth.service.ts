@@ -81,18 +81,30 @@ export class AuthService {
         .pipe(take(1))
         .subscribe({
           complete: () => {
-            this.cartStorage.clearExpiration(); 
+            this.cartStorage.clearExpiration();
+            this.navigateAfterLogin();
+          },
+          error: () => {
+            this.navigateAfterLogin();
           }
         });
-
-      const returnUrl = this.router.routerState.snapshot.root.queryParams['returnUrl'] || '/';
-      this.router.navigate([returnUrl]);
     });
+  }
+
+  private navigateAfterLogin(): void {
+    const returnUrl = sessionStorage.getItem('returnUrl');
+
+    if (returnUrl) {
+      sessionStorage.removeItem('returnUrl');
+      this.router.navigateByUrl(returnUrl);
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
   logout(): void {
     this.userSubject.next(null);
-    this.sessionCheckedSubject.next(false); 
+    this.sessionCheckedSubject.next(true); 
     this.cartService.setUserSession(false, null);
     this.cartStorage.restoreExpiration();
 
