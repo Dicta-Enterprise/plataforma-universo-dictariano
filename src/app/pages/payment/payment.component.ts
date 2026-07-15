@@ -92,6 +92,8 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectedIssuerId = '';
   isSubmitting = false;
   errorMessage = '';
+  acceptTerms = false;
+  formSubmitted = false;
 
   private pendingMount = false;
 
@@ -316,7 +318,8 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   async submit() {
-    if (!this.selectedMethod || this.paymentForm.invalid) {
+    this.formSubmitted = true;
+    if (!this.selectedMethod || this.paymentForm.invalid || !this.acceptTerms) {
       this.paymentForm.markAllAsTouched();
       return;
     }

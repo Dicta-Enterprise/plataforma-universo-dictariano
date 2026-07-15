@@ -108,20 +108,35 @@
         </small>
       </div>
    
-<div class="flex items-center justify-between mb-6 text-sm">
-  <span class="flex items-center text-gray-300">
-    <p-checkbox 
-      id="termsofuse" 
-      [binary]="true" 
-      styleClass="mr-2"
-      formControlName="acceptTerms">
-    </p-checkbox>
+      <div class="flex items-center gap-3 mb-3 text-sm">
+        <p-checkbox
+          id="termsofuse"
+          [binary]="true"
+          styleClass="mr-2"
+          formControlName="acceptTerms"
+          [disabled]="!politicaLeida">
+        </p-checkbox>
+        <span class="text-gray-400">
+          He leído y acepto la
+          <a
+            tabindex="0"
+            class="text-blue-400 hover:underline cursor-pointer"
+            (click)="abrirPolitica()"
+            (keyup.enter)="abrirPolitica()">
+            Política de Privacidad y Tratamiento de Datos
+          </a>
+        </span>
+      </div>
 
-  </span>
-  <a routerLink="/auth/privacy-policy" class="text-blue-400 hover:underline cursor-pointer">
-        Aceptar política de privacidad y tratamiento de datos
-  </a>
-</div>
+      <small *ngIf="!politicaLeida" class="text-yellow-400 text-xs block mb-4">
+        <i class="pi pi-info-circle mr-1"></i>
+        Debes leer y aceptar la Política de Privacidad para continuar.
+      </small>
+      <small *ngIf="politicaLeida && !registerFormPresenter.Form.get('acceptTerms')?.value"
+            class="text-green-400 text-xs block mb-4">
+        <i class="pi pi-check-circle mr-1"></i>
+        Lectura completada. Marca la casilla para aceptar.
+      </small>
 
       
 
@@ -136,10 +151,16 @@
               text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black 
               transition mb-4 flex items-center justify-center gap-2"
         (click)="submit()"
-        [disabled]="registerFormPresenter.Form.invalid">
+        [disabled]="!politicaLeida || registerFormPresenter.Form.invalid">
       </button>
 
     </form>
 
   </div>
+
+  <!-- Modal Política de Privacidad -->
+  <app-privacy-policy-modal
+    [(visible)]="mostrarModal"
+    (politicaLeida)="onPoliticaLeida()">
+  </app-privacy-policy-modal>
 </div>

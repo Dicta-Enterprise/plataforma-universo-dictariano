@@ -1,0 +1,52 @@
+<p-dialog
+  header="Política de Privacidad y Tratamiento de Datos"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="false"
+  [style]="{'width': '90vw', 'max-width': '800px'}"
+  [contentStyle]="{'padding': '0', 'overflow': 'hidden'}"
+  (onHide)="cerrar()">
+
+  <div style="height: 4px; background: #272727; position: sticky; top: 0; z-index: 1;">
+    <div [style.width.%]="progreso"
+        style="height: 100%; background: #22d3ee; transition: width 0.2s;">
+    </div>
+  </div>
+
+  <div (scroll)="onScroll($event)"
+     style="height: 60vh; overflow-y: auto; padding: 1.5rem; background: #272727;">
+
+    <app-privacy-policy-content></app-privacy-policy-content>
+
+    <div class="text-center py-4">
+      <small *ngIf="!leida" class="text-yellow-400">
+        <i class="pi pi-arrow-down mr-1"></i>
+        Desplázate hasta el final para habilitar la aceptación
+      </small>
+      <small *ngIf="leida" class="text-green-400">
+        <i class="pi pi-check-circle mr-1"></i>
+        ¡Lectura completada! Ya puedes aceptar la política.
+      </small>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+  <div style="padding: 0.75rem 1rem;">
+    <button *ngIf="!leida"
+            type="button" pButton pRipple
+            label="Continuar leyendo"
+            disabled
+            class="w-full px-6 py-2 rounded-lg border-0 text-sm opacity-50 cursor-not-allowed"
+            style="background: #374151; color: #9ca3af;">
+    </button>
+
+    <button *ngIf="leida"
+            type="button" pButton pRipple
+            label="Entendido"
+            class="w-full px-6 py-2 rounded-lg border-0 text-black font-bold"
+            style="background: linear-gradient(90deg, #2dd4bf, #22d3ee);"
+            (click)="cerrar()">
+    </button>
+  </div>
+</ng-template>
+</p-dialog>

@@ -10,6 +10,8 @@ import { MessageService } from 'primeng/api';
 })
 export class RegisterFacade {
   register$ = new BehaviorSubject<Register>(new Register());
+  private emailSubject = new BehaviorSubject<string>(''); 
+  public email$ = this.emailSubject.asObservable();
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -19,21 +21,22 @@ export class RegisterFacade {
   ) {}
 
   registrarUsuario(register: Register): void {
-    this.registerService
-      .registrarUsuario(register)
+    this.registerService.registrarUsuario(register)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           this.register$.next(response);
-
+          this.emailSubject.next(register.email);
+          sessionStorage.setItem('pendingVerifyEmail', register.email);
+          sessionStorage.setItem('verifyCodeSentAt', Date.now().toString());
           this.messageService.add({
             key: 'global',
             severity: 'success',
             summary: 'Registro exitoso',
-            detail: 'Tu cuenta fue creada correctamente',
+            detail: 'Te enviamos un código de verificación a tu correo',
           });
 
-          this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/verify-email']);
         },
         error: (error) => {
           const backendMessage = error?.error?.message;
@@ -56,6 +59,16 @@ export class RegisterFacade {
           });
         },
       });
+  }
+
+  getEmail(): string {
+    return this.emailSubject.value || sessionStorage.getItem('pendingVerifyEmail') || '';
+  }
+
+  clearEmail(): void {
+    this.emailSubject.next('');
+    sessionStorage.removeItem('pendingVerifyEmail');
+    sessionStorage.removeItem('verifyCodeSentAt');
   }
 
   destroy(): void {

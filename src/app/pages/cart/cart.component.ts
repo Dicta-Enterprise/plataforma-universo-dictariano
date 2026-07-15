@@ -59,11 +59,6 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   onCheckout(): void {
-    if (!this.isLoggedIn) {
-      sessionStorage.setItem('returnUrl', '/cart');
-      this.router.navigate(['/auth/register']);
-      return;
-    }
     this.router.navigate(['/payment']);
   }
 

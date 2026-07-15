@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 import { Login } from 'src/app/core/class/auth/login.class';
 import { LoginService } from 'src/app/pages/auth/services/login.service';
@@ -17,15 +18,19 @@ export class LoginFacade {
   constructor(
     private readonly loginService: LoginService,
     private readonly messageService: MessageService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly router: Router,
   ) {}
 
   iniciarSesion(login: Login): void {
+    sessionStorage.setItem('pendingVerifyEmail', login.email);
+
     this.loginService
       .iniciarSesion(login)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
+          sessionStorage.removeItem('pendingVerifyEmail');
           this.authService.login();
           this.login$.next(null);
 
@@ -39,7 +44,19 @@ export class LoginFacade {
         error: (error) => {
           const backendMessage = error?.error?.message;
 
+          if (backendMessage === 'Debes verificar tu correo electrónico antes de iniciar sesión.') {
+            this.messageService.add({
+              key: 'global',
+              severity: 'warn',
+              summary: 'Correo no verificado',
+              detail: 'Debes verificar tu correo. Revisa tu bandeja de entrada.',
+            });
+            this.router.navigate(['/auth/verify-email']);
+            return;
+          }
+
           if (backendMessage === 'Credenciales inválidas') {
+            sessionStorage.removeItem('pendingVerifyEmail');
             this.messageService.add({
               key: 'global',
               severity: 'warn',
@@ -49,6 +66,7 @@ export class LoginFacade {
             return;
           }
 
+          sessionStorage.removeItem('pendingVerifyEmail');
           this.messageService.add({
             key: 'global',
             severity: 'error',

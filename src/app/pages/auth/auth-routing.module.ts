@@ -16,7 +16,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule),
   },
-
+  {
+    path: 'verify-email',
+    loadChildren: () => import('./verify-email/verify-email.module').then(m => m.VerifyEmailModule)
+  },
 ];
 
 @NgModule({

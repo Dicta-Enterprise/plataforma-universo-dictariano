@@ -241,7 +241,30 @@
         {{ errorMessage }}
       </div>
 
-      
+      <!-- Términos y condiciones -->
+        <div *ngIf="selectedMethod" class="flex align-items-center gap-2 mb-2" style="margin-top: 1rem;">
+          <p-checkbox
+            inputId="acceptTerms"
+            [binary]="true"
+            [(ngModel)]="acceptTerms"
+            [ngModelOptions]="{standalone: true}">
+          </p-checkbox>
+          <label for="acceptTerms" style="color: rgba(255,255,255,0.6); font-size: 13px; cursor: pointer;">
+            He leído y acepto los
+            <a routerLink="/terms-conditions"
+              target="_blank"
+              style="color: #22d3ee; text-decoration: underline;">
+              Términos y Condiciones
+            </a>
+          </label>
+        </div>
+
+        <!-- Mensaje si no ha aceptado y ya intentó pagar -->
+        <small *ngIf="selectedMethod && !acceptTerms && formSubmitted"
+              style="color: #f87171; font-size: 12px; display: block; margin-bottom: 0.75rem;">
+          <i class="pi pi-exclamation-circle mr-1"></i>
+          Debes aceptar los Términos y Condiciones para continuar.
+        </small>
 
       <!-- Botón pagar — solo visible al elegir método -->
       <button *ngIf="selectedMethod"
