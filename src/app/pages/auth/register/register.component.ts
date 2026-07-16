@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.registerFormPresenter.createForm();
+    this.registerFormPresenter.Form.get('acceptTerms')?.disable();
   }
 
   abrirPolitica(): void {
@@ -26,7 +27,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onPoliticaLeida(): void {
     this.politicaLeida = true;
-    this.registerFormPresenter.Form.get('acceptTerms')?.setValue(true);
+    this.registerFormPresenter.Form.get('acceptTerms')?.enable();
+  }
+
+  cerrarModal(): void {
+    this.mostrarModal = false;
   }
 
   onCheckboxClick(event: Event): void {
@@ -35,10 +40,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       event.stopPropagation();
       this.abrirPolitica();
     }
-  }
-
-  cerrarModal(): void {
-    this.mostrarModal = false;
   }
 
   submit(): void {
