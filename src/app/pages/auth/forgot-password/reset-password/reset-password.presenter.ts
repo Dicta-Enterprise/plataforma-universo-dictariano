@@ -26,7 +26,7 @@ export class ResetPasswordPresenter extends StepPresenter<ResetPassword> {
         confirmPassword: this.confirmPassword,
       },
       {
-        validators: PasswordValidator('newPassword', 'confirmPassword'), // 👈
+        validators: PasswordValidator('newPassword', 'confirmPassword'), 
       },
     );
   }

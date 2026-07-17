@@ -10,7 +10,4 @@ export class TermsConditionsComponent {
 
   constructor(private readonly location: Location) {}
 
-  goBack(): void {
-    this.location.back();
-  }
 }
