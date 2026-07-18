@@ -17,6 +17,10 @@ const routes: Routes = [
       import('./privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule),
   },
   {
+    path: 'forgot-password', 
+    loadChildren: () => import('./forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
+  },
+  {
     path: 'verify-email',
     loadChildren: () => import('./verify-email/verify-email.module').then(m => m.VerifyEmailModule)
   },
