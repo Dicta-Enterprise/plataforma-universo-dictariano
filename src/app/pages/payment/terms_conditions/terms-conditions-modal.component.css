@@ -1,0 +1,18 @@
+:host ::ng-deep .p-dialog {
+  background: #272727 !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background: #272727 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  background: #272727 !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  background: #272727 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

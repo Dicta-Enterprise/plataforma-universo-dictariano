@@ -15,10 +15,11 @@ import { PaymentFormPresenter } from './payment-form.presenter';
 import { PaymentApiService } from './services/payment-api.service';
 import { PAYMENT_REPOSITORY } from 'src/app/core/tokens/payment/payment.token';
 import { PaymentResultComponent } from './payment-result/payment-result.component';
+import { TermsConditionsModule } from './terms_conditions/terms-conditions.module';
 
 @NgModule({
   declarations: [PaymentComponent,
-    PaymentResultComponent
+    PaymentResultComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +36,7 @@ import { PaymentResultComponent } from './payment-result/payment-result.componen
     DataViewModule,
     StepsModule,
     SharedModule,
+    TermsConditionsModule
   ],
   providers: [
     PaymentFormPresenter,

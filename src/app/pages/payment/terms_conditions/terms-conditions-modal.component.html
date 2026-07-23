@@ -1,0 +1,23 @@
+<p-dialog
+  header="Términos y Condiciones"
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [dismissableMask]="true"
+  [style]="{'width':'90vw','max-width':'900px'}"
+  [contentStyle]="{'padding':'0'}"
+  (onHide)="cerrar()">
+
+  <div
+    style="height:70vh;
+           overflow-y:auto;
+           padding:1.5rem;
+           background:#272727;">
+
+    <app-terms-conditions-content></app-terms-conditions-content>
+
+  </div>
+
+ 
+
+</p-dialog>

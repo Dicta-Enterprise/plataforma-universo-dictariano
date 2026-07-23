@@ -92,6 +92,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectedIssuerId = '';
   isSubmitting = false;
   errorMessage = '';
+  mostrarModalTerminos = false;
   acceptTerms = false;
   formSubmitted = false;
 
@@ -315,6 +316,12 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.requiresIssuer       = false;
     this.selectedInstallments = 1;
     this.selectedIssuerId     = '';
+  }
+
+  abrirTerminos(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.mostrarModalTerminos = true;
   }
 
   async submit() {
