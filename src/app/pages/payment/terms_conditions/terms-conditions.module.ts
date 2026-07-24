@@ -4,21 +4,19 @@ import { TermsConditionsRoutingModule } from './terms-conditions-routing.module'
 import { TermsConditionsComponent } from './terms-conditions.component';
 import { AuthThemeModule } from 'src/app/core/themes/auth/auth-primeng.module';
 import { TermsConditionsContentComponent } from './terms-conditions-content/terms-conditions-content.component';
-import { TermsConditionsModalComponent } from './terms-conditions-modal.component';
 
 @NgModule({
-  declarations: [TermsConditionsComponent,
-    TermsConditionsContentComponent,
-    TermsConditionsModalComponent
+  declarations: [
+    TermsConditionsComponent,
   ],
   imports: [
     CommonModule,
     TermsConditionsRoutingModule,
     AuthThemeModule,
+    TermsConditionsContentComponent
   ],
   exports: [
-    TermsConditionsContentComponent, 
-    TermsConditionsModalComponent,    
+    TermsConditionsContentComponent
   ],
 })
 export class TermsConditionsModule {}

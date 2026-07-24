@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { AuthService } from './pages/auth/services/auth.service';
+import { ModalHostComponent } from './containers/host/app-modal-host.component';
+import { ModalService } from './containers/host/app-modal.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'front-magment-universodicta';
+  @ViewChild(ModalHostComponent) host!: ModalHostComponent;
   constructor(
+    private modalService: ModalService,
     private primengConfig: PrimeNGConfig,
     private authService: AuthService
   ) {}
@@ -41,5 +45,9 @@ export class AppComponent implements OnInit {
       accept: 'Aceptar',
       reject: 'Cancelar',
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.modalService.registerHost(this.host);
   }
 }
