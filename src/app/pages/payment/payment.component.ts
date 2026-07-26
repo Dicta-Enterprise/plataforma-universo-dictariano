@@ -9,6 +9,7 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
 import { CategoriaFacade } from 'src/app/shared/patterns/facade/models/categoria-facade';
 import { Curso } from 'src/app/core/class/curso/curso.class';
+import { ModalService } from 'src/app/containers/host/app-modal.service';
 
 // ── Interfaces ────────────────────────────────────────────────────────────────
 
@@ -120,6 +121,7 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
   selectedDocType: { min_length: number; max_length: number } | null = null;
 
   constructor(
+    private modalService: ModalService,
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
@@ -315,6 +317,10 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.requiresIssuer       = false;
     this.selectedInstallments = 1;
     this.selectedIssuerId     = '';
+  }
+
+  abrirTerminos(): void {
+    this.modalService.openByName('termsConditions');
   }
 
   async submit() {
