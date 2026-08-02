@@ -1,0 +1,109 @@
+<div class="bg-black text-white px-[4vw] py-4">
+  <!-- Encabezado superior -->
+  <header
+    class="flex flex-col md:flex-row justify-between gap-3 mb-4 max-w-7xl mx-auto"
+  >
+    <h1 class="text-3xl font-bold">Hola, Carlos</h1>
+
+    <div class="relative w-full md:max-w-xs">
+      <input
+        type="text"
+        placeholder="Barra de búsqueda"
+        class="w-full bg-[#1e1e20] text-gray-300 placeholder-gray-500 rounded-full py-2 pl-4 pr-10 text-sm border border-transparent focus:outline-none focus:border-cyan-400 transition"
+      />
+      <i
+        class="pi pi-search absolute right-5 top-2.5 text-gray-400 text-sm"
+      ></i>
+    </div>
+  </header>
+
+  <!-- Contenido Principal -->
+  <div class="flex gap-3 max-w-7xl mx-auto items-start">
+    <!-- Sidebar / Menú Lateral -->
+    <aside
+      class="hidden md:flex md:w-56 bg-[#18181a] rounded-xl p-2 flex-col gap-1 text-sm shrink-0 transition-all"
+    >
+      <!-- Card Mi familia -->
+      <div class="flex items-center justify-between p-2 mb-2">
+        <div class="flex items-center gap-3">
+          <p-avatar
+            image="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
+            shape="circle"
+            size="normal"
+          ></p-avatar>
+          <!-- Texto oculto en pantallas pequeñas, visible en 'md' en adelante -->
+          <span class="hidden md:inline text-base font-semibold text-gray-200"
+            >Mi familia</span
+          >
+        </div>
+      </div>
+
+      <!-- 1. Mi cuenta -->
+      <a
+        routerLink="my-account"
+        routerLinkActive="text-cyan-400 bg-[#212b2e] border-l-2 border-cyan-400 font-medium"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+      >
+        <i class="pi pi-user text-base"></i>
+        <!-- Oculto en pantallas pequeñas -->
+        <span class="hidden md:inline">Mi cuenta</span>
+      </a>
+
+      <!-- 2. Mis cursos -->
+      <a
+        routerLink="my-courses"
+        routerLinkActive="text-cyan-400 bg-[#212b2e] border-l-2 border-cyan-400 font-medium"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+      >
+        <i class="pi pi-desktop text-base"></i>
+        <span class="hidden md:inline">Mis cursos</span>
+      </a>
+
+      <!-- 3. Mi progreso -->
+      <a
+        routerLink="my-progress"
+        routerLinkActive="text-cyan-400 bg-[#212b2e] border-l-2 border-cyan-400 font-medium"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+      >
+        <i class="pi pi-chart-line text-base"></i>
+        <span class="hidden md:inline">Mi progreso</span>
+      </a>
+
+      <!-- 4. Mi comunidad -->
+      <a
+        routerLink="my-community"
+        routerLinkActive="text-cyan-400 bg-[#212b2e] border-l-2 border-cyan-400 font-medium"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+      >
+        <i class="pi pi-users text-base"></i>
+        <span class="hidden md:inline">Mi comunidad</span>
+      </a>
+
+      <!-- 5. Mi certificación -->
+      <a
+        routerLink="mycertification"
+        routerLinkActive="text-cyan-400 bg-[#212b2e] border-l-2 border-cyan-400 font-medium"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+      >
+        <i class="pi pi-bookmark text-base"></i>
+        <span class="hidden md:inline">Mi certificación</span>
+      </a>
+
+      <!-- 6. Mi facturación -->
+      <a
+        routerLink="my-billing"
+        routerLinkActive="text-cyan-400 bg-[#212b2e] border-l-2 border-cyan-400 font-medium"
+        class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+      >
+        <i class="pi pi-file text-base"></i>
+        <span class="hidden md:inline">Mi facturación</span>
+      </a>
+    </aside>
+
+    <!-- Contenido Central / Tabs y Perfil -->
+    <main class="flex-1">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

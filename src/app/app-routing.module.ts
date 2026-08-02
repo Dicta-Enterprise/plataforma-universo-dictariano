@@ -12,33 +12,51 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+        loadChildren: () =>
+          import('./pages/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'auth',
-        loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
+        loadChildren: () =>
+          import('./pages/auth/auth.module').then((m) => m.AuthModule),
       },
       {
         path: 'courses',
-        loadChildren: () => import('./pages/courses/courses.module').then(m => m.CoursesModule),
+        loadChildren: () =>
+          import('./pages/courses/courses.module').then((m) => m.CoursesModule),
       },
       {
         path: 'about',
-        loadChildren: () => import('./pages/about/about.module').then(m => m.AboutModule),
+        loadChildren: () =>
+          import('./pages/about/about.module').then((m) => m.AboutModule),
       },
       {
         path: 'perfil',
-        loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilModule),
+        loadChildren: () =>
+          import('./pages/perfil/perfil.module').then((m) => m.PerfilModule),
       },
       {
         path: 'my-courses',
-        loadChildren: () => import('./pages/my-courses/my-courses.module').then(m => m.MyCoursesModule),
+        loadChildren: () =>
+          import('./pages/my-courses/my-courses.module').then(
+            (m) => m.MyCoursesModule,
+          ),
       },
       {
-        path: 'terms-conditions',  // 👈
-        loadChildren: () => import('./pages/payment/terms_conditions/terms-conditions.module').then(m => m.TermsConditionsModule),
+        path: 'terms-conditions',
+        loadChildren: () =>
+          import('./pages/payment/terms_conditions/terms-conditions.module').then(
+            (m) => m.TermsConditionsModule,
+          ),
       },
-    ]
+      {
+        path: 'my-family',
+        loadChildren: () =>
+          import('./pages/my-family/my-family.module').then(
+            (m) => m.MyFamilyModule,
+          ),
+      },
+    ],
   },
 
   // Rutas SIN navbar (flujo de pago)
@@ -48,22 +66,27 @@ const routes: Routes = [
     children: [
       {
         path: 'cart',
-        loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartModule),
-      },{
+        loadChildren: () =>
+          import('./pages/cart/cart.module').then((m) => m.CartModule),
+      },
+      {
         path: 'payment',
-        loadChildren: () => import('./pages/payment/payment.module').then(m => m.PaymentModule),
+        loadChildren: () =>
+          import('./pages/payment/payment.module').then((m) => m.PaymentModule),
         canActivate: [AuthGuard],
       },
-    ]
+    ],
   },
 
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'top'
-  })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'top',
+    }),
+  ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

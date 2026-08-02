@@ -30,6 +30,7 @@ import { CheckoutNavbarComponent } from './shared/components/checkout-navbar/che
 
 import { FormsModule } from '@angular/forms';
 import { ModalHostComponent } from './containers/host/app-modal-host.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,8 +38,8 @@ import { ModalHostComponent } from './containers/host/app-modal-host.component';
     CheckoutNavbarComponent,
     FooterComponent,
     ActivoInactivoPipe,
-    MainLayoutComponent, 
-    BlankLayoutComponent,  
+    MainLayoutComponent,
+    BlankLayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +58,6 @@ import { ModalHostComponent } from './containers/host/app-modal-host.component';
     SharedModule,
     CartPopupModule,
     ToastModule,
-
     FormsModule,
   ],
   providers: [
