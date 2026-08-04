@@ -23,7 +23,7 @@ export interface CursoCuenta {
 })
 export class MyAccountComponent {
   // Pestaña activa: 'mi-cuenta' | 'joven' | 'nino'
-  activeTab: 'mi-cuenta' | 'joven' | 'nino' = 'joven';
+  activeTab: 'mi-cuenta' | 'joven' | 'nino' = 'mi-cuenta';
 
   // Datos dinámicos por tipo de cuenta
   cuentasData: Record<'joven' | 'nino', CursoCuenta> = {

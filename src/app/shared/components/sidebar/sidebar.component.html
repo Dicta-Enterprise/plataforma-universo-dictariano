@@ -1,0 +1,58 @@
+<!-- Boton de abrir menu que sale en moviles -->
+<button
+  class="top-[120px] left-[16px] md:hidden flex items-center bg-[#18181a] px-3 py-2.5 rounded-lg absolute border-2 border-transparent hover:border-cyan-400"
+  (click)="openMenu()"
+>
+  <i class="pi pi-bars text-xl"></i>
+</button>
+
+<!-- Fondo oscuro -->
+<div
+  *ngIf="isOpen"
+  class="fixed inset-0 bg-black/50 z-40 md:hidden"
+  tabindex="0"
+  (click)="closeMenu()"
+  (keydown.enter)="closeMenu()"
+  (keydown.space)="closeMenu()"
+></div>
+
+<!-- Menu lateral -->
+<aside
+  class="fixed top-0 left-0 h-screen w-64 bg-[#18181a] transition-transform duration-100 z-50 p-2 flex flex-col gap-1 md:static md:h-auto md:w-56 md:translate-x-0 md:rounded-xl"
+  [class.-translate-x-full]="!isOpen"
+  [class.translate-x-0]="isOpen"
+>
+  <div class="flex items-center justify-between p-2 mb-2">
+    <div class="flex items-center gap-3">
+      <p-avatar
+        image="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
+        shape="circle"
+      >
+      </p-avatar>
+
+      <span class="text-base font-semibold text-gray-200"> Mi familia </span>
+    </div>
+
+    <button
+      type="button"
+      class="text-gray-400 cursor-pointer hover:text-cyan-400 text-xl md:hidden"
+      (click)="closeMenu()"
+    >
+      <i class="pi pi-angle-left text-xl"></i>
+    </button>
+  </div>
+
+  <a
+    *ngFor="let item of items"
+    [routerLink]="item.route"
+    routerLinkActive="text-cyan-400 bg-[#212b2e] border-l-2 border-cyan-400 font-medium"
+    (click)="closeMenu()"
+    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+  >
+    <i class="pi" [ngClass]="item.icon"></i>
+
+    <span class="">
+      {{ item.label }}
+    </span>
+  </a>
+</aside>

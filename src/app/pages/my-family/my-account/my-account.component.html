@@ -125,7 +125,7 @@
     >
       <!-- CARD DE CURSO Y PERMISOS -->
       <div
-        class="bg-[#18181b] border border-[#27272a] rounded-2xl p-3 flex flex-col items-center shadow-lg"
+        class="bg-[#232326] border border-[#27272a] rounded-2xl p-3 flex flex-col items-center shadow-lg"
       >
         <div class="space-y-2 w-full">
           <!-- Imagen Ilustrativa -->
@@ -260,10 +260,14 @@
         <div class="grid grid-cols-2 gap-2 mt-3 w-full">
           <p-button
             label="Guardar"
-            styleClass="w-full !bg-[#27272a] hover:!bg-[#3f3f46] !text-white !border-none !rounded-xl !py-2.5 !text-xs !font-semibold"
+            [styleClass]="
+              'w-full !bg-[#27272a] hover:!bg-[#3f3f46] !text-white !border !rounded-xl !py-2.5 !text-xs !font-semibold ' +
+              (cuenta.colorTheme === 'amber'
+                ? '!border-amber-400'
+                : '!border-emerald-400')
+            "
           >
           </p-button>
-
           <!-- Botón Enviar Dinámico (Amarillo para Joven, Verde para Niño) -->
           <p-button
             label="Enviar"
@@ -280,7 +284,7 @@
 
       <!-- TARJETAS DE AGREGAR (+) Con hover dinámico -->
       <div
-        class="bg-[#18181b] border border-[#27272a] rounded-2xl flex items-center justify-center min-h-[650px] cursor-pointer transition"
+        class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center min-h-[650px] cursor-pointer transition"
         [ngClass]="
           cuenta.colorTheme === 'amber'
             ? 'hover:border-amber-400/50'
@@ -298,7 +302,7 @@
       </div>
 
       <div
-        class="bg-[#18181b] border border-[#27272a] rounded-2xl items-center justify-center cursor-pointer transition lg:flex hidden"
+        class="bg-[#232326] border border-[#27272a] rounded-2xl items-center justify-center cursor-pointer transition lg:flex hidden"
         [ngClass]="
           cuenta.colorTheme === 'amber'
             ? 'hover:border-amber-400/50'
