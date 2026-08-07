@@ -1,6 +1,6 @@
 <!-- Boton de abrir menu que sale en moviles -->
 <button
-  class="top-[120px] left-[16px] md:hidden flex items-center bg-[#18181a] px-3 py-2.5 rounded-lg absolute border-2 border-transparent hover:border-cyan-400"
+  class="top-[70px] left-[16px] md:hidden flex items-center bg-[#18181a] px-3 py-2.5 rounded-lg absolute border-2 border-transparent hover:border-cyan-400"
   (click)="openMenu()"
 >
   <i class="pi pi-bars text-xl"></i>
@@ -18,7 +18,7 @@
 
 <!-- Menu lateral -->
 <aside
-  class="fixed top-0 left-0 h-screen w-64 bg-[#18181a] transition-transform duration-100 z-50 p-2 flex flex-col gap-1 md:static md:h-auto md:w-56 md:translate-x-0 md:rounded-xl"
+  class="fixed top-0 left-0 h-full md:min-h-[540px] w-full min-w-[260px] bg-[#18181a] transition-transform duration-100 z-50 p-2 flex flex-col gap-1 md:static md:h-auto md:w-56 md:translate-x-0 md:rounded-xl"
   [class.-translate-x-full]="!isOpen"
   [class.translate-x-0]="isOpen"
 >

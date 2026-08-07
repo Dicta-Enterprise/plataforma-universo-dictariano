@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private _isAuthenticated = false;
   private _userImg = '';
 
-  private userImgSubject = new BehaviorSubject<string>('https://randomuser.me/api/portraits/men/11.jpg');
+  private userImgSubject = new BehaviorSubject<string>(
+    'https://randomuser.me/api/portraits/men/11.jpg',
+  );
   public userImg$ = this.userImgSubject.asObservable();
   constructor() {
     this._isAuthenticated = !!localStorage.getItem('userToken');

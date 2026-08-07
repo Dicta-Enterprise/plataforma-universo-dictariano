@@ -1,4 +1,4 @@
-<!-- BARRA DE CATEGORÍAS - visible siempre -->
+<!-- BARRA DE CATEGORÍAS - invisible cuando se esta dentro de la ruta my-family -->
 <div
   class="flex align-items-center justify-content-between gap-1 lg:gap-4 py-2 px-4"
   style="
@@ -6,6 +6,7 @@
     border-bottom: 1px solid #374151;
     height: 50px;
   "
+  *ngIf="!router.url.includes('my-family')"
 >
   <div
     class="flex align-items-center gap-1 lg:gap-4 flex-1 justify-content-center"
@@ -112,6 +113,81 @@
   </div>
 </div>
 
+<!-- NAVBAR CON LOGO -->
+<div
+  class="flex align-items-center py-2 px-3"
+  style="background-color: #272727; min-height: 56px"
+>
+  <!-- Logo -->
+  <a routerLink="/">
+    <img
+      src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
+      alt="Logo Mundo Dictariano"
+      class="h-10 w-auto object-contain"
+    />
+  </a>
+
+  <!-- Links centrales -->
+  <ul class="list-none flex align-items-center gap-2 flex-1">
+    <li>
+      <a
+        pRipple
+        href="http://localhost:3000"
+        target="_blank"
+        class="flex px-3 py-2 ml-[1vw] align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
+        style="white-space: nowrap"
+      >
+        <i class="pi pi-globe mr-2"></i>
+        <span class="hidden sm:flex">Mundo 3D</span>
+      </a>
+    </li>
+  </ul>
+
+  <!-- Derecha: carrito + login/avatar -->
+  <div class="flex align-items-center gap-2">
+    <a
+      pRipple
+      [routerLink]="['/cart']"
+      class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2"
+    >
+      <i class="pi pi-shopping-cart text-xl"></i>
+      <ng-container *ngIf="count$ | async as count">
+        <span
+          *ngIf="count > 0"
+          class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5"
+        >
+          {{ count }}
+        </span>
+      </ng-container>
+    </a>
+
+    <!-- Boton de login -->
+    <button
+      class="px-4 py-1 rounded-lg font-semibold text-black hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300"
+      routerLink="/auth/login"
+      *ngIf="(auth.isLoggedIn$ | async) === false"
+    >
+      Login
+    </button>
+
+    <!-- Boton de perfil -->
+    <button
+      *ngIf="auth.isLoggedIn$ | async"
+      (click)="menu.toggle($event)"
+      class="w-10 h-10 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition duration-200 bg-gray-700"
+      aria-haspopup="true"
+      aria-controls="user_menu_popup"
+    >
+      <img
+        [src]="(auth.userImg$ | async) ?? ''"
+        [alt]="'Avatar de usuario'"
+        class="w-full h-full object-cover"
+      />
+    </button>
+  </div>
+</div>
+
+<!-- Barra de busqueda para moviles, se abre al hacer click en el icono -->
 <div
   *ngIf="searchVisible"
   class="flex lg:hidden"
@@ -135,7 +211,6 @@
       [(ngModel)]="searchQuery"
       (keyup.enter)="buscar(); searchVisible = false"
       (blur)="searchVisible = false"
-     
       style="
         background-color: #3a3a3a;
         border: 1px solid #5c5c5c;
@@ -146,6 +221,7 @@
       "
     />
   </span>
+
   <button
     (click)="searchVisible = false"
     style="
@@ -161,78 +237,7 @@
   </button>
 </div>
 
-<!-- NAVBAR CON LOGO -->
-<div
-  class="flex align-items-center justify-content-between px-4 py-2"
-  style="background-color: #272727; min-height: 56px"
->
-  <!-- Logo -->
-  <a routerLink="/">
-    <img
-      src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
-      alt="Logo Mundo Dictariano"
-      style="height: 40px; width: auto; object-fit: contain"
-    />
-  </a>
-
-  <!-- Links centrales -->
-  <ul class="list-none p-0 m-0 flex align-items-center gap-2 flex-1 ml-3">
-    <li>
-      <a
-        pRipple
-        href="http://localhost:3000"
-        target="_blank"
-        class="flex px-3 py-2 align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
-        style="white-space: nowrap"
-      >
-        <i class="pi pi-globe mr-2"></i>
-        <span>Mundo 3D</span>
-      </a>
-    </li>
-  </ul>
-
-  <!-- Derecha: carrito + login/avatar -->
-  <div class="flex align-items-center gap-2">
-    <a
-      pRipple
-      [routerLink]="['/cart']"
-      class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2"
-    >
-      <i class="pi pi-shopping-cart text-xl"></i>
-      <ng-container *ngIf="count$ | async as count">
-        <span
-          *ngIf="count > 0"
-          class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5"
-        >
-          {{ count }}
-        </span>
-      </ng-container>
-    </a>
-
-    <button
-      class="px-4 py-1 rounded font-semibold text-black shadow-[0_4px_0_0_black] hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300"
-      style="border-radius: 10px"
-      routerLink="/auth/login"
-      *ngIf="(auth.isLoggedIn$ | async) === false"
-    >
-      Login
-    </button>
-
-    <p-avatar
-      *ngIf="auth.isLoggedIn$ | async"
-      [image]="(auth.userImg$ | async) ?? ''"
-      shape="circle"
-      size="large"
-      (click)="menu.toggle($event)"
-      styleClass="user-avatar-button"
-      class="block cursor-pointer hover:scale-105 transition duration-200"
-      aria-haspopup="true"
-      aria-controls="user_menu_popup"
-    >
-    </p-avatar>
-  </div>
-</div>
-
+<!-- Menu de usuario (popup) -->
 <p-menu
   #menu
   [model]="userItems"
