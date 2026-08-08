@@ -19,26 +19,28 @@ export class NavBarComponent implements OnInit {
   searchVisible = false;
 
   constructor(
-     private cart: CartService,
-     public auth: AuthService,
-     private router: Router
+    private cart: CartService,
+    public auth: AuthService,
+    public router: Router,
   ) {
-    this.count$ = cart.items$.pipe(map(items => items.length));
+    this.count$ = cart.items$.pipe(map((items) => items.length));
   }
-  
+
   buscar() {
     if (this.searchQuery.trim()) {
-      this.router.navigate(['/courses'], { queryParams: { q: this.searchQuery } });
+      this.router.navigate(['/courses'], {
+        queryParams: { q: this.searchQuery },
+      });
     }
   }
-  
+
   ngOnInit(): void {
     this.userItems = [
       {
         label: 'Ver perfil',
         icon: 'pi pi-user', // Icono de PrimeIcons
         //command: () => this.onViewProfile()
-        routerLink: '/perfil/mi-informacion'
+        routerLink: '/perfil/mi-informacion',
       },
       {
         label: 'Ver mis compras',
@@ -49,13 +51,13 @@ export class NavBarComponent implements OnInit {
         label: 'Ver mis cursos',
         icon: 'pi pi-book', // Icono de PrimeIcons
         //command: () => this.onViewMyCourses()
-        routerLink: '/my-courses'
+        routerLink: '/my-courses',
       },
       {
         label: 'Cerrar sesión',
         icon: 'pi pi-sign-out', // Icono de PrimeIcons
-        command: () => this.logout()
-      }
+        command: () => this.logout(),
+      },
     ];
     this.items = [
       {
@@ -75,35 +77,35 @@ export class NavBarComponent implements OnInit {
             label: 'Todos los cursos',
             icon: 'pi pi-fw pi-book',
             styleClass: 'custom-menu-item',
-            routerLink: '/courses'
+            routerLink: '/courses',
           },
           {
             label: 'Padres',
             icon: 'pi pi-fw pi-book',
             styleClass: 'custom-menu-item',
-            routerLink: '/courses'
+            routerLink: '/courses',
           },
           {
             label: 'Jóvenes',
             icon: 'pi pi-fw pi-book',
             styleClass: 'custom-menu-item',
-            routerLink: '/courses'
+            routerLink: '/courses',
           },
           {
             label: 'Niños',
             icon: 'pi pi-fw pi-book',
             styleClass: 'custom-menu-item',
-            routerLink: '/courses'
-          }
-        ]
+            routerLink: '/courses',
+          },
+        ],
       },
       {
         label: 'Acerca de Nosotros',
         icon: 'pi pi-fw pi-users',
         styleClass: 'custom-menu-item',
         routerLink: '/about',
-      }
-    ]; 
+      },
+    ];
   }
   abrirPerfil() {
     // Por ahora puedes navegar a /perfil, o mostrar modal

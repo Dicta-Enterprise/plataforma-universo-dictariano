@@ -13,7 +13,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     public readonly registerFormPresenter: RegisterFormPresenter,
-    private readonly registerFacade: RegisterFacade
+    private readonly registerFacade: RegisterFacade,
   ) {}
 
   ngOnInit(): void {

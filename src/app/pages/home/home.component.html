@@ -1,37 +1,79 @@
-<div class="px-4 py-8 md:px-6 lg:px-8"
-     style="min-height: 100vh;
-     position: relative;
-     overflow: hidden;
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-            url('https://images.pexels.com/photos/4497038/pexels-photo-4497038.jpeg'); 
-            background-size: cover; 
-            background-position: center;
-            background-repeat: no-repeat;">
-            
-            <span class="estrella" style="top:10%; left:15%; animation-duration:2s;"></span>
-            <span class="estrella estrella-blanca" style="top:10%; left:15%; animation-duration:2s;"></span>
-            <span class="estrella estrella-turquesa" style="top:20%; left:40%; animation-duration:3s;"></span>
-            <span class="estrella estrella-amarilla" style="top:5%; left:70%; animation-duration:1.5s;"></span>
-            <span class="estrella estrella-verde" style="top:35%; left:85%; animation-duration:2.5s;"></span>
-            <span class="estrella estrella-turquesa" style="top:60%; left:25%; animation-duration:1.8s;"></span>
-            <span class="estrella estrella-amarilla" style="top:75%; left:60%; animation-duration:2.2s;"></span>
-            <span class="estrella estrella-verde" style="top:15%; left:55%; animation-duration:3.5s;"></span>
-            <span class="estrella estrella-blanca" style="top:50%; left:10%; animation-duration:1.3s;"></span>
-            <span class="estrella estrella-turquesa" style="top:80%; left:90%; animation-duration:2.8s;"></span>
-            <span class="estrella estrella-amarilla" style="top:45%; left:50%; animation-duration:1.6s;"></span>
+<!-- Pagina home cuando el usuario no esta logeado -->
+<div
+  *ngIf="(auth.isLoggedIn$ | async) === false"
+  class="px-4 py-8 md:px-6 lg:px-8"
+  style="
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url(&quot;https://images.pexels.com/photos/4497038/pexels-photo-4497038.jpeg&quot;);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  "
+>
+  <span
+    class="estrella"
+    style="top: 10%; left: 15%; animation-duration: 2s"
+  ></span>
+  <span
+    class="estrella estrella-blanca"
+    style="top: 10%; left: 15%; animation-duration: 2s"
+  ></span>
+  <span
+    class="estrella estrella-turquesa"
+    style="top: 20%; left: 40%; animation-duration: 3s"
+  ></span>
+  <span
+    class="estrella estrella-amarilla"
+    style="top: 5%; left: 70%; animation-duration: 1.5s"
+  ></span>
+  <span
+    class="estrella estrella-verde"
+    style="top: 35%; left: 85%; animation-duration: 2.5s"
+  ></span>
+  <span
+    class="estrella estrella-turquesa"
+    style="top: 60%; left: 25%; animation-duration: 1.8s"
+  ></span>
+  <span
+    class="estrella estrella-amarilla"
+    style="top: 75%; left: 60%; animation-duration: 2.2s"
+  ></span>
+  <span
+    class="estrella estrella-verde"
+    style="top: 15%; left: 55%; animation-duration: 3.5s"
+  ></span>
+  <span
+    class="estrella estrella-blanca"
+    style="top: 50%; left: 10%; animation-duration: 1.3s"
+  ></span>
+  <span
+    class="estrella estrella-turquesa"
+    style="top: 80%; left: 90%; animation-duration: 2.8s"
+  ></span>
+  <span
+    class="estrella estrella-amarilla"
+    style="top: 45%; left: 50%; animation-duration: 1.6s"
+  ></span>
 
-            <span class="meteorito"></span>
-            <span class="meteorito-2"></span>
-            <span class="meteorito-3"></span>
+  <span class="meteorito"></span>
+  <span class="meteorito-2"></span>
+  <span class="meteorito-3"></span>
 
-  <div class="flex flex-wrap" style="align-items: center;">
+  <div class="flex flex-wrap" style="align-items: center">
     <div class="w-full lg:w-6 px-4 py-2 md:px-6 lg:px-8">
       <h1 class="text-6xl text-white mb-4 font-medium titulo-animado">
         ¡Descubre mundos 3D llenos de aprendizaje y diversión!
       </h1>
-      <p class="line-height-3 mt-0 mb-7 p-0 text-white-alpha-80 text-2xl parrafo-animado">
-        Descubre cursos interactivos para toda la familia y desarrolla habilidades
-        digitales de forma divertida y segura. ¡Empieza a aprender hoy mismo!
+      <p
+        class="line-height-3 mt-0 mb-7 p-0 text-white-alpha-80 text-2xl parrafo-animado"
+      >
+        Descubre cursos interactivos para toda la familia y desarrolla
+        habilidades digitales de forma divertida y segura. ¡Empieza a aprender
+        hoy mismo!
       </p>
 
       <!-- Botón CTA -->
@@ -44,7 +86,7 @@
         >
           Explorar Cursos
         </button>
-      </div>     
+      </div>
     </div>
 
     <div class="col-12 lg:col-6 flex justify-content-center align-items-center">
@@ -52,8 +94,84 @@
         src="https://i.postimg.cc/CL2zRx21/WORLD.png"
         alt="Mundo"
         class="globo-animado"
-        style="width: 120%; max-width: 550rem; height: auto;"
+        style="width: 120%; max-width: 550rem; height: auto"
       />
     </div>
   </div>
+</div>
+
+<!-- Pagina bienvenida cuando el usuario esta logeado (falta especificar que salga solo cuando el usuario sea padre) -->
+<div
+  class="relative flex flex-col items-center bg-black text-white gap-5 py-5 select-none"
+  *ngIf="auth.isLoggedIn$ | async"
+>
+  <!-- Bienvenida -->
+  <h1 class="text-4xl md:text-6xl font-bold tracking-wide text-cyan-400">
+    Bienvenido Pápa
+  </h1>
+
+  <!-- Main Image Container -->
+  <main
+    class="relative w-full flex-1 flex items-center justify-center overflow-hidden"
+  >
+    <img
+      src="assets/img/imagenBienvenida.png"
+      alt="Mundo Dictariano characters"
+      class="w-full h-auto max-h-[800px] object-cover"
+    />
+  </main>
+
+  <!-- Link Gestiona tu cuenta -->
+  <a
+    routerLink="/my-family"
+    class="inline-block bg-cyan-400 text-black border-none text-sm md:text-xl font-bold rounded-full px-4 py-2 md:py-3 md:px-6 hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,229,255,0.4)] transition text-center cursor-pointer"
+  >
+    Gestiona tu cuenta
+  </a>
+
+  <!-- Seccion te puede interesar -->
+  <section class="w-full select-none px-[4vw]">
+    <!-- Título de la sección -->
+    <h2 class="text-xl sm:text-2xl font-semibold tracking-wide px-4">
+      Te pueden interesar
+    </h2>
+
+    <!-- Contenedor principal con flechas y listado -->
+    <div class="relative flex gap-1 items-center">
+      <!-- Flecha izquierda -->
+      <button
+        (click)="scrollLeft()"
+        type="button"
+        class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
+        aria-label="Anterior"
+      >
+        <i class="pi pi-chevron-left text-xl sm:text-2xl"></i>
+      </button>
+
+      <!-- Listado de tarjetas -->
+      <div
+        #sliderContainer
+        class="flex gap-2 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full"
+      >
+        <div *ngFor="let curso of cursos" class="flex-none w-[280px]">
+          <app-card-curso
+            [curso]="curso"
+            primary_color="#F5C518"
+            secondary_color="#e0a800"
+          >
+          </app-card-curso>
+        </div>
+      </div>
+
+      <!-- Flecha derecha -->
+      <button
+        (click)="scrollRight()"
+        type="button"
+        class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
+        aria-label="Siguiente"
+      >
+        <i class="pi pi-chevron-right text-xl sm:text-2xl"></i>
+      </button>
+    </div>
+  </section>
 </div>

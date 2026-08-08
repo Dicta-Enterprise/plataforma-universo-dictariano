@@ -11,12 +11,8 @@ import { RouterModule } from '@angular/router';
 import { BadgeModule } from 'primeng/badge';
 import { SharedPipeModule } from './pipes/shared-pipe.module';
 
-
 @NgModule({
-  declarations: [
-    CardCursoComponent,
-    CourseCarouselComponent,
-  ],
+  declarations: [CardCursoComponent, CourseCarouselComponent],
   imports: [
     CommonModule,
     CardModule,
@@ -28,10 +24,6 @@ import { SharedPipeModule } from './pipes/shared-pipe.module';
     BadgeModule,
     SharedPipeModule,
   ],
-  exports: [
-    CardCursoComponent,
-    CourseCarouselComponent,
-    ProgressSpinnerModule,
-  ]
+  exports: [CardCursoComponent, CourseCarouselComponent, ProgressSpinnerModule],
 })
-export class SharedModule { }
+export class SharedModule {}

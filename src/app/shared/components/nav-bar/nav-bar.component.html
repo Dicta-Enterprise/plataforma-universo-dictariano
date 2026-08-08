@@ -1,139 +1,249 @@
-<!-- BARRA DE CATEGORÍAS - visible siempre -->
-<div class="flex align-items-center justify-content-between gap-1 lg:gap-4 py-2 px-4"
-  style="background-color: #272727; border-bottom: 1px solid #374151; height: 50px;">
-<div class="flex align-items-center gap-1 lg:gap-4 flex-1 justify-content-center">
-  <a routerLink="courses/padres" pRipple
-     routerLinkActive="text-yellow-400 shadow-[0_1px_0_0_#ffcc00] outline-transparent"
-    #rla="routerLinkActive"
-    class="flex align-items-center gap-1 text-gray-400 hover:text-yellow-400 hover:shadow-[0_1px_0_0_#ffcc00] shadow-[0_0_0_0_#ffcc00] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-    [style]="!rla.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #ffcc00 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
-    <i class="pi pi-heart text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''"></i>
-    <span class="text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''">Padres</span>
-  </a>
+<!-- BARRA DE CATEGORÍAS - invisible cuando se esta dentro de la ruta my-family -->
+<div
+  class="flex align-items-center justify-content-between gap-1 lg:gap-4 py-2 px-4"
+  style="
+    background-color: #272727;
+    border-bottom: 1px solid #374151;
+    height: 50px;
+  "
+  *ngIf="!router.url.includes('my-family')"
+>
+  <div
+    class="flex align-items-center gap-1 lg:gap-4 flex-1 justify-content-center"
+  >
+    <a
+      routerLink="courses/padres"
+      pRipple
+      routerLinkActive="text-yellow-400 shadow-[0_1px_0_0_#ffcc00] outline-transparent"
+      #rla="routerLinkActive"
+      class="flex align-items-center gap-1 text-gray-400 hover:text-yellow-400 hover:shadow-[0_1px_0_0_#ffcc00] shadow-[0_0_0_0_#ffcc00] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+      [style]="
+        !rla.isActive
+          ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #ffcc00 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;'
+          : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
+      "
+    >
+      <i
+        class="pi pi-heart text-sm"
+        [style.color]="!rla.isActive ? '#0a0a0a' : ''"
+      ></i>
+      <span class="text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''"
+        >Padres</span
+      >
+    </a>
 
-  <span class="text-gray-600">|</span>
+    <span class="text-gray-600">|</span>
 
-  <a routerLink="courses/jovenes" pRipple
-     routerLinkActive="text-cyan-400 shadow-[0_1px_0_0_#33ccff] outline-transparent"
-    #rlaJovenes="routerLinkActive"
-    class="flex align-items-center gap-1 text-gray-400 hover:text-cyan-400 hover:shadow-[0_1px_0_0_#33ccff] shadow-[0_0_0_0_#33ccff] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-    [style]="!rlaJovenes.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #33ccff 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
-    <i class="pi pi-send text-sm" [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"></i>
-    <span class="text-sm" [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''">Jóvenes</span>
-  </a>
+    <a
+      routerLink="courses/jovenes"
+      pRipple
+      routerLinkActive="text-cyan-400 shadow-[0_1px_0_0_#33ccff] outline-transparent"
+      #rlaJovenes="routerLinkActive"
+      class="flex align-items-center gap-1 text-gray-400 hover:text-cyan-400 hover:shadow-[0_1px_0_0_#33ccff] shadow-[0_0_0_0_#33ccff] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+      [style]="
+        !rlaJovenes.isActive
+          ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #33ccff 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;'
+          : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
+      "
+    >
+      <i
+        class="pi pi-send text-sm"
+        [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
+      ></i>
+      <span
+        class="text-sm"
+        [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
+        >Jóvenes</span
+      >
+    </a>
 
-  <span class="text-gray-600">|</span>
+    <span class="text-gray-600">|</span>
 
-  <a routerLink="/courses/ninos" pRipple
-    routerLinkActive="text-green-400 shadow-[0_1px_0_0_#2ee85d] outline-transparent"
-    #rlaNinos="routerLinkActive"
-    class="flex align-items-center gap-1 text-gray-400 hover:text-green-400 hover:shadow-[0_1px_0_0_#2ee85d] shadow-[0_0_0_0_#2ee85d] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-    [style]="!rlaNinos.isActive ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #2ee85d 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;' : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'">
-    <i class="pi pi-star text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"></i>
-    <span class="text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''">Niños</span>
-  </a>
-</div>
+    <a
+      routerLink="/courses/ninos"
+      pRipple
+      routerLinkActive="text-green-400 shadow-[0_1px_0_0_#2ee85d] outline-transparent"
+      #rlaNinos="routerLinkActive"
+      class="flex align-items-center gap-1 text-gray-400 hover:text-green-400 hover:shadow-[0_1px_0_0_#2ee85d] shadow-[0_0_0_0_#2ee85d] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+      [style]="
+        !rlaNinos.isActive
+          ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #2ee85d 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;'
+          : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
+      "
+    >
+      <i
+        class="pi pi-star text-sm"
+        [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
+      ></i>
+      <span class="text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
+        >Niños</span
+      >
+    </a>
+  </div>
   <!-- Buscador derecha -->
-<div class="flex align-items-center ml-auto">
-  <!-- Desktop -->
-  <span class="p-input-icon-left hidden lg:block">
-  <i class="pi pi-search" style="color: #e8002e;"></i>
-  <input type="text" pInputText placeholder="Buscar cursos..."
-    [(ngModel)]="searchQuery" (keyup.enter)="buscar()"
-    style="background-color: #3a3a3a; border: 1px solid #5c5c5c !important; color: #fff; border-radius: 10px; padding-left: 2.5rem; width: 300px;"/>
-</span>
-  <!-- Móvil: solo ícono -->
-  <span class="flex lg:hidden" (click)="searchVisible = !searchVisible" style="cursor: pointer;">
-    <i class="pi pi-search" style="color: #e8002e; font-size: 0.9rem;"></i>
-  </span>
-</div>
-</div>
-
-<div *ngIf="searchVisible"
-  class="flex lg:hidden"
-  style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background-color: #272727; padding: 12px 16px; border-bottom: 1px solid #374151;">
-  <span class="p-input-icon-left" style="width: 100%;">
-    <i class="pi pi-search" style="color: #e8002e;"></i>
-    <input type="text" pInputText placeholder="Buscar cursos..."
-      [(ngModel)]="searchQuery"
-      (keyup.enter)="buscar(); searchVisible = false"
-      (blur)="searchVisible = false"
-      autofocus
-      style="background-color: #3a3a3a; border: 1px solid #5c5c5c; color: #fff; border-radius: 10px; padding-left: 2.5rem; width: 100%;"/>
-  </span>
-  <button (click)="searchVisible = false"
-    style="background: none; border: none; color: #fff; cursor: pointer; margin-left: 8px; font-size: 1.2rem;">
-    <i class="pi pi-times"></i>
-  </button>
+  <div class="flex align-items-center ml-auto">
+    <!-- Desktop -->
+    <span class="p-input-icon-left hidden lg:block">
+      <i class="pi pi-search" style="color: #e8002e"></i>
+      <input
+        type="text"
+        pInputText
+        placeholder="Buscar cursos..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="buscar()"
+        style="
+          background-color: #3a3a3a;
+          border: 1px solid #5c5c5c !important;
+          color: #fff;
+          border-radius: 10px;
+          padding-left: 2.5rem;
+          width: 300px;
+        "
+      />
+    </span>
+    <!-- Móvil: solo ícono -->
+    <button
+      type="button"
+      class="flex lg:hidden cursor-pointer"
+      (click)="searchVisible = !searchVisible"
+      aria-label="Abrir búsqueda"
+    >
+      <i class="pi pi-search" style="color: #e8002e; font-size: 0.9rem"></i>
+    </button>
+  </div>
 </div>
 
 <!-- NAVBAR CON LOGO -->
-<div class="flex align-items-center justify-content-between px-4 py-2"
-  style="background-color: #272727; min-height: 56px;">
-
+<div
+  class="flex align-items-center py-2 px-3"
+  style="background-color: #272727; min-height: 56px"
+>
   <!-- Logo -->
   <a routerLink="/">
     <img
       src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
       alt="Logo Mundo Dictariano"
-      style="height: 40px; width: auto; object-fit: contain;"
+      class="h-10 w-auto object-contain"
     />
   </a>
 
   <!-- Links centrales -->
-<ul class="list-none p-0 m-0 flex align-items-center gap-2 flex-1 ml-3">
-  
-  <li>
-  <a pRipple href="http://localhost:3000" target="_blank"
-    class="flex px-3 py-2 align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
-    style="white-space: nowrap;">
-    <i class="pi pi-globe mr-2"></i>
-    <span>Mundo 3D</span>
-  </a>
-</li>
-</ul>
+  <ul class="list-none flex align-items-center gap-2 flex-1">
+    <li>
+      <a
+        pRipple
+        href="http://localhost:3000"
+        target="_blank"
+        class="flex px-3 py-2 ml-[1vw] align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
+        style="white-space: nowrap"
+      >
+        <i class="pi pi-globe mr-2"></i>
+        <span class="hidden sm:flex">Mundo 3D</span>
+      </a>
+    </li>
+  </ul>
 
   <!-- Derecha: carrito + login/avatar -->
   <div class="flex align-items-center gap-2">
-    <a pRipple [routerLink]="['/cart']"
-      class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2">
+    <a
+      pRipple
+      [routerLink]="['/cart']"
+      class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2"
+    >
       <i class="pi pi-shopping-cart text-xl"></i>
       <ng-container *ngIf="count$ | async as count">
-        <span *ngIf="count > 0"
-          class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5">
+        <span
+          *ngIf="count > 0"
+          class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5"
+        >
           {{ count }}
         </span>
       </ng-container>
     </a>
 
+    <!-- Boton de login -->
     <button
-      class="px-4 py-1 rounded font-semibold text-black shadow-[0_4px_0_0_black] hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300"
-      style="border-radius: 10px;"
+      class="px-4 py-1 rounded-lg font-semibold text-black hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300"
       routerLink="/auth/login"
-      *ngIf="(auth.isLoggedIn$ | async) === false">
+      *ngIf="(auth.isLoggedIn$ | async) === false"
+    >
       Login
     </button>
 
-    <p-avatar
+    <!-- Boton de perfil -->
+    <button
       *ngIf="auth.isLoggedIn$ | async"
-      [image]="(auth.userImg$ | async) ?? ''"
-      shape="circle"
-      size="large"
       (click)="menu.toggle($event)"
-      styleClass="user-avatar-button"
-      class="block cursor-pointer hover:scale-105 transition duration-200"
+      class="w-10 h-10 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition duration-200 bg-gray-700"
       aria-haspopup="true"
-      aria-controls="user_menu_popup">
-    </p-avatar>
+      aria-controls="user_menu_popup"
+    >
+      <img
+        [src]="(auth.userImg$ | async) ?? ''"
+        [alt]="'Avatar de usuario'"
+        class="w-full h-full object-cover"
+      />
+    </button>
   </div>
-
 </div>
 
+<!-- Barra de busqueda para moviles, se abre al hacer click en el icono -->
+<div
+  *ngIf="searchVisible"
+  class="flex lg:hidden"
+  style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #272727;
+    padding: 12px 16px;
+    border-bottom: 1px solid #374151;
+  "
+>
+  <span class="p-input-icon-left" style="width: 100%">
+    <i class="pi pi-search" style="color: #e8002e"></i>
+    <input
+      type="text"
+      pInputText
+      placeholder="Buscar cursos..."
+      [(ngModel)]="searchQuery"
+      (keyup.enter)="buscar(); searchVisible = false"
+      (blur)="searchVisible = false"
+      style="
+        background-color: #3a3a3a;
+        border: 1px solid #5c5c5c;
+        color: #fff;
+        border-radius: 10px;
+        padding-left: 2.5rem;
+        width: 100%;
+      "
+    />
+  </span>
+
+  <button
+    (click)="searchVisible = false"
+    style="
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      margin-left: 8px;
+      font-size: 1.2rem;
+    "
+  >
+    <i class="pi pi-times"></i>
+  </button>
+</div>
+
+<!-- Menu de usuario (popup) -->
 <p-menu
   #menu
   [model]="userItems"
   [popup]="true"
   id="user_menu_popup"
-  appendTo="body">
+  appendTo="body"
+>
 </p-menu>
 <app-cart-popup></app-cart-popup>

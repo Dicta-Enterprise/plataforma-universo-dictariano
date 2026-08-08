@@ -1,4 +1,4 @@
-<div class="card-curso my-5">
+<div class="card-curso">
   <div
     class="card-inner"
     [style.--dynamic-hover-color]="primary_color"
@@ -6,7 +6,11 @@
   >
     <div class="card-face card-front">
       <img
-        [src]="curso.imagen.startsWith('https') ? curso.imagen : '/assets/loaders/bottle-loader.gif'"
+        [src]="
+          curso.imagen.startsWith('https')
+            ? curso.imagen
+            : '/assets/loaders/bottle-loader.gif'
+        "
         alt="Curso banner"
         class="curso-image-full"
       />
@@ -40,7 +44,11 @@
           <div class="header-right">
             <div class="img-circular-container">
               <img
-                [src]="curso.imagen.startsWith('https') ? curso.imagen : '/assets/loaders/bottle-loader.gif'"
+                [src]="
+                  curso.imagen.startsWith('https')
+                    ? curso.imagen
+                    : '/assets/loaders/bottle-loader.gif'
+                "
                 class="img-circular"
                 [alt]="'Imagen de ' + curso.nombre"
               />
@@ -58,11 +66,14 @@
 
         <div class="card-back-content">
           <p class="curso-back-desc">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam voluptatum, fuga quasi cupiditate minima
-            fugiat assumenda nesciunt illo minus reiciendis, placeat hic sapiente sed magnam est necessitatibus cum
-            excepturi alias neque. Cumque, pariatur. Harum tenetur laborum voluptatum libero, eligendi, repellendus, eum
-            accusantium ad enim omnis quos ducimus? Sint animi iure rem? Amet voluptatem quasi rerum ullam nobis
-            corrupti qui odio eum vero maxime. Quia, at!
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam
+            voluptatum, fuga quasi cupiditate minima fugiat assumenda nesciunt
+            illo minus reiciendis, placeat hic sapiente sed magnam est
+            necessitatibus cum excepturi alias neque. Cumque, pariatur. Harum
+            tenetur laborum voluptatum libero, eligendi, repellendus, eum
+            accusantium ad enim omnis quos ducimus? Sint animi iure rem? Amet
+            voluptatem quasi rerum ullam nobis corrupti qui odio eum vero
+            maxime. Quia, at!
           </p>
 
           <h2 class="beneficios-title">Beneficios</h2>
@@ -83,11 +94,18 @@
           </div>
 
           <div class="card-back-footer">
-            <button type="button" class="link-ver-mas mb-2" (click)="irADetalle()">
+            <button
+              type="button"
+              class="link-ver-mas mb-2"
+              (click)="irADetalle()"
+            >
               <u>Ver más...</u>
             </button>
 
-            <button class="btn-carrito-moderno w-full" (click)="agregarAlCarrito()">
+            <button
+              class="btn-carrito-moderno w-full"
+              (click)="agregarAlCarrito()"
+            >
               <i class="pi pi-shopping-cart"></i>
               <span>Agregar al carrito</span>
             </button>

@@ -1,0 +1,325 @@
+<div class="flex flex-col">
+  <!-- Selector de Pestañas (Tabs) -->
+  <div class="flex bg-[#232326] rounded-t-xl overflow-hidden font-semibold">
+    <!-- Tab 1: Mi cuenta -->
+    <button
+      (click)="activeTab = 'mi-cuenta'"
+      [ngClass]="{
+        'text-white bg-[#2c2c2e] border-b-2 border-cyan-400 shadow font-semibold':
+          activeTab === 'mi-cuenta',
+        'text-gray-400 hover:text-white font-medium': activeTab !== 'mi-cuenta',
+      }"
+      class="flex-1 py-3 text-center text-sm transition rounded-lg"
+    >
+      Mi cuenta
+    </button>
+
+    <!-- Tab 2: Cuenta Joven -->
+    <button
+      (click)="activeTab = 'joven'"
+      [ngClass]="{
+        'text-white bg-[#2c2c2e] border-b-2 border-amber-400 shadow font-semibold':
+          activeTab === 'joven',
+        'text-gray-400 hover:text-white font-medium': activeTab !== 'joven',
+      }"
+      class="flex-1 py-3 text-center text-sm transition rounded-lg"
+    >
+      Cuenta Joven
+    </button>
+
+    <!-- Tab 3: Cuenta Niño -->
+    <button
+      (click)="activeTab = 'nino'"
+      [ngClass]="{
+        'text-white bg-[#2c2c2e] border-b-2 border-emerald-400 shadow font-semibold':
+          activeTab === 'nino',
+        'text-gray-400 hover:text-white font-medium': activeTab !== 'nino',
+      }"
+      class="flex-1 py-3 text-center text-sm transition rounded-lg"
+    >
+      Cuenta Niño
+    </button>
+  </div>
+
+  <div class="overflow-hidden">
+    <!-- Card de mi cuenta -->
+    <div
+      *ngIf="!currentCuenta as cuenta"
+      class="bg-[#18181a] rounded-b-xl py-5 px-3 flex flex-col items-center gap-4"
+    >
+      <!-- Foto de Perfil -->
+      <div class="relative mb-[-16px]">
+        <p-avatar
+          image="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
+          shape="circle"
+          styleClass="w-24 h-24 border-2 border-gray-700 shadow-lg"
+        ></p-avatar>
+      </div>
+
+      <h2 class="text-xl font-bold">Carlos Mendoza</h2>
+
+      <!-- Formulario de Datos -->
+      <div
+        class="w-full max-w-lg bg-[#121214] border border-[#2b2b2e] rounded-xl divide-y divide-[#222226] text-sm"
+      >
+        <!-- Correo -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Correo:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <span class="text-gray-200 font-medium truncate"
+              >carlos.m@ejemplo.com</span
+            >
+            <button class="text-cyan-400 hover:text-cyan-300 transition">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Fecha de nacimiento -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Fecha nacimiento:</span>
+          <div class="flex items-center gap-3">
+            <span class="text-gray-200 font-medium">15/08/1980</span>
+            <button class="text-cyan-400 hover:text-cyan-300 transition">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Contraseña:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <span class="text-gray-200 tracking-widest font-bold"
+              >••••••••</span
+            >
+            <button class="text-cyan-400 hover:text-cyan-300 transition">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Alias -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Alias:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <span class="text-gray-200 font-medium">PapaCarlos</span>
+            <button class="text-cyan-400 hover:text-cyan-300 transition">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón Guardar -->
+      <button
+        type="button"
+        class="bg-cyan-400 text-black border-none font-bold rounded-full py-2 px-4 hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,229,255,0.4)] transition"
+      >
+        Guardar
+      </button>
+    </div>
+
+    <!-- Card de cuenta joven y niño -->
+    <div
+      *ngIf="currentCuenta as cuenta"
+      class="bg-[#18181a] rounded-b-xl p-4 grid grid-cols-1 lg:grid-cols-3 gap-3"
+    >
+      <!-- CARD DE CURSO Y PERMISOS -->
+      <div
+        class="bg-[#232326] border border-[#27272a] rounded-2xl p-3 flex flex-col items-center shadow-lg"
+      >
+        <div class="space-y-2 w-full">
+          <!-- Imagen Ilustrativa -->
+          <div class="w-full rounded-xl overflow-hidden">
+            <img
+              [src]="cuenta.imagen"
+              [alt]="cuenta.nombre"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <!-- Título -->
+          <h3 class="text-lg font-bold text-white">{{ cuenta.nombre }}</h3>
+
+          <!-- Sección: CUENTA -->
+          <div>
+            <span
+              class="text-[11px] font-bold tracking-wider text-gray-400 uppercase"
+              >CUENTA</span
+            >
+            <div
+              class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-3 flex justify-between items-center"
+            >
+              <div class="text-xs text-gray-300 space-y-1">
+                <p>Alias</p>
+                <p>Cumpleaños</p>
+              </div>
+              <div
+                class="flex flex-col gap-2"
+                [ngClass]="
+                  cuenta.colorTheme === 'amber'
+                    ? 'text-amber-400'
+                    : 'text-emerald-400'
+                "
+              >
+                <i
+                  class="pi pi-pencil text-xs cursor-pointer hover:opacity-80"
+                ></i>
+                <i
+                  class="pi pi-pencil text-xs cursor-pointer hover:opacity-80"
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sección: PERMISOS -->
+          <div>
+            <span
+              class="text-[11px] font-bold tracking-wider text-gray-400 uppercase"
+              >PERMISOS</span
+            >
+            <div
+              class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-3 space-y-2.5 text-xs text-gray-300"
+            >
+              <div class="flex justify-between items-center">
+                <span>Ver perfil</span>
+                <i
+                  class="pi pi-check text-xs"
+                  [ngClass]="
+                    cuenta.colorTheme === 'amber'
+                      ? 'text-amber-400'
+                      : 'text-emerald-400'
+                  "
+                ></i>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Interacción foros</span>
+                <i
+                  class="pi pi-check text-xs"
+                  [ngClass]="
+                    cuenta.colorTheme === 'amber'
+                      ? 'text-amber-400'
+                      : 'text-emerald-400'
+                  "
+                ></i>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Ver calificación</span>
+                <i
+                  class="pi pi-check text-xs"
+                  [ngClass]="
+                    cuenta.colorTheme === 'amber'
+                      ? 'text-amber-400'
+                      : 'text-emerald-400'
+                  "
+                ></i>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Cambiar avatar</span>
+                <i class="pi pi-times text-gray-500 text-xs"></i>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Ver progreso</span>
+                <i
+                  class="pi pi-check text-xs"
+                  [ngClass]="
+                    cuenta.colorTheme === 'amber'
+                      ? 'text-amber-400'
+                      : 'text-emerald-400'
+                  "
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Input Correo Electrónico con Color Dinámico -->
+          <div class="relative flex items-center">
+            <input
+              type="email"
+              [value]="cuenta.email"
+              readonly
+              [ngClass]="{
+                'bg-[#272412] border-amber-500/50 text-amber-200':
+                  cuenta.colorTheme === 'amber',
+                'bg-[#122718] border-emerald-500/50 text-emerald-200':
+                  cuenta.colorTheme === 'emerald',
+              }"
+              class="w-full border text-xs rounded-xl px-3 py-2.5 pr-8 focus:outline-none min-w-0 truncate"
+            />
+            <i
+              class="pi pi-pencil text-xs absolute right-3 cursor-pointer"
+              [ngClass]="
+                cuenta.colorTheme === 'amber'
+                  ? 'text-amber-400'
+                  : 'text-emerald-400'
+              "
+            ></i>
+          </div>
+        </div>
+
+        <!-- Botones Guardar / Enviar -->
+        <div class="grid grid-cols-2 gap-2 mt-3 w-full">
+          <p-button
+            label="Guardar"
+            [styleClass]="
+              'w-full !bg-[#27272a] hover:!bg-[#3f3f46] !text-white !border !rounded-xl !py-2.5 !text-xs !font-semibold ' +
+              (cuenta.colorTheme === 'amber'
+                ? '!border-amber-400'
+                : '!border-emerald-400')
+            "
+          >
+          </p-button>
+          <!-- Botón Enviar Dinámico (Amarillo para Joven, Verde para Niño) -->
+          <p-button
+            label="Enviar"
+            [styleClass]="
+              'w-full !border-none !rounded-xl !py-2.5 !text-xs !font-bold !text-black ' +
+              (cuenta.colorTheme === 'amber'
+                ? '!bg-amber-400 hover:!bg-amber-500'
+                : '!bg-emerald-400 hover:!bg-emerald-500')
+            "
+          >
+          </p-button>
+        </div>
+      </div>
+
+      <!-- TARJETAS DE AGREGAR (+) Con hover dinámico -->
+      <div
+        class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center min-h-[650px] cursor-pointer transition"
+        [ngClass]="
+          cuenta.colorTheme === 'amber'
+            ? 'hover:border-amber-400/50'
+            : 'hover:border-emerald-400/50'
+        "
+      >
+        <i
+          class="pi pi-plus text-5xl font-bold"
+          [ngClass]="
+            cuenta.colorTheme === 'amber'
+              ? 'text-amber-400'
+              : 'text-emerald-400'
+          "
+        ></i>
+      </div>
+
+      <div
+        class="bg-[#232326] border border-[#27272a] rounded-2xl items-center justify-center cursor-pointer transition lg:flex hidden"
+        [ngClass]="
+          cuenta.colorTheme === 'amber'
+            ? 'hover:border-amber-400/50'
+            : 'hover:border-emerald-400/50'
+        "
+      >
+        <i
+          class="pi pi-plus text-5xl font-bold"
+          [ngClass]="
+            cuenta.colorTheme === 'amber'
+              ? 'text-amber-400'
+              : 'text-emerald-400'
+          "
+        ></i>
+      </div>
+    </div>
+  </div>
+</div>
