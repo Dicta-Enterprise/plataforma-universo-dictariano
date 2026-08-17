@@ -1,208 +1,253 @@
-<!-- BARRA DE CATEGORÍAS - invisible cuando se esta dentro de la ruta my-family -->
-<div
-  class="flex align-items-center justify-content-between gap-1 lg:gap-4 py-2 px-4"
-  style="
-    background-color: #272727;
-    border-bottom: 1px solid #374151;
-    height: 50px;
-  "
-  *ngIf="!router.url.includes('my-family')"
->
+<!-- HEADER FIJO (Navbar + Barra de Categorías opcional) -->
+<header class="fixed top-0 left-0 w-full z-50 bg-[#272727] shadow-md">
+  <!-- 2. BARRA DE CATEGORÍAS (Visible solo sin autenticar) -->
   <div
-    class="flex align-items-center gap-1 lg:gap-4 flex-1 justify-content-center"
+    *ngIf="(auth.isLoggedIn$ | async) === false"
+    class="flex items-center justify-between h-12 px-4 bg-[#272727] border-b border-gray-700"
   >
-    <a
-      routerLink="courses/padres"
-      pRipple
-      routerLinkActive="text-yellow-400 shadow-[0_1px_0_0_#ffcc00] outline-transparent"
-      #rla="routerLinkActive"
-      class="flex align-items-center gap-1 text-gray-400 hover:text-yellow-400 hover:shadow-[0_1px_0_0_#ffcc00] shadow-[0_0_0_0_#ffcc00] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-      [style]="
-        !rla.isActive
-          ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #ffcc00 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;'
-          : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
-      "
-    >
-      <i
-        class="pi pi-heart text-sm"
-        [style.color]="!rla.isActive ? '#0a0a0a' : ''"
-      ></i>
-      <span class="text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''"
-        >Padres</span
-      >
-    </a>
-
-    <span class="text-gray-600">|</span>
-
-    <a
-      routerLink="courses/jovenes"
-      pRipple
-      routerLinkActive="text-cyan-400 shadow-[0_1px_0_0_#33ccff] outline-transparent"
-      #rlaJovenes="routerLinkActive"
-      class="flex align-items-center gap-1 text-gray-400 hover:text-cyan-400 hover:shadow-[0_1px_0_0_#33ccff] shadow-[0_0_0_0_#33ccff] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-      [style]="
-        !rlaJovenes.isActive
-          ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #33ccff 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;'
-          : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
-      "
-    >
-      <i
-        class="pi pi-send text-sm"
-        [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
-      ></i>
-      <span
-        class="text-sm"
-        [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
-        >Jóvenes</span
-      >
-    </a>
-
-    <span class="text-gray-600">|</span>
-
-    <a
-      routerLink="/courses/ninos"
-      pRipple
-      routerLinkActive="text-green-400 shadow-[0_1px_0_0_#2ee85d] outline-transparent"
-      #rlaNinos="routerLinkActive"
-      class="flex align-items-center gap-1 text-gray-400 hover:text-green-400 hover:shadow-[0_1px_0_0_#2ee85d] shadow-[0_0_0_0_#2ee85d] font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-      [style]="
-        !rlaNinos.isActive
-          ? 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #2ee85d 100%); font-weight:700; align-self:stretch; display:flex; align-items:center; width:90px; justify-content:center;'
-          : 'text-decoration:none; white-space:nowrap; padding:8px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
-      "
-    >
-      <i
-        class="pi pi-star text-sm"
-        [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
-      ></i>
-      <span class="text-sm" [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
-        >Niños</span
-      >
-    </a>
-  </div>
-  <!-- Buscador derecha -->
-  <div class="flex align-items-center ml-auto">
-    <!-- Desktop -->
-    <span class="p-input-icon-left hidden lg:block">
-      <i class="pi pi-search" style="color: #e8002e"></i>
-      <input
-        type="text"
-        pInputText
-        placeholder="Buscar cursos..."
-        [(ngModel)]="searchQuery"
-        (keyup.enter)="buscar()"
-        style="
-          background-color: #3a3a3a;
-          border: 1px solid #5c5c5c !important;
-          color: #fff;
-          border-radius: 10px;
-          padding-left: 2.5rem;
-          width: 300px;
-        "
-      />
-    </span>
-    <!-- Móvil: solo ícono -->
-    <button
-      type="button"
-      class="flex lg:hidden cursor-pointer"
-      (click)="searchVisible = !searchVisible"
-      aria-label="Abrir búsqueda"
-    >
-      <i class="pi pi-search" style="color: #e8002e; font-size: 0.9rem"></i>
-    </button>
-  </div>
-</div>
-
-<!-- NAVBAR CON LOGO -->
-<div
-  class="flex align-items-center py-2 px-3"
-  style="background-color: #272727; min-height: 56px"
->
-  <!-- Logo -->
-  <a routerLink="/">
-    <img
-      src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
-      alt="Logo Mundo Dictariano"
-      class="h-10 w-auto object-contain"
-    />
-  </a>
-
-  <!-- Links centrales -->
-  <ul class="list-none flex align-items-center gap-2 flex-1">
-    <li>
+    <div class="flex items-center justify-center gap-2 lg:gap-4 flex-1">
+      <!-- Padres -->
       <a
+        routerLink="courses/padres"
+        pRipple
+        routerLinkActive="text-yellow-400 shadow-[0_1px_0_0_#ffcc00] outline-transparent"
+        #rla="routerLinkActive"
+        class="flex items-center gap-1 text-gray-400 hover:text-yellow-400 font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+        [style]="
+          !rla.isActive
+            ? 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #ffcc00 100%); font-weight:700; width:90px; justify-content:center;'
+            : 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
+        "
+      >
+        <i
+          class="pi pi-heart text-sm"
+          [style.color]="!rla.isActive ? '#0a0a0a' : ''"
+        ></i>
+        <span class="text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''"
+          >Padres</span
+        >
+      </a>
+
+      <span class="text-gray-600">|</span>
+
+      <!-- Jóvenes -->
+      <a
+        routerLink="courses/jovenes"
+        pRipple
+        routerLinkActive="text-cyan-400 shadow-[0_1px_0_0_#33ccff] outline-transparent"
+        #rlaJovenes="routerLinkActive"
+        class="flex items-center gap-1 text-gray-400 hover:text-cyan-400 font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+        [style]="
+          !rlaJovenes.isActive
+            ? 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #33ccff 100%); font-weight:700; width:90px; justify-content:center;'
+            : 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
+        "
+      >
+        <i
+          class="pi pi-send text-sm"
+          [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
+        ></i>
+        <span
+          class="text-sm"
+          [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
+          >Jóvenes</span
+        >
+      </a>
+
+      <span class="text-gray-600">|</span>
+
+      <!-- Niños -->
+      <a
+        routerLink="/courses/ninos"
+        pRipple
+        routerLinkActive="text-green-400 shadow-[0_1px_0_0_#2ee85d] outline-transparent"
+        #rlaNinos="routerLinkActive"
+        class="flex items-center gap-1 text-gray-400 hover:text-green-400 font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
+        [style]="
+          !rlaNinos.isActive
+            ? 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #2ee85d 100%); font-weight:700; width:90px; justify-content:center;'
+            : 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
+        "
+      >
+        <i
+          class="pi pi-star text-sm"
+          [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
+        ></i>
+        <span
+          class="text-sm"
+          [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
+          >Niños</span
+        >
+      </a>
+    </div>
+
+    <!-- Buscador Desktop/Mobile -->
+    <div class="flex items-center ml-auto">
+      <span class="p-input-icon-left hidden lg:block">
+        <i class="pi pi-search" style="color: #e8002e"></i>
+        <input
+          type="text"
+          pInputText
+          placeholder="Buscar cursos..."
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="buscar()"
+          style="
+            background-color: #3a3a3a;
+            border: 1px solid #5c5c5c !important;
+            color: #fff;
+            border-radius: 10px;
+            padding-left: 2.5rem;
+            width: 260px;
+          "
+        />
+      </span>
+      <button
+        type="button"
+        class="flex lg:hidden cursor-pointer bg-transparent border-none"
+        (click)="searchVisible = !searchVisible"
+        aria-label="Abrir búsqueda"
+      >
+        <i class="pi pi-search" style="color: #e8002e; font-size: 1rem"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- 1. NAVBAR CON LOGO -->
+  <div
+    class="flex items-center justify-between px-4 h-16 bg-[#272727] border-b border-gray-700"
+  >
+    <div class="flex items-center gap-3">
+      <!-- Logo -->
+      <a
+        routerLink="/"
+        routerLinkActive="border-b-2 border-yellow-500 rounded-b"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="inline-block transition-all border-b-2 border-transparent"
+      >
+        <img
+          src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
+          alt="Logo Mundo Dictariano"
+          class="h-10 w-auto object-contain"
+        />
+      </a>
+
+      <!-- Link Mundo 3D -->
+      <a
+        *ngIf="(auth.isLoggedIn$ | async) === false"
         pRipple
         href="http://localhost:3000"
         target="_blank"
-        class="flex px-3 py-2 ml-[1vw] align-items-center text-gray-400 hover:text-yellow-500 hover:shadow-[0_1px_0_0_#F7C50F] shadow-[0_0_0_0_#F7C50F] font-medium border-round cursor-pointer transition duration-200"
-        style="white-space: nowrap"
+        class="hidden sm:flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-yellow-500 font-medium transition duration-200"
       >
-        <i class="pi pi-globe mr-2"></i>
-        <span class="hidden sm:flex">Mundo 3D</span>
+        <i class="pi pi-globe"></i>
+        <span>Mundo 3D</span>
       </a>
-    </li>
-  </ul>
+    </div>
 
-  <!-- Derecha: carrito + login/avatar -->
-  <div class="flex align-items-center gap-2">
-    <a
-      pRipple
-      [routerLink]="['/cart']"
-      class="relative flex align-items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2"
-    >
-      <i class="pi pi-shopping-cart text-xl"></i>
-      <ng-container *ngIf="count$ | async as count">
-        <span
-          *ngIf="count > 0"
-          class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5"
-        >
-          {{ count }}
-        </span>
-      </ng-container>
-    </a>
+    <!-- Derecha: Carrito + Login/Avatar -->
+    <div class="flex items-center gap-3">
+      <!-- Carrito -->
+      <a
+        *ngIf="(auth.isLoggedIn$ | async) === false"
+        pRipple
+        [routerLink]="['/cart']"
+        class="relative flex items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2"
+      >
+        <i class="pi pi-shopping-cart text-xl"></i>
+        <ng-container *ngIf="count$ | async as count">
+          <span
+            *ngIf="count > 0"
+            class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5 font-bold"
+          >
+            {{ count }}
+          </span>
+        </ng-container>
+      </a>
 
-    <!-- Boton de login -->
-    <button
-      class="px-4 py-1 rounded-lg font-semibold text-black hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300"
-      routerLink="/auth/login"
-      *ngIf="(auth.isLoggedIn$ | async) === false"
-    >
-      Login
-    </button>
+      <!-- Botón Login -->
+      <button
+        *ngIf="(auth.isLoggedIn$ | async) === false"
+        class="px-4 py-1.5 rounded-lg font-semibold text-black hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300 cursor-pointer"
+        routerLink="/auth/login"
+      >
+        Login
+      </button>
 
-    <!-- Boton de perfil -->
-    <button
-      *ngIf="auth.isLoggedIn$ | async"
-      (click)="menu.toggle($event)"
-      class="w-10 h-10 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition duration-200 bg-gray-700"
-      aria-haspopup="true"
-      aria-controls="user_menu_popup"
-    >
-      <img
-        [src]="(auth.userImg$ | async) ?? ''"
-        [alt]="'Avatar de usuario'"
-        class="w-full h-full object-cover"
-      />
-    </button>
+      <!-- Botón Perfil / Avatar -->
+      <button
+        *ngIf="auth.isLoggedIn$ | async"
+        (click)="menu.toggle($event)"
+        class="w-auto h-10 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition duration-200 bg-gray-700 focus:outline-none"
+        aria-haspopup="true"
+        aria-controls="user_menu_popup"
+      >
+        <img
+          [src]="(auth.userImg$ | async) ?? ''"
+          alt="Avatar de usuario"
+          class="w-full h-full object-cover"
+        />
+      </button>
+    </div>
   </div>
+</header>
+
+<!-- SIDEBAR Y FOOTER (Logueados) -->
+<div *ngIf="auth.isLoggedIn$ | async">
+  <!-- Sidebar escritorio fijado a la izquierda (debajo del header) -->
+  <aside
+    class="hidden md:flex md:flex-col fixed top-16 left-0 h-[calc(100vh-64px)] w-56 bg-[#18181a] p-3 gap-1 z-40 border-r border-gray-800"
+  >
+    <div class="flex items-center gap-3 p-2 mb-2">
+      <p-avatar
+        image="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=150&q=80"
+        shape="circle"
+      ></p-avatar>
+      <span class="text-base font-semibold text-gray-200">Mi familia</span>
+    </div>
+
+    <a
+      *ngFor="let item of itemsSidebar"
+      [routerLink]="item.routerLink"
+      routerLinkActive="text-yellow-400 bg-[#2e2b21] border-l-2 border-yellow-400 font-medium"
+      class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 hover:text-white hover:bg-[#232326] transition cursor-pointer"
+    >
+      <i class="pi" [ngClass]="item.icon"></i>
+      <span>{{ item.label }}</span>
+    </a>
+  </aside>
+
+  <!-- Navigation móvil fijo abajo -->
+  <nav
+    class="fixed bottom-0 left-0 z-50 w-full bg-black border-t border-gray-700 px-2 pt-3 pb-4 md:hidden"
+  >
+    <div class="flex items-center justify-around">
+      <a
+        *ngFor="let item of itemsSidebar"
+        [routerLink]="item.routerLink"
+        routerLinkActive="!text-yellow-400"
+        #rla="routerLinkActive"
+        class="flex flex-col items-center justify-center text-gray-400 hover:text-gray-200 transition-colors text-[8px] sm:text-sm font-medium relative px group cursor-pointer"
+      >
+        <i class="pi text-xl transition-colors" [ngClass]="item.icon"></i>
+        <span
+          class="truncate max-w-[40px] sm:max-w-[100px] transition-colors"
+          >{{ item.label }}</span
+        >
+        <span
+          *ngIf="rla.isActive"
+          class="absolute -bottom-2 w-1.5 h-1.5 bg-yellow-400 rounded-full"
+        ></span>
+      </a>
+    </div>
+  </nav>
 </div>
 
-<!-- Barra de busqueda para moviles, se abre al hacer click en el icono -->
+<!-- Modal Búsqueda Móvil -->
 <div
   *ngIf="searchVisible"
-  class="flex lg:hidden"
-  style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: #272727;
-    padding: 12px 16px;
-    border-bottom: 1px solid #374151;
-  "
+  class="flex items-center lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#272727] p-3 border-b border-gray-700"
 >
-  <span class="p-input-icon-left" style="width: 100%">
+  <span class="p-input-icon-left w-full">
     <i class="pi pi-search" style="color: #e8002e"></i>
     <input
       type="text"
@@ -221,29 +266,20 @@
       "
     />
   </span>
-
   <button
     (click)="searchVisible = false"
-    style="
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      margin-left: 8px;
-      font-size: 1.2rem;
-    "
+    class="bg-transparent border-none text-white ml-2 text-xl cursor-pointer"
   >
     <i class="pi pi-times"></i>
   </button>
 </div>
 
-<!-- Menu de usuario (popup) -->
+<!-- Popups de PrimeNG -->
 <p-menu
   #menu
   [model]="userItems"
   [popup]="true"
   id="user_menu_popup"
   appendTo="body"
->
-</p-menu>
+></p-menu>
 <app-cart-popup></app-cart-popup>

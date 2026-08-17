@@ -9,6 +9,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 })
 export class HomeComponent {
   constructor(public auth: AuthService) {}
+  // Cursos de prueba para mostrar en la sección mas cursos
   @ViewChild('sliderContainer') sliderContainer!: ElementRef<HTMLDivElement>;
 
   cursos: (Curso & { fechaCompra: Date })[] = [
@@ -121,7 +122,7 @@ export class HomeComponent {
   scrollLeft(): void {
     if (this.sliderContainer) {
       this.sliderContainer.nativeElement.scrollBy({
-        left: -288,
+        left: -300,
         behavior: 'smooth',
       });
     }
@@ -130,7 +131,7 @@ export class HomeComponent {
   scrollRight(): void {
     if (this.sliderContainer) {
       this.sliderContainer.nativeElement.scrollBy({
-        left: 288,
+        left: 300,
         behavior: 'smooth',
       });
     }

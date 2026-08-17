@@ -34,12 +34,12 @@ import { ModalHostComponent } from './containers/host/app-modal-host.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
     CheckoutNavbarComponent,
     FooterComponent,
     ActivoInactivoPipe,
     MainLayoutComponent,
     BlankLayoutComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

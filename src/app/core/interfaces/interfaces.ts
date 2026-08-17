@@ -3,3 +3,4 @@ export * from './galaxy/IGalaxy.interface';
 export * from './language/ILanguage.interface';
 export * from './menus/IMenu.interface';
 export * from './event-buss/global.event.interface';
+export * from './associated-account/IAssociatedAccount.interface';

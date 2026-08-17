@@ -5,7 +5,7 @@
 
 .card-inner {
   position: relative;
-  height: 650px; 
+  height: 580px;
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
   border-radius: 16px;
@@ -291,7 +291,6 @@
 .card-curso.flipped .card-inner {
   transform: rotateY(180deg);
 }
-
 
 @media (max-width: 768px) {
   .card-inner {

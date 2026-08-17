@@ -1,2 +1,7 @@
 <app-nav-bar></app-nav-bar>
-<router-outlet></router-outlet>
+<main
+  class="pt-16 md:pt-28"
+  [ngClass]="{ 'md:pl-56 pt-7': (authService.isLoggedIn$ | async) }"
+>
+  <router-outlet></router-outlet>
+</main>

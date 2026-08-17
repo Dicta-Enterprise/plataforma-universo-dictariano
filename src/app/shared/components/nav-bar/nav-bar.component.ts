@@ -6,6 +6,12 @@ import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
 import { Router } from '@angular/router';
 
+export interface SidebarItem {
+  label: string;
+  icon: string;
+  routerLink: string;
+}
+
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
@@ -13,6 +19,38 @@ import { Router } from '@angular/router';
 })
 export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
+  itemsSidebar: SidebarItem[] = [
+    {
+      label: 'Mi cuenta',
+      icon: 'pi-user',
+      routerLink: 'my-family/my-account',
+    },
+    {
+      label: 'Mis cursos',
+      icon: 'pi-desktop',
+      routerLink: 'my-family/my-courses',
+    },
+    {
+      label: 'Mi progreso',
+      icon: 'pi-chart-line',
+      routerLink: 'my-family/my-progress',
+    },
+    {
+      label: 'Mi comunidad',
+      icon: 'pi-users',
+      routerLink: 'my-family/my-community',
+    },
+    {
+      label: 'Mi certificación',
+      icon: 'pi-bookmark',
+      routerLink: 'my-family/mycertification',
+    },
+    {
+      label: 'Mi facturación',
+      icon: 'pi-file',
+      routerLink: 'my-family/my-billing',
+    },
+  ];
   userItems: MenuItem[];
   count$: Observable<number>;
   searchQuery = '';

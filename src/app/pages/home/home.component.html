@@ -1,7 +1,7 @@
-<!-- Pagina home cuando el usuario no esta logeado -->
+<!-- Interfaz cuando no esta logueado -->
 <div
-  *ngIf="(auth.isLoggedIn$ | async) === false"
   class="px-4 py-8 md:px-6 lg:px-8"
+  *ngIf="(auth.isLoggedIn$ | async) === false"
   style="
     min-height: 100vh;
     position: relative;
@@ -100,49 +100,87 @@
   </div>
 </div>
 
-<!-- Pagina bienvenida cuando el usuario esta logeado (falta especificar que salga solo cuando el usuario sea padre) -->
-<div
-  class="relative flex flex-col items-center bg-black text-white gap-5 py-5 select-none"
-  *ngIf="auth.isLoggedIn$ | async"
->
-  <!-- Bienvenida -->
-  <h1 class="text-4xl md:text-6xl font-bold tracking-wide text-cyan-400">
-    Bienvenido Pápa
-  </h1>
-
-  <!-- Main Image Container -->
-  <main
-    class="relative w-full flex-1 flex items-center justify-center overflow-hidden"
+<!-- Interfaz papa logeado -->
+<div *ngIf="auth.isLoggedIn$ | async" class="flex flex-col gap-4 mb-5">
+  <!-- Seccion de bienvenida padre -->
+  <section
+    class="relative w-full h-[400px] bg-cover bg-center flex flex-col gap-3 justify-end items-center px-3 text-center pb-5"
+    style="
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url(&quot;assets/img/imagenBienvenida.png&quot;);
+    "
   >
-    <img
-      src="assets/img/imagenBienvenida.png"
-      alt="Mundo Dictariano characters"
-      class="w-full h-auto max-h-[800px] object-cover"
-    />
-  </main>
+    <h1 class="text-4xl md:text-5xl font-bold">Bienvenido, Papá</h1>
 
-  <!-- Link Gestiona tu cuenta -->
-  <a
-    routerLink="/my-family"
-    class="inline-block bg-cyan-400 text-black border-none text-sm md:text-xl font-bold rounded-full px-4 py-2 md:py-3 md:px-6 hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,229,255,0.4)] transition text-center cursor-pointer"
-  >
-    Gestiona tu cuenta
-  </a>
+    <p class="text-sm md:text-base">
+      Tu aventura junto a tu familia te espera en el mundo digital.
+    </p>
 
-  <!-- Seccion te puede interesar -->
-  <section class="w-full select-none px-[4vw]">
-    <!-- Título de la sección -->
-    <h2 class="text-xl sm:text-2xl font-semibold tracking-wide px-4">
-      Te pueden interesar
-    </h2>
+    <a
+      routerLink="/my-family"
+      class="items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-5 py-2.5 rounded-full transition-colors cursor-pointer inline-flex"
+    >
+      <span>Gestiona tu cuenta</span>
+      <i class="pi pi-arrow-right"></i>
+    </a>
+  </section>
 
-    <!-- Contenedor principal con flechas y listado -->
-    <div class="relative flex gap-1 items-center">
+  <!-- Seccion de cursos disponibles -->
+  <section class="flex flex-col gap-2 justify-start px-1 md:px-2 w-full">
+    <!-- Filtros -->
+    <div class="space-y-4 text-xs px-2 md:px-5">
+      <h2 class="text-2xl font-bold tracking-wide">Cursos disponibles</h2>
+      <!-- Galaxias -->
+      <div class="text-gray-400">
+        <p class="mb-2 uppercase tracking-wider font-medium">Galaxias</p>
+        <div class="flex flex-wrap gap-2">
+          <p-chip
+            label="Peligros en la Salud física"
+            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
+          ></p-chip>
+          <p-chip
+            label="Salud Mental"
+            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
+          ></p-chip>
+          <p-chip
+            label="Habilidades Digitales"
+            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
+          ></p-chip>
+          <p-chip
+            label="Riesgos Cibernéticos"
+            styleClass="!bg-white !text-black font-semibold !text-xs cursor-pointer"
+          ></p-chip>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div>
+        <p class="mb-2 uppercase tracking-wider font-medium">Tags</p>
+        <div class="flex flex-wrap gap-2">
+          <p-chip
+            label="Niños"
+            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
+          ></p-chip>
+          <p-chip
+            label="Jóvenes"
+            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
+          ></p-chip>
+          <p-chip
+            label="Padres"
+            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
+          ></p-chip>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll de cursos -->
+    <div class="flex gap-2 items-center w-full">
       <!-- Flecha izquierda -->
       <button
         (click)="scrollLeft()"
         type="button"
-        class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
+        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         aria-label="Anterior"
       >
         <i class="pi pi-chevron-left text-xl sm:text-2xl"></i>
@@ -151,13 +189,14 @@
       <!-- Listado de tarjetas -->
       <div
         #sliderContainer
-        class="flex gap-2 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full"
+        class="flex gap-3 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full"
       >
-        <div *ngFor="let curso of cursos" class="flex-none w-[280px]">
+        <div *ngFor="let curso of cursos" class="shrink-0 w-[285px]">
           <app-card-curso
             [curso]="curso"
             primary_color="#F5C518"
             secondary_color="#e0a800"
+            class="block w-full"
           >
           </app-card-curso>
         </div>
@@ -167,7 +206,7 @@
       <button
         (click)="scrollRight()"
         type="button"
-        class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
+        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         aria-label="Siguiente"
       >
         <i class="pi pi-chevron-right text-xl sm:text-2xl"></i>
