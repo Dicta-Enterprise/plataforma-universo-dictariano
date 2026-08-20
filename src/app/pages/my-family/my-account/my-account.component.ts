@@ -9,6 +9,21 @@ export interface UserFormData {
   alias: string;
   aliasFamilia: string;
   nivelEconomico: string;
+
+export interface CursoCuenta {
+  id: string;
+  nombre: string;
+  tipo: 'joven' | 'nino';
+  imagen: string;
+  colorTheme: 'amber' | 'emerald'; // Amber (Joven), Emerald (Niño)
+  email: string;
+  permisos: {
+    verPerfil: boolean;
+    interaccionForos: boolean;
+    verCalificacion: boolean;
+    cambiarAvatar: boolean;
+    verProgreso: boolean;
+  };
 }
 
 @Component({
@@ -23,6 +38,13 @@ export class MyAccountComponent {
   cuentasData: CursoCuenta[] = [
     {
       id: 1,
+  // Pestaña activa: 'mi-cuenta' | 'joven' | 'nino'
+  activeTab: 'mi-cuenta' | 'joven' | 'nino' = 'mi-cuenta';
+
+  // Datos dinámicos por tipo de cuenta
+  cuentasData: Record<'joven' | 'nino', CursoCuenta> = {
+    joven: {
+      id: 'joven',
       nombre: 'Adolescencia y Amor',
       tipo: 'joven',
       imagen:
@@ -30,6 +52,8 @@ export class MyAccountComponent {
       email: 'coreoelectronico@gmail.com',
       cumpleanos: '01-01',
       edad: 16,
+      colorTheme: 'amber',
+      email: 'coreoelectronico@gmail.com',
       permisos: {
         verPerfil: true,
         interaccionForos: true,
@@ -49,6 +73,16 @@ export class MyAccountComponent {
         'https://img.freepik.com/fotos-premium/foto-de-um-menino-bonito-no-estilo-pixar-desenho-animado-3d-ilustracao-generativa-ai_776674-524491.jpg',
       email: 'coreoelectronico@gmail.com',
       edad: 10,
+      },
+    },
+    nino: {
+      id: 'nino',
+      nombre: 'Grooming',
+      tipo: 'nino',
+      imagen:
+        'https://img.freepik.com/fotos-premium/foto-de-um-menino-bonito-no-estilo-pixar-desenho-animado-3d-ilustracao-generativa-ai_776674-524491.jpg',
+      colorTheme: 'emerald',
+      email: 'coreoelectronico@gmail.com',
       permisos: {
         verPerfil: true,
         interaccionForos: true,
@@ -146,5 +180,13 @@ export class MyAccountComponent {
     if (this.confirmContrasenaInput === this.formData.contrasena) {
       this.cerrarModalEliminar();
     }
+      },
+    },
+  };
+
+  // Getter para obtener rápidamente los datos de la pestaña actual
+  get currentCuenta(): CursoCuenta | null {
+    if (this.activeTab === 'mi-cuenta') return null;
+    return this.cuentasData[this.activeTab];
   }
 }

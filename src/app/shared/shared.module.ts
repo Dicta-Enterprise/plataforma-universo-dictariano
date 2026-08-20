@@ -21,6 +21,9 @@ import { FormsModule } from '@angular/forms';
     MonthDayPickerComponent,
     AssociatedAccountCardComponent,
   ],
+
+@NgModule({
+  declarations: [CardCursoComponent, CourseCarouselComponent],
   imports: [
     CommonModule,
     CardModule,
@@ -41,5 +44,6 @@ import { FormsModule } from '@angular/forms';
     MonthDayPickerComponent,
     AssociatedAccountCardComponent,
   ],
+  exports: [CardCursoComponent, CourseCarouselComponent, ProgressSpinnerModule],
 })
 export class SharedModule {}

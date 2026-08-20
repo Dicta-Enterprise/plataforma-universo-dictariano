@@ -123,6 +123,7 @@ export class HomeComponent {
     if (this.sliderContainer) {
       this.sliderContainer.nativeElement.scrollBy({
         left: -300,
+        left: -288,
         behavior: 'smooth',
       });
     }
@@ -132,6 +133,7 @@ export class HomeComponent {
     if (this.sliderContainer) {
       this.sliderContainer.nativeElement.scrollBy({
         left: 300,
+        left: 288,
         behavior: 'smooth',
       });
     }

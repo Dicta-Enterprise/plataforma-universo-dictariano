@@ -8,6 +8,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 import { AvatarModule } from 'primeng/avatar';
 import { ChipModule } from 'primeng/chip';
+
+import { MyAccountRoutingModule } from './my-account-routing.module';
+import { MyAccountComponent } from './my-account.component';
+
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 
 @NgModule({
@@ -21,5 +26,6 @@ import { ButtonModule } from 'primeng/button';
     ChipModule,
     SharedModule,
   ],
+  imports: [CommonModule, MyAccountRoutingModule, AvatarModule, ButtonModule],
 })
 export class MyAccountModule {}

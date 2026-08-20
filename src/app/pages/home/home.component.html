@@ -2,6 +2,10 @@
 <div
   class="px-4 py-8 md:px-6 lg:px-8"
   *ngIf="(auth.isLoggedIn$ | async) === false"
+<!-- Pagina home cuando el usuario no esta logeado -->
+<div
+  *ngIf="(auth.isLoggedIn$ | async) === false"
+  class="px-4 py-8 md:px-6 lg:px-8"
   style="
     min-height: 100vh;
     position: relative;
@@ -176,11 +180,50 @@
 
     <!-- Scroll de cursos -->
     <div class="flex gap-2 items-center w-full">
+<!-- Pagina bienvenida cuando el usuario esta logeado (falta especificar que salga solo cuando el usuario sea padre) -->
+<div
+  class="relative flex flex-col items-center bg-black text-white gap-5 py-5 select-none"
+  *ngIf="auth.isLoggedIn$ | async"
+>
+  <!-- Bienvenida -->
+  <h1 class="text-4xl md:text-6xl font-bold tracking-wide text-cyan-400">
+    Bienvenido Pápa
+  </h1>
+
+  <!-- Main Image Container -->
+  <main
+    class="relative w-full flex-1 flex items-center justify-center overflow-hidden"
+  >
+    <img
+      src="assets/img/imagenBienvenida.png"
+      alt="Mundo Dictariano characters"
+      class="w-full h-auto max-h-[800px] object-cover"
+    />
+  </main>
+
+  <!-- Link Gestiona tu cuenta -->
+  <a
+    routerLink="/my-family"
+    class="inline-block bg-cyan-400 text-black border-none text-sm md:text-xl font-bold rounded-full px-4 py-2 md:py-3 md:px-6 hover:bg-cyan-300 shadow-[0_0_15px_rgba(0,229,255,0.4)] transition text-center cursor-pointer"
+  >
+    Gestiona tu cuenta
+  </a>
+
+  <!-- Seccion te puede interesar -->
+  <section class="w-full select-none px-[4vw]">
+    <!-- Título de la sección -->
+    <h2 class="text-xl sm:text-2xl font-semibold tracking-wide px-4">
+      Te pueden interesar
+    </h2>
+
+    <!-- Contenedor principal con flechas y listado -->
+    <div class="relative flex gap-1 items-center">
       <!-- Flecha izquierda -->
       <button
         (click)="scrollLeft()"
         type="button"
         class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
+        class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         aria-label="Anterior"
       >
         <i class="pi pi-chevron-left text-xl sm:text-2xl"></i>
@@ -192,6 +235,9 @@
         class="flex gap-3 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full"
       >
         <div *ngFor="let curso of cursos" class="shrink-0 w-[285px]">
+        class="flex gap-2 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full"
+      >
+        <div *ngFor="let curso of cursos" class="flex-none w-[280px]">
           <app-card-curso
             [curso]="curso"
             primary_color="#F5C518"
@@ -207,6 +253,7 @@
         (click)="scrollRight()"
         type="button"
         class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
+        class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         aria-label="Siguiente"
       >
         <i class="pi pi-chevron-right text-xl sm:text-2xl"></i>

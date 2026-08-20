@@ -6,6 +6,12 @@
     class="flex flex-col md:flex-row justify-between gap-3 mb-4 md:mx-auto w-full max-w-5xl"
   >
     <h1 class="text-3xl font-bold">Hola, Carlos</h1>
+<div class="bg-black text-white px-3 md:px-5 py-4">
+  <!-- Encabezado superior -->
+  <header
+    class="flex flex-col md:flex-row justify-between gap-3 mb-4 max-w-7xl md:mx-auto"
+  >
+    <h1 class="ml-[68px] md:ml-0 text-3xl font-bold">Hola, Carlos</h1>
 
     <div class="relative w-full md:max-w-xs">
       <input
@@ -15,6 +21,10 @@
       />
       <i
         class="pi pi-search absolute right-5 top-2.5 text-yellow-300 font-bold text-sm"
+        class="w-full bg-[#1e1e20] text-gray-300 placeholder-gray-500 rounded-full py-2 pl-4 pr-10 text-sm border border-transparent focus:outline-none focus:border-cyan-400 transition"
+      />
+      <i
+        class="pi pi-search absolute right-5 top-2.5 text-cyan-400 font-bold text-sm"
       ></i>
     </div>
   </header>
@@ -22,5 +32,14 @@
   <!-- Contenido Central / Tabs y Perfil -->
   <div class="flex-1 w-full max-w-5xl">
     <router-outlet></router-outlet>
+  <!-- Contenido Principal -->
+  <div class="flex md:gap-3 max-w-7xl mx-auto items-start">
+    <!-- Sidebar / Menú Lateral -->
+    <app-sidebar [items]="menuItems"> </app-sidebar>
+
+    <!-- Contenido Central / Tabs y Perfil -->
+    <main class="flex-1">
+      <router-outlet></router-outlet>
+    </main>
   </div>
 </div>
