@@ -6,6 +6,7 @@ import { SidebarItem } from 'src/app/core/interfaces/menus/sidebar-item.interfac
   templateUrl: './my-family.component.html',
   styleUrls: ['./my-family.component.css'],
 })
+export class MyFamilyComponent {}
 export class MyFamilyComponent {
   // Definición de los elementos del menú lateral
   menuItems: SidebarItem[] = [

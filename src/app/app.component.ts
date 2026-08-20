@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private modalService: ModalService,
     private primengConfig: PrimeNGConfig,
-    private authService: AuthService
+    public authService: AuthService,
   ) {}
 
   ngOnInit() {

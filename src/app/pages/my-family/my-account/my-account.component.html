@@ -1,10 +1,18 @@
 <div class="flex flex-col">
   <!-- Selector de Pestañas (Tabs) -->
+  <div
+    class="flex bg-[#1c1f26] p-1 rounded-t-3xl rounded-b-none border border-gray-800/60 font-bold w-full"
+  >
   <div class="flex bg-[#232326] rounded-t-xl overflow-hidden font-semibold">
     <!-- Tab 1: Mi cuenta -->
     <button
       (click)="activeTab = 'mi-cuenta'"
       [ngClass]="{
+        'bg-[#eab308] text-black font-bold shadow-md':
+          activeTab === 'mi-cuenta',
+        'text-gray-400 hover:text-white font-bold': activeTab !== 'mi-cuenta',
+      }"
+      class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full"
         'text-white bg-[#2c2c2e] border-b-2 border-cyan-400 shadow font-semibold':
           activeTab === 'mi-cuenta',
         'text-gray-400 hover:text-white font-medium': activeTab !== 'mi-cuenta',
@@ -18,6 +26,10 @@
     <button
       (click)="activeTab = 'joven'"
       [ngClass]="{
+        'bg-[#eab308] text-black font-bold shadow-md': activeTab === 'joven',
+        'text-gray-400 hover:text-white font-bold': activeTab !== 'joven',
+      }"
+      class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full"
         'text-white bg-[#2c2c2e] border-b-2 border-amber-400 shadow font-semibold':
           activeTab === 'joven',
         'text-gray-400 hover:text-white font-medium': activeTab !== 'joven',
@@ -31,6 +43,10 @@
     <button
       (click)="activeTab = 'nino'"
       [ngClass]="{
+        'bg-[#eab308] text-black font-bold shadow-md': activeTab === 'nino',
+        'text-gray-400 hover:text-white font-bold': activeTab !== 'nino',
+      }"
+      class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full"
         'text-white bg-[#2c2c2e] border-b-2 border-emerald-400 shadow font-semibold':
           activeTab === 'nino',
         'text-gray-400 hover:text-white font-medium': activeTab !== 'nino',
@@ -41,6 +57,11 @@
     </button>
   </div>
 
+  <main class="w-full overflow-hidden">
+    <!-- Modulo de mi cuenta -->
+    <div
+      *ngIf="!currentCuenta as cuenta"
+      class="bg-[#18181a] rounded-b-xl flex flex-col items-center gap-4 px-3 py-5"
   <div class="overflow-hidden">
     <!-- Card de mi cuenta -->
     <div
@@ -56,12 +77,53 @@
         ></p-avatar>
       </div>
 
+      <!-- Alias -->
+      <div class="flex items-center gap-2">
+        <h2 class="text-xl font-bold">{{ formData.alias }}</h2>
+      </div>
       <h2 class="text-xl font-bold">Carlos Mendoza</h2>
 
       <!-- Formulario de Datos -->
       <div
         class="w-full max-w-lg bg-[#121214] border border-[#2b2b2e] rounded-xl divide-y divide-[#222226] text-sm"
       >
+        <!-- Correo (Solo lectura) -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Correo:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <span class="font-medium truncate">
+              {{ formData.email }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Tu cumpleaños -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Tu cumpleaños:</span>
+          <div class="flex items-center gap-3">
+            <ng-container *ngIf="!editState.tuCumpleanos; else editFecha">
+              <span class="text-gray-200 font-medium">
+                <!-- Uso del Custom Pipe -->
+                {{ formData.tuCumpleanos | dayMonthFormat }}
+              </span>
+            </ng-container>
+
+            <ng-template #editFecha>
+              <!-- Uso del Selector CVA -->
+              <app-month-day-picker
+                [(ngModel)]="formData.tuCumpleanos"
+              ></app-month-day-picker>
+            </ng-template>
+
+            <button
+              (click)="toggleEdit('tuCumpleanos')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i
+                [class]="
+                  editState.tuCumpleanos ? 'pi pi-check' : 'pi pi-pencil'
+                "
+              ></i>
         <!-- Correo -->
         <div class="flex items-center justify-between px-3 py-3.5">
           <span class="text-gray-400">Correo:</span>
@@ -75,6 +137,31 @@
           </div>
         </div>
 
+        <!-- Edad -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Edad:</span>
+          <div class="flex items-center gap-3">
+            <ng-container *ngIf="!editState.edad; else editEdad">
+              <span class="text-gray-200 font-medium">
+                {{ formData.edad }} años
+              </span>
+            </ng-container>
+
+            <ng-template #editEdad>
+              <input
+                type="number"
+                [(ngModel)]="formData.edad"
+                min="1"
+                max="120"
+                class="bg-gray-800 text-gray-200 border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:border-yellow-500 max-w-[60px]"
+              />
+            </ng-template>
+
+            <button
+              (click)="toggleEdit('edad')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i [class]="editState.edad ? 'pi pi-check' : 'pi pi-pencil'"></i>
         <!-- Fecha de nacimiento -->
         <div class="flex items-center justify-between px-3 py-3.5">
           <span class="text-gray-400">Fecha nacimiento:</span>
@@ -90,6 +177,25 @@
         <div class="flex items-center justify-between px-3 py-3.5">
           <span class="text-gray-400">Contraseña:</span>
           <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <ng-container *ngIf="!editState.contrasena; else editContrasena">
+              <span class="text-gray-200 tracking-widest font-bold"
+                >••••••••</span
+              >
+            </ng-container>
+            <ng-template #editContrasena>
+              <input
+                type="password"
+                [(ngModel)]="formData.contrasena"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+              />
+            </ng-template>
+            <button
+              (click)="toggleEdit('contrasena')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i
+                [class]="editState.contrasena ? 'pi pi-check' : 'pi pi-pencil'"
+              ></i>
             <span class="text-gray-200 tracking-widest font-bold"
               >••••••••</span
             >
@@ -103,6 +209,181 @@
         <div class="flex items-center justify-between px-3 py-3.5">
           <span class="text-gray-400">Alias:</span>
           <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <ng-container *ngIf="!editState.alias; else editAlias">
+              <span class="text-gray-200 font-medium">{{
+                formData.alias
+              }}</span>
+            </ng-container>
+            <ng-template #editAlias>
+              <input
+                type="text"
+                [(ngModel)]="formData.alias"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+              />
+            </ng-template>
+            <button
+              (click)="toggleEdit('alias')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i [class]="editState.alias ? 'pi pi-check' : 'pi pi-pencil'"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Alias de tu familia -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Alias de tu familia:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <ng-container
+              *ngIf="!editState.aliasFamilia; else editAliasFamilia"
+            >
+              <span class="text-gray-200 font-medium">
+                {{ formData.aliasFamilia }}
+              </span>
+            </ng-container>
+
+            <ng-template #editAliasFamilia>
+              <input
+                type="text"
+                [(ngModel)]="formData.aliasFamilia"
+                placeholder="Ej: Familia Mendoza"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+              />
+            </ng-template>
+
+            <button
+              (click)="toggleEdit('aliasFamilia')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i
+                [class]="
+                  editState.aliasFamilia ? 'pi pi-check' : 'pi pi-pencil'
+                "
+              ></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Nivel Económico -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <label for="nivelEconomico" class="text-gray-400"
+            >Nivel económico:</label
+          >
+          <select
+            id="nivelEconomico"
+            [(ngModel)]="formData.nivelEconomico"
+            class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded-lg px-2.5 py-1 focus:outline-none focus:border-yellow-500 cursor-pointer"
+          >
+            <option value="bajo">Bajo</option>
+            <option value="medio">Medio</option>
+            <option value="alto">Alto</option>
+          </select>
+        </div>
+
+        <!-- Eliminar Cuenta -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Eliminar cuenta:</span>
+
+          <button
+            type="button"
+            (click)="abrirModalEliminar()"
+            title="Eliminar cuenta"
+            class="text-red-400 hover:text-red-500 transition-colors"
+          >
+            <i class="pi pi-trash text-base"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Botón Guardar (Solo visible si hasChanges es true) -->
+      <button
+        *ngIf="isEditing && hasChanges"
+        (click)="guardarCambios()"
+        type="button"
+        class="bg-yellow-500 mt-2 text-black border-none font-bold rounded-full py-2 px-5 hover:bg-yellow-600 transition"
+      >
+        Guardar
+      </button>
+
+      <!-- Modal de Confirmación eliminacion -->
+      <div
+        *ngIf="showDeleteModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 transition-all duration-200 ease-out"
+      >
+        <div
+          class="bg-[#18181a] border border-[#2b2b2e] rounded-xl max-w-md w-full p-6 shadow-2xl relative text-left transform transition-all scale-100 opacity-100"
+        >
+          <!-- Encabezado del Warning -->
+          <div class="flex items-center gap-3 text-red-500 mb-4">
+            <div
+              class="bg-red-500/10 px-3 py-2.5 rounded-full border border-red-500/20"
+            >
+              <!-- Corregida la clase del icono -->
+              <i class="pi pi-exclamation-triangle text-xl text-red-500"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-gray-100 leading-tight mb-2">
+                ¿Estás seguro de que quieres eliminar tu cuenta?
+              </h3>
+              <p class="text-xs text-red-400 font-medium">
+                Esta acción no se puede deshacer
+              </p>
+            </div>
+          </div>
+
+          <!-- Mensaje de advertencia -->
+          <p class="text-sm text-gray-300 mb-4 leading-relaxed">
+            Se borrarán todos tus datos de forma permanente. Los pagos y
+            suscripciones activas no se reembolsarán.
+          </p>
+
+          <!-- Instrucción de confirmación -->
+          <div class="mb-2 text-xs text-gray-300">
+            Escribe tu contraseña para confirmar:
+          </div>
+
+          <!-- Input de confirmación -->
+          <input
+            type="text"
+            [(ngModel)]="confirmContrasenaInput"
+            class="w-full bg-[#121214] text-gray-100 border border-[#2b2b2e] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 mb-4"
+          />
+
+          <!-- Botones de Acción -->
+          <div class="flex items-center justify-end gap-3">
+            <button
+              type="button"
+              (click)="cerrarModalEliminar()"
+              class="border border-gray-600 rounded-lg px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition cursor-pointer w-full"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              (click)="confirmarEliminacion()"
+              [disabled]="confirmContrasenaInput !== formData.contrasena"
+              class="bg-red-600 hover:bg-red-700 disabled:opacity-40 w-full disabled:hover:bg-red-600 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg px-4 py-2 transition cursor-pointer"
+            >
+              Eliminar Cuenta
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modulo de cuenta joven y niño -->
+    <div
+      *ngIf="currentCuenta as cuenta"
+      class="bg-[#18181a] rounded-b-xl p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center"
+    >
+      <app-associated-account-card
+        *ngFor="let itemCuenta of tarjetasParaMostrar"
+        [account]="itemCuenta"
+        [fallbackTheme]="activeTab === 'joven' ? 'yellow' : 'emerald'"
+        class="w-full flex justify-center"
+      ></app-associated-account-card>
+    </div>
+  </main>
             <span class="text-gray-200 font-medium">PapaCarlos</span>
             <button class="text-cyan-400 hover:text-cyan-300 transition">
               <i class="pi pi-pencil"></i>

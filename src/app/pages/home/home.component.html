@@ -1,3 +1,7 @@
+<!-- Interfaz cuando no esta logueado -->
+<div
+  class="px-4 py-8 md:px-6 lg:px-8"
+  *ngIf="(auth.isLoggedIn$ | async) === false"
 <!-- Pagina home cuando el usuario no esta logeado -->
 <div
   *ngIf="(auth.isLoggedIn$ | async) === false"
@@ -100,6 +104,82 @@
   </div>
 </div>
 
+<!-- Interfaz papa logeado -->
+<div *ngIf="auth.isLoggedIn$ | async" class="flex flex-col gap-4 mb-5">
+  <!-- Seccion de bienvenida padre -->
+  <section
+    class="relative w-full h-[400px] bg-cover bg-center flex flex-col gap-3 justify-end items-center px-3 text-center pb-5"
+    style="
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url(&quot;assets/img/imagenBienvenida.png&quot;);
+    "
+  >
+    <h1 class="text-4xl md:text-5xl font-bold">Bienvenido, Papá</h1>
+
+    <p class="text-sm md:text-base">
+      Tu aventura junto a tu familia te espera en el mundo digital.
+    </p>
+
+    <a
+      routerLink="/my-family"
+      class="items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-5 py-2.5 rounded-full transition-colors cursor-pointer inline-flex"
+    >
+      <span>Gestiona tu cuenta</span>
+      <i class="pi pi-arrow-right"></i>
+    </a>
+  </section>
+
+  <!-- Seccion de cursos disponibles -->
+  <section class="flex flex-col gap-2 justify-start px-1 md:px-2 w-full">
+    <!-- Filtros -->
+    <div class="space-y-4 text-xs px-2 md:px-5">
+      <h2 class="text-2xl font-bold tracking-wide">Cursos disponibles</h2>
+      <!-- Galaxias -->
+      <div class="text-gray-400">
+        <p class="mb-2 uppercase tracking-wider font-medium">Galaxias</p>
+        <div class="flex flex-wrap gap-2">
+          <p-chip
+            label="Peligros en la Salud física"
+            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
+          ></p-chip>
+          <p-chip
+            label="Salud Mental"
+            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
+          ></p-chip>
+          <p-chip
+            label="Habilidades Digitales"
+            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
+          ></p-chip>
+          <p-chip
+            label="Riesgos Cibernéticos"
+            styleClass="!bg-white !text-black font-semibold !text-xs cursor-pointer"
+          ></p-chip>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div>
+        <p class="mb-2 uppercase tracking-wider font-medium">Tags</p>
+        <div class="flex flex-wrap gap-2">
+          <p-chip
+            label="Niños"
+            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
+          ></p-chip>
+          <p-chip
+            label="Jóvenes"
+            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
+          ></p-chip>
+          <p-chip
+            label="Padres"
+            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
+          ></p-chip>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll de cursos -->
+    <div class="flex gap-2 items-center w-full">
 <!-- Pagina bienvenida cuando el usuario esta logeado (falta especificar que salga solo cuando el usuario sea padre) -->
 <div
   class="relative flex flex-col items-center bg-black text-white gap-5 py-5 select-none"
@@ -142,6 +222,7 @@
       <button
         (click)="scrollLeft()"
         type="button"
+        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         aria-label="Anterior"
       >
@@ -151,6 +232,9 @@
       <!-- Listado de tarjetas -->
       <div
         #sliderContainer
+        class="flex gap-3 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full"
+      >
+        <div *ngFor="let curso of cursos" class="shrink-0 w-[285px]">
         class="flex gap-2 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full"
       >
         <div *ngFor="let curso of cursos" class="flex-none w-[280px]">
@@ -158,6 +242,7 @@
             [curso]="curso"
             primary_color="#F5C518"
             secondary_color="#e0a800"
+            class="block w-full"
           >
           </app-card-curso>
         </div>
@@ -167,6 +252,7 @@
       <button
         (click)="scrollRight()"
         type="button"
+        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         class="z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none"
         aria-label="Siguiente"
       >

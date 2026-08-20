@@ -1,0 +1,19 @@
+<div class="flex items-center gap-2">
+  <select
+    [value]="dia"
+    (change)="onDiaChange($event)"
+    class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-1 focus:outline-none focus:border-yellow-500"
+  >
+    <option *ngFor="let d of dias" [value]="d">{{ d }}</option>
+  </select>
+
+  <span class="text-gray-400">de</span>
+
+  <select
+    [value]="mes"
+    (change)="onMesChange($event)"
+    class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-1 focus:outline-none focus:border-yellow-500"
+  >
+    <option *ngFor="let m of meses" [value]="m.value">{{ m.label }}</option>
+  </select>
+</div>

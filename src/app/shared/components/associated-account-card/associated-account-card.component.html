@@ -1,0 +1,303 @@
+<ng-container *ngIf="account; else emptyCard">
+  <!-- TARJETA CON DATOS -->
+  <div
+    class="bg-[#232326] border border-[#27272a] rounded-2xl p-3 flex flex-col justify-between items-center max-w-[340px] w-full h-full mx-auto"
+  >
+    <div class="space-y-2 w-full">
+      <!-- Imagen Ilustrativa -->
+      <div class="w-full h-36 rounded-xl overflow-hidden">
+        <img
+          [src]="account.imagen"
+          [alt]="account.nombre"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Título -->
+      <h3 class="text-base font-bold text-white truncate">
+        {{ account.nombre }}
+      </h3>
+
+      <!-- Sección: CUENTA -->
+      <div>
+        <span
+          class="text-[10px] font-bold tracking-wider text-gray-400 uppercase"
+        >
+          CUENTA
+        </span>
+        <div
+          class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2.5 text-xs text-gray-300"
+        >
+          <!-- ALIAS -->
+          <div class="flex justify-between items-center h-4 gap-2">
+            <div class="flex items-center justify-between gap-1.5 w-full">
+              <span class="text-gray-400">Alias:</span>
+              <ng-container *ngIf="!isEditingNombre; else inputNombre">
+                <span class="text-white">{{ account.nombre }}</span>
+              </ng-container>
+              <ng-template #inputNombre>
+                <input
+                  type="text"
+                  [(ngModel)]="account.nombre"
+                  class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded px-1 py-0.5 text-right focus:outline-none"
+                />
+              </ng-template>
+            </div>
+            <button
+              type="button"
+              (click)="toggleEdit('nombre')"
+              class="bg-transparent border-0 p-0 cursor-pointer"
+            >
+              <i
+                class="pi text-xs cursor-pointer hover:opacity-80 transition"
+                [ngClass]="[
+                  isEditingNombre ? 'pi-check' : 'pi-pencil',
+                  account.tipo === 'joven'
+                    ? 'text-yellow-500'
+                    : 'text-emerald-400',
+                ]"
+              ></i>
+            </button>
+          </div>
+
+          <!-- CUMPLEAÑOS -->
+          <div class="flex justify-between items-center h-4 gap-2">
+            <div class="flex items-center justify-between gap-1.5 w-full">
+              <span class="text-gray-400 shrink-0">
+                {{ isEditingCumpleanos ? "C:" : "Cumpleaños:" }}
+              </span>
+              <ng-container *ngIf="!isEditingCumpleanos; else inputCumpleanos">
+                <span class="text-white">
+                  {{ account.cumpleanos | dayMonthFormat }}
+                </span>
+              </ng-container>
+              <ng-template #inputCumpleanos>
+                <app-month-day-picker
+                  [(ngModel)]="account.cumpleanos"
+                  class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded px-1 py-0.5 focus:outline-none"
+                ></app-month-day-picker>
+              </ng-template>
+            </div>
+            <button
+              type="button"
+              (click)="toggleEdit('cumpleanos')"
+              class="bg-transparent border-0 p-0 cursor-pointer"
+            >
+              <i
+                class="pi text-xs transition"
+                [ngClass]="[
+                  isEditingCumpleanos ? 'pi-check' : 'pi-pencil',
+                  account.tipo === 'joven'
+                    ? 'text-yellow-500'
+                    : 'text-emerald-400',
+                ]"
+              ></i>
+            </button>
+          </div>
+
+          <!-- EDAD -->
+          <div class="flex justify-between items-center h-4 gap-2">
+            <div class="flex items-center justify-between gap-1.5 w-full">
+              <span class="text-gray-400">Edad:</span>
+              <ng-container *ngIf="!isEditingEdad; else inputEdad">
+                <span class="text-white">{{ account.edad }} años</span>
+              </ng-container>
+              <ng-template #inputEdad>
+                <input
+                  type="number"
+                  [(ngModel)]="account.edad"
+                  class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded text-right max-w-12 px-1 py-0.5 focus:outline-none"
+                />
+              </ng-template>
+            </div>
+            <button
+              type="button"
+              (click)="toggleEdit('edad')"
+              class="bg-transparent border-0 p-0 cursor-pointer"
+            >
+              <i
+                class="pi text-xs transition"
+                [ngClass]="[
+                  isEditingEdad ? 'pi-check' : 'pi-pencil',
+                  account.tipo === 'joven'
+                    ? 'text-yellow-500'
+                    : 'text-emerald-400',
+                ]"
+              ></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: PERMISOS -->
+      <div>
+        <span
+          class="text-[10px] font-bold tracking-wider text-gray-400 uppercase"
+        >
+          PERMISOS
+        </span>
+        <div
+          class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2 text-xs text-gray-300"
+        >
+          <div class="flex justify-between items-center">
+            <span>Ver perfil</span>
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.verPerfil
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </div>
+          <div class="flex justify-between items-center">
+            <span>Interacción foros</span>
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.interaccionForos
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </div>
+          <div class="flex justify-between items-center">
+            <span>Ver calificación</span>
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.verCalificacion
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </div>
+          <div class="flex justify-between items-center">
+            <span>Cambiar avatar</span>
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.cambiarAvatar
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </div>
+          <div class="flex justify-between items-center">
+            <span>Ver progreso</span>
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.verProgreso
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </div>
+          <!-- Nuevo: Consentimiento Informado -->
+          <div class="flex justify-between items-center">
+            <span>Consentimiento informado</span>
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.consentimiento
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </div>
+          <!-- Nuevo: Tiempo en Pantalla -->
+          <div class="flex justify-between items-center">
+            <span>Tiempo en pantalla</span>
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.tiempoEnPantalla
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Correo Electrónico -->
+      <div class="relative flex items-center">
+        <input
+          type="email"
+          [value]="account.email"
+          readonly
+          [ngClass]="{
+            'bg-[#272412] border-yellow-500/50 text-yellow-200':
+              account.tipo === 'joven',
+            'bg-[#122718] border-emerald-500/50 text-emerald-200':
+              account.tipo === 'nino',
+          }"
+          class="w-full border text-xs rounded-xl px-3 py-2 pr-8 focus:outline-none min-w-0 truncate"
+        />
+        <i
+          class="pi pi-pencil text-xs absolute right-3 cursor-pointer"
+          [ngClass]="
+            account.tipo === 'joven' ? 'text-yellow-500' : 'text-emerald-400'
+          "
+        ></i>
+      </div>
+    </div>
+
+    <!-- Botones Guardar / Enviar -->
+    <div class="grid grid-cols-2 gap-2 mt-3 w-full">
+      <p-button
+        label="Guardar"
+        [styleClass]="
+          'w-full !bg-[#27272a] hover:!bg-[#3f3f46] !text-white !border !rounded-xl !py-2 !text-xs !font-semibold ' +
+          (account.tipo === 'joven'
+            ? '!border-yellow-500'
+            : '!border-emerald-400')
+        "
+      ></p-button>
+
+      <p-button
+        label="Enviar"
+        [styleClass]="
+          'w-full !border-none !rounded-xl !py-2 !text-xs !font-bold !text-black ' +
+          (account.tipo === 'joven'
+            ? '!bg-yellow-500 hover:!bg-yellow-600'
+            : '!bg-emerald-400 hover:!bg-emerald-600')
+        "
+      ></p-button>
+    </div>
+  </div>
+</ng-container>
+
+<!-- TARJETA VACÍA CON (+) -->
+<ng-template #emptyCard>
+  <div
+    class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center max-w-[340px] w-full min-h-[480px] h-full cursor-pointer transition mx-auto"
+    [ngClass]="
+      fallbackTheme === 'yellow'
+        ? 'hover:border-yellow-500/50'
+        : 'hover:border-emerald-400/50'
+    "
+  >
+    <i
+      class="pi pi-plus text-4xl font-bold"
+      [ngClass]="
+        fallbackTheme === 'yellow' ? 'text-yellow-500' : 'text-emerald-400'
+      "
+    ></i>
+  </div>
+</ng-template>
