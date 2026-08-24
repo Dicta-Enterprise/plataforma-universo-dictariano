@@ -32,7 +32,7 @@
     <button
       (click)="activeTab = 'nino'"
       [ngClass]="{
-        'bg-[#eab308] text-black font-bold shadow-md': activeTab === 'nino',
+        'bg-emerald-500 text-black font-bold shadow-md': activeTab === 'nino',
         'text-gray-400 hover:text-white font-bold': activeTab !== 'nino',
       }"
       class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full"
@@ -41,11 +41,11 @@
     </button>
   </div>
 
-  <main class="w-full overflow-hidden">
+  <main class="w-full">
     <!-- Modulo de mi cuenta -->
     <div
       *ngIf="!currentCuenta as cuenta"
-      class="bg-[#18181a] rounded-b-xl flex flex-col items-center gap-4 px-3 py-5"
+      class="bg-[#18181a] rounded-b-xl flex flex-col items-center relative gap-4 px-3 py-5"
     >
       <!-- Foto de Perfil -->
       <div class="relative mb-[-16px]">
@@ -65,6 +65,65 @@
       <div
         class="w-full max-w-lg bg-[#121214] border border-[#2b2b2e] rounded-xl divide-y divide-[#222226] text-sm"
       >
+        <!-- Alias de tu familia -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Alias de tu familia:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <ng-container
+              *ngIf="!editState.aliasFamilia; else editAliasFamilia"
+            >
+              <span class="text-gray-200 font-medium">
+                {{ formData.aliasFamilia }}
+              </span>
+            </ng-container>
+
+            <ng-template #editAliasFamilia>
+              <input
+                type="text"
+                [(ngModel)]="formData.aliasFamilia"
+                value="{{ formData.aliasFamilia }}"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+              />
+            </ng-template>
+
+            <button
+              (click)="toggleEdit('aliasFamilia')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i
+                [class]="
+                  editState.aliasFamilia ? 'pi pi-check' : 'pi pi-pencil'
+                "
+              ></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Alias -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Alias papá o mamá:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <ng-container *ngIf="!editState.alias; else editAlias">
+              <span class="text-gray-200 font-medium">{{
+                formData.alias
+              }}</span>
+            </ng-container>
+            <ng-template #editAlias>
+              <input
+                type="text"
+                [(ngModel)]="formData.alias"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+              />
+            </ng-template>
+            <button
+              (click)="toggleEdit('alias')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i [class]="editState.alias ? 'pi pi-check' : 'pi pi-pencil'"></i>
+            </button>
+          </div>
+        </div>
+
         <!-- Correo (Solo lectura) -->
         <div class="flex items-center justify-between px-3 py-3.5">
           <span class="text-gray-400">Correo:</span>
@@ -72,6 +131,33 @@
             <span class="font-medium truncate">
               {{ formData.email }}
             </span>
+          </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Contraseña:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <ng-container *ngIf="!editState.contrasena; else editContrasena">
+              <span class="text-gray-200 tracking-widest font-bold"
+                >••••••••</span
+              >
+            </ng-container>
+            <ng-template #editContrasena>
+              <input
+                type="password"
+                [(ngModel)]="formData.contrasena"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+              />
+            </ng-template>
+            <button
+              (click)="toggleEdit('contrasena')"
+              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+            >
+              <i
+                [class]="editState.contrasena ? 'pi pi-check' : 'pi pi-pencil'"
+              ></i>
+            </button>
           </div>
         </div>
 
@@ -118,11 +204,13 @@
 
             <ng-template #editEdad>
               <input
+                #edadInput="ngModel"
                 type="number"
                 [(ngModel)]="formData.edad"
-                min="1"
-                max="120"
-                class="bg-gray-800 text-gray-200 border border-gray-700 rounded px-2 py-1 text-sm focus:outline-none focus:border-yellow-500 max-w-[60px]"
+                required
+                min="18"
+                max="100"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 max-w-12"
               />
             </ng-template>
 
@@ -131,92 +219,6 @@
               class="text-yellow-500 hover:text-yellow-600 transition text-xl"
             >
               <i [class]="editState.edad ? 'pi pi-check' : 'pi pi-pencil'"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Contraseña -->
-        <div class="flex items-center justify-between px-3 py-3.5">
-          <span class="text-gray-400">Contraseña:</span>
-          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
-            <ng-container *ngIf="!editState.contrasena; else editContrasena">
-              <span class="text-gray-200 tracking-widest font-bold"
-                >••••••••</span
-              >
-            </ng-container>
-            <ng-template #editContrasena>
-              <input
-                type="password"
-                [(ngModel)]="formData.contrasena"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
-              />
-            </ng-template>
-            <button
-              (click)="toggleEdit('contrasena')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
-            >
-              <i
-                [class]="editState.contrasena ? 'pi pi-check' : 'pi pi-pencil'"
-              ></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Alias -->
-        <div class="flex items-center justify-between px-3 py-3.5">
-          <span class="text-gray-400">Alias:</span>
-          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
-            <ng-container *ngIf="!editState.alias; else editAlias">
-              <span class="text-gray-200 font-medium">{{
-                formData.alias
-              }}</span>
-            </ng-container>
-            <ng-template #editAlias>
-              <input
-                type="text"
-                [(ngModel)]="formData.alias"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
-              />
-            </ng-template>
-            <button
-              (click)="toggleEdit('alias')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
-            >
-              <i [class]="editState.alias ? 'pi pi-check' : 'pi pi-pencil'"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Alias de tu familia -->
-        <div class="flex items-center justify-between px-3 py-3.5">
-          <span class="text-gray-400">Alias de tu familia:</span>
-          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
-            <ng-container
-              *ngIf="!editState.aliasFamilia; else editAliasFamilia"
-            >
-              <span class="text-gray-200 font-medium">
-                {{ formData.aliasFamilia }}
-              </span>
-            </ng-container>
-
-            <ng-template #editAliasFamilia>
-              <input
-                type="text"
-                [(ngModel)]="formData.aliasFamilia"
-                placeholder="Ej: Familia Mendoza"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
-              />
-            </ng-template>
-
-            <button
-              (click)="toggleEdit('aliasFamilia')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
-            >
-              <i
-                [class]="
-                  editState.aliasFamilia ? 'pi pi-check' : 'pi pi-pencil'
-                "
-              ></i>
             </button>
           </div>
         </div>
@@ -236,92 +238,305 @@
             <option value="alto">Alto</option>
           </select>
         </div>
-
-        <!-- Eliminar Cuenta -->
-        <div class="flex items-center justify-between px-3 py-3.5">
-          <span class="text-gray-400">Eliminar cuenta:</span>
-
-          <button
-            type="button"
-            (click)="abrirModalEliminar()"
-            title="Eliminar cuenta"
-            class="text-red-400 hover:text-red-500 transition-colors"
-          >
-            <i class="pi pi-trash text-base"></i>
-          </button>
-        </div>
       </div>
 
-      <!-- Botón Guardar (Solo visible si hasChanges es true) -->
+      <!-- Botón Guardar -->
       <button
-        *ngIf="isEditing && hasChanges"
+        [disabled]="!(isEditing && hasChanges)"
+        [attr.tabindex]="isEditing && hasChanges ? 0 : -1"
         (click)="guardarCambios()"
         type="button"
-        class="bg-yellow-500 mt-2 text-black border-none font-bold rounded-full py-2 px-5 hover:bg-yellow-600 transition"
+        class="bg-yellow-500 mt-2 text-black border-none font-bold rounded-full py-2 px-5 transition disabled:cursor-not-allowed disabled:opacity-50"
       >
         Guardar
       </button>
 
-      <!-- Modal de Confirmación eliminacion -->
+      <!-- Botón Eliminar Cuenta -->
+      <button
+        type="button"
+        (click)="abrirModalEliminar()"
+        title="Eliminar cuenta"
+        class="text-red-200 hover:text-red-300 text-sm px-3 py-2 border border-red-200 rounded-full transition-colors absolute bottom-8 right-4 md:right-8"
+      >
+        <i class="pi pi-trash text-base"></i>
+      </button>
+
+      <!-- Modal Multi-Paso de Eliminación de Cuenta -->
       <div
         *ngIf="showDeleteModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 transition-all duration-200 ease-out"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
       >
         <div
-          class="bg-[#18181a] border border-[#2b2b2e] rounded-xl max-w-md w-full p-6 shadow-2xl relative text-left transform transition-all scale-100 opacity-100"
+          class="bg-[#18181a] border border-[#2b2b2e] rounded-xl max-w-xl w-full p-5 relative text-left max-h-[90vh] flex flex-col"
         >
-          <!-- Encabezado del Warning -->
-          <div class="flex items-center gap-3 text-red-500 mb-4">
-            <div
-              class="bg-red-500/10 px-3 py-2.5 rounded-full border border-red-500/20"
+          <!-- Header Modal -->
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <span
+                class="text-xs font-bold px-2.5 py-1 rounded-full bg-red-400/20 text-red-400 border border-red-400/30"
+              >
+                Paso {{ pasoEliminacion }} de 3
+              </span>
+              <h2 class="text-lg font-bold text-gray-100">
+                Eliminación de Cuenta
+              </h2>
+            </div>
+            <button
+              (click)="cerrarModalEliminar()"
+              class="text-gray-400 hover:text-white transition"
             >
-              <!-- Corregida la clase del icono -->
-              <i class="pi pi-exclamation-triangle text-xl text-red-500"></i>
-            </div>
-            <div>
-              <h3 class="text-lg font-bold text-gray-100 leading-tight mb-2">
-                ¿Estás seguro de que quieres eliminar tu cuenta?
-              </h3>
-              <p class="text-xs text-red-400 font-medium">
-                Esta acción no se puede deshacer
+              <i class="pi pi-times text-lg"></i>
+            </button>
+          </div>
+
+          <!-- Contenido scrolleable -->
+          <div
+            class="overflow-y-auto pr-1 flex-1 space-y-4 custom-scrollbar [will-change:scroll-position]"
+          >
+            <!-- PASO 1: Confirmación de Intención -->
+            <ng-container *ngIf="pasoEliminacion === 1">
+              <div
+                class="flex items-center gap-3 bg-red-400/10 border border-red-400/20 p-3 rounded-xl"
+              >
+                <div
+                  class="p-3 bg-red-400/20 rounded-lg text-red-400 hidden md:block"
+                >
+                  <i class="pi pi-exclamation-triangle text-3xl"></i>
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-red-400 mb-1">
+                    ¿ESTÁ SEGURO DE ELIMINAR SU CUENTA?
+                  </h3>
+                  <p class="text-sm text-gray-300 leading-relaxed">
+                    Atención: Esta acción es irreversible y eliminará su acceso
+                    a todos los contenidos de la plataforma.
+                  </p>
+                </div>
+              </div>
+
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Al continuar, usted acepta las condiciones establecidas en
+                nuestra Política de Tratamiento de Datos Personales y en los
+                Términos y Condiciones del servicio.
               </p>
-            </div>
+              <p class="text-sm font-medium text-gray-200">
+                ¿Desea continuar con el proceso de eliminación?
+              </p>
+            </ng-container>
+
+            <!-- PASO 2: Consentimiento Informado -->
+            <ng-container *ngIf="pasoEliminacion === 2">
+              <div class="space-y-3 text-xs text-gray-300">
+                <div>
+                  <h3
+                    class="text-sm font-bold text-gray-100 flex items-center gap-2 mb-2"
+                  >
+                    <i class="pi pi-shield text-yellow-500"></i>
+                    CONSENTIMIENTO PARA ELIMINACIÓN DE CUENTA Y DATOS PERSONALES
+                  </h3>
+                  <p class="leading-relaxed">
+                    Al hacer clic en "Aceptar y Continuar", usted, en calidad de
+                    titular de los datos y responsable del menor de edad, otorga
+                    su consentimiento expreso e informado para la eliminación
+                    definitiva de su cuenta en la plataforma
+                    <strong
+                      >Club Social Digital Dicta SAS (NIT. 901312870)</strong
+                    >.
+                  </p>
+                </div>
+
+                <!-- Puntos informativos -->
+                <div class="space-y-2 pr-1">
+                  <div
+                    class="bg-[#121214] p-3 rounded-lg border border-[#2b2b2e]"
+                  >
+                    <h4 class="font-bold text-gray-200 mb-1">
+                      1. ELIMINACIÓN TOTAL DE DATOS PERSONALES
+                    </h4>
+                    <ul class="ml-3 list-disc space-y-1 text-gray-400">
+                      <li>
+                        Se eliminarán sus datos de identificación (nombres,
+                        apellidos, cédula).
+                      </li>
+                      <li>
+                        Se eliminarán sus datos de contacto (correo electrónico,
+                        teléfono).
+                      </li>
+                      <li>
+                        Se eliminarán los datos del menor registrado (alias,
+                        cumpleaños, edad, verificación de identidad).
+                      </li>
+                    </ul>
+                    <p class="mt-2 text-[11px] text-gray-500 italic">
+                      Fundamento Legal: Art. 8° Ley 1581 de 2012.
+                    </p>
+                  </div>
+
+                  <div
+                    class="bg-[#121214] p-3 rounded-lg border border-[#2b2b2e]"
+                  >
+                    <h4 class="font-bold text-gray-200 mb-1">
+                      2. SUPRESIÓN DE LA BASE DE DATOS
+                    </h4>
+                    <p class="text-gray-400">
+                      Sus datos personales y los del menor no serán almacenados
+                      más en nuestra base de datos, salvo obligación legal.
+                    </p>
+                    <p class="mt-1 text-[11px] text-gray-500 italic">
+                      Fundamento Legal: Art. 4° Ley 1581 de 2012.
+                    </p>
+                  </div>
+
+                  <div
+                    class="bg-[#121214] p-3 rounded-lg border border-[#2b2b2e]"
+                  >
+                    <h4 class="font-bold text-gray-200 mb-1">
+                      3. NO HABRÁ DEVOLUCIÓN DE DINERO
+                    </h4>
+                    <p class="text-gray-400">
+                      NO se realizará devolución parcial o total del valor de
+                      cursos o programas pagados. La empresa no generará saldos
+                      a favor ni créditos.
+                    </p>
+                    <p class="mt-1 text-[11px] text-gray-500 italic">
+                      Fundamento Legal: Art. 47 Ley 1480 de 2011 y Art. 1602
+                      Código Civil.
+                    </p>
+                  </div>
+
+                  <div
+                    class="bg-[#121214] p-3 rounded-lg border border-[#2b2b2e]"
+                  >
+                    <h4 class="font-bold text-gray-200 mb-1">
+                      4. TERMINACIÓN DEL VÍNCULO CONTRACTUAL
+                    </h4>
+                    <p class="text-gray-400">
+                      Finalizado el proceso, la empresa no mantendrá contrato de
+                      prestación de servicios con usted.
+                    </p>
+                  </div>
+
+                  <div
+                    class="bg-[#1a1708] border-l-2 border-yellow-500 p-3 rounded-r-lg"
+                  >
+                    <h4 class="font-bold text-yellow-400 mb-1">
+                      5. PERIODO DE GRACIA DE 15 DÍAS (Reactivación)
+                    </h4>
+                    <p class="text-gray-300">
+                      Su cuenta entrará en
+                      <strong
+                        >desactivación temporal por 15 días calendario</strong
+                      >. Si inicia sesión en este plazo, se reactivará
+                      automáticamente. Transcurridos los 15 días, la eliminación
+                      será permanente.
+                    </p>
+                    <p class="mt-1 text-[11px] text-yellow-500/80 italic">
+                      Fundamento Legal: Art. 83 C.P. y Art. 5° Ley 1480 de 2011.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- PASO 3: Validación de Identidad -->
+            <ng-container *ngIf="pasoEliminacion === 3">
+              <div class="space-y-4">
+                <div
+                  class="flex items-center gap-3 bg-blue-500/10 border border-blue-500/20 p-3 rounded-xl text-blue-400"
+                >
+                  <i class="pi pi-lock text-xl"></i>
+                  <h3 class="text-sm font-bold">VERIFICACIÓN DE IDENTIDAD</h3>
+                </div>
+
+                <p class="text-xs text-gray-300 leading-relaxed">
+                  Para proceder con la solicitud de eliminación definitiva,
+                  ingrese sus credenciales de acceso a la plataforma (LMS).
+                </p>
+
+                <div
+                  class="bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-lg text-xs text-yellow-300"
+                >
+                  ⚠️ Si no recuerda su contraseña, use la opción
+                  <a
+                    href="/auth/forgot-password"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-bold hover:text-white"
+                    >¿Olvidó su contraseña?</a
+                  >
+                  en la página de inicio antes de continuar.
+                </div>
+
+                <div class="space-y-3 pt-2">
+                  <div>
+                    <p class="block text-xs font-medium text-gray-300 mb-1">
+                      Correo electrónico de ingreso
+                    </p>
+                    <input
+                      type="email"
+                      [(ngModel)]="confirmEmailInput"
+                      placeholder="ejemplo@correo.com"
+                      class="w-full bg-[#121214] text-gray-100 border border-[#2b2b2e] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-red-500"
+                    />
+                  </div>
+
+                  <div>
+                    <p class="block text-xs font-medium text-gray-300 mb-1">
+                      Contraseña
+                    </p>
+                    <input
+                      type="password"
+                      [(ngModel)]="confirmContrasenaInput"
+                      placeholder="••••••••"
+                      class="w-full bg-[#121214] text-gray-100 border border-[#2b2b2e] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-red-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            </ng-container>
           </div>
 
-          <!-- Mensaje de advertencia -->
-          <p class="text-sm text-gray-300 mb-4 leading-relaxed">
-            Se borrarán todos tus datos de forma permanente. Los pagos y
-            suscripciones activas no se reembolsarán.
-          </p>
-
-          <!-- Instrucción de confirmación -->
-          <div class="mb-2 text-xs text-gray-300">
-            Escribe tu contraseña para confirmar:
-          </div>
-
-          <!-- Input de confirmación -->
-          <input
-            type="text"
-            [(ngModel)]="confirmContrasenaInput"
-            class="w-full bg-[#121214] text-gray-100 border border-[#2b2b2e] rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-yellow-500 mb-4"
-          />
-
-          <!-- Botones de Acción -->
-          <div class="flex items-center justify-end gap-3">
+          <!-- Footer con Botones de Acción -->
+          <div class="pt-4 flex items-center justify-between gap-3">
             <button
               type="button"
-              (click)="cerrarModalEliminar()"
-              class="border border-gray-600 rounded-lg px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition cursor-pointer w-full"
+              (click)="
+                pasoEliminacion === 1 ? cerrarModalEliminar() : pasoAnterior()
+              "
+              class="border border-gray-600 rounded-lg px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition cursor-pointer w-1/2"
             >
-              Cancelar
+              {{ pasoEliminacion === 1 ? "Cancelar" : "Atrás" }}
             </button>
+
+            <!-- Botón Continuar (Paso 1) -->
             <button
+              *ngIf="pasoEliminacion === 1"
+              type="button"
+              (click)="siguientePaso()"
+              class="bg-red-500 hover:bg-red-600 text-white font-semibold text-sm rounded-lg px-4 py-2 transition cursor-pointer w-1/2"
+            >
+              Continuar
+            </button>
+
+            <!-- Botón Aceptar (Paso 2) -->
+            <button
+              *ngIf="pasoEliminacion === 2"
+              type="button"
+              (click)="siguientePaso()"
+              class="bg-red-500 hover:bg-red-600 text-white font-semibold text-sm rounded-lg px-4 py-2 transition cursor-pointer w-1/2"
+            >
+              Aceptar y Continuar
+            </button>
+
+            <!-- Botón Final (Paso 3) -->
+            <button
+              *ngIf="pasoEliminacion === 3"
               type="button"
               (click)="confirmarEliminacion()"
-              [disabled]="confirmContrasenaInput !== formData.contrasena"
-              class="bg-red-600 hover:bg-red-700 disabled:opacity-40 w-full disabled:hover:bg-red-600 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg px-4 py-2 transition cursor-pointer"
+              [disabled]="!esFormularioPaso3Valido"
+              class="bg-red-500 hover:bg-red-600 disabled:opacity-40 disabled:hover:bg-red-400 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-lg px-4 py-2 transition cursor-pointer w-1/2"
             >
-              Eliminar Cuenta
+              Verificar y Enviar Solicitud
             </button>
           </div>
         </div>
@@ -331,13 +546,14 @@
     <!-- Modulo de cuenta joven y niño -->
     <div
       *ngIf="currentCuenta as cuenta"
-      class="bg-[#18181a] rounded-b-xl p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center"
+      class="bg-[#18181a] m-auto rounded-b-2xl p-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 justify-items-center w-full min-w-0"
     >
       <app-associated-account-card
         *ngFor="let itemCuenta of tarjetasParaMostrar"
         [account]="itemCuenta"
-        [fallbackTheme]="activeTab === 'joven' ? 'yellow' : 'emerald'"
-        class="w-full flex justify-center"
+        [fallback]="activeTab === 'joven' ? 'joven' : 'nino'"
+        (createAccount)="onCrearCuenta($event)"
+        class="w-full min-w-0 flex justify-center"
       ></app-associated-account-card>
     </div>
   </main>

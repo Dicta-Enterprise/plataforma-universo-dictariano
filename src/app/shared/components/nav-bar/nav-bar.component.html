@@ -218,7 +218,7 @@
 
   <!-- Navigation móvil fijo abajo -->
   <nav
-    class="fixed bottom-0 left-0 z-50 w-full bg-black border-t border-gray-700 px-2 pt-3 pb-4 md:hidden"
+    class="fixed bottom-0 left-0 z-50 w-full bg-black border-t border-gray-700 px-1 pt-3 pb-4 md:hidden"
   >
     <div class="flex items-center justify-around">
       <a
@@ -226,13 +226,12 @@
         [routerLink]="item.routerLink"
         routerLinkActive="!text-yellow-400"
         #rla="routerLinkActive"
-        class="flex flex-col items-center justify-center text-gray-400 hover:text-gray-200 transition-colors text-[8px] sm:text-sm font-medium relative px group cursor-pointer"
+        class="flex flex-col items-center justify-center text-center text-gray-400 hover:text-gray-200 transition-colors text-[8px] sm:text-sm font-medium relative cursor-pointer"
       >
         <i class="pi text-xl transition-colors" [ngClass]="item.icon"></i>
-        <span
-          class="truncate max-w-[40px] sm:max-w-[100px] transition-colors"
-          >{{ item.label }}</span
-        >
+        <span class="truncate min-w-[42px] sm:max-w-[100px] transition-colors">
+          {{ item.label.replace("Mi ", "").replace("Mis ", "") | titlecase }}
+        </span>
         <span
           *ngIf="rla.isActive"
           class="absolute -bottom-2 w-1.5 h-1.5 bg-yellow-400 rounded-full"
