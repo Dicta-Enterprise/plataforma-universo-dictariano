@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CursoCuenta } from 'src/app/core/interfaces/interfaces';
+import { CuentaAsociada } from 'src/app/core/interfaces/interfaces';
 
 export interface UserFormData {
   email: string;
@@ -9,21 +9,6 @@ export interface UserFormData {
   alias: string;
   aliasFamilia: string;
   nivelEconomico: string;
-
-export interface CursoCuenta {
-  id: string;
-  nombre: string;
-  tipo: 'joven' | 'nino';
-  imagen: string;
-  colorTheme: 'amber' | 'emerald'; // Amber (Joven), Emerald (Niño)
-  email: string;
-  permisos: {
-    verPerfil: boolean;
-    interaccionForos: boolean;
-    verCalificacion: boolean;
-    cambiarAvatar: boolean;
-    verProgreso: boolean;
-  };
 }
 
 @Component({
@@ -35,73 +20,78 @@ export class MyAccountComponent {
   activeTab: 'mi-cuenta' | 'joven' | 'nino' = 'mi-cuenta';
 
   // Datos simulados
-  cuentasData: CursoCuenta[] = [
+  cuentasData: CuentaAsociada[] = [
     {
       id: 1,
-  // Pestaña activa: 'mi-cuenta' | 'joven' | 'nino'
-  activeTab: 'mi-cuenta' | 'joven' | 'nino' = 'mi-cuenta';
-
-  // Datos dinámicos por tipo de cuenta
-  cuentasData: Record<'joven' | 'nino', CursoCuenta> = {
-    joven: {
-      id: 'joven',
-      nombre: 'Adolescencia y Amor',
+      nombre: 'Juan Camilo',
       tipo: 'joven',
-      imagen:
-        'https://img.freepik.com/fotos-premium/linda-pareja-enamorada-dibujos-animados_1029469-101356.jpg',
+      imagen: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6',
       email: 'coreoelectronico@gmail.com',
       cumpleanos: '01-01',
       edad: 16,
-      colorTheme: 'amber',
-      email: 'coreoelectronico@gmail.com',
+      invitacionEstado: 'inactiva',
       permisos: {
         verPerfil: true,
         interaccionForos: true,
         verCalificacion: true,
         cambiarAvatar: false,
         verProgreso: true,
-        consentimiento: true,
-        tiempoEnPantalla: false,
+        consentimiento: false,
+        tiempoEnPantalla: 60,
       },
     },
     {
       id: 2,
-      nombre: 'Grooming',
+      nombre: 'Juanito',
       tipo: 'nino',
       cumpleanos: '01-02',
-      imagen:
-        'https://img.freepik.com/fotos-premium/foto-de-um-menino-bonito-no-estilo-pixar-desenho-animado-3d-ilustracao-generativa-ai_776674-524491.jpg',
+      imagen: 'https://images.unsplash.com/photo-1543332164-6e82f355badc',
       email: 'coreoelectronico@gmail.com',
       edad: 10,
-      },
-    },
-    nino: {
-      id: 'nino',
-      nombre: 'Grooming',
-      tipo: 'nino',
-      imagen:
-        'https://img.freepik.com/fotos-premium/foto-de-um-menino-bonito-no-estilo-pixar-desenho-animado-3d-ilustracao-generativa-ai_776674-524491.jpg',
-      colorTheme: 'emerald',
-      email: 'coreoelectronico@gmail.com',
+      invitacionEstado: 'activa',
       permisos: {
         verPerfil: true,
         interaccionForos: true,
         verCalificacion: true,
         cambiarAvatar: false,
         verProgreso: true,
-        consentimiento: true,
-        tiempoEnPantalla: true,
+        consentimiento: false,
+        tiempoEnPantalla: 60,
       },
     },
   ];
 
+  onCrearCuenta(tipoCuenta: 'joven' | 'nino'): void {
+    const nuevaCuenta: CuentaAsociada = {
+      id: Date.now(),
+      nombre: 'Nuevo usuario',
+      tipo: tipoCuenta,
+      imagen: '',
+      email: '',
+      cumpleanos: '',
+      edad: tipoCuenta === 'joven' ? 13 : 9,
+      invitacionEstado: 'inactiva',
+      permisos: {
+        verPerfil: true,
+        interaccionForos: true,
+        verCalificacion: true,
+        cambiarAvatar: true,
+        verProgreso: true,
+        consentimiento: false,
+        tiempoEnPantalla: 60,
+      },
+    };
+
+    this.cuentasData = [...this.cuentasData, nuevaCuenta];
+  }
+
   // Garantiza siempre mostrar minimo 3 tarjetas de cuenta asociada
-  get tarjetasParaMostrar(): (CursoCuenta | null)[] {
+  get tarjetasParaMostrar(): (CuentaAsociada | null)[] {
     const cuentasFiltradas = this.cuentasData.filter(
       (cuenta) => cuenta.tipo === this.activeTab,
     );
 
-    const tarjetas: (CursoCuenta | null)[] = [...cuentasFiltradas];
+    const tarjetas: (CuentaAsociada | null)[] = [...cuentasFiltradas];
 
     while (tarjetas.length < 3) {
       tarjetas.push(null);
@@ -110,7 +100,7 @@ export class MyAccountComponent {
     return tarjetas;
   }
 
-  get currentCuenta(): CursoCuenta | null {
+  get currentCuenta(): CuentaAsociada | null {
     if (this.activeTab === 'mi-cuenta') return null;
     return (
       this.cuentasData.find((cuenta) => cuenta.tipo === this.activeTab) || null
@@ -145,7 +135,13 @@ export class MyAccountComponent {
   }
 
   toggleEdit(field: keyof UserFormData): void {
-    if (field === 'email') return; // El correo no se puede modificar
+    if (field === 'email') return;
+
+    // Si se está guardando la edición de la edad, validamos
+    if (field === 'edad' && this.editState.edad) {
+      this.validarEdad();
+    }
+
     this.editState[field] = !this.editState[field];
   }
 
@@ -154,6 +150,7 @@ export class MyAccountComponent {
   }
 
   guardarCambios(): void {
+    this.validarEdad();
     this.originalData = { ...this.formData };
 
     // Restablecer estados de edición a false
@@ -162,31 +159,62 @@ export class MyAccountComponent {
     });
   }
 
-  // MÉTODOS DEL MODAL DE ELIMINACIÓN
+  validarEdad(): void {
+    const edadActual = Number(this.formData.edad);
+
+    if (isNaN(edadActual) || edadActual < 18) {
+      this.formData.edad = 18;
+    } else if (edadActual > 100) {
+      this.formData.edad = 100;
+    }
+  }
+
+  // MÉTODOS Y ESTADOS DEL MODAL DE ELIMINACIÓN CUENTA
   showDeleteModal = false;
+  pasoEliminacion = 1;
+  confirmEmailInput = '';
   confirmContrasenaInput = '';
 
   abrirModalEliminar(): void {
+    this.pasoEliminacion = 1;
+    this.confirmEmailInput = '';
     this.confirmContrasenaInput = '';
     this.showDeleteModal = true;
   }
 
   cerrarModalEliminar(): void {
+    this.pasoEliminacion = 1;
+    this.confirmEmailInput = '';
     this.confirmContrasenaInput = '';
     this.showDeleteModal = false;
   }
 
+  siguientePaso(): void {
+    if (this.pasoEliminacion < 3) {
+      this.pasoEliminacion++;
+    }
+  }
+
+  pasoAnterior(): void {
+    if (this.pasoEliminacion > 1) {
+      this.pasoEliminacion--;
+    }
+  }
+
+  get esFormularioPaso3Valido(): boolean {
+    return (
+      this.confirmEmailInput.trim().toLowerCase() ===
+        this.formData.email.trim().toLowerCase() &&
+      this.confirmContrasenaInput === this.formData.contrasena
+    );
+  }
+
   confirmarEliminacion(): void {
-    if (this.confirmContrasenaInput === this.formData.contrasena) {
+    if (this.esFormularioPaso3Valido) {
+      alert(
+        'Solicitud enviada con éxito. Se ha enviado un correo de confirmación.',
+      );
       this.cerrarModalEliminar();
     }
-      },
-    },
-  };
-
-  // Getter para obtener rápidamente los datos de la pestaña actual
-  get currentCuenta(): CursoCuenta | null {
-    if (this.activeTab === 'mi-cuenta') return null;
-    return this.cuentasData[this.activeTab];
   }
 }

@@ -8,10 +8,6 @@ import { AvatarModule } from 'primeng/avatar';
 
 @NgModule({
   declarations: [MyFamilyComponent],
-import { SidebarComponent } from 'src/app/shared/components/sidebar/sidebar.component';
-
-@NgModule({
-  declarations: [MyFamilyComponent, SidebarComponent],
   imports: [CommonModule, MyFamilyRoutingModule, AvatarModule],
 })
 export class MyFamilyModule {}

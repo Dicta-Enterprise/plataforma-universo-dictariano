@@ -1,146 +1,165 @@
 <ng-container *ngIf="account; else emptyCard">
   <!-- TARJETA CON DATOS -->
   <div
-    class="bg-[#232326] border border-[#27272a] rounded-2xl p-3 flex flex-col justify-between items-center max-w-[340px] w-full h-full mx-auto"
+    class="bg-[#232326] w-full rounded-2xl p-3 flex flex-col gap-2 items-start max-w-[340px] h-full relative"
   >
-    <div class="space-y-2 w-full">
-      <!-- Imagen Ilustrativa -->
-      <div class="w-full h-36 rounded-xl overflow-hidden">
-        <img
-          [src]="account.imagen"
-          [alt]="account.nombre"
-          class="w-full h-full object-cover"
-        />
-      </div>
+    <!-- Imagen Ilustrativa -->
+    <div class="w-full h-36 rounded-xl overflow-hidden">
+      <img
+        [src]="account.imagen || 'assets/img/imagenBienvenida.png'"
+        [alt]="account.nombre"
+        class="w-full h-full object-cover"
+      />
+    </div>
 
-      <!-- Título -->
-      <h3 class="text-base font-bold text-white truncate">
-        {{ account.nombre }}
-      </h3>
+    <!-- Título -->
+    <h3 class="font-bold truncate">
+      {{ account.nombre }}
+    </h3>
 
-      <!-- Sección: CUENTA -->
-      <div>
-        <span
-          class="text-[10px] font-bold tracking-wider text-gray-400 uppercase"
-        >
-          CUENTA
-        </span>
-        <div
-          class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2.5 text-xs text-gray-300"
-        >
-          <!-- ALIAS -->
-          <div class="flex justify-between items-center h-4 gap-2">
-            <div class="flex items-center justify-between gap-1.5 w-full">
-              <span class="text-gray-400">Alias:</span>
-              <ng-container *ngIf="!isEditingNombre; else inputNombre">
-                <span class="text-white">{{ account.nombre }}</span>
-              </ng-container>
-              <ng-template #inputNombre>
-                <input
-                  type="text"
-                  [(ngModel)]="account.nombre"
-                  class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded px-1 py-0.5 text-right focus:outline-none"
-                />
-              </ng-template>
-            </div>
-            <button
-              type="button"
-              (click)="toggleEdit('nombre')"
-              class="bg-transparent border-0 p-0 cursor-pointer"
-            >
-              <i
-                class="pi text-xs cursor-pointer hover:opacity-80 transition"
-                [ngClass]="[
-                  isEditingNombre ? 'pi-check' : 'pi-pencil',
-                  account.tipo === 'joven'
-                    ? 'text-yellow-500'
-                    : 'text-emerald-400',
-                ]"
-              ></i>
-            </button>
+    <!-- Sección: CUENTA -->
+    <section class="w-full">
+      <span
+        class="text-[10px] font-bold tracking-wider text-gray-400 uppercase"
+      >
+        CUENTA
+      </span>
+      <div
+        class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2.5 text-xs text-gray-300"
+      >
+        <!-- ALIAS -->
+        <div class="flex justify-between items-center h-4 gap-2">
+          <div class="flex items-center justify-between gap-1.5 w-full">
+            <span class="text-gray-400">
+              Alias
+              {{
+                account.tipo.toLowerCase() === "nino" ? "niño" : account.tipo
+              }}:
+            </span>
+            <ng-container *ngIf="!isEditingNombre; else inputNombre">
+              <span class="text-white">{{ account.nombre }}</span>
+            </ng-container>
+            <ng-template #inputNombre>
+              <input
+                type="text"
+                [(ngModel)]="account.nombre"
+                class="bg-[#18181a] border border-[#27272a] max-w-40 text-white text-xs rounded px-1 py-0.5 text-right focus:outline-none"
+              />
+            </ng-template>
           </div>
+          <button
+            type="button"
+            (click)="toggleEdit('nombre')"
+            class="bg-transparent border-0 p-0 cursor-pointer"
+          >
+            <i
+              class="pi text-xs cursor-pointer hover:opacity-80 transition"
+              [ngClass]="[
+                isEditingNombre ? 'pi-check' : 'pi-pencil',
+                account.tipo === 'joven'
+                  ? 'text-yellow-500'
+                  : 'text-emerald-400',
+              ]"
+            ></i>
+          </button>
+        </div>
 
-          <!-- CUMPLEAÑOS -->
-          <div class="flex justify-between items-center h-4 gap-2">
-            <div class="flex items-center justify-between gap-1.5 w-full">
-              <span class="text-gray-400 shrink-0">
-                {{ isEditingCumpleanos ? "C:" : "Cumpleaños:" }}
+        <!-- CUMPLEAÑOS -->
+        <div class="flex justify-between items-center h-4 gap-2">
+          <div class="flex items-center justify-between gap-1.5 w-full">
+            <span class="text-gray-400 shrink-0">
+              {{ isEditingCumpleanos ? "C:" : "Cumpleaños:" }}
+            </span>
+            <ng-container *ngIf="!isEditingCumpleanos; else inputCumpleanos">
+              <span class="text-white">
+                {{ account.cumpleanos | dayMonthFormat }}
               </span>
-              <ng-container *ngIf="!isEditingCumpleanos; else inputCumpleanos">
-                <span class="text-white">
-                  {{ account.cumpleanos | dayMonthFormat }}
-                </span>
-              </ng-container>
-              <ng-template #inputCumpleanos>
-                <app-month-day-picker
-                  [(ngModel)]="account.cumpleanos"
-                  class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded px-1 py-0.5 focus:outline-none"
-                ></app-month-day-picker>
-              </ng-template>
-            </div>
-            <button
-              type="button"
-              (click)="toggleEdit('cumpleanos')"
-              class="bg-transparent border-0 p-0 cursor-pointer"
-            >
-              <i
-                class="pi text-xs transition"
-                [ngClass]="[
-                  isEditingCumpleanos ? 'pi-check' : 'pi-pencil',
-                  account.tipo === 'joven'
-                    ? 'text-yellow-500'
-                    : 'text-emerald-400',
-                ]"
-              ></i>
-            </button>
+            </ng-container>
+            <ng-template #inputCumpleanos>
+              <app-month-day-picker
+                [(ngModel)]="account.cumpleanos"
+                class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded px-1 py-0.5 focus:outline-none"
+              ></app-month-day-picker>
+            </ng-template>
+          </div>
+          <button
+            type="button"
+            (click)="toggleEdit('cumpleanos')"
+            class="bg-transparent border-0 p-0 cursor-pointer"
+          >
+            <i
+              class="pi text-xs transition"
+              [ngClass]="[
+                isEditingCumpleanos ? 'pi-check' : 'pi-pencil',
+                account.tipo === 'joven'
+                  ? 'text-yellow-500'
+                  : 'text-emerald-400',
+              ]"
+            ></i>
+          </button>
+        </div>
+
+        <!-- EDAD -->
+        <div class="flex justify-between items-center h-4 gap-2">
+          <div class="flex items-center justify-between gap-1.5 w-full">
+            <span class="text-gray-400">Edad:</span>
+            <ng-container *ngIf="!isEditingEdad; else selectEdad">
+              <span class="text-white">{{ account.edad }} años</span>
+            </ng-container>
+            <ng-template #selectEdad>
+              <select
+                [(ngModel)]="account.edad"
+                (change)="toggleEdit('edad')"
+                class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded px-1.5 py-0.5 focus:outline-none cursor-pointer"
+              >
+                <option
+                  *ngFor="let edad of getEdadesDisponibles()"
+                  [ngValue]="edad"
+                  class="bg-[#18181a] text-white"
+                >
+                  {{ edad }} años
+                </option>
+              </select>
+            </ng-template>
           </div>
 
-          <!-- EDAD -->
-          <div class="flex justify-between items-center h-4 gap-2">
-            <div class="flex items-center justify-between gap-1.5 w-full">
-              <span class="text-gray-400">Edad:</span>
-              <ng-container *ngIf="!isEditingEdad; else inputEdad">
-                <span class="text-white">{{ account.edad }} años</span>
-              </ng-container>
-              <ng-template #inputEdad>
-                <input
-                  type="number"
-                  [(ngModel)]="account.edad"
-                  class="bg-[#18181a] border border-[#27272a] text-white text-xs rounded text-right max-w-12 px-1 py-0.5 focus:outline-none"
-                />
-              </ng-template>
-            </div>
-            <button
-              type="button"
-              (click)="toggleEdit('edad')"
-              class="bg-transparent border-0 p-0 cursor-pointer"
-            >
-              <i
-                class="pi text-xs transition"
-                [ngClass]="[
-                  isEditingEdad ? 'pi-check' : 'pi-pencil',
-                  account.tipo === 'joven'
-                    ? 'text-yellow-500'
-                    : 'text-emerald-400',
-                ]"
-              ></i>
-            </button>
-          </div>
+          <button
+            type="button"
+            (click)="toggleEdit('edad')"
+            class="bg-transparent border-0 p-0 cursor-pointer"
+          >
+            <i
+              class="pi text-xs transition"
+              [ngClass]="[
+                isEditingEdad ? 'pi-check' : 'pi-pencil',
+                account.tipo === 'joven'
+                  ? 'text-yellow-500'
+                  : 'text-emerald-400',
+              ]"
+            ></i>
+          </button>
         </div>
       </div>
+    </section>
 
-      <!-- Sección: PERMISOS -->
-      <div>
-        <span
-          class="text-[10px] font-bold tracking-wider text-gray-400 uppercase"
-        >
-          PERMISOS
-        </span>
-        <div
-          class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2 text-xs text-gray-300"
-        >
-          <div class="flex justify-between items-center">
-            <span>Ver perfil</span>
+    <!-- Sección: PERMISOS GENERALES -->
+    <section class="w-full">
+      <span
+        class="text-[10px] font-bold tracking-wider text-gray-400 uppercase"
+      >
+        PERMISOS
+      </span>
+      <div
+        class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2 text-xs text-gray-300"
+      >
+        <!-- Ver perfil -->
+        <div class="flex justify-between items-center">
+          <span>Ver perfil</span>
+          <button
+            type="button"
+            (click)="togglePermiso('verPerfil')"
+            class="cursor-pointer hover:scale-110 transition select-none focus:outline-none"
+          >
             <i
               class="pi text-xs"
               [ngClass]="
@@ -151,9 +170,17 @@
                   : 'pi-times text-gray-500'
               "
             ></i>
-          </div>
-          <div class="flex justify-between items-center">
-            <span>Interacción foros</span>
+          </button>
+        </div>
+
+        <!-- Interacción foros -->
+        <div class="flex justify-between items-center">
+          <span>Interacción foros</span>
+          <button
+            type="button"
+            (click)="togglePermiso('interaccionForos')"
+            class="cursor-pointer hover:scale-110 transition select-none focus:outline-none"
+          >
             <i
               class="pi text-xs"
               [ngClass]="
@@ -164,9 +191,17 @@
                   : 'pi-times text-gray-500'
               "
             ></i>
-          </div>
-          <div class="flex justify-between items-center">
-            <span>Ver calificación</span>
+          </button>
+        </div>
+
+        <!-- Ver calificación -->
+        <div class="flex justify-between items-center">
+          <span>Ver calificación</span>
+          <button
+            type="button"
+            (click)="togglePermiso('verCalificacion')"
+            class="cursor-pointer hover:scale-110 transition select-none focus:outline-none"
+          >
             <i
               class="pi text-xs"
               [ngClass]="
@@ -177,9 +212,17 @@
                   : 'pi-times text-gray-500'
               "
             ></i>
-          </div>
-          <div class="flex justify-between items-center">
-            <span>Cambiar avatar</span>
+          </button>
+        </div>
+
+        <!-- Cambiar avatar -->
+        <div class="flex justify-between items-center">
+          <span>Cambiar avatar</span>
+          <button
+            type="button"
+            (click)="togglePermiso('cambiarAvatar')"
+            class="cursor-pointer hover:scale-110 transition select-none focus:outline-none"
+          >
             <i
               class="pi text-xs"
               [ngClass]="
@@ -190,9 +233,17 @@
                   : 'pi-times text-gray-500'
               "
             ></i>
-          </div>
-          <div class="flex justify-between items-center">
-            <span>Ver progreso</span>
+          </button>
+        </div>
+
+        <!-- Ver progreso -->
+        <div class="flex justify-between items-center">
+          <span>Ver progreso</span>
+          <button
+            type="button"
+            (click)="togglePermiso('verProgreso')"
+            class="cursor-pointer hover:scale-110 transition select-none focus:outline-none"
+          >
             <i
               class="pi text-xs"
               [ngClass]="
@@ -203,101 +254,457 @@
                   : 'pi-times text-gray-500'
               "
             ></i>
-          </div>
-          <!-- Nuevo: Consentimiento Informado -->
-          <div class="flex justify-between items-center">
-            <span>Consentimiento informado</span>
+          </button>
+        </div>
+
+        <!-- Tiempo en pantalla -->
+        <div class="flex justify-between items-center gap-2">
+          <span class="shrink-0">Tiempo en pantalla</span>
+          <select
+            *ngIf="account.permisos"
+            [(ngModel)]="account.permisos.tiempoEnPantalla"
+            [ngClass]="
+              account.tipo === 'joven'
+                ? 'border-yellow-500/40'
+                : 'border-emerald-400/40'
+            "
+            class="bg-[#18181a] border text-xs rounded px-1 py-0.5 focus:outline-none transition cursor-pointer"
+          >
+            <option
+              *ngFor="let opcion of opcionesTiempo"
+              [ngValue]="opcion.value"
+              class="bg-[#18181a] text-white"
+            >
+              {{ opcion.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: CONSENTIMIENTO INFORMADO -->
+    <section
+      class="bg-[#121214] border rounded-xl pl-3 pr-2 py-2 flex items-center justify-between gap-2 w-full"
+      [ngClass]="{
+        'border-yellow-500/40 bg-[#272412]': account.tipo === 'joven',
+        'border-emerald-500/40 bg-[#122718]': account.tipo === 'nino',
+      }"
+    >
+      <div class="flex flex-col min-w-0">
+        <span class="text-xs font-semibold text-white truncate"
+          >Consentimiento informado</span
+        >
+        <span
+          class="text-[10px]"
+          [ngClass]="
+            account.permisos.consentimiento ? 'text-gray-400' : 'text-red-300'
+          "
+        >
+          {{
+            account.permisos.consentimiento
+              ? "Aprobado y Firmado"
+              : "Pendiente de aprobación"
+          }}
+        </span>
+      </div>
+
+      <button
+        type="button"
+        *ngIf="!account.permisos.consentimiento"
+        (click)="abrirConsentimientoModal()"
+        class="text-xs font-medium px-3 py-1.5 rounded-full transition"
+        [ngClass]="
+          account.tipo === 'joven'
+            ? 'bg-yellow-500 hover:bg-yellow-600 text-black'
+            : 'bg-emerald-400 hover:bg-emerald-500 text-black'
+        "
+      >
+        Revisar
+      </button>
+      <i
+        *ngIf="account.permisos.consentimiento"
+        class="pi pi-check text-green-500 pr-1"
+      ></i>
+    </section>
+
+    <!-- Seccion: Enviar e Historial de Invitación -->
+    <section class="w-full space-y-1">
+      <!-- ESTADO 1: INACTIVA / SIN ENVIAR (Ingresar correo y enviar) -->
+      <div *ngIf="account.invitacionEstado === 'inactiva'" class="space-y-2">
+        <div class="relative flex items-center w-full">
+          <input
+            type="email"
+            [(ngModel)]="account.email"
+            placeholder="ejemplo@correo.com"
+            [ngClass]="{
+              'border-yellow-500/40 bg-[#272412]': account.tipo === 'joven',
+              'border-emerald-500/40 bg-[#122718]': account.tipo === 'nino',
+            }"
+            class="w-full border text-xs rounded-xl px-3 py-2.5 pr-8 focus:outline-none transition min-w-0"
+          />
+          <i class="pi pi-envelope text-xs absolute right-3 text-gray-400"></i>
+        </div>
+
+        <!-- Botón deshabilitado si el formato del correo no es válido -->
+        <button
+          type="button"
+          (click)="procesarInvitacion()"
+          [disabled]="!esEmailValido(account.email)"
+          [ngClass]="[
+            'w-full border-none rounded-xl py-2 text-xs font-bold text-black transition disabled:opacity-40 disabled:cursor-not-allowed',
+            account.tipo === 'joven'
+              ? 'bg-yellow-500 hover:bg-yellow-600'
+              : 'bg-emerald-400 hover:bg-emerald-500',
+          ]"
+        >
+          Enviar invitación
+        </button>
+      </div>
+
+      <!-- ESTADO 2: PENDIENTE DE APROBACIÓN -->
+      <div
+        *ngIf="account.invitacionEstado === 'pendiente'"
+        class="px-2.5 py-2 border rounded-xl space-y-1.5"
+        [ngClass]="{
+          'border-yellow-500/40 bg-[#272412]': account.tipo === 'joven',
+          'border-emerald-500/40 bg-[#122718]': account.tipo === 'nino',
+        }"
+      >
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-400">Invitación enviada a:</span>
+          <span
+            class="text-[10px] px-2 py-1 rounded-full font-semibold bg-gray-500/20 text-gray-400 border border-gray-500/30 flex items-center gap-1"
+          >
+            <i class="pi pi-clock text-[9px]"></i> Pendiente
+          </span>
+        </div>
+
+        <div
+          class="flex items-center justify-between bg-[#121214] px-2 rounded-lg border border-[#27272a]"
+        >
+          <span class="text-xs text-white truncate max-w-[180px]">{{
+            account.email
+          }}</span>
+          <button
+            type="button"
+            (click)="habilitarEdicionEmail()"
+            title="Cambiar correo"
+            class="text-gray-400 hover:text-white transition p-1"
+          >
+            <i class="pi pi-pencil text-xs"></i>
+          </button>
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button
+            type="button"
+            (click)="reenviarInvitacion()"
+            class="flex-1 py-1.5 px-2 text-xs rounded-lg font-medium transition flex items-center justify-center gap-1"
+            [ngClass]="
+              account.tipo === 'joven'
+                ? 'bg-yellow-500 hover:bg-yellow-600 text-black'
+                : 'bg-emerald-400 hover:bg-emerald-500 text-black'
+            "
+          >
+            <i class="pi pi-refresh font-bold text-[10px]"></i> Reenviar
+          </button>
+          <button
+            type="button"
+            (click)="cancelarInvitacion()"
+            class="py-1.5 px-3 bg-gray-800 hover:bg-gray-900 text-xs rounded-lg font-medium transition"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+
+      <!-- ESTADO 3: ACTIVA / ACEPTADA -->
+      <div
+        *ngIf="account.invitacionEstado === 'activa'"
+        class="px-3 py-2.5 bg-[#122718]/30 border border-emerald-500/30 rounded-xl space-y-1"
+      >
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-400">Cuenta vinculada</span>
+          <span
+            class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1"
+          >
+            <i class="pi pi-check-circle text-[9px]"></i> Activa
+          </span>
+        </div>
+
+        <p class="text-xs font-semibold text-white truncate">
+          {{ account.email }}
+        </p>
+        <p class="text-[10px] text-emerald-400/80">
+          El usuario ya aceptó la invitación y tiene acceso a la LMS.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- MODAL FLOTANTE DE CONSENTIMIENTO INFORMADO -->
+  <div
+    *ngIf="showConsentModal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70"
+  >
+    <div
+      class="bg-[#18181a] border border-[#27272a] rounded-2xl max-w-[700px] w-full p-6 flex flex-col max-h-[90vh] space-y-5"
+    >
+      <!-- Cabecera Modal -->
+      <div class="flex justify-between items-center">
+        <h4 class="font-bold flex items-center gap-2 text-white text-lg">
+          <i
+            class="pi pi-lock"
+            [ngClass]="
+              account.tipo === 'joven' ? 'text-yellow-500' : 'text-emerald-400'
+            "
+          ></i>
+          Antes de continuar, necesitamos tu autorización
+        </h4>
+        <button
+          type="button"
+          (click)="cerrarConsentimientoModal()"
+          class="text-gray-400 hover:text-white transition"
+        >
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+
+      <!-- Cuerpo del Modal (Scrollable) -->
+      <div
+        class="flex-1 overflow-y-auto space-y-4 text-sm text-gray-300 pr-2 custom-scrollbar"
+      >
+        <!-- CAPA 1: Resumen Visible -->
+        <div class="space-y-3">
+          <p>
+            Vas a crear una cuenta para
+            <strong>{{ account.nombre }} ({{ account.edad }} años)</strong> en
+            Mundo Dictariano.
+          </p>
+
+          <!-- Texto específico Niños (9-12) -->
+          <ng-container *ngIf="account.tipo === 'nino'">
+            <p>
+              Como es menor de edad, la ley exige tu autorización expresa como
+              su representante legal antes de poder guardar sus datos (nombre,
+              alias, fecha de nacimiento) en nuestra plataforma.
+            </p>
+            <p>
+              Usaremos esta información únicamente para darle acceso a sus
+              cursos y hacerle seguimiento a su progreso — nunca para publicidad
+              dirigida a él/ella, y nunca la compartiremos con terceros sin tu
+              autorización adicional.
+            </p>
+            <p>
+              Puedes revocar esta autorización cuando quieras, escribiéndonos a
+              ayuda@mundodictariano.com.
+            </p>
+          </ng-container>
+
+          <!-- Texto específico Jóvenes (13-17) -->
+          <ng-container *ngIf="account.tipo === 'joven'">
+            <p>
+              Aunque algunas leyes permiten que un joven de esta edad participe
+              más activamente en la decisión, en Mundo Dictariano pedimos
+              siempre la autorización de un padre/madre/tutor para cualquier
+              persona menor de 18 años, esta es la posición más protectora y la
+              que aplicamos en todos los países donde operamos.
+            </p>
+            <p>
+              Usaremos esta información para darle acceso a sus cursos y hacerle
+              seguimiento a su progreso, nunca para publicidad dirigida a
+              él/ella, y nunca la compartiremos con terceros sin tu autorización
+              adicional.
+            </p>
+            <p>
+              <strong>{{ account.nombre }}</strong> también podrá ver, en su
+              propia cuenta, un resumen de qué datos suyos autorizaste y para
+              qué se usan.
+            </p>
+          </ng-container>
+        </div>
+
+        <!-- CAPA 2: Texto Legal Expandible -->
+        <div
+          class="border border-[#27272a] bg-[#121214] rounded-xl overflow-hidden mt-4"
+        >
+          <button
+            type="button"
+            (click)="mostrarTextoLegal = !mostrarTextoLegal"
+            class="w-full p-3 flex justify-between items-center hover:bg-[#1f1f22] transition text-left"
+          >
+            <span class="font-semibold text-white"
+              >📄 Leer el texto legal completo (Colombia, EE. UU. y Unión
+              Europea)</span
+            >
             <i
-              class="pi text-xs"
+              class="pi"
               [ngClass]="
-                account.permisos.consentimiento
-                  ? account.tipo === 'joven'
-                    ? 'pi-check text-yellow-500'
-                    : 'pi-check text-emerald-400'
-                  : 'pi-times text-gray-500'
+                mostrarTextoLegal ? 'pi-chevron-up' : 'pi-chevron-down'
               "
             ></i>
+          </button>
+
+          <div
+            *ngIf="mostrarTextoLegal"
+            class="p-4 space-y-5 border-t border-[#27272a] text-xs text-gray-400"
+          >
+            <!-- Bloque Jurisdicción: COLOMBIA/LATAM -->
+            <div
+              [ngClass]="{
+                'border-l-2 border-emerald-400 pl-3':
+                  bloqueJurisdiccionPrincipal === 'latam',
+              }"
+            >
+              <h5 class="text-white font-semibold mb-1">
+                🇨🇴 Colombia y Latinoamérica (Ley 1581 de 2012)
+              </h5>
+              <p *ngIf="account.tipo === 'nino'">
+                Como representante legal del menor, otorgas tu consentimiento
+                previo, expreso e informado para que Club Social Digital Dicta
+                S.A.S. (NIT 901.312.870-9) recolecte y trate los siguientes
+                datos de tu hijo/a: nombres, alias, fecha de nacimiento o edad,
+                y tus propios datos de contacto. Esta información se usa
+                exclusivamente para gestionar su cuenta, darle acceso a los
+                cursos, y realizar actividades educativas. No se recolectan
+                datos sensibles. Tienes derecho a acceder, corregir y revocar
+                esta autorización en ayuda@mundodictariano.com. Vigencia: 3 años
+                o hasta que cumpla 13 años.
+              </p>
+              <p *ngIf="account.tipo === 'joven'">
+                Como representante legal, otorgas tu consentimiento previo,
+                expreso e informado para el tratamiento de los datos personales
+                de tu hijo/a adolescente: nombres, alias, fecha de nacimiento,
+                correo. Se le dará a tu hijo/a el derecho a ser escuchado/a
+                sobre esta decisión, pero la autorización formal la otorgas tú
+                como representante legal. Tienes los mismos derechos de acceso,
+                corrección y revocatoria. Vigencia: 3 años o hasta que cumpla 18
+                años.
+              </p>
+            </div>
+
+            <!-- Bloque Jurisdicción: ESTADOS UNIDOS -->
+            <div
+              [ngClass]="{
+                'border-l-2 border-emerald-400 pl-3':
+                  bloqueJurisdiccionPrincipal === 'usa',
+              }"
+            >
+              <h5 class="text-white font-semibold mb-1">
+                🇺🇸 Estados Unidos (COPPA)
+              </h5>
+              <p *ngIf="account.tipo === 'nino'">
+                Como tu hijo/a tiene menos de 13 años, la ley federal COPPA
+                exige obtener tu 'consentimiento parental verificable' antes de
+                recolectar cualquier dato. La definición de 'información
+                personal' bajo COPPA incluye datos biométricos e identificadores
+                persistentes. Tienes derecho a revisar los datos, solicitar
+                eliminación, y negar el consentimiento para que se compartan con
+                terceros. Los datos se eliminan cuando ya no son necesarios.
+              </p>
+              <p *ngIf="account.tipo === 'joven'">
+                La COPPA federal solo exige consentimiento parental verificable
+                para menores de 13 años; a partir de esa edad, no impone ese
+                requisito. Sin embargo, Mundo Dictariano mantiene la misma
+                política de consentimiento para jóvenes de 13 a 17 años en todos
+                los mercados, como protección adicional. Aplican las
+                protecciones de privacidad del estado de residencia.
+              </p>
+            </div>
+
+            <!-- Bloque Jurisdicción: UNIÓN EUROPEA -->
+            <div
+              [ngClass]="{
+                'border-l-2 border-emerald-400 pl-3':
+                  bloqueJurisdiccionPrincipal === 'ue',
+              }"
+            >
+              <h5 class="text-white font-semibold mb-1">
+                🇪🇺 Unión Europea (GDPR, Art. 8)
+              </h5>
+              <p *ngIf="account.tipo === 'nino'">
+                El GDPR exige el consentimiento de quien ejerce la patria
+                potestad para el tratamiento de datos de menores en servicios de
+                la sociedad de la información, cuando el menor tiene menos de 16
+                años (o mínimo 13 según el país). Como
+                {{ account.nombre }} tiene {{ account.edad }} años, este
+                consentimiento es obligatorio. Tienes derecho de acceso,
+                rectificación, supresión, portabilidad y oposición (derechos
+                ARCO).
+              </p>
+              <p *ngIf="account.tipo === 'joven'">
+                Si {{ account.nombre }} reside en un país miembro donde la edad
+                de consentimiento autónomo sea 13 a 16 años, es posible que
+                legalmente ya pueda consentir directamente. Aun así, Mundo
+                Dictariano solicita también tu autorización como representante
+                legal por coherencia. Los derechos ARCO aplican igual.
+              </p>
+            </div>
           </div>
-          <!-- Nuevo: Tiempo en Pantalla -->
-          <div class="flex justify-between items-center">
-            <span>Tiempo en pantalla</span>
-            <i
-              class="pi text-xs"
-              [ngClass]="
-                account.permisos.tiempoEnPantalla
-                  ? account.tipo === 'joven'
-                    ? 'pi-check text-yellow-500'
-                    : 'pi-check text-emerald-400'
-                  : 'pi-times text-gray-500'
-              "
-            ></i>
+        </div>
+
+        <!-- ACEPTACIÓN DE TERMINOS -->
+        <div class="mt-4 px-1">
+          <div class="flex gap-3 cursor-pointer">
+            <p-checkbox
+              [(ngModel)]="consentimientoAceptado"
+              [binary]="true"
+              styleClass="custom-p-checkbox"
+              class="mt-0.5"
+            ></p-checkbox>
+
+            <span class="text-gray-300 group-hover:text-white transition">
+              Autorizo el tratamiento de los datos de
+              <strong>{{ account.nombre }}</strong> según lo descrito en el
+              texto legal completo.
+            </span>
           </div>
         </div>
       </div>
 
-      <!-- Input Correo Electrónico -->
-      <div class="relative flex items-center">
-        <input
-          type="email"
-          [value]="account.email"
-          readonly
-          [ngClass]="{
-            'bg-[#272412] border-yellow-500/50 text-yellow-200':
-              account.tipo === 'joven',
-            'bg-[#122718] border-emerald-500/50 text-emerald-200':
-              account.tipo === 'nino',
-          }"
-          class="w-full border text-xs rounded-xl px-3 py-2 pr-8 focus:outline-none min-w-0 truncate"
-        />
-        <i
-          class="pi pi-pencil text-xs absolute right-3 cursor-pointer"
+      <!-- Acciones Modal -->
+      <div class="flex gap-3 w-full justify-center pt-2">
+        <button
+          type="button"
+          (click)="cerrarConsentimientoModal()"
+          class="px-5 py-2.5 rounded-xl font-semibold text-gray-300 bg-[#27272a] hover:bg-[#3f3f46] transition"
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="button"
+          (click)="aceptarConsentimiento()"
+          [disabled]="!consentimientoAceptado"
+          class="px-5 py-2.5 rounded-xl font-bold transition disabled:opacity-50 disabled:cursor-not-allowed"
           [ngClass]="
-            account.tipo === 'joven' ? 'text-yellow-500' : 'text-emerald-400'
+            account.tipo === 'joven'
+              ? 'bg-yellow-500 hover:bg-yellow-600 text-black'
+              : 'bg-emerald-400 hover:bg-emerald-500 text-black'
           "
-        ></i>
+        >
+          Autorizar y Continuar
+        </button>
       </div>
-    </div>
-
-    <!-- Botones Guardar / Enviar -->
-    <div class="grid grid-cols-2 gap-2 mt-3 w-full">
-      <p-button
-        label="Guardar"
-        [styleClass]="
-          'w-full !bg-[#27272a] hover:!bg-[#3f3f46] !text-white !border !rounded-xl !py-2 !text-xs !font-semibold ' +
-          (account.tipo === 'joven'
-            ? '!border-yellow-500'
-            : '!border-emerald-400')
-        "
-      ></p-button>
-
-      <p-button
-        label="Enviar"
-        [styleClass]="
-          'w-full !border-none !rounded-xl !py-2 !text-xs !font-bold !text-black ' +
-          (account.tipo === 'joven'
-            ? '!bg-yellow-500 hover:!bg-yellow-600'
-            : '!bg-emerald-400 hover:!bg-emerald-600')
-        "
-      ></p-button>
     </div>
   </div>
 </ng-container>
 
 <!-- TARJETA VACÍA CON (+) -->
 <ng-template #emptyCard>
-  <div
-    class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center max-w-[340px] w-full min-h-[480px] h-full cursor-pointer transition mx-auto"
+  <button
+    type="button"
+    (click)="crearNuevaCuenta()"
+    class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center max-w-[340px] w-full min-h-[480px] h-full cursor-pointer transition mx-auto focus:outline-none"
     [ngClass]="
-      fallbackTheme === 'yellow'
+      fallback === 'joven'
         ? 'hover:border-yellow-500/50'
         : 'hover:border-emerald-400/50'
     "
   >
     <i
       class="pi pi-plus text-4xl font-bold"
-      [ngClass]="
-        fallbackTheme === 'yellow' ? 'text-yellow-500' : 'text-emerald-400'
-      "
+      [ngClass]="fallback === 'joven' ? 'text-yellow-500' : 'text-emerald-400'"
     ></i>
-  </div>
+  </button>
 </ng-template>

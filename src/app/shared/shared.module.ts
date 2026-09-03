@@ -13,6 +13,7 @@ import { BadgeModule } from 'primeng/badge';
 import { SharedPipeModule } from './pipes/shared-pipe.module';
 import { AssociatedAccountCardComponent } from './components/associated-account-card/associated-account-card.component';
 import { FormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [CardCursoComponent, CourseCarouselComponent],
   imports: [
+    CheckboxModule,
     CommonModule,
     CardModule,
     ButtonModule,
@@ -44,6 +46,5 @@ import { FormsModule } from '@angular/forms';
     MonthDayPickerComponent,
     AssociatedAccountCardComponent,
   ],
-  exports: [CardCursoComponent, CourseCarouselComponent, ProgressSpinnerModule],
 })
 export class SharedModule {}

@@ -18,6 +18,5 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ChipModule,
     SharedModule,
   ],
-  imports: [CommonModule, HomeRoutingModule, ButtonModule, SharedModule],
 })
 export class HomeModule {}

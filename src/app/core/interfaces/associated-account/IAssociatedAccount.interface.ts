@@ -1,4 +1,4 @@
-export interface CursoCuenta {
+export interface CuentaAsociada {
   id: number;
   nombre: string;
   tipo: 'joven' | 'nino';
@@ -6,6 +6,7 @@ export interface CursoCuenta {
   email: string;
   cumpleanos: string;
   edad: number;
+  invitacionEstado: 'inactiva' | 'pendiente' | 'activa';
   permisos: {
     verPerfil: boolean;
     interaccionForos: boolean;
@@ -13,6 +14,6 @@ export interface CursoCuenta {
     cambiarAvatar: boolean;
     verProgreso: boolean;
     consentimiento: boolean;
-    tiempoEnPantalla: boolean;
+    tiempoEnPantalla: number | null;
   };
 }
