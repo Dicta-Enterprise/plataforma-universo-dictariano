@@ -22,9 +22,6 @@ import { CheckboxModule } from 'primeng/checkbox';
     MonthDayPickerComponent,
     AssociatedAccountCardComponent,
   ],
-
-@NgModule({
-  declarations: [CardCursoComponent, CourseCarouselComponent],
   imports: [
     CheckboxModule,
     CommonModule,
