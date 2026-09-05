@@ -9,12 +9,6 @@ import { CuentaAsociada } from 'src/app/core/interfaces/interfaces';
 export class AssociatedAccountCardComponent {
   @Input() fallback: 'joven' | 'nino' | null | undefined = null;
   @Input() account: CuentaAsociada | null | undefined = null;
-  @Output() createAccount = new EventEmitter<'joven' | 'nino'>();
-
-  crearNuevaCuenta(): void {
-    const tipoCuenta: 'joven' | 'nino' = this.fallback || 'nino';
-    this.createAccount.emit(tipoCuenta);
-  }
 
   // LOGICA PARA EDITAR NOMBRE, CUMPLEANOS Y EDAD
   isEditingNombre = false;

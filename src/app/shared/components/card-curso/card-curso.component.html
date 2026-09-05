@@ -1,10 +1,12 @@
-<div class="card-curso">
+<div class="group [perspective:1000px] w-full min-w-0">
   <div
-    class="card-inner"
+    class="relative h-[440px] w-full rounded-2xl border border-[#929292] bg-[#272727] transition-transform duration-[600ms] ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
     [style.--dynamic-hover-color]="primary_color"
     [style.--dynamic-hover-color-sec]="secondary_color"
   >
-    <div class="card-face card-front">
+    <div
+      class="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden] z-[2] [transform:rotateY(0deg)]"
+    >
       <img
         [src]="
           curso.imagen.startsWith('https')
@@ -12,49 +14,76 @@
             : '/assets/loaders/bottle-loader.gif'
         "
         alt="Curso banner"
-        class="curso-image-full"
+        class="absolute inset-0 w-full h-full object-cover block"
       />
-      <div class="card-overlay"></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"
+      ></div>
 
-      <div class="card-rating">
-        <div class="custom-rating-tag">
-          <i class="pi pi-star-fill rating-icon"></i>
+      <div class="absolute top-[14px] left-[14px]">
+        <div
+          class="bg-[rgba(100,94,94,0.5)] border-2 border-[#a1a9a9] text-white py-[4px] px-[10px] rounded-full inline-flex items-center gap-[6px] font-semibold text-[0.85rem] backdrop-blur-[4px]"
+        >
+          <i class="pi pi-star-fill text-[#f1c40f] text-[0.85rem]"></i>
           <span>5.0</span>
         </div>
       </div>
 
-      <div class="card-bottom">
-        <div class="curso-title-sm">{{ curso.nombre }}</div>
+      <div class="absolute bottom-[16px] left-[14px] right-[14px]">
+        <div class="text-[1.15rem] font-bold leading-[1.2] text-white">
+          {{ curso.nombre }}
+        </div>
         <div class="flex flex-wrap gap-2 mt-2">
-          <div class="custom-tag grey-tag">Riesgos cibernéticos</div>
-          <div class="custom-tag green-outline-tag">Niños</div>
-          <div class="custom-tag grey-tag">+1</div>
+          <div
+            class="py-[4px] px-[10px] rounded-full text-[0.75rem] font-medium text-white bg-[rgba(64,64,64,0.8)]"
+          >
+            Riesgos cibernéticos
+          </div>
+          <div
+            class="py-[4px] px-[10px] rounded-full text-[0.75rem] font-medium text-white bg-[rgba(64,64,64,0.8)] border-[1.5px] border-[var(--dynamic-hover-color)]"
+          >
+            Niños
+          </div>
+          <div
+            class="py-[4px] px-[10px] rounded-full text-[0.75rem] font-medium text-white bg-[rgba(64,64,64,0.8)]"
+          >
+            +1
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="card-face card-back" [style.background]="'#1f1f1f'">
-      <div class="card-back-inner">
-        <div class="card-back-header-modern">
-          <div class="header-left">
-            <h2 class="curso-back-titulo">{{ curso.nombre }}</h2>
-            <div class="precio-texto">Col $ {{ curso.precio }}</div>
+    <div
+      class="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden] [transform:rotateY(180deg)] text-white"
+      [style.background]="'#1f1f1f'"
+    >
+      <div class="absolute inset-0 flex flex-col p-3">
+        <div class="grid grid-cols-2 gap-3 p-2">
+          <div class="flex-1 flex flex-col justify-center gap-2">
+            <h2
+              class="text-xl md:text-[28px] font-extrabold leading-[1] text-[var(--dynamic-hover-color)]"
+            >
+              {{ curso.nombre }}
+            </h2>
+            <div class="font-semibold text-white">Col $ {{ curso.precio }}</div>
           </div>
 
-          <div class="header-right">
-            <div class="img-circular-container">
+          <div class="flex flex-col items-end justify-center gap-2">
+            <div
+              class="w-[72px] h-[72px] rounded-full overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.4)]"
+            >
               <img
                 [src]="
                   curso.imagen.startsWith('https')
                     ? curso.imagen
                     : '/assets/loaders/bottle-loader.gif'
                 "
-                class="img-circular"
+                class="w-full h-full object-cover"
                 [alt]="'Imagen de ' + curso.nombre"
               />
             </div>
 
-            <div class="rating-stars-container">
+            <div class="flex gap-[2px] text-[#f1c40f] text-[0.7rem]">
               <i class="pi pi-star-fill"></i>
               <i class="pi pi-star-fill"></i>
               <i class="pi pi-star-fill"></i>
@@ -64,50 +93,68 @@
           </div>
         </div>
 
-        <div class="card-back-content">
-          <p class="curso-back-desc">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam
-            voluptatum, fuga quasi cupiditate minima fugiat assumenda nesciunt
-            illo minus reiciendis, placeat hic sapiente sed magnam est
-            necessitatibus cum excepturi alias neque. Cumque, pariatur. Harum
-            tenetur laborum voluptatum libero, eligendi, repellendus, eum
-            accusantium ad enim omnis quos ducimus? Sint animi iure rem? Amet
-            voluptatem quasi rerum ullam nobis corrupti qui odio eum vero
-            maxime. Quia, at!
+        <div class="flex-1 flex flex-col gap-3">
+          <p class="text-xs leading-[1.4] text-white text-left line-clamp-5">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
+            dolorum, consectetur odit consequuntur doloribus rerum quam aut
+            atque dignissimos culpa veritatis quo illo voluptatem rem
+            exercitationem obcaecati officia accusamus optio?
           </p>
 
-          <h2 class="beneficios-title">Beneficios</h2>
+          <h2
+            class="text-[1rem] font-bold text-center text-[var(--dynamic-hover-color)]"
+          >
+            Beneficios
+          </h2>
 
-          <div class="features-grid-modern">
-            <div class="feature-card">
-              <i class="pi pi-eye"></i>
-              <span>Conciencia Crítica</span>
+          <div class="grid grid-cols-3 gap-2">
+            <div
+              class="bg-white/8 border border-white/10 rounded-xl py-2 px-1 flex flex-col items-center text-center gap-[6px] transition-transform duration-300 hover:bg-white/12 hover:-translate-y-[2px]"
+            >
+              <i
+                class="pi pi-eye text-[1rem] text-[var(--dynamic-hover-color)]"
+              ></i>
+              <span class="text-[0.65rem] text-white font-medium leading-[1.1]"
+                >Conciencia Crítica</span
+              >
             </div>
-            <div class="feature-card">
-              <i class="pi pi-shield"></i>
-              <span>Acción Segura</span>
+            <div
+              class="bg-white/8 border border-white/10 rounded-xl py-2 px-1 flex flex-col items-center text-center gap-[6px] transition-transform duration-300 hover:bg-white/12 hover:-translate-y-[2px]"
+            >
+              <i
+                class="pi pi-shield text-[1rem] text-[var(--dynamic-hover-color)]"
+              ></i>
+              <span class="text-[0.65rem] text-white font-medium leading-[1.1]"
+                >Acción Segura</span
+              >
             </div>
-            <div class="feature-card">
-              <i class="pi pi-users"></i>
-              <span>Inclusión Real</span>
+            <div
+              class="bg-white/8 border border-white/10 rounded-xl py-2 px-1 flex flex-col items-center text-center gap-[6px] transition-transform duration-300 hover:bg-white/12 hover:-translate-y-[2px]"
+            >
+              <i
+                class="pi pi-users text-[1rem] text-[var(--dynamic-hover-color)]"
+              ></i>
+              <span class="text-[0.65rem] text-white font-medium leading-[1.1]"
+                >Inclusión Real</span
+              >
             </div>
           </div>
 
-          <div class="card-back-footer">
+          <div class="mt-auto flex flex-col gap-2">
             <button
               type="button"
-              class="link-ver-mas mb-2"
+              class="text-[0.82rem] text-white underline cursor-pointer font-medium text-center w-full block"
               (click)="irADetalle()"
             >
               <u>Ver más...</u>
             </button>
 
             <button
-              class="btn-carrito-moderno w-full"
+              class="w-full p-[9px] rounded-[14px] bg-[var(--dynamic-hover-color)] border-2 border-[var(--dynamic-hover-color-sec)] text-black font-bold text-[0.82rem] md:text-[0.9rem] flex items-center justify-center gap-3 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.3)] mb-0"
               (click)="agregarAlCarrito()"
             >
               <i class="pi pi-shopping-cart"></i>
-              <span>Agregar al carrito</span>
+              <span class="line-clamp-1">Agregar al carrito</span>
             </button>
           </div>
         </div>

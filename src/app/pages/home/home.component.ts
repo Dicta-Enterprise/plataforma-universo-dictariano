@@ -1,13 +1,13 @@
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
 import { Curso } from 'src/app/core/class/curso/curso.class';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
   constructor(public auth: AuthService) {}
   // Cursos de prueba para mostrar en la sección mas cursos
   @ViewChild('sliderContainer') sliderContainer!: ElementRef<HTMLDivElement>;
@@ -119,21 +119,33 @@ export class HomeComponent {
     },
   ];
 
-  scrollLeft(): void {
-    if (this.sliderContainer) {
-      this.sliderContainer.nativeElement.scrollBy({
-        left: -300,
-        behavior: 'smooth',
-      });
-    }
+  scrollTo(isNext: boolean): void {
+    if (!this.sliderContainer) return;
+
+    const container = this.sliderContainer.nativeElement;
+    const width = window.innerWidth;
+
+    const offset = width >= 1024 ? 12 : 16;
+
+    // Calculamos la distancia total a desplazar
+    const scrollAmount = container.clientWidth - offset;
+
+    container.scrollBy({
+      left: isNext ? scrollAmount : -scrollAmount,
+      behavior: 'smooth',
+    });
   }
 
-  scrollRight(): void {
-    if (this.sliderContainer) {
-      this.sliderContainer.nativeElement.scrollBy({
-        left: 300,
-        behavior: 'smooth',
-      });
-    }
+  // Logica de redireccion a seccion de cursos cuando se hace click en el boton de (+) de card de cuenta asociada
+  @ViewChild('seccionCursos') seccionCursos!: ElementRef<HTMLElement>;
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.seccionCursos) {
+        this.seccionCursos.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }
+    }, 100);
   }
 }

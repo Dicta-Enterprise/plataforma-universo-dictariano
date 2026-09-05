@@ -101,7 +101,7 @@
 </div>
 
 <!-- Interfaz padre logeado -->
-<div *ngIf="auth.isLoggedIn$ | async" class="flex flex-col gap-4 mb-5">
+<div *ngIf="auth.isLoggedIn$ | async" class="flex flex-col gap-4 mb-24 md:mb-5">
   <!-- Seccion de bienvenida padre -->
   <section
     class="relative w-full h-[400px] bg-cover bg-center flex flex-col gap-3 justify-end items-center px-3 text-center pb-5 text-white"
@@ -131,9 +131,9 @@
   </section>
 
   <!-- Seccion de cursos disponibles -->
-  <section class="flex flex-col gap-4 justify-start px-1 md:px-4 w-full">
+  <section class="flex flex-col gap-4 justify-start px-2 sm:px-4 w-full">
     <!-- Filtros -->
-    <div class="space-y-4 text-xs px-2 md:px-5">
+    <div class="space-y-4 text-xs px-1 md:px-5">
       <h2 class="text-2xl font-bold tracking-wide">Cursos disponibles</h2>
       <!-- Galaxias -->
       <div class="text-gray-400">
@@ -179,38 +179,34 @@
     </div>
 
     <!-- Scroll de cursos -->
-    <div class="flex gap-1 items-center w-full min-w-0">
-      <!-- Flecha izquierda -->
+    <div #seccionCursos class="flex gap-1 items-center w-full mx-2 sm:mx-0">
       <button
-        (click)="scrollLeft()"
+        (click)="scrollTo(false)"
         type="button"
-        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none px-1"
+        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none px-1.5 hidden sm:block"
         aria-label="Anterior"
       >
         <i class="pi pi-chevron-left text-xl sm:text-2xl"></i>
       </button>
 
-      <!-- Listado de tarjetas -->
       <div
         #sliderContainer
-        class="flex gap-3 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full min-w-0 border border-gray-700 px-3 rounded-xl bg-[#18181a]"
+        class="grid grid-flow-col auto-cols-[100%] sm:auto-cols-[calc(50%-8px)] lg:auto-cols-[calc(33.333%-10px)] gap-3 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full border border-gray-700 p-3 rounded-xl bg-[#18181a]"
       >
-        <div *ngFor="let curso of cursos" class="shrink-0 w-[273px]">
-          <app-card-curso
-            [curso]="curso"
-            primary_color="#F5C518"
-            secondary_color="#e0a800"
-            class="block w-full"
-          >
-          </app-card-curso>
-        </div>
+        <app-card-curso
+          *ngFor="let curso of cursos"
+          [curso]="curso"
+          primary_color="#F5C518"
+          secondary_color="#e0a800"
+          class="snap-start w-full min-w-0"
+        >
+        </app-card-curso>
       </div>
 
-      <!-- Flecha derecha -->
       <button
-        (click)="scrollRight()"
+        (click)="scrollTo(true)"
         type="button"
-        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none px-1"
+        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none px-1.5 hidden sm:block"
         aria-label="Siguiente"
       >
         <i class="pi pi-chevron-right text-xl sm:text-2xl"></i>

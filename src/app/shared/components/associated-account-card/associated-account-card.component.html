@@ -692,9 +692,9 @@
 
 <!-- TARJETA VACÍA CON (+) -->
 <ng-template #emptyCard>
-  <button
-    type="button"
-    (click)="crearNuevaCuenta()"
+  <a
+    routerLink="/"
+    fragment="seccionCursos"
     class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center max-w-[340px] w-full min-h-[480px] h-full cursor-pointer transition mx-auto focus:outline-none"
     [ngClass]="
       fallback === 'joven'
@@ -706,5 +706,5 @@
       class="pi pi-plus text-4xl font-bold"
       [ngClass]="fallback === 'joven' ? 'text-yellow-500' : 'text-emerald-400'"
     ></i>
-  </button>
+  </a>
 </ng-template>
