@@ -1,6 +1,6 @@
-<div class="group [perspective:1000px] w-full min-w-0">
+<div class="group [perspective:1000px] w-full h-full">
   <div
-    class="relative h-[440px] w-full rounded-2xl border border-[#929292] bg-[#272727] transition-transform duration-[600ms] ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
+    class="relative aspect-[2/3] w-[200px] sm:w-[300px] rounded-2xl border border-[#929292] bg-[#272727] transition-transform duration-[600ms] ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] shrink-0"
     [style.--dynamic-hover-color]="primary_color"
     [style.--dynamic-hover-color-sec]="secondary_color"
   >
@@ -17,35 +17,35 @@
         class="absolute inset-0 w-full h-full object-cover block"
       />
       <div
-        class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent"
+        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"
       ></div>
 
-      <div class="absolute top-[14px] left-[14px]">
+      <div class="absolute top-3 left-3">
         <div
-          class="bg-[rgba(100,94,94,0.5)] border-2 border-[#a1a9a9] text-white py-[4px] px-[10px] rounded-full inline-flex items-center gap-[6px] font-semibold text-[0.85rem] backdrop-blur-[4px]"
+          class="bg-[rgba(100,94,94,0.5)] border-2 border-[#a1a9a9] py-1 px-2.5 rounded-full inline-flex items-center gap-1.5 font-semibold text-xs sm:text-sm backdrop-blur-sm"
         >
-          <i class="pi pi-star-fill text-[#f1c40f] text-[0.85rem]"></i>
+          <i class="pi pi-star-fill text-[#f1c40f] text-xs sm:text-sm"></i>
           <span>5.0</span>
         </div>
       </div>
 
-      <div class="absolute bottom-[16px] left-[14px] right-[14px]">
-        <div class="text-[1.15rem] font-bold leading-[1.2] text-white">
+      <div class="absolute bottom-3.5 left-3.5 right-3.5">
+        <div class="text-sm sm:text-lg font-bold leading-tight line-clamp-2">
           {{ curso.nombre }}
         </div>
-        <div class="flex flex-wrap gap-2 mt-2">
+        <div class="flex flex-wrap gap-1.5 mt-2">
           <div
-            class="py-[4px] px-[10px] rounded-full text-[0.75rem] font-medium text-white bg-[rgba(64,64,64,0.8)]"
+            class="py-1 px-2.5 rounded-full text-[0.65rem] sm:text-xs font-medium bg-[rgba(64,64,64,0.8)]"
           >
             Riesgos cibernéticos
           </div>
           <div
-            class="py-[4px] px-[10px] rounded-full text-[0.75rem] font-medium text-white bg-[rgba(64,64,64,0.8)] border-[1.5px] border-[var(--dynamic-hover-color)]"
+            class="py-1 px-2.5 rounded-full text-[0.65rem] sm:text-xs font-medium text-white bg-[rgba(64,64,64,0.8)] border-[1.5px] border-[var(--dynamic-hover-color)]"
           >
             Niños
           </div>
           <div
-            class="py-[4px] px-[10px] rounded-full text-[0.75rem] font-medium text-white bg-[rgba(64,64,64,0.8)]"
+            class="py-1 px-2.5 rounded-full text-[0.65rem] sm:text-xs font-medium text-white bg-[rgba(64,64,64,0.8)]"
           >
             +1
           </div>
@@ -54,111 +54,115 @@
     </div>
 
     <div
-      class="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden] [transform:rotateY(180deg)] text-white"
-      [style.background]="'#1f1f1f'"
+      class="inset-0 h-full rounded-2xl bg-[#232326] overflow-hidden [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col gap-1.5 sm:gap-2 p-2 sm:p-3"
     >
-      <div class="absolute inset-0 flex flex-col p-3">
-        <div class="grid grid-cols-2 gap-3 p-2">
-          <div class="flex-1 flex flex-col justify-center gap-2">
-            <h2
-              class="text-xl md:text-[28px] font-extrabold leading-[1] text-[var(--dynamic-hover-color)]"
-            >
-              {{ curso.nombre }}
-            </h2>
-            <div class="font-semibold text-white">Col $ {{ curso.precio }}</div>
-          </div>
-
-          <div class="flex flex-col items-end justify-center gap-2">
-            <div
-              class="w-[72px] h-[72px] rounded-full overflow-hidden shadow-[0_4px_15px_rgba(0,0,0,0.4)]"
-            >
-              <img
-                [src]="
-                  curso.imagen.startsWith('https')
-                    ? curso.imagen
-                    : '/assets/loaders/bottle-loader.gif'
-                "
-                class="w-full h-full object-cover"
-                [alt]="'Imagen de ' + curso.nombre"
-              />
-            </div>
-
-            <div class="flex gap-[2px] text-[#f1c40f] text-[0.7rem]">
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-              <i class="pi pi-star-fill"></i>
-            </div>
+      <div class="flex gap-1.5">
+        <div class="flex-1 flex flex-col justify-center gap-1">
+          <h2
+            class="text-sm sm:text-base md:text-xl font-extrabold text-[var(--dynamic-hover-color)] line-clamp-3"
+          >
+            {{ curso.nombre }}
+          </h2>
+          <div class="font-semibold text-xs sm:text-base">
+            Col $ {{ curso.precio }}
           </div>
         </div>
 
-        <div class="flex-1 flex flex-col gap-3">
-          <p class="text-xs leading-[1.4] text-white text-left line-clamp-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-            dolorum, consectetur odit consequuntur doloribus rerum quam aut
-            atque dignissimos culpa veritatis quo illo voluptatem rem
-            exercitationem obcaecati officia accusamus optio?
-          </p>
-
-          <h2
-            class="text-[1rem] font-bold text-center text-[var(--dynamic-hover-color)]"
+        <div class="flex flex-col items-end justify-center gap-1.5">
+          <div
+            class="h-12 sm:h-16 aspect-square rounded-full overflow-hidden shadow-lg"
           >
-            Beneficios
-          </h2>
-
-          <div class="grid grid-cols-3 gap-2">
-            <div
-              class="bg-white/8 border border-white/10 rounded-xl py-2 px-1 flex flex-col items-center text-center gap-[6px] transition-transform duration-300 hover:bg-white/12 hover:-translate-y-[2px]"
-            >
-              <i
-                class="pi pi-eye text-[1rem] text-[var(--dynamic-hover-color)]"
-              ></i>
-              <span class="text-[0.65rem] text-white font-medium leading-[1.1]"
-                >Conciencia Crítica</span
-              >
-            </div>
-            <div
-              class="bg-white/8 border border-white/10 rounded-xl py-2 px-1 flex flex-col items-center text-center gap-[6px] transition-transform duration-300 hover:bg-white/12 hover:-translate-y-[2px]"
-            >
-              <i
-                class="pi pi-shield text-[1rem] text-[var(--dynamic-hover-color)]"
-              ></i>
-              <span class="text-[0.65rem] text-white font-medium leading-[1.1]"
-                >Acción Segura</span
-              >
-            </div>
-            <div
-              class="bg-white/8 border border-white/10 rounded-xl py-2 px-1 flex flex-col items-center text-center gap-[6px] transition-transform duration-300 hover:bg-white/12 hover:-translate-y-[2px]"
-            >
-              <i
-                class="pi pi-users text-[1rem] text-[var(--dynamic-hover-color)]"
-              ></i>
-              <span class="text-[0.65rem] text-white font-medium leading-[1.1]"
-                >Inclusión Real</span
-              >
-            </div>
+            <img
+              [src]="
+                curso.imagen.startsWith('https')
+                  ? curso.imagen
+                  : '/assets/loaders/bottle-loader.gif'
+              "
+              class="w-full h-full object-cover block"
+              [alt]="'Imagen de ' + curso.nombre"
+            />
           </div>
 
-          <div class="mt-auto flex flex-col gap-2">
-            <button
-              type="button"
-              class="text-[0.82rem] text-white underline cursor-pointer font-medium text-center w-full block"
-              (click)="irADetalle()"
-            >
-              <u>Ver más...</u>
-            </button>
-
-            <button
-              class="w-full p-[9px] rounded-[14px] bg-[var(--dynamic-hover-color)] border-2 border-[var(--dynamic-hover-color-sec)] text-black font-bold text-[0.82rem] md:text-[0.9rem] flex items-center justify-center gap-3 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.3)] mb-0"
-              (click)="agregarAlCarrito()"
-            >
-              <i class="pi pi-shopping-cart"></i>
-              <span class="line-clamp-1">Agregar al carrito</span>
-            </button>
+          <div class="flex gap-0.5 text-[#f1c40f]">
+            <i class="pi pi-star-fill !text-[0.6rem] sm:!text-xs"></i>
+            <i class="pi pi-star-fill !text-[0.6rem] sm:!text-xs"></i>
+            <i class="pi pi-star-fill !text-[0.6rem] sm:!text-xs"></i>
+            <i class="pi pi-star-fill !text-[0.6rem] sm:!text-xs"></i>
+            <i class="pi pi-star-fill !text-[0.6rem] sm:!text-xs"></i>
           </div>
         </div>
       </div>
+
+      <p
+        class="text-[0.7rem] sm:text-xs leading-tight sm:leading-relaxed text-left line-clamp-3 sm:line-clamp-6"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum dolorum,
+        consectetur odit consequuntur doloribus rerum quam aut atque dignissimos
+        culpa veritatis. Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Ipsum dolorum, consectetur odit consequuntur doloribus rerum quam
+        aut atque dignissimos culpa veritatis.
+      </p>
+
+      <button
+        type="button"
+        class="group text-xs font-semibold text-[var(--dynamic-hover-color)] hover:text-[var(--dynamic-hover-color-sec)] flex items-center w-fit justify-center gap-0.5"
+        (click)="irADetalle()"
+      >
+        <span>Ver más</span>
+        <i
+          class="pi pi-angle-right text-xs transition-transform duration-200 group-hover:translate-x-1"
+        ></i>
+      </button>
+
+      <h2
+        class="text-xs sm:text-sm font-bold text-center text-[var(--dynamic-hover-color)] mt-auto"
+      >
+        Beneficios
+      </h2>
+
+      <div class="grid grid-cols-3 gap-1.5 my-1 mx-1">
+        <div
+          class="bg-white/10 border border-white/10 rounded-xl py-1.5 px-1 flex flex-col items-center text-center gap-1"
+        >
+          <i
+            class="pi pi-eye text-xs sm:text-base text-[var(--dynamic-hover-color)]"
+          ></i>
+          <span
+            class="text-[0.55rem] sm:text-[0.65rem] font-medium leading-tight"
+            >Conciencia Crítica</span
+          >
+        </div>
+        <div
+          class="bg-white/10 border border-white/10 rounded-xl py-1.5 px-1 flex flex-col items-center text-center gap-1"
+        >
+          <i
+            class="pi pi-shield text-xs sm:text-base text-[var(--dynamic-hover-color)]"
+          ></i>
+          <span
+            class="text-[0.55rem] sm:text-[0.65rem] font-medium leading-tight"
+            >Acción Segura</span
+          >
+        </div>
+        <div
+          class="bg-white/10 border border-white/10 rounded-xl py-1.5 px-1 flex flex-col items-center text-center gap-1"
+        >
+          <i
+            class="pi pi-users text-xs sm:text-base text-[var(--dynamic-hover-color)]"
+          ></i>
+          <span
+            class="text-[0.55rem] sm:text-[0.65rem] font-medium leading-tight"
+            >Inclusión Real</span
+          >
+        </div>
+      </div>
+
+      <button
+        class="w-full py-2 px-3 rounded-xl bg-[var(--dynamic-hover-color)] border border-[var(--dynamic-hover-color-sec)] text-black font-bold text-xs sm:text-sm flex items-center justify-center gap-2 hover:bg-[var(--dynamic-hover-color-sec)] cursor-pointer transition-all duration-300 shadow-md"
+        (click)="agregarAlCarrito()"
+      >
+        <i class="pi pi-shopping-cart text-xs sm:text-sm"></i>
+        <span class="line-clamp-1">Agregar al carrito</span>
+      </button>
     </div>
   </div>
 </div>

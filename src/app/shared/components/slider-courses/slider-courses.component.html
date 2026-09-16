@@ -1,0 +1,38 @@
+<div
+  #seccionCursos
+  class="flex items-center relative w-full gap-2 my-[-48px] md:ml-[-12px]"
+>
+  <!-- Botón Anterior -->
+  <button
+    (click)="scrollTo(false)"
+    type="button"
+    class="hidden md:flex items-center justify-center !w-10 !h-10 rounded-full bg-stone-900/80 hover:bg-stone-800 border border-white/10 transition-transform duration-200 hover:scale-110"
+    aria-label="Anterior"
+  >
+    <i class="pi pi-chevron-left text-lg"></i>
+  </button>
+
+  <!-- Slider / Contenedor de Tarjetas -->
+  <div
+    #sliderContainer
+    class="flex gap-2.5 sm:gap-3 overflow-x-auto scroll-smooth w-full py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+  >
+    <app-card-curso
+      *ngFor="let curso of cursos"
+      [curso]="curso"
+      primary_color="#F5C518"
+      secondary_color="#e0a800"
+    >
+    </app-card-curso>
+  </div>
+
+  <!-- Botón Siguiente -->
+  <button
+    (click)="scrollTo(true)"
+    type="button"
+    class="hidden md:flex items-center justify-center !w-10 !h-10 rounded-full bg-stone-900/80 hover:bg-stone-800 border border-white/10 transition-transform duration-200 hover:scale-110"
+    aria-label="Siguiente"
+  >
+    <i class="pi pi-chevron-right text-lg"></i>
+  </button>
+</div>

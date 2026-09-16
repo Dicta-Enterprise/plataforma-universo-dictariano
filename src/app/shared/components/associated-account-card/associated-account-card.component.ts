@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CuentaAsociada } from 'src/app/core/interfaces/interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-associated-account-card',
@@ -9,6 +10,8 @@ import { CuentaAsociada } from 'src/app/core/interfaces/interfaces';
 export class AssociatedAccountCardComponent {
   @Input() fallback: 'joven' | 'nino' | null | undefined = null;
   @Input() account: CuentaAsociada | null | undefined = null;
+
+  constructor(private router: Router) {}
 
   // LOGICA PARA EDITAR NOMBRE, CUMPLEANOS Y EDAD
   isEditingNombre = false;
@@ -168,5 +171,15 @@ export class AssociatedAccountCardComponent {
   habilitarEdicionEmail(): void {
     if (!this.account?.email) return;
     this.account.invitacionEstado = 'inactiva';
+  }
+
+  // Logica de redireccion a seccion de cursos con el tag activo, si fue seccion nino o joven
+  seleccionarTagYNavegar(fallback?: string | null): void {
+    const targetTag = fallback === 'joven' ? 'Jóvenes' : 'Niños';
+
+    this.router.navigate(['/'], {
+      fragment: 'seccionCursos',
+      queryParams: { tag: targetTag },
+    });
   }
 }
