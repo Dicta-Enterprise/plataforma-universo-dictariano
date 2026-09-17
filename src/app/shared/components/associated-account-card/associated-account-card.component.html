@@ -694,7 +694,7 @@
 <ng-template #emptyCard>
   <button
     type="button"
-    (click)="crearNuevaCuenta()"
+    (click)="seleccionarTagYNavegar(fallback)"
     class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center max-w-[340px] w-full min-h-[480px] h-full cursor-pointer transition mx-auto focus:outline-none"
     [ngClass]="
       fallback === 'joven'

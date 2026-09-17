@@ -98,10 +98,30 @@
       />
     </div>
   </div>
+
+  <!-- Carruceles de cursos -->
+  <section class="flex flex-col gap-5 justify-start px-3 sm:px-4 w-full mt-7">
+    <div>
+      <h2 class="text-xl font-bold sm:ml-5 mb-2">Cursos Recomendados</h2>
+      <app-slider-courses [cursos]="cursosRecomendados"></app-slider-courses>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-bold sm:ml-5 mb-2">Recién Añadidos</h2>
+      <app-slider-courses [cursos]="cursosNuevos"></app-slider-courses>
+    </div>
+
+    <div>
+      <h2 class="text-xl font-bold sm:ml-5 mb-2">
+        Descuentos por tiempo limitado
+      </h2>
+      <app-slider-courses [cursos]="cursosDescuentos"></app-slider-courses>
+    </div>
+  </section>
 </div>
 
 <!-- Interfaz padre logeado -->
-<div *ngIf="auth.isLoggedIn$ | async" class="flex flex-col gap-4 mb-5">
+<div *ngIf="auth.isLoggedIn$ | async" class="flex flex-col gap-5 mb-24 md:mb-5">
   <!-- Seccion de bienvenida padre -->
   <section
     class="relative w-full h-[400px] bg-cover bg-center flex flex-col gap-3 justify-end items-center px-3 text-center pb-5 text-white"
@@ -130,91 +150,23 @@
     </a>
   </section>
 
-  <!-- Seccion de cursos disponibles -->
-  <section class="flex flex-col gap-4 justify-start px-1 md:px-4 w-full">
-    <!-- Filtros -->
-    <div class="space-y-4 text-xs px-2 md:px-5">
-      <h2 class="text-2xl font-bold tracking-wide">Cursos disponibles</h2>
-      <!-- Galaxias -->
-      <div class="text-gray-400">
-        <p class="mb-2 uppercase tracking-wider font-medium">Galaxias</p>
-        <div class="flex flex-wrap gap-2">
-          <p-chip
-            label="Peligros en la Salud física"
-            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
-          ></p-chip>
-          <p-chip
-            label="Salud Mental"
-            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
-          ></p-chip>
-          <p-chip
-            label="Habilidades Digitales"
-            styleClass="!bg-neutral-900 !text-gray-300 !text-xs cursor-pointer hover:!bg-neutral-800"
-          ></p-chip>
-          <p-chip
-            label="Riesgos Cibernéticos"
-            styleClass="!bg-white !text-black font-semibold !text-xs cursor-pointer"
-          ></p-chip>
-        </div>
-      </div>
-
-      <!-- Tags -->
-      <div>
-        <p class="mb-2 uppercase tracking-wider font-medium">Tags</p>
-        <div class="flex flex-wrap gap-2">
-          <p-chip
-            label="Niños"
-            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
-          ></p-chip>
-          <p-chip
-            label="Jóvenes"
-            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
-          ></p-chip>
-          <p-chip
-            label="Padres"
-            styleClass="!bg-white !text-black font-medium !text-xs cursor-pointer"
-          ></p-chip>
-        </div>
-      </div>
+  <!-- Seccion carruceles de cursos -->
+  <section class="flex flex-col gap-5 justify-start px-3 sm:px-4 w-full">
+    <div>
+      <h2 class="text-xl font-bold sm:ml-5 mb-2">Cursos Recomendados</h2>
+      <app-slider-courses [cursos]="cursosRecomendados"></app-slider-courses>
     </div>
 
-    <!-- Scroll de cursos -->
-    <div class="flex gap-1 items-center w-full min-w-0">
-      <!-- Flecha izquierda -->
-      <button
-        (click)="scrollLeft()"
-        type="button"
-        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none px-1"
-        aria-label="Anterior"
-      >
-        <i class="pi pi-chevron-left text-xl sm:text-2xl"></i>
-      </button>
+    <div>
+      <h2 class="text-xl font-bold sm:ml-5 mb-2">Recién Añadidos</h2>
+      <app-slider-courses [cursos]="cursosNuevos"></app-slider-courses>
+    </div>
 
-      <!-- Listado de tarjetas -->
-      <div
-        #sliderContainer
-        class="flex gap-3 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar w-full min-w-0 border border-gray-700 px-3 rounded-xl bg-[#18181a]"
-      >
-        <div *ngFor="let curso of cursos" class="shrink-0 w-[273px]">
-          <app-card-curso
-            [curso]="curso"
-            primary_color="#F5C518"
-            secondary_color="#e0a800"
-            class="block w-full"
-          >
-          </app-card-curso>
-        </div>
-      </div>
-
-      <!-- Flecha derecha -->
-      <button
-        (click)="scrollRight()"
-        type="button"
-        class="shrink-0 z-10 text-gray-400 hover:text-white transition-colors cursor-pointer focus:outline-none px-1"
-        aria-label="Siguiente"
-      >
-        <i class="pi pi-chevron-right text-xl sm:text-2xl"></i>
-      </button>
+    <div>
+      <h2 class="text-xl font-bold sm:ml-5 mb-2">
+        Descuentos por tiempo limitado
+      </h2>
+      <app-slider-courses [cursos]="cursosDescuentos"></app-slider-courses>
     </div>
   </section>
 </div>

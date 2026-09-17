@@ -552,7 +552,6 @@
         *ngFor="let itemCuenta of tarjetasParaMostrar"
         [account]="itemCuenta"
         [fallback]="activeTab === 'joven' ? 'joven' : 'nino'"
-        (createAccount)="onCrearCuenta($event)"
         class="w-full min-w-0 flex justify-center"
       ></app-associated-account-card>
     </div>
