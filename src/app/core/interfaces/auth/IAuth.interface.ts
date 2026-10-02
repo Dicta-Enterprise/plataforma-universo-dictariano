@@ -1,6 +1,7 @@
 // IAuth.interface.ts
 export interface IJwtPayload {
-  sub: string;    // string, no number
+  id?: number;
+  sub: string; // string, no number
   email: string;
   idrol: number;
 }

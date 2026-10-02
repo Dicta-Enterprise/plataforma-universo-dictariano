@@ -4,8 +4,14 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
 import { CursoFacade } from 'src/app/shared/patterns/facade/models/curso-facade';
 import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
-import { CategoriaFacade, CategoriaUI } from 'src/app/shared/patterns/facade/models/categoria-facade';
-import { ProfesorFacade, ProfesorUI } from 'src/app/shared/patterns/facade/models/profesor-facade';
+import {
+  CategoriaFacade,
+  CategoriaUI,
+} from 'src/app/shared/patterns/facade/models/categoria-facade';
+import {
+  ProfesorFacade,
+  ProfesorUI,
+} from 'src/app/shared/patterns/facade/models/profesor-facade';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -29,7 +35,7 @@ export class CartComponent implements OnInit, OnDestroy {
     public profesorFacade: ProfesorFacade,
     private authService: AuthService,
     private cursoFacade: CursoFacade,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -46,11 +52,11 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cursoFacade.cursos$
       .asObservable()
       .pipe(takeUntil(this.destroy$))
-      .subscribe(cursos => (this.cursosSugeridos = cursos.slice(0, 4)));
+      .subscribe((cursos) => (this.cursosSugeridos = cursos.slice(0, 4)));
 
     this.authService.isLoggedIn$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(isLogged => (this.isLoggedIn = isLogged));
+      .subscribe((isLogged) => (this.isLoggedIn = isLogged));
   }
 
   ngOnDestroy(): void {
@@ -74,8 +80,9 @@ export class CartComponent implements OnInit, OnDestroy {
     return this.profesorFacade.getProfesorById(profesorId ?? '');
   }
 
-  getStarClass(rating: number, star: number): string {
-    return star <= Math.round(rating)
+  getStarClass(rating: number | undefined, star: number): string {
+    const currentRating = rating ?? 0;
+    return star <= Math.round(currentRating)
       ? 'pi pi-star-fill rating-star-filled'
       : 'pi pi-star rating-star-empty';
   }

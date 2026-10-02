@@ -75,25 +75,8 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.userItems = [
       {
-        label: 'Ver perfil',
-        icon: 'pi pi-user', // Icono de PrimeIcons
-        //command: () => this.onViewProfile()
-        routerLink: '/perfil/mi-informacion',
-      },
-      {
-        label: 'Ver mis compras',
-        icon: 'pi pi-shopping-cart', // Icono de PrimeIcons
-        //command: () => this.onViewPurchases()
-      },
-      {
-        label: 'Ver mis cursos',
-        icon: 'pi pi-book', // Icono de PrimeIcons
-        //command: () => this.onViewMyCourses()
-        routerLink: '/my-courses',
-      },
-      {
         label: 'Cerrar sesión',
-        icon: 'pi pi-sign-out', // Icono de PrimeIcons
+        icon: 'pi pi-sign-out',
         command: () => this.logout(),
       },
     ];
@@ -145,11 +128,7 @@ export class NavBarComponent implements OnInit {
       },
     ];
   }
-  abrirPerfil() {
-    // Por ahora puedes navegar a /perfil, o mostrar modal
-    // this.router.navigate(['/perfil']);
-    alert('Ir a perfil (aquí va tu lógica)');
-  }
+
   logout(): void {
     this.auth.logout();
   }

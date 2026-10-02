@@ -31,18 +31,6 @@ const routes: Routes = [
           import('./pages/about/about.module').then((m) => m.AboutModule),
       },
       {
-        path: 'perfil',
-        loadChildren: () =>
-          import('./pages/perfil/perfil.module').then((m) => m.PerfilModule),
-      },
-      {
-        path: 'my-courses',
-        loadChildren: () =>
-          import('./pages/my-courses/my-courses.module').then(
-            (m) => m.MyCoursesModule,
-          ),
-      },
-      {
         path: 'terms-conditions',
         loadChildren: () =>
           import('./pages/payment/terms_conditions/terms-conditions.module').then(

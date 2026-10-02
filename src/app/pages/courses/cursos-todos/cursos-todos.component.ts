@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { Curso } from 'src/app/core/class/curso/curso.class';
+import { Cursos } from 'src/app/core/class/models';
 
 @Component({
   selector: 'app-cursos-todos',
   templateUrl: './cursos-todos.component.html',
 })
 export class CursosTodosComponent {
-  cursosNinos: Curso[] = [];
-  cursosJovenes: Curso[] = [];
-  cursosPadres: Curso[] = [];
-
+  cursosNinos: Cursos[] = [];
+  cursosJovenes: Cursos[] = [];
+  cursosPadres: Cursos[] = [];
 }
