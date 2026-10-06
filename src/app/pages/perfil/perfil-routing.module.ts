@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PerfilComponent } from './perfil.component';
+import { MiFacturacionComponent } from './mi-facturacion/mi-facturacion.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,10 @@ const routes: Routes = [
           import('./tarjetas-asociadas/tarjetas-asociadas.module').then(
             (m) => m.TarjetasAsociadasModule
           ),
+      },
+      {
+        path: 'mi-facturacion',
+        component: MiFacturacionComponent,
       },
     ],
   },
