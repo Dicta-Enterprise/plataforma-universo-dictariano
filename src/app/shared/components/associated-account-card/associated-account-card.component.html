@@ -13,8 +13,8 @@
     </div>
 
     <!-- Título -->
-    <h3 class="font-bold truncate">
-      {{ account.nombre }}
+    <h3 class="w-[290px] font-bold truncate whitespace-nowrap">
+      {{ account.nombre }} {{ account.apellido }}
     </h3>
 
     <!-- Sección: CUENTA -->
@@ -27,11 +27,11 @@
       <div
         class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2.5 text-xs text-gray-300"
       >
-        <!-- ALIAS -->
+        <!-- NOMBRE -->
         <div class="flex justify-between items-center h-4 gap-2">
           <div class="flex items-center justify-between gap-1.5 w-full">
             <span class="text-gray-400">
-              Alias
+              Nombre
               {{
                 account.tipo.toLowerCase() === "nino" ? "niño" : account.tipo
               }}:
@@ -56,6 +56,43 @@
               class="pi text-xs cursor-pointer hover:opacity-80 transition"
               [ngClass]="[
                 isEditingNombre ? 'pi-check' : 'pi-pencil',
+                account.tipo === 'joven'
+                  ? 'text-yellow-500'
+                  : 'text-emerald-400',
+              ]"
+            ></i>
+          </button>
+        </div>
+
+        <!-- APELLIDO -->
+        <div class="flex justify-between items-center h-4 gap-2">
+          <div class="flex items-center justify-between gap-1.5 w-full">
+            <span class="text-gray-400">
+              Apellido
+              {{
+                account.tipo.toLowerCase() === "nino" ? "niño" : account.tipo
+              }}:
+            </span>
+            <ng-container *ngIf="!isEditingApellido; else inputApellido">
+              <span class="text-white">{{ account.apellido }}</span>
+            </ng-container>
+            <ng-template #inputApellido>
+              <input
+                type="text"
+                [(ngModel)]="account.apellido"
+                class="bg-[#18181a] border border-[#27272a] max-w-40 text-white text-xs rounded px-1 py-0.5 text-right focus:outline-none"
+              />
+            </ng-template>
+          </div>
+          <button
+            type="button"
+            (click)="toggleEdit('apellido')"
+            class="bg-transparent border-0 p-0 cursor-pointer"
+          >
+            <i
+              class="pi text-xs cursor-pointer hover:opacity-80 transition"
+              [ngClass]="[
+                isEditingApellido ? 'pi-check' : 'pi-pencil',
                 account.tipo === 'joven'
                   ? 'text-yellow-500'
                   : 'text-emerald-400',
@@ -248,6 +285,27 @@
               class="pi text-xs"
               [ngClass]="
                 account.permisos.verProgreso
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-yellow-500'
+                    : 'pi-check text-emerald-400'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </button>
+        </div>
+
+        <!-- Ver certificado -->
+        <div class="flex justify-between items-center">
+          <span>Ver certificado</span>
+          <button
+            type="button"
+            (click)="togglePermiso('verCertificado')"
+            class="cursor-pointer hover:scale-110 transition select-none focus:outline-none"
+          >
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.verCertificado
                   ? account.tipo === 'joven'
                     ? 'pi-check text-yellow-500'
                     : 'pi-check text-emerald-400'
@@ -694,7 +752,7 @@
 <ng-template #emptyCard>
   <button
     type="button"
-    (click)="seleccionarTagYNavegar(fallback)"
+    [routerLink]="'/'"
     class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center max-w-[340px] w-full min-h-[480px] h-full cursor-pointer transition mx-auto focus:outline-none"
     [ngClass]="
       fallback === 'joven'

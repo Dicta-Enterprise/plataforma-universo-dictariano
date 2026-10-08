@@ -1,6 +1,6 @@
 <!-- HEADER FIJO (Navbar + Barra de Categorías opcional) -->
 <header class="fixed top-0 left-0 w-full z-50 bg-[#272727] shadow-md">
-  <!-- 2. BARRA DE CATEGORÍAS (Visible solo sin autenticar) -->
+  <!-- BARRA DE CATEGORÍAS (Visible solo sin autenticar) -->
   <div
     *ngIf="(auth.isLoggedIn$ | async) === false"
     class="flex items-center justify-between h-12 px-4 bg-[#272727] border-b border-gray-700"
@@ -80,41 +80,11 @@
         >
       </a>
     </div>
-
-    <!-- Buscador Desktop/Mobile -->
-    <div class="flex items-center ml-auto">
-      <span class="p-input-icon-left hidden lg:block">
-        <i class="pi pi-search" style="color: #e8002e"></i>
-        <input
-          type="text"
-          pInputText
-          placeholder="Buscar cursos..."
-          [(ngModel)]="searchQuery"
-          (keyup.enter)="buscar()"
-          style="
-            background-color: #3a3a3a;
-            border: 1px solid #5c5c5c !important;
-            color: #fff;
-            border-radius: 10px;
-            padding-left: 2.5rem;
-            width: 260px;
-          "
-        />
-      </span>
-      <button
-        type="button"
-        class="flex lg:hidden cursor-pointer bg-transparent border-none"
-        (click)="searchVisible = !searchVisible"
-        aria-label="Abrir búsqueda"
-      >
-        <i class="pi pi-search" style="color: #e8002e; font-size: 1rem"></i>
-      </button>
-    </div>
   </div>
 
-  <!-- 1. NAVBAR CON LOGO -->
+  <!-- NAVBAR de abajo -->
   <div
-    class="flex items-center justify-between px-4 h-16 bg-[#272727] border-b border-gray-700"
+    class="flex items-center justify-between px-4 gap-2 h-16 bg-[#272727] border-b border-gray-700"
   >
     <div class="flex items-center gap-3">
       <!-- Logo -->
@@ -142,6 +112,35 @@
         <i class="pi pi-globe"></i>
         <span>Mundo 3D</span>
       </a>
+    </div>
+
+    <!-- Barra de busqueda -->
+    <div class="ml-auto flex items-center">
+      <!-- Input de búsqueda para pantallas grandes -->
+      <div class="relative hidden sm:block">
+        <i
+          class="pi pi-search text-[#e8002e] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+        ></i>
+
+        <input
+          type="text"
+          pInputText
+          placeholder="Buscar cursos..."
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="buscar()"
+          class="w-[260px] rounded-[10px] border border-[#5c5c5c] bg-[#3a3a3a] pl-10 pr-3 py-1 placeholder-gray-400 focus:outline-none focus:border-[#e8002e]"
+        />
+      </div>
+
+      <!-- Botón para pantallas pequeñas (móvil) -->
+      <button
+        type="button"
+        class="flex sm:hidden cursor-pointer bg-transparent border-0 p-0 focus:outline-none"
+        (click)="searchVisible = !searchVisible"
+        aria-label="Abrir búsqueda"
+      >
+        <i class="pi pi-search text-[#e8002e] text-base"></i>
+      </button>
     </div>
 
     <!-- Derecha: Carrito + Login/Avatar -->
@@ -243,10 +242,13 @@
 <!-- Modal Búsqueda Móvil -->
 <div
   *ngIf="searchVisible"
-  class="flex items-center lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#272727] p-3 border-b border-gray-700"
+  class="fixed inset-x-0 top-0 z-50 flex items-center border-b border-gray-700 bg-[#272727] p-3 sm:hidden"
 >
-  <span class="p-input-icon-left w-full">
-    <i class="pi pi-search" style="color: #e8002e"></i>
+  <!-- Contenedor del input con icono en posición absoluta -->
+  <div class="relative w-full">
+    <i
+      class="pi pi-search text-[#e8002e] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+    ></i>
     <input
       type="text"
       pInputText
@@ -254,19 +256,16 @@
       [(ngModel)]="searchQuery"
       (keyup.enter)="buscar(); searchVisible = false"
       (blur)="searchVisible = false"
-      style="
-        background-color: #3a3a3a;
-        border: 1px solid #5c5c5c;
-        color: #fff;
-        border-radius: 10px;
-        padding-left: 2.5rem;
-        width: 100%;
-      "
+      class="w-full rounded-[10px] border border-[#5c5c5c] bg-[#3a3a3a] pl-10 pr-3 py-1 placeholder-gray-400 focus:outline-none focus:border-[#e8002e]"
     />
-  </span>
+  </div>
+
+  <!-- Botón de cerrar -->
   <button
+    type="button"
     (click)="searchVisible = false"
-    class="bg-transparent border-none text-white ml-2 text-xl cursor-pointer"
+    class="ml-2 cursor-pointer border-0 bg-transparent p-1 text-xl text-white focus:outline-none"
+    aria-label="Cerrar búsqueda"
   >
     <i class="pi pi-times"></i>
   </button>
