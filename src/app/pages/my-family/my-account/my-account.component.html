@@ -58,7 +58,9 @@
 
       <!-- Alias -->
       <div class="flex items-center gap-2">
-        <h2 class="text-xl font-bold">{{ formData.alias }}</h2>
+        <h2 class="text-xl font-bold">
+          {{ formData.nombre }} {{ formData.apellido }}
+        </h2>
       </div>
 
       <!-- Formulario de Datos -->
@@ -76,7 +78,6 @@
                 {{ formData.aliasFamilia }}
               </span>
             </ng-container>
-
             <ng-template #editAliasFamilia>
               <input
                 type="text"
@@ -85,7 +86,6 @@
                 class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
               />
             </ng-template>
-
             <button
               (click)="toggleEdit('aliasFamilia')"
               class="text-yellow-500 hover:text-yellow-600 transition text-xl"
@@ -99,28 +99,41 @@
           </div>
         </div>
 
-        <!-- Alias -->
+        <!-- Nombre -->
         <div class="flex items-center justify-between px-3 py-3.5">
-          <span class="text-gray-400">Alias papá o mamá:</span>
+          <span class="text-gray-400">Nombre:</span>
           <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
-            <ng-container *ngIf="!editState.alias; else editAlias">
+            <ng-container *ngIf="!editState.nombre; else editNombre">
               <span class="text-gray-200 font-medium">{{
-                formData.alias
+                formData.nombre
               }}</span>
             </ng-container>
-            <ng-template #editAlias>
+            <ng-template #editNombre>
               <input
                 type="text"
-                [(ngModel)]="formData.alias"
+                [(ngModel)]="formData.nombre"
                 class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
               />
             </ng-template>
-            <button
-              (click)="toggleEdit('alias')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
-            >
-              <i [class]="editState.alias ? 'pi pi-check' : 'pi pi-pencil'"></i>
-            </button>
+          </div>
+        </div>
+
+        <!-- Apellido -->
+        <div class="flex items-center justify-between px-3 py-3.5">
+          <span class="text-gray-400">Apellido:</span>
+          <div class="flex items-center gap-3 max-w-40 md:max-w-[300px]">
+            <ng-container *ngIf="!editState.apellido; else editApellido">
+              <span class="text-gray-200 font-medium">{{
+                formData.apellido
+              }}</span>
+            </ng-container>
+            <ng-template #editApellido>
+              <input
+                type="text"
+                [(ngModel)]="formData.apellido"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+              />
+            </ng-template>
           </div>
         </div>
 

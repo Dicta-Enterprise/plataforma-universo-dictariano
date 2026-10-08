@@ -1,6 +1,3 @@
-
-
-
 export * from './categoria/Categoria.class';
 export * from './cursos/Cursos.class';
 export * from './galaxias/Galaxias.class';

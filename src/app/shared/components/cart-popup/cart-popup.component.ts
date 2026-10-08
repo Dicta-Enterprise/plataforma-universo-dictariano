@@ -6,7 +6,10 @@ import { takeUntil } from 'rxjs/operators';
 import { CartService } from 'src/app/core/services/cart/cart.service';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
 import { CursoFacade } from 'src/app/shared/patterns/facade/models/curso-facade';
-import { CategoriaFacade, CategoriaUI } from 'src/app/shared/patterns/facade/models/categoria-facade';
+import {
+  CategoriaFacade,
+  CategoriaUI,
+} from 'src/app/shared/patterns/facade/models/categoria-facade';
 import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
 
 @Component({
@@ -27,7 +30,7 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private cursoFacade: CursoFacade,
-    public categoriaFacade: CategoriaFacade
+    public categoriaFacade: CategoriaFacade,
   ) {}
 
   ngOnInit(): void {
@@ -35,14 +38,13 @@ export class CartPopupComponent implements OnInit, OnDestroy {
 
     this.cursoFacade.listarCursos();
 
-    combineLatest([
-      this.cursoFacade.cursos$.asObservable(),
-      this.items$,
-    ])
+    combineLatest([this.cursoFacade.cursos$.asObservable(), this.items$])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([cursos, itemsEnCarrito]) => {
-        const idsEnCarrito = new Set(itemsEnCarrito.map(i => i.id));
-        this.cursosSugeridos = cursos.filter(c => !idsEnCarrito.has(c.id)).slice(0, 2);
+        const idsEnCarrito = new Set(itemsEnCarrito.map((i) => i.id));
+        this.cursosSugeridos = cursos
+          .filter((c) => !idsEnCarrito.has(c.id))
+          .slice(0, 2);
       });
   }
 
@@ -76,8 +78,9 @@ export class CartPopupComponent implements OnInit, OnDestroy {
     return this.categoriaFacade.getCategoryById(categoriaId ?? '');
   }
 
-  getStarClass(rating: number, star: number): string {
-    return star <= Math.round(rating)
+  getStarClass(rating: number | undefined, star: number): string {
+    const currentRating = rating ?? 0;
+    return star <= Math.round(currentRating)
       ? 'pi pi-star-fill rating-star-filled'
       : 'pi pi-star rating-star-empty';
   }

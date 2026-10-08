@@ -4,7 +4,6 @@ import { CardCursoComponent } from './components/card-curso/card-curso.component
 import { MonthDayPickerComponent } from './components/month-day-picker/month-day-picker.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { CourseCarouselComponent } from './components/course-carousel/course-carousel.component';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
@@ -19,7 +18,6 @@ import { SliderCoursesComponent } from './components/slider-courses/slider-cours
 @NgModule({
   declarations: [
     CardCursoComponent,
-    CourseCarouselComponent,
     MonthDayPickerComponent,
     AssociatedAccountCardComponent,
     SliderCoursesComponent,
@@ -39,7 +37,6 @@ import { SliderCoursesComponent } from './components/slider-courses/slider-cours
   ],
   exports: [
     CardCursoComponent,
-    CourseCarouselComponent,
     ProgressSpinnerModule,
     SharedPipeModule,
     MonthDayPickerComponent,

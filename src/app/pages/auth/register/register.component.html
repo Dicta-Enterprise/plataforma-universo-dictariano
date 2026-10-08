@@ -1,6 +1,7 @@
 <div class="min-h-screen flex items-center justify-center bg-black">
-  <div class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-md">
-
+  <div
+    class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-lg"
+  >
     <div class="flex flex-col items-center mb-6">
       <img
         src="https://res.cloudinary.com/djwspay9f/image/upload/v1782180945/Mesa_de_trabajo_1_x72aap.png"
@@ -15,9 +16,10 @@
       </span>
       <div class="text-gray-400 text-center mt-2">
         ¿Ya tienes una cuenta?
-        <a 
+        <a
           routerLink="/auth/login"
-          class="font-semibold text-blue-400 hover:underline ml-1 cursor-pointer">
+          class="font-semibold text-blue-400 hover:underline ml-1 cursor-pointer"
+        >
           Inicia sesión aquí!
         </a>
       </div>
@@ -25,38 +27,61 @@
         type="button"
         pButton
         pRipple
-        label="Ingresar"
         icon="pi pi-google"
-        class="w-1/2 py-3 text-xs font-semibold rounded-lg
-              bg-gradient-to-r from-zinc-500 to-zinc-800 border-0 shadow-md 
-              text-white hover:from-pink-400 hover:to-red-500 
-              transition flex items-center justify-center gap-2
-              mt-5"
-        (click)="loginWithGoogle()">
+        class="w-1/2 py-3 text-xs font-semibold rounded-lg bg-gradient-to-r from-zinc-500 to-zinc-800 border-0 shadow-md text-white hover:from-pink-400 hover:to-red-500 transition flex items-center justify-center gap-2 mt-5"
+        (click)="loginWithGoogle()"
+      >
+        Ingresar
       </button>
     </div>
 
     <form [formGroup]="registerFormPresenter.Form">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label for="firstName" class="block text-gray-300 font-medium mb-1"
+            >Nombre</label
+          >
+          <input
+            id="firstName"
+            type="text"
+            pInputText
+            formControlName="firstName"
+            placeholder="Ingresa tu nombre"
+            class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
+          />
+          <small
+            class="p-error"
+            dictaErrorForm
+            [control]="registerFormPresenter.firstName"
+          >
+          </small>
+        </div>
 
-      <div class="mb-4">
-        <label for="username" class="block text-gray-300 font-medium mb-1">Username</label>
-        <input
-          id="username"
-          type="text"
-          pInputText
-          formControlName="username"
-          placeholder="Ingresa tu usuario"
-          class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
-        />
-        <small
-          class="p-error"
-          dictaErrorForm
-          [control]="registerFormPresenter.username">
-        </small>
+        <div>
+          <label for="lastName" class="block text-gray-300 font-medium mb-1"
+            >Apellido</label
+          >
+          <input
+            id="lastName"
+            type="text"
+            pInputText
+            formControlName="lastName"
+            placeholder="Ingresa tu apellido"
+            class="w-full p-3 rounded bg-gray-900 text-white border-none focus:ring-2 focus:ring-cyan-400"
+          />
+          <small
+            class="p-error"
+            dictaErrorForm
+            [control]="registerFormPresenter.lastName"
+          >
+          </small>
+        </div>
       </div>
 
       <div class="mb-4">
-        <label for="email" class="block text-gray-300 font-medium mb-1">Email</label>
+        <label for="email" class="block text-gray-300 font-medium mb-1"
+          >Email</label
+        >
         <input
           id="email"
           type="email"
@@ -68,12 +93,15 @@
         <small
           class="p-error"
           dictaErrorForm
-          [control]="registerFormPresenter.email">
+          [control]="registerFormPresenter.email"
+        >
         </small>
       </div>
 
       <div class="mb-4">
-        <label for="password" class="block text-gray-300 font-medium mb-1">Contraseña</label>
+        <label for="password" class="block text-gray-300 font-medium mb-1"
+          >Contraseña</label
+        >
         <p-password
           id="password"
           formControlName="password"
@@ -90,12 +118,17 @@
         <small
           class="p-error"
           dictaErrorForm
-          [control]="registerFormPresenter.Form.get('password')">
+          [control]="registerFormPresenter.Form.get('password')"
+        >
         </small>
       </div>
 
       <div class="mb-6">
-        <label for="confirmPassword" class="block text-gray-300 font-medium mb-1">Confirmar contraseña</label>
+        <label
+          for="confirmPassword"
+          class="block text-gray-300 font-medium mb-1"
+          >Confirmar contraseña</label
+        >
         <p-password
           id="confirmPassword"
           formControlName="confirmPassword"
@@ -112,22 +145,25 @@
         <small
           class="p-error"
           dictaErrorForm
-          [control]="registerFormPresenter.Form.get('confirmPassword')">
+          [control]="registerFormPresenter.Form.get('confirmPassword')"
+        >
         </small>
       </div>
-   
+
       <div
         class="flex items-center gap-3 mb-3 text-sm"
         tabindex="0"
         (click)="onCheckboxClick($event)"
         (keydown.enter)="onCheckboxClick($event)"
-        (keydown.space)="onCheckboxClick($event)">
+        (keydown.space)="onCheckboxClick($event)"
+      >
         <p-checkbox
           id="termsofuse"
           [binary]="true"
           styleClass="mr-2"
           formControlName="acceptTerms"
-          [readonly]="!politicaLeida">
+          [readonly]="!politicaLeida"
+        >
         </p-checkbox>
         <span class="text-gray-400">
           He leído y acepto la
@@ -137,7 +173,8 @@
             class="text-blue-400 hover:underline cursor-pointer"
             (click)="abrirPolitica()"
             (keydown.enter)="abrirPolitica()"
-            (keydown.space)="abrirPolitica()">
+            (keydown.space)="abrirPolitica()"
+          >
             Política de Privacidad y Tratamiento de Datos
           </a>
         </span>
@@ -147,35 +184,34 @@
         <i class="pi pi-info-circle mr-1"></i>
         Debes leer y aceptar la Política de Privacidad para continuar.
       </small>
-      <small *ngIf="politicaLeida && !registerFormPresenter.Form.get('acceptTerms')?.value"
-            class="text-green-400 text-xs block mb-4">
+      <small
+        *ngIf="
+          politicaLeida && !registerFormPresenter.Form.get('acceptTerms')?.value
+        "
+        class="text-green-400 text-xs block mb-4"
+      >
         <i class="pi pi-check-circle mr-1"></i>
         Lectura completada. Marca la casilla para aceptar.
       </small>
-
-      
 
       <button
         type="button"
         pButton
         pRipple
-        label="Registrarme"
         icon="pi pi-user-plus"
-        class="w-full py-3 text-lg font-semibold rounded-lg
-              bg-gradient-to-r from-teal-400 to-cyan-500 border-0 shadow-md 
-              text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black 
-              transition mb-4 flex items-center justify-center gap-2"
+        class="w-full py-3 text-lg font-semibold rounded-lg bg-gradient-to-r from-teal-400 to-cyan-500 border-0 shadow-md text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black transition mb-4 flex items-center justify-center gap-2"
         (click)="submit()"
-        [disabled]="!politicaLeida || registerFormPresenter.Form.invalid">
+        [disabled]="!politicaLeida || registerFormPresenter.Form.invalid"
+      >
+        Registrarme
       </button>
-
     </form>
-
   </div>
 
   <!-- Modal Política de Privacidad -->
   <app-privacy-policy-modal
     [(visible)]="mostrarModal"
-    (politicaLeida)="onPoliticaLeida()">
+    (politicaLeida)="onPoliticaLeida()"
+  >
   </app-privacy-policy-modal>
 </div>

@@ -6,7 +6,8 @@ export interface UserFormData {
   tuCumpleanos: string;
   edad: number;
   contrasena: string;
-  alias: string;
+  nombre: string;
+  apellido: string;
   aliasFamilia: string;
   nivelEconomico: string;
 }
@@ -113,7 +114,8 @@ export class MyAccountComponent {
     tuCumpleanos: '08-15',
     edad: 25,
     contrasena: 'contrasena123',
-    alias: 'Carloz Mendoza',
+    nombre: 'Carlos',
+    apellido: 'Mendoza',
     aliasFamilia: 'Familia Mendoza',
     nivelEconomico: 'medio',
   };
@@ -125,7 +127,8 @@ export class MyAccountComponent {
     tuCumpleanos: false,
     edad: false,
     contrasena: false,
-    alias: false,
+    nombre: false,
+    apellido: false,
     aliasFamilia: false,
     nivelEconomico: false,
   };

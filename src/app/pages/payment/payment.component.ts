@@ -14,8 +14,8 @@ import { loadMercadoPago } from '@mercadopago/sdk-js';
 import { CartService } from 'src/app/core/services/cart/cart.service';
 import { AuthService } from 'src/app/pages/auth/services/auth.service';
 import { CategoriaFacade } from 'src/app/shared/patterns/facade/models/categoria-facade';
-import { Curso } from 'src/app/core/class/curso/curso.class';
 import { ModalService } from 'src/app/containers/host/app-modal.service';
+import { Cursos } from 'src/app/core/class/models';
 
 // ── Interfaces ────────────────────────────────────────────────────────────────
 
@@ -248,31 +248,28 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
       style: { color: '#ffffff', fontSize: '14px' },
     }).mount('form-checkout__securityCode');
 
-    this.cardNumberElement.on('ready', () => {
-      this.attachFieldListeners(
-        this.cardNumberElement!,
-        'form-checkout__cardNumber',
-      );
-      this.cardNumberElement!.on('binChange', async (data: unknown) => {
-        const { bin } = data as BinChangeData;
-        if (!bin) {
-          this.resetCardState();
-          return;
-        }
-        try {
-          const { results } = await this.mp!.getPaymentMethods({ bin });
-          if (!results?.length) return;
-          const paymentMethod = results[0];
-          this.paymentMethodId = paymentMethod.id;
-          this.cardBrand = paymentMethod.id;
-          this.updatePCIFieldsSettings(paymentMethod);
-          await this.loadIssuers(paymentMethod, bin);
-          await this.loadInstallments(bin);
-          this.cdr.detectChanges();
-        } catch {
-          // bin lookup failed
-        }
-      });
+    this.cardNumberElement!.on('binChange', async (data: unknown) => {
+      const { bin } = data as BinChangeData;
+      if (!bin) {
+        this.resetCardState();
+        return;
+      }
+      try {
+        const { results } = await this.mp!.getPaymentMethods({ bin });
+        if (!results?.length) return;
+
+        const paymentMethod = results[0];
+
+        // Guardamos exactamente el ID entregado por la API de MercadoPago
+        this.paymentMethodId = paymentMethod.id;
+        this.cardBrand = paymentMethod.id;
+
+        await this.loadIssuers(paymentMethod, bin);
+        await this.loadInstallments(bin);
+        this.cdr.detectChanges();
+      } catch {
+        this.resetCardState();
+      }
     });
 
     this.expirationDateElement.on('ready', () => {
@@ -314,13 +311,6 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
       }
       this.cdr.detectChanges();
     });
-  }
-
-  private updatePCIFieldsSettings(paymentMethod: MpPaymentMethod) {
-    const { settings } = paymentMethod;
-    if (!settings?.length) return;
-    this.cardNumberElement!.update({ settings: settings[0].card_number });
-    this.securityCodeElement!.update({ settings: settings[0].security_code });
   }
 
   private async loadIssuers(paymentMethod: MpPaymentMethod, bin: string) {
@@ -376,10 +366,18 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   async submit() {
     this.formSubmitted = true;
+
     if (!this.selectedMethod || this.paymentForm.invalid || !this.acceptTerms) {
       this.paymentForm.markAllAsTouched();
       return;
     }
+
+    if (!this.paymentMethodId) {
+      this.errorMessage =
+        'No se pudo identificar la franquicia de la tarjeta. Revisa el número ingresado.';
+      return;
+    }
+
     this.isSubmitting = true;
     this.isProcessing = true;
     this.errorMessage = '';
@@ -397,8 +395,8 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
         identificationNumber: form.docNumber,
       });
 
-      const detalleOrden = this.cart.items.map((item: Curso) => ({
-        idcurso: item.id,
+      const detalleOrden = this.cart.items.map((item: Cursos) => ({
+        idcurso: String(item.id),
         nombrecurso: item.nombre,
         precio: parseFloat(Math.floor(item.precio).toFixed(2)),
       }));
@@ -411,59 +409,60 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
         pago: {
           idorden: 1,
           fechapago: new Date().toISOString(),
-          monto: parseFloat(Math.floor(this.totalAmount).toFixed(2)),
+          monto: Math.round(this.totalAmount),
           nombrepagante: form.holder,
           emailpagante: form.email,
           moneda: 'COP',
-          metodopago: this.paymentMethodId || 'master',
+          metodopago: this.paymentMethodId,
           tipotarjeta:
             this.selectedMethod === 'credit' ? 'credit_card' : 'debit_card',
           token: cardToken.id,
           cuotas:
             this.selectedMethod === 'debit' ? 1 : this.selectedInstallments,
           processing_mode: 'automatic',
-          //numeroDocumento: form.docNumber,
         },
       };
 
-      this.http
-        .post<OrderResponse>(`${environment.URL_BACKEND_CARRITO}orders`, body)
-        .subscribe({
-          next: (res) => {
-            this.guardarSessionYNavegar(
-              res.data,
-              res.statusCode === 202 ? 'pending' : 'success',
-            );
-          },
-          error: (err) => {
-            const body = err?.error;
-            const statusCode = body?.statusCode ?? err?.status;
-            const estadoDetalle =
-              body?.mpStatusDetail ?? body?.mpStatus ?? 'failed';
+      const urlBackend = `${environment.URL_BACKEND_CARRITO}orders`;
 
-            this.guardarSession({ estadoDetalle });
+      this.http.post<OrderResponse>(urlBackend, body).subscribe({
+        next: (res) => {
+          this.guardarSessionYNavegar(
+            res.data,
+            res.statusCode === 202 ? 'pending' : 'success',
+          );
+        },
+        error: (err) => {
+          const bodyErr = err?.error;
+          const statusCode = bodyErr?.statusCode ?? err?.status;
+          const estadoDetalle =
+            bodyErr?.mpStatusDetail ?? bodyErr?.mpStatus ?? 'failed';
 
-            if (statusCode === 402) {
-              this.navegar('rejected', estadoDetalle);
-            } else {
-              // error de infraestructura, no de pago
-              this.errorMessage =
-                'Ocurrió un error al procesar el pago. Intenta nuevamente.';
-              this.isProcessing = false;
-              this.isSubmitting = false;
-            }
-          },
-        });
+          this.guardarSession({ estadoDetalle });
+
+          if (statusCode === 402) {
+            this.navegar('rejected', estadoDetalle);
+          } else {
+            this.errorMessage =
+              'Ocurrió un error al procesar el pago. Intenta nuevamente.';
+            this.isProcessing = false;
+            this.isSubmitting = false;
+            this.cdr.detectChanges();
+          }
+        },
+      });
     } catch {
       this.isSubmitting = false;
+      this.isProcessing = false;
       this.errorMessage = 'No se pudo procesar la tarjeta. Verifica los datos.';
+      this.cdr.detectChanges();
     }
   }
 
   get totalAmount(): number {
     return parseFloat(
       this.cart.items
-        .reduce((sum: number, item: Curso) => sum + Math.floor(item.precio), 0)
+        .reduce((sum: number, item: Cursos) => sum + Math.floor(item.precio), 0)
         .toFixed(2),
     );
   }
@@ -473,8 +472,9 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
     return !!(ctrl?.invalid && ctrl?.touched);
   }
 
-  getStarClass(rating: number, star: number) {
-    return star <= Math.round(rating)
+  getStarClass(rating: number | undefined, star: number): string {
+    const currentRating = rating ?? 0;
+    return star <= Math.round(currentRating)
       ? 'pi pi-star-fill rating-star-filled'
       : 'pi pi-star rating-star-empty';
   }

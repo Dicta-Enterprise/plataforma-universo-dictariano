@@ -41,8 +41,12 @@ export class AuthService {
       this.authApiService.profile().subscribe({
         next: (user: IJwtPayload) => {
           this.userSubject.next(user);
-          const userId = parseInt(user.sub, 10);
-          this.cartService.setUserSession(true, userId);
+
+          const rawId = user?.id ?? user?.sub;
+          const userId =
+            rawId !== undefined && rawId !== null ? Number(rawId) : NaN;
+
+          this.cartService.setUserSession(true, isNaN(userId) ? null : userId);
           this.cartStorage.clearExpiration();
           this.sessionCheckedSubject.next(true);
           resolve();
@@ -59,7 +63,9 @@ export class AuthService {
   }
 
   getUserId(): string | null {
-    return this.userSubject.value?.sub ?? null;
+    const currentUser = this.userSubject.value;
+    const userId = currentUser?.id ?? currentUser?.sub ?? null;
+    return userId !== null ? String(userId) : null;
   }
 
   login(): void {
@@ -69,32 +75,41 @@ export class AuthService {
         filter((user): user is IJwtPayload => !!user),
         take(1),
       )
-      .subscribe((user) => {
-        this.userSubject.next(user);
-        this.sessionCheckedSubject.next(true);
+      .subscribe({
+        next: (user) => {
+          this.userSubject.next(user);
+          this.sessionCheckedSubject.next(true);
 
-        const userId = parseInt(user.sub, 10);
-        this.cartService.setUserSession(true, userId);
+          const rawId = user?.id ?? user?.sub;
+          const userId =
+            rawId !== undefined && rawId !== null ? Number(rawId) : NaN;
 
-        const cursosResolver = (ids: string[]) =>
-          this.cursosService
-            .listarCursosService$()
-            .pipe(
-              map((todos) => todos.filter((c) => ids.includes(String(c.id)))),
-            );
+          this.cartService.setUserSession(true, isNaN(userId) ? null : userId);
 
-        this.cartService
-          .syncAfterLogin(userId, cursosResolver)
-          .pipe(take(1))
-          .subscribe({
-            complete: () => {
-              this.cartStorage.clearExpiration();
-              this.navigateAfterLogin();
-            },
-            error: () => {
-              this.navigateAfterLogin();
-            },
-          });
+          const cursosResolver = (ids: string[]) =>
+            this.cursosService
+              .listarCursosService$()
+              .pipe(
+                map((todos) => todos.filter((c) => ids.includes(String(c.id)))),
+              );
+
+          if (!isNaN(userId)) {
+            this.cartService
+              .syncAfterLogin(userId, cursosResolver)
+              .pipe(take(1))
+              .subscribe({
+                complete: () => {
+                  this.cartStorage.clearExpiration();
+                  this.navigateAfterLogin();
+                },
+                error: () => {
+                  this.navigateAfterLogin();
+                },
+              });
+          } else {
+            this.navigateAfterLogin();
+          }
+        },
       });
   }
 

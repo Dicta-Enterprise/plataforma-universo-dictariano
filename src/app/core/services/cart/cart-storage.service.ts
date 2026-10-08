@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Curso } from 'src/app/core/class/curso/curso.class';
+import { Cursos } from 'src/app/core/class/models/cursos/Cursos.class';
 
 interface CartSnapshot {
-  items: Curso[];
+  items: Cursos[];
   savedAt: number | null;
 }
 
@@ -11,7 +11,7 @@ export class CartStorageService {
   private readonly CART_KEY = 'cartItems';
   private readonly TTL_DAYS = 3;
 
-  getItems(): Curso[] {
+  getItems(): Cursos[] {
     try {
       const snapshot = this.getSnapshot();
       return snapshot?.items ?? [];
@@ -20,7 +20,7 @@ export class CartStorageService {
     }
   }
 
-  saveItems(items: Curso[]): void {
+  saveItems(items: Cursos[]): void {
     const current = this.getSnapshot();
     const snapshot: CartSnapshot = {
       items,
@@ -32,13 +32,19 @@ export class CartStorageService {
   clearExpiration(): void {
     const current = this.getSnapshot();
     if (!current) return;
-    localStorage.setItem(this.CART_KEY, JSON.stringify({ items: current.items, savedAt: null }));
+    localStorage.setItem(
+      this.CART_KEY,
+      JSON.stringify({ items: current.items, savedAt: null }),
+    );
   }
 
   restoreExpiration(): void {
     const current = this.getSnapshot();
     if (!current) return;
-    localStorage.setItem(this.CART_KEY, JSON.stringify({ items: current.items, savedAt: Date.now() }));
+    localStorage.setItem(
+      this.CART_KEY,
+      JSON.stringify({ items: current.items, savedAt: Date.now() }),
+    );
   }
 
   isExpired(): boolean {

@@ -24,7 +24,7 @@ export class CursoRepositoryImpl implements CursoRepository {
         return response.data._value.map((curso) => {
           return Cursos.fromJson(curso);
         });
-      })
+      }),
     );
   }
 
@@ -34,43 +34,36 @@ export class CursoRepositoryImpl implements CursoRepository {
     return this.httpClient.get<IGeneric<Cursos>>(url).pipe(
       map((response) => {
         return Cursos.fromJson(response.data);
-      })
+      }),
     );
   }
 
-  crearCursoService$(
-    curso: Cursos
-  ): Observable<Cursos> {
-
+  crearCursoService$(curso: Cursos): Observable<Cursos> {
     const url = `${this.base_url}cursos`;
     return this.httpClient.post<IGeneric<Cursos>>(url, curso).pipe(
       map((response) => {
         return Cursos.fromJson(response.data);
-      })
+      }),
     );
   }
 
-  editarCursoService$(
-    curso: Cursos
-  ): Observable<Cursos> {
+  editarCursoService$(curso: Cursos): Observable<Cursos> {
     const url = `${this.base_url}cursos/${curso.id}`;
 
     return this.httpClient.patch<IGeneric<Cursos>>(url, curso).pipe(
       map((response) => {
         return Cursos.fromJson(response.data);
-      })
+      }),
     );
   }
 
   eliminarCursoService$(cursoId: string): Observable<Cursos> {
     return this.httpClient
-      .delete<IGeneric<Cursos>>(
-        `${this.base_url}cursos/${cursoId}`
-      )
+      .delete<IGeneric<Cursos>>(`${this.base_url}cursos/${cursoId}`)
       .pipe(
         map((response) => {
           return Cursos.fromJson(response.data);
-        })
+        }),
       );
   }
 }
