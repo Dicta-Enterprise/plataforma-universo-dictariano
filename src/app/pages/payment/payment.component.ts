@@ -381,7 +381,6 @@ export class PaymentComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.isSubmitting = true;
     this.isProcessing = true;
     this.errorMessage = '';
-
     const form = this.paymentForm.value as {
       holder: string;
       email: string;
