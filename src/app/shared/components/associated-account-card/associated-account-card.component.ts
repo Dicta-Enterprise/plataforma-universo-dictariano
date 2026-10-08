@@ -15,11 +15,15 @@ export class AssociatedAccountCardComponent {
 
   // LOGICA PARA EDITAR NOMBRE, CUMPLEANOS Y EDAD
   isEditingNombre = false;
+  isEditingApellido = false;
   isEditingCumpleanos = false;
   isEditingEdad = false;
 
-  toggleEdit(field: 'nombre' | 'cumpleanos' | 'edad'): void {
+  toggleEdit(field: 'nombre' | 'cumpleanos' | 'edad' | 'apellido'): void {
     if (field === 'nombre') this.isEditingNombre = !this.isEditingNombre;
+    if (field === 'apellido') {
+      this.isEditingApellido = !this.isEditingApellido;
+    }
     if (field === 'cumpleanos')
       this.isEditingCumpleanos = !this.isEditingCumpleanos;
     if (field === 'edad') {
@@ -47,6 +51,7 @@ export class AssociatedAccountCardComponent {
       | 'verCalificacion'
       | 'cambiarAvatar'
       | 'verProgreso'
+      | 'verCertificado'
     >,
   ): void {
     if (this.account?.permisos) {
@@ -171,15 +176,5 @@ export class AssociatedAccountCardComponent {
   habilitarEdicionEmail(): void {
     if (!this.account?.email) return;
     this.account.invitacionEstado = 'inactiva';
-  }
-
-  // Logica de redireccion a seccion de cursos con el tag activo, si fue seccion nino o joven
-  seleccionarTagYNavegar(fallback?: string | null): void {
-    const targetTag = fallback === 'joven' ? 'Jóvenes' : 'Niños';
-
-    this.router.navigate(['/'], {
-      fragment: 'seccionCursos',
-      queryParams: { tag: targetTag },
-    });
   }
 }
