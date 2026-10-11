@@ -1,5 +1,7 @@
 <div class="min-h-screen flex items-center justify-center bg-black">
-  <div class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-md">
+  <div
+    class="bg-black bg-opacity-80 rounded-2xl shadow-2xl px-6 py-10 w-full max-w-md"
+  >
     <div class="flex flex-col items-center mb-6">
       <img
         src="https://res.cloudinary.com/djwspay9f/image/upload/v1782180945/Mesa_de_trabajo_1_x72aap.png"
@@ -11,32 +13,30 @@
       </h2>
       <div class="text-gray-400 text-center">
         No tienes una cuenta?
-        <a 
-        routerLink="/auth/register"
-        class="font-semibold text-blue-400 hover:underline ml-1 cursor-pointer">
-        Crea una ahora!</a>
+        <a
+          routerLink="/auth/register"
+          class="font-semibold text-blue-400 hover:underline ml-1 cursor-pointer"
+        >
+          Crea una ahora!</a
+        >
       </div>
-            <button
+      <button
         type="button"
         pButton
         pRipple
-        label="Ingresar"
         icon="pi pi-google"
-        class="w-1/2 py-3 text-xs font-semibold rounded-lg
-              bg-gradient-to-r from-zinc-500 to-zinc-800 border-0 shadow-md 
-              text-white hover:from-pink-400 hover:to-red-500 
-              transition flex items-center justify-center gap-2
-              mt-5"
+        class="w-1/2 py-3 text-xs font-semibold rounded-lg bg-gradient-to-r from-zinc-500 to-zinc-800 border-0 shadow-md text-white hover:from-pink-400 hover:to-red-500 transition flex items-center justify-center gap-2 mt-5"
         (click)="loginWithGoogle()"
-        >
+      >
+        Ingresar
       </button>
     </div>
-  
-    <form 
-      [formGroup]="loginFormPresenter.Form"
-      (ngSubmit)="submit()">
+
+    <form [formGroup]="loginFormPresenter.Form" (ngSubmit)="submit()">
       <div class="mb-4">
-        <label for="email1" class="block text-gray-300 font-medium mb-1">Email</label>
+        <label for="email1" class="block text-gray-300 font-medium mb-1"
+          >Email</label
+        >
         <input
           id="email1"
           type="text"
@@ -48,12 +48,14 @@
         <small
           class="p-error"
           dictaErrorForm
-          [control]="loginFormPresenter.Form.get('email')">
+          [control]="loginFormPresenter.Form.get('email')"
+        >
         </small>
-        
       </div>
       <div class="mb-4">
-        <label for="password1" class="block text-gray-300 font-medium mb-1">Contraseña</label>
+        <label for="password1" class="block text-gray-300 font-medium mb-1"
+          >Contraseña</label
+        >
         <input
           id="password1"
           type="password"
@@ -65,17 +67,24 @@
         <small
           class="p-error"
           dictaErrorForm
-          [control]="loginFormPresenter.Form.get('password')">
+          [control]="loginFormPresenter.Form.get('password')"
+        >
         </small>
       </div>
 
       <div class="flex items-center justify-between mb-6 text-sm">
         <span class="flex items-center text-gray-300">
-          <p-checkbox id="rememberme" [binary]="true" styleClass="mr-2"></p-checkbox>
+          <p-checkbox
+            id="rememberme"
+            [binary]="true"
+            styleClass="mr-2"
+          ></p-checkbox>
           Recuérdame
         </span>
-        <a routerLink="/auth/forgot-password"
-          class="text-blue-400 hover:underline cursor-pointer">
+        <a
+          routerLink="/auth/forgot-password"
+          class="text-blue-400 hover:underline cursor-pointer"
+        >
           Olvidaste la Contraseña?
         </a>
       </div>
@@ -84,16 +93,12 @@
         type="submit"
         pButton
         pRipple
-        label="Ingresar"
         icon="pi pi-user"
-        class="w-full py-3 text-lg font-semibold rounded-lg
-              bg-gradient-to-r from-teal-400 to-cyan-500 border-0 shadow-md 
-              text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black 
-              transition mb-4 flex items-center justify-center gap-2"
+        class="w-full py-3 text-lg font-semibold rounded-lg bg-gradient-to-r from-teal-400 to-cyan-500 border-0 shadow-md text-black hover:from-cyan-400 hover:to-teal-500 hover:text-black transition mb-4 flex items-center justify-center gap-2"
         [disabled]="loginFormPresenter.Invalid"
-        >
+      >
+        Ingresar
       </button>
-
     </form>
   </div>
 </div>

@@ -1,85 +1,64 @@
 <!-- HEADER FIJO (Navbar + Barra de Categorías opcional) -->
-<header class="fixed top-0 left-0 w-full z-50 bg-[#272727] shadow-md">
+<header class="fixed top-0 left-0 w-full z-50 bg-[#272727]">
   <!-- BARRA DE CATEGORÍAS (Visible solo sin autenticar) -->
   <div
     *ngIf="(auth.isLoggedIn$ | async) === false"
-    class="flex items-center justify-between h-12 px-4 bg-[#272727] border-b border-gray-700"
+    class="flex items-center justify-center gap-3 h-12 bg-[#272727] border-b border-gray-700 w-full"
   >
-    <div class="flex items-center justify-center gap-2 lg:gap-4 flex-1">
-      <!-- Padres -->
-      <a
-        routerLink="courses/padres"
-        pRipple
-        routerLinkActive="text-yellow-400 shadow-[0_1px_0_0_#ffcc00] outline-transparent"
-        #rla="routerLinkActive"
-        class="flex items-center gap-1 text-gray-400 hover:text-yellow-400 font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-        [style]="
-          !rla.isActive
-            ? 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #ffcc00 100%); font-weight:700; width:90px; justify-content:center;'
-            : 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
-        "
-      >
-        <i
-          class="pi pi-heart text-sm"
-          [style.color]="!rla.isActive ? '#0a0a0a' : ''"
-        ></i>
-        <span class="text-sm" [style.color]="!rla.isActive ? '#0a0a0a' : ''"
-          >Padres</span
-        >
-      </a>
+    <!-- Padres -->
+    <a
+      routerLink="courses/padres"
+      pRipple
+      routerLinkActive="outline-transparent"
+      #rla="routerLinkActive"
+      [class]="
+        !rla.isActive
+          ? 'flex items-center gap-1 font-bold whitespace-nowrap px-3 py-1.5 rounded-[10px] w-[90px] justify-center bg-padre text-[#0a0a0a] transition duration-200'
+          : 'flex items-center gap-1 font-medium whitespace-nowrap px-3 py-1.5 rounded-[10px] w-[90px] justify-center bg-white/5 text-gray-400 hover:text-cyan-400 outline outline-1 outline-gray-700 transition duration-200'
+      "
+      style="text-decoration: none"
+    >
+      <i class="pi pi-heart text-sm"></i>
+      <span class="text-sm">Padres</span>
+    </a>
 
-      <span class="text-gray-600">|</span>
+    <span class="text-gray-600">|</span>
 
-      <!-- Jóvenes -->
-      <a
-        routerLink="courses/jovenes"
-        pRipple
-        routerLinkActive="text-cyan-400 shadow-[0_1px_0_0_#33ccff] outline-transparent"
-        #rlaJovenes="routerLinkActive"
-        class="flex items-center gap-1 text-gray-400 hover:text-cyan-400 font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-        [style]="
-          !rlaJovenes.isActive
-            ? 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #33ccff 100%); font-weight:700; width:90px; justify-content:center;'
-            : 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
-        "
-      >
-        <i
-          class="pi pi-send text-sm"
-          [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
-        ></i>
-        <span
-          class="text-sm"
-          [style.color]="!rlaJovenes.isActive ? '#0a0a0a' : ''"
-          >Jóvenes</span
-        >
-      </a>
+    <!-- Jóvenes -->
+    <a
+      routerLink="courses/jovenes"
+      pRipple
+      routerLinkActive="outline-transparent"
+      #rlaJovenes="routerLinkActive"
+      [class]="
+        !rlaJovenes.isActive
+          ? 'flex items-center gap-1 font-bold whitespace-nowrap px-3 py-1.5 rounded-[10px] w-[90px] justify-center bg-joven text-[#0a0a0a] transition duration-200'
+          : 'flex items-center gap-1 font-medium whitespace-nowrap px-3 py-1.5 rounded-[10px] w-[90px] justify-center bg-white/5 text-gray-400 hover:text-yellow-400 outline outline-1 outline-gray-700 transition duration-200'
+      "
+      style="text-decoration: none"
+    >
+      <i class="pi pi-send text-sm"></i>
+      <span class="text-sm">Jóvenes</span>
+    </a>
 
-      <span class="text-gray-600">|</span>
+    <span class="text-gray-600">|</span>
 
-      <!-- Niños -->
-      <a
-        routerLink="/courses/ninos"
-        pRipple
-        routerLinkActive="text-green-400 shadow-[0_1px_0_0_#2ee85d] outline-transparent"
-        #rlaNinos="routerLinkActive"
-        class="flex items-center gap-1 text-gray-400 hover:text-green-400 font-medium cursor-pointer transition duration-200 outline outline-1 outline-gray-700"
-        [style]="
-          !rlaNinos.isActive
-            ? 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background:linear-gradient(180deg, #2a2a2a 0%, #2ee85d 100%); font-weight:700; width:90px; justify-content:center;'
-            : 'text-decoration:none; white-space:nowrap; padding:6px 12px; border-radius:10px; background-color:rgba(255,255,255,0.05); width:90px; justify-content:center;'
-        "
-      >
-        <i
-          class="pi pi-star text-sm"
-          [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
-        ></i>
-        <span
-          class="text-sm"
-          [style.color]="!rlaNinos.isActive ? '#0a0a0a' : ''"
-          >Niños</span
-        >
-      </a>
-    </div>
+    <!-- Niños -->
+    <a
+      routerLink="/courses/ninos"
+      pRipple
+      routerLinkActive="outline-transparent"
+      #rlaNinos="routerLinkActive"
+      [class]="
+        !rlaNinos.isActive
+          ? 'flex items-center gap-1 font-bold whitespace-nowrap px-3 py-1.5 rounded-[10px] w-[90px] justify-center bg-nino text-[#0a0a0a] transition duration-200'
+          : 'flex items-center gap-1 font-medium whitespace-nowrap px-3 py-1.5 rounded-[10px] w-[90px] justify-center bg-white/5 text-gray-400 hover:text-green-400 outline outline-1 outline-gray-700 transition duration-200'
+      "
+      style="text-decoration: none"
+    >
+      <i class="pi pi-star text-sm"></i>
+      <span class="text-sm">Niños</span>
+    </a>
   </div>
 
   <!-- NAVBAR de abajo -->
@@ -90,7 +69,7 @@
       <!-- Logo -->
       <a
         routerLink="/"
-        routerLinkActive="border-b-2 border-yellow-500 rounded-b"
+        routerLinkActive="border-b-2 border-yellow-400 rounded-b"
         [routerLinkActiveOptions]="{ exact: true }"
         class="inline-block transition-all border-b-2 border-transparent"
       >
@@ -107,7 +86,7 @@
         pRipple
         href="http://localhost:3000"
         target="_blank"
-        class="hidden sm:flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-yellow-500 font-medium transition duration-200"
+        class="hidden sm:flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-yellow-400 font-medium transition duration-200"
       >
         <i class="pi pi-globe"></i>
         <span>Mundo 3D</span>
@@ -119,7 +98,7 @@
       <!-- Input de búsqueda para pantallas grandes -->
       <div class="relative hidden sm:block">
         <i
-          class="pi pi-search text-[#e8002e] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+          class="pi pi-search text-joven absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
         ></i>
 
         <input
@@ -139,7 +118,7 @@
         (click)="searchVisible = !searchVisible"
         aria-label="Abrir búsqueda"
       >
-        <i class="pi pi-search text-[#e8002e] text-base"></i>
+        <i class="pi pi-search text-joven text-base"></i>
       </button>
     </div>
 
@@ -149,13 +128,13 @@
       <a
         pRipple
         [routerLink]="['/cart']"
-        class="relative flex items-center text-gray-400 hover:text-yellow-500 cursor-pointer px-2"
+        class="relative flex items-center text-gray-400 hover:text-joven cursor-pointer px-2"
       >
         <i class="pi pi-shopping-cart text-xl"></i>
         <ng-container *ngIf="count$ | async as count">
           <span
             *ngIf="count > 0"
-            class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white text-xs rounded-full px-2 py-0.5 font-bold"
+            class="absolute -top-1.5 -right-1.5 bg-nino text-black text-xs rounded-full px-2 py-0.5 font-bold"
           >
             {{ count }}
           </span>
@@ -165,7 +144,7 @@
       <!-- Botón Login -->
       <button
         *ngIf="(auth.isLoggedIn$ | async) === false"
-        class="px-4 py-1.5 rounded-lg font-semibold text-black hover:shadow-[0_0_10px_2px_#F7C50F] bg-yellow-500 transition duration-300 cursor-pointer"
+        class="px-4 py-1.5 rounded-lg font-semibold text-black bg-joven transition duration-300 cursor-pointer"
         routerLink="/auth/login"
       >
         Login
@@ -232,7 +211,7 @@
         </span>
         <span
           *ngIf="rla.isActive"
-          class="absolute -bottom-2 w-1.5 h-1.5 bg-yellow-400 rounded-full"
+          class="absolute -bottom-2 w-1.5 h-1.5 bg-joven rounded-full"
         ></span>
       </a>
     </div>
@@ -247,7 +226,7 @@
   <!-- Contenedor del input con icono en posición absoluta -->
   <div class="relative w-full">
     <i
-      class="pi pi-search text-[#e8002e] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+      class="pi pi-search text-joven absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
     ></i>
     <input
       type="text"

@@ -1,9 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{html,ts}",
-  ],
-safelist: [
+  content: ["./src/**/*.{html,ts}"],
+  safelist: [
     /^p-carousel/,
     /^p-button/,
     /^p-tag/,
@@ -12,6 +10,14 @@ safelist: [
     /^w-/,
     /^rounded-/,
   ],
-  theme: { extend: {} },
+  theme: {
+    extend: {
+      colors: {
+        nino: "var(--color-nino)",
+        joven: "var(--color-joven)",
+        padre: "var(--color-padre)",
+      },
+    },
+  },
   plugins: [],
-}
+};

@@ -26,7 +26,7 @@ export class SliderCoursesComponent implements OnInit, OnDestroy {
   @Input() primary_color = '#15b6cf';
   @Input() secondary_color = '#235E66';
   @Input() scrollStep = 316;
-  @Input() maxCursos = 15; // Límite máximo de cursos a mostrar
+  @Input() maxCursos = 15;
 
   cursos: Cursos[] = [];
   loading = true;
@@ -39,14 +39,11 @@ export class SliderCoursesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // 1. Cargar datos desde los Facades
     this.categoriaFacade.listarCategorias();
     this.cursoFacade.listarCursos();
 
-    // 2. Definir colores por categoría
     this.setColorsByCategory();
 
-    // 3. Suscripción reactiva sincronizada
     combineLatest([
       this.categoriaFacade.categorias$.asObservable(),
       this.cursoFacade.cursos$.asObservable(),
@@ -83,17 +80,17 @@ export class SliderCoursesComponent implements OnInit, OnDestroy {
   private setColorsByCategory(): void {
     switch (this.category) {
     case 'ninos':
-      this.primary_color = '#33FF66';
+      this.primary_color = 'var(--color-nino)';
       this.secondary_color = '#156B2B';
       break;
 
     case 'jovenes':
-      this.primary_color = 'rgb(255, 204, 0)';
+      this.primary_color = 'var(--color-joven)';
       this.secondary_color = '#b38f00';
       break;
 
     case 'padres':
-      this.primary_color = '#33CCFF';
+      this.primary_color = 'var(--color-padre)';
       this.secondary_color = '#1a8fb3';
       break;
 

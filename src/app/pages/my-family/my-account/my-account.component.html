@@ -7,8 +7,7 @@
     <button
       (click)="activeTab = 'mi-cuenta'"
       [ngClass]="{
-        'bg-[#eab308] text-black font-bold shadow-md':
-          activeTab === 'mi-cuenta',
+        'bg-padre text-black font-bold shadow-md': activeTab === 'mi-cuenta',
         'text-gray-400 hover:text-white font-bold': activeTab !== 'mi-cuenta',
       }"
       class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full"
@@ -20,7 +19,7 @@
     <button
       (click)="activeTab = 'joven'"
       [ngClass]="{
-        'bg-[#eab308] text-black font-bold shadow-md': activeTab === 'joven',
+        'bg-joven text-black font-bold shadow-md': activeTab === 'joven',
         'text-gray-400 hover:text-white font-bold': activeTab !== 'joven',
       }"
       class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full"
@@ -32,7 +31,7 @@
     <button
       (click)="activeTab = 'nino'"
       [ngClass]="{
-        'bg-emerald-500 text-black font-bold shadow-md': activeTab === 'nino',
+        'bg-nino text-black font-bold shadow-md': activeTab === 'nino',
         'text-gray-400 hover:text-white font-bold': activeTab !== 'nino',
       }"
       class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full"
@@ -83,12 +82,12 @@
                 type="text"
                 [(ngModel)]="formData.aliasFamilia"
                 value="{{ formData.aliasFamilia }}"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-joven w-36"
               />
             </ng-template>
             <button
               (click)="toggleEdit('aliasFamilia')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+              class="text-padre hover:text-cyan-600 transition text-xl"
             >
               <i
                 [class]="
@@ -112,7 +111,7 @@
               <input
                 type="text"
                 [(ngModel)]="formData.nombre"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-joven w-36"
               />
             </ng-template>
           </div>
@@ -131,7 +130,7 @@
               <input
                 type="text"
                 [(ngModel)]="formData.apellido"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-joven w-36"
               />
             </ng-template>
           </div>
@@ -160,12 +159,12 @@
               <input
                 type="password"
                 [(ngModel)]="formData.contrasena"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 w-36"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-joven w-36"
               />
             </ng-template>
             <button
               (click)="toggleEdit('contrasena')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+              class="text-padre hover:text-cyan-600 transition text-xl"
             >
               <i
                 [class]="editState.contrasena ? 'pi pi-check' : 'pi pi-pencil'"
@@ -194,7 +193,7 @@
 
             <button
               (click)="toggleEdit('tuCumpleanos')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+              class="text-padre hover:text-cyan-600 transition text-xl"
             >
               <i
                 [class]="
@@ -223,13 +222,13 @@
                 required
                 min="18"
                 max="100"
-                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-yellow-500 max-w-12"
+                class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded px-2 py-0.5 focus:outline-none focus:border-joven max-w-12"
               />
             </ng-template>
 
             <button
               (click)="toggleEdit('edad')"
-              class="text-yellow-500 hover:text-yellow-600 transition text-xl"
+              class="text-padre hover:text-cyan-600 transition text-xl"
             >
               <i [class]="editState.edad ? 'pi pi-check' : 'pi pi-pencil'"></i>
             </button>
@@ -244,7 +243,7 @@
           <select
             id="nivelEconomico"
             [(ngModel)]="formData.nivelEconomico"
-            class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded-lg px-2.5 py-1 focus:outline-none focus:border-yellow-500 cursor-pointer"
+            class="bg-[#18181a] text-gray-200 border border-[#2b2b2e] rounded-lg px-2.5 py-1 focus:outline-none focus:border-padre cursor-pointer"
           >
             <option value="bajo">Bajo</option>
             <option value="medio">Medio</option>
@@ -259,7 +258,7 @@
         [attr.tabindex]="isEditing && hasChanges ? 0 : -1"
         (click)="guardarCambios()"
         type="button"
-        class="bg-yellow-500 mt-2 text-black border-none font-bold rounded-full py-2 px-5 transition disabled:cursor-not-allowed disabled:opacity-50"
+        class="bg-padre mt-2 text-black border-none font-bold rounded-full py-2 px-5 transition disabled:cursor-not-allowed disabled:opacity-50"
       >
         Guardar
       </button>
@@ -344,7 +343,7 @@
                   <h3
                     class="text-sm font-bold text-gray-100 flex items-center gap-2 mb-2"
                   >
-                    <i class="pi pi-shield text-yellow-500"></i>
+                    <i class="pi pi-shield text-joven"></i>
                     CONSENTIMIENTO PARA ELIMINACIÓN DE CUENTA Y DATOS PERSONALES
                   </h3>
                   <p class="leading-relaxed">
@@ -430,7 +429,7 @@
                   </div>
 
                   <div
-                    class="bg-[#1a1708] border-l-2 border-yellow-500 p-3 rounded-r-lg"
+                    class="bg-[#1a1708] border-l-2 border-joven p-3 rounded-r-lg"
                   >
                     <h4 class="font-bold text-yellow-400 mb-1">
                       5. PERIODO DE GRACIA DE 15 DÍAS (Reactivación)
@@ -443,7 +442,7 @@
                       automáticamente. Transcurridos los 15 días, la eliminación
                       será permanente.
                     </p>
-                    <p class="mt-1 text-[11px] text-yellow-500/80 italic">
+                    <p class="mt-1 text-[11px] text-joven/80 italic">
                       Fundamento Legal: Art. 83 C.P. y Art. 5° Ley 1480 de 2011.
                     </p>
                   </div>
@@ -467,7 +466,7 @@
                 </p>
 
                 <div
-                  class="bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-lg text-xs text-yellow-300"
+                  class="bg-joven/10 border border-joven/20 p-3 rounded-lg text-xs text-yellow-300"
                 >
                   ⚠️ Si no recuerda su contraseña, use la opción
                   <a
