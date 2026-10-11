@@ -1,86 +1,94 @@
-<div class="p-6 bg-black text-white min-h-screen font-sans">
-
-  <!-- Encabezado y buscador -->
-  <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
-    <h1 class="text-3xl font-bold text-white">Hola, Carlos</h1>
-    <div class="relative w-full md:w-64">
-      <input type="text" placeholder="Barra de búsqueda" class="w-full bg-neutral-900 border border-neutral-800 rounded-full py-1.5 px-4 text-xs text-gray-300 focus:outline-none focus:border-cyan-400">
-      <span class="absolute right-3 top-2 text-xs text-gray-400">🔍</span>
-    </div>
+<div class="facturacion-main space-y-4 text-white p-2 sm:p-4">
+  
+  <!-- Encabezado despejado para el botón hamburguesa ☰ en móvil -->
+  <div class="w-full max-w-full min-w-0 pl-14 sm:pl-0 flex items-center justify-between gap-4">
+    <h1 class="text-xl sm:text-2xl font-bold text-white">Mi facturación</h1>
   </div>
 
-  <h2 class="text-xl font-semibold mb-4 text-white">Mi facturación</h2>
-
-  <!-- Banner informativo -->
-  <div class="bg-neutral-950 border border-cyan-500/60 p-3.5 rounded-lg mb-6 text-xs text-gray-300 flex items-start gap-2">
-    <span class="text-sm">🙏</span>
-    <p>
-      Gracias a ti, PapaCarlos, hoy más niños y jóvenes están protegidos en el mundo digital. La Comunidad del Mundo Dictariano crece gracias a familias como la tuya. ¡Sigue siendo el guía que tus hijos necesitan!
+  <!-- Banner Informativo -->
+  <div class="banner-box flex items-start gap-2.5 p-3 rounded-lg bg-[#27272a] border border-amber-500/30 text-amber-200/90 text-xs sm:text-sm leading-relaxed">
+    <span class="text-base sm:text-lg shrink-0">🙏</span>
+    <p class="w-full min-w-0 break-words whitespace-normal">
+      Gracias a ti, PapaCarlos, hoy más niños y jóvenes están protegidos gracias a familias como la tuya. ¡Sigue siendo el guía que tus hijos necesitan!
     </p>
   </div>
 
-  <!-- Tabla de Facturación -->
-  <div *ngIf="invoices.length > 0" class="bg-neutral-900/90 border border-neutral-800 rounded-xl p-5 mb-5 shadow-2xl">
-    <div class="overflow-x-auto">
-      <table class="w-full text-left border-collapse text-xs min-w-[650px]">
-        <thead>
-          <tr class="border-b border-neutral-800 text-gray-400 font-medium">
-            <th class="py-3 px-2">Fecha</th>
-            <th class="py-3 px-2">Usuario</th>
-            <th class="py-3 px-2">Descripción del Curso</th>
-            <th class="py-3 px-2">Monto</th>
-            <th class="py-3 px-2">Estatus</th>
-            <th class="py-3 px-2 text-center">Factura</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-neutral-800/60">
-          <tr *ngFor="let item of invoices" class="hover:bg-neutral-800/40 transition">
-            <td class="py-3.5 px-2 text-gray-400 whitespace-nowrap">{{ item.date }}</td>
-            <td class="py-3.5 px-2 text-gray-300 whitespace-nowrap">{{ item.user }}</td>
-            <td class="py-3.5 px-2 font-normal text-white">{{ item.courseDescription }}</td>
-            <td class="py-3.5 px-2 font-bold text-white whitespace-nowrap">${{ item.amount | number:'1.0-0' }}</td>
-            
-            <td class="py-3.5 px-2 whitespace-nowrap">
-              <span *ngIf="item.status === 'Pagado'" class="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] rounded-full bg-emerald-950/60 text-emerald-400 border border-emerald-500/20 font-medium">
-                <span class="text-[8px]">●</span> {{ item.status }} {{ item.paymentMethod }}
-              </span>
-              <span *ngIf="item.status === 'Pendiente'" class="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] rounded-full bg-amber-950/60 text-amber-400 border border-amber-500/20 font-medium">
-                <span class="text-[8px]">●</span> {{ item.status }} {{ item.paymentMethod }}
-              </span>
-              <span *ngIf="item.status === 'Rechazado'" class="inline-flex items-center gap-1.5 px-3 py-1 text-[11px] rounded-full bg-rose-950/60 text-rose-400 border border-rose-500/20 font-medium">
-                <span class="text-[8px]">●</span> {{ item.status }} {{ item.paymentMethod }}
-              </span>
-            </td>
+  <!-- Tarjeta Principal -->
+  <div class="card-box bg-[#18181b] border border-zinc-800 rounded-xl p-3 sm:p-6 shadow-xl overflow-hidden">
+    
+    <!-- VISTA CON DATOS -->
+    <ng-container *ngIf="!showEmptyState && invoices.length > 0; else emptyStateTemplate">
+      
+      <!-- Contenedor con Scroll Horizontal Aislado -->
+      <div class="table-responsive-wrapper rounded-lg border border-zinc-800/60">
+        <table class="text-xs sm:text-sm text-left text-zinc-300">
+          <thead class="bg-zinc-900/50">
+            <tr class="border-b border-zinc-800 text-zinc-400 font-semibold uppercase tracking-wider text-[10px] sm:text-[11px]">
+              <th class="py-2.5 px-3 whitespace-nowrap">Fecha</th>
+              <th class="py-2.5 px-3 whitespace-nowrap">Usuario</th>
+              <th class="py-2.5 px-3 whitespace-nowrap">Descripción del Curso</th>
+              <th class="py-2.5 px-3 whitespace-nowrap">Monto</th>
+              <th class="py-2.5 px-3 whitespace-nowrap">Estatus / Método</th>
+              <th class="py-2.5 px-3 text-center whitespace-nowrap">Factura</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/60">
+            <tr *ngFor="let invoice of invoices" class="hover:bg-zinc-800/40 transition-colors">
+              <td class="py-2.5 px-3 whitespace-nowrap text-zinc-400">{{ invoice.date }}</td>
+              <td class="py-2.5 px-3 font-medium whitespace-nowrap text-white">{{ invoice.user }}</td>
+              <td class="py-2.5 px-3 whitespace-nowrap max-w-[140px] truncate" [title]="invoice.courseDescription">
+                {{ invoice.courseDescription }}
+              </td>
+              <td class="py-2.5 px-3 font-semibold whitespace-nowrap text-white">${{ invoice.amount | number }}</td>
+              <td class="py-2.5 px-3 whitespace-nowrap">
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Pagado ({{ invoice.paymentMethod }})
+                </span>
+              </td>
+              <td class="py-2.5 px-3 text-center whitespace-nowrap">
+                <button (click)="downloadPdf(invoice.id)" class="inline-flex items-center gap-1 px-2 py-1 text-xs rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 transition cursor-pointer">
+                  <span>📄</span> PDF
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-            <td class="py-3.5 px-2 text-center whitespace-nowrap">
-              <button (click)="downloadPdf(item.id)" class="inline-flex items-center gap-1.5 px-4 py-1.5 bg-cyan-400 hover:bg-cyan-300 text-black font-semibold rounded-full text-[11px] transition">
-                <span>📄</span> Descargar PDF
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <!-- Resumen de Facturación y Botón Azul -->
+      <div class="mt-4 pt-4 border-t border-zinc-800 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 w-full min-w-0">
+        <div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-1.5 sm:gap-6 w-full md:w-auto text-xs sm:text-sm text-zinc-400 min-w-0">
+          <div>Total Cursos: <strong class="text-white">{{ summary.totalCourses }}</strong></div>
+          <div>Total Invertido: <strong class="text-white">${{ summary.totalAmount | number }}</strong></div>
+          <div class="break-words">Método: <strong class="text-white">{{ summary.paymentMethod }}</strong></div>
+        </div>
+        
+        <button (click)="downloadAllPdfs()" class="w-full md:w-auto px-3 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white font-medium text-xs sm:text-sm rounded-lg transition shadow-lg shadow-cyan-950/50 cursor-pointer text-center whitespace-normal break-words leading-tight">
+          Descargar todas las facturas (PDF)
+        </button>
+      </div>
+
+    </ng-container>
+
+    <!-- VISTA ESTADO VACÍO -->
+    <ng-template #emptyStateTemplate>
+      <div class="flex flex-col items-center justify-center py-8 px-2 text-center space-y-3 w-full min-w-0">
+        <div class="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center text-xl shrink-0">
+          🧾
+        </div>
+        <h3 class="text-base font-semibold text-white break-words">No tienes comprobantes de facturación</h3>
+        <p class="text-xs text-zinc-400 max-w-xs break-words">
+          Aún no has adquirido cursos o suscripciones. Cuando realices una transacción, podrás visualizar tus facturas aquí.
+        </p>
+      </div>
+    </ng-template>
+
   </div>
 
-  <!-- Estado sin facturas -->
-  <div *ngIf="invoices.length === 0" class="bg-neutral-900/90 border border-neutral-800 rounded-xl p-12 text-center my-6">
-    <div class="text-4xl mb-3">🧾</div>
-    <h3 class="text-base font-semibold text-white mb-1">No hay comprobantes de facturación</h3>
-    <p class="text-xs text-gray-400">Aún no has adquirido cursos o tus comprobantes se generarán tras realizar la primera compra.</p>
-  </div>
-
-  <!-- Resumen de Facturación -->
-  <div *ngIf="invoices.length > 0" class="bg-neutral-900/90 border border-neutral-800 rounded-xl p-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-    <div class="text-center md:text-left">
-      Total cursos comprados: <strong class="text-white font-semibold">{{ summary.totalCourses }}</strong> | 
-      Total invertido: <strong class="text-white font-semibold">${{ summary.totalAmount | number:'1.0-0' }}</strong> | 
-      Método de pago: <strong class="text-white font-semibold">{{ summary.paymentMethod }}</strong>
-    </div>
-
-    <button (click)="downloadAllPdfs()" class="px-5 py-2 bg-cyan-400 hover:bg-cyan-300 text-black font-bold rounded-full transition text-xs whitespace-nowrap">
-      Descargar todas las facturas (PDF)
-    </button>
+  <!-- Toast Flotante de Notificación -->
+  <div *ngIf="toastMessage" class="fixed bottom-5 right-5 z-50 flex items-center gap-2.5 bg-zinc-800/95 border border-cyan-500/50 text-cyan-200 px-4 py-3 rounded-xl shadow-2xl text-xs sm:text-sm backdrop-blur-md">
+    <span class="text-base">📄</span>
+    <span class="font-medium">{{ toastMessage }}</span>
   </div>
 
 </div>

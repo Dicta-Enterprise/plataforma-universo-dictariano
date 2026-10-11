@@ -10,17 +10,25 @@ export class MiFacturacionComponent {
   invoices: Invoice[] = MOCK_INVOICES;
   summary: InvoiceSummary = MOCK_SUMMARY;
   showEmptyState = false;
+  toastMessage: string | null = null;
 
   downloadPdf(invoiceId: string): void {
-    alert(`[Simulación] Descargando comprobante PDF de la factura ID #${invoiceId}`);
+    this.showToast(`Descargando comprobante PDF de la factura ID #${invoiceId}...`);
   }
 
   downloadAllPdfs(): void {
-    alert('[Simulación] Descargando paquete completo con todas las facturas en PDF');
+    this.showToast('Generando paquete completo con todas las facturas en PDF...');
   }
 
   toggleEmptyState(): void {
     this.showEmptyState = !this.showEmptyState;
     this.invoices = this.showEmptyState ? [] : MOCK_INVOICES;
+  }
+
+  private showToast(message: string): void {
+    this.toastMessage = message;
+    setTimeout(() => {
+      this.toastMessage = null;
+    }, 3500);
   }
 }
