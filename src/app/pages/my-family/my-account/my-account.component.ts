@@ -25,6 +25,7 @@ export class MyAccountComponent {
     {
       id: 1,
       nombre: 'Juan Camilo',
+      apellido: 'Perez',
       tipo: 'joven',
       imagen: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6',
       email: 'coreoelectronico@gmail.com',
@@ -37,6 +38,7 @@ export class MyAccountComponent {
         verCalificacion: true,
         cambiarAvatar: false,
         verProgreso: true,
+        verCertificado: true,
         consentimiento: false,
         tiempoEnPantalla: 60,
       },
@@ -44,6 +46,7 @@ export class MyAccountComponent {
     {
       id: 2,
       nombre: 'Juanito',
+      apellido: 'Perezito',
       tipo: 'nino',
       cumpleanos: '01-02',
       imagen: 'https://images.unsplash.com/photo-1543332164-6e82f355badc',
@@ -56,6 +59,7 @@ export class MyAccountComponent {
         verCalificacion: true,
         cambiarAvatar: false,
         verProgreso: true,
+        verCertificado: true,
         consentimiento: false,
         tiempoEnPantalla: 60,
       },
@@ -66,6 +70,7 @@ export class MyAccountComponent {
     const nuevaCuenta: CuentaAsociada = {
       id: Date.now(),
       nombre: 'Nuevo usuario',
+      apellido: '',
       tipo: tipoCuenta,
       imagen: '',
       email: '',
@@ -78,6 +83,7 @@ export class MyAccountComponent {
         verCalificacion: true,
         cambiarAvatar: true,
         verProgreso: true,
+        verCertificado: true,
         consentimiento: false,
         tiempoEnPantalla: 60,
       },

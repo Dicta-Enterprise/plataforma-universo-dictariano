@@ -13,8 +13,8 @@
     </div>
 
     <!-- Título -->
-    <h3 class="font-bold truncate">
-      {{ account.nombre }}
+    <h3 class="w-[290px] font-bold truncate whitespace-nowrap">
+      {{ account.nombre }} {{ account.apellido }}
     </h3>
 
     <!-- Sección: CUENTA -->
@@ -27,11 +27,11 @@
       <div
         class="mt-1 bg-[#121214] border border-[#27272a] rounded-xl p-2.5 space-y-2.5 text-xs text-gray-300"
       >
-        <!-- ALIAS -->
+        <!-- NOMBRE -->
         <div class="flex justify-between items-center h-4 gap-2">
           <div class="flex items-center justify-between gap-1.5 w-full">
             <span class="text-gray-400">
-              Alias
+              Nombre
               {{
                 account.tipo.toLowerCase() === "nino" ? "niño" : account.tipo
               }}:
@@ -56,9 +56,42 @@
               class="pi text-xs cursor-pointer hover:opacity-80 transition"
               [ngClass]="[
                 isEditingNombre ? 'pi-check' : 'pi-pencil',
-                account.tipo === 'joven'
-                  ? 'text-yellow-500'
-                  : 'text-emerald-400',
+                account.tipo === 'joven' ? 'text-joven' : 'text-nino',
+              ]"
+            ></i>
+          </button>
+        </div>
+
+        <!-- APELLIDO -->
+        <div class="flex justify-between items-center h-4 gap-2">
+          <div class="flex items-center justify-between gap-1.5 w-full">
+            <span class="text-gray-400">
+              Apellido
+              {{
+                account.tipo.toLowerCase() === "nino" ? "niño" : account.tipo
+              }}:
+            </span>
+            <ng-container *ngIf="!isEditingApellido; else inputApellido">
+              <span class="text-white">{{ account.apellido }}</span>
+            </ng-container>
+            <ng-template #inputApellido>
+              <input
+                type="text"
+                [(ngModel)]="account.apellido"
+                class="bg-[#18181a] border border-[#27272a] max-w-40 text-white text-xs rounded px-1 py-0.5 text-right focus:outline-none"
+              />
+            </ng-template>
+          </div>
+          <button
+            type="button"
+            (click)="toggleEdit('apellido')"
+            class="bg-transparent border-0 p-0 cursor-pointer"
+          >
+            <i
+              class="pi text-xs cursor-pointer hover:opacity-80 transition"
+              [ngClass]="[
+                isEditingApellido ? 'pi-check' : 'pi-pencil',
+                account.tipo === 'joven' ? 'text-joven' : 'text-nino',
               ]"
             ></i>
           </button>
@@ -91,9 +124,7 @@
               class="pi text-xs transition"
               [ngClass]="[
                 isEditingCumpleanos ? 'pi-check' : 'pi-pencil',
-                account.tipo === 'joven'
-                  ? 'text-yellow-500'
-                  : 'text-emerald-400',
+                account.tipo === 'joven' ? 'text-joven' : 'text-nino',
               ]"
             ></i>
           </button>
@@ -132,9 +163,7 @@
               class="pi text-xs transition"
               [ngClass]="[
                 isEditingEdad ? 'pi-check' : 'pi-pencil',
-                account.tipo === 'joven'
-                  ? 'text-yellow-500'
-                  : 'text-emerald-400',
+                account.tipo === 'joven' ? 'text-joven' : 'text-nino',
               ]"
             ></i>
           </button>
@@ -165,8 +194,8 @@
               [ngClass]="
                 account.permisos.verPerfil
                   ? account.tipo === 'joven'
-                    ? 'pi-check text-yellow-500'
-                    : 'pi-check text-emerald-400'
+                    ? 'pi-check text-joven'
+                    : 'pi-check text-nino'
                   : 'pi-times text-gray-500'
               "
             ></i>
@@ -186,8 +215,8 @@
               [ngClass]="
                 account.permisos.interaccionForos
                   ? account.tipo === 'joven'
-                    ? 'pi-check text-yellow-500'
-                    : 'pi-check text-emerald-400'
+                    ? 'pi-check text-joven'
+                    : 'pi-check text-nino'
                   : 'pi-times text-gray-500'
               "
             ></i>
@@ -207,8 +236,8 @@
               [ngClass]="
                 account.permisos.verCalificacion
                   ? account.tipo === 'joven'
-                    ? 'pi-check text-yellow-500'
-                    : 'pi-check text-emerald-400'
+                    ? 'pi-check text-joven'
+                    : 'pi-check text-nino'
                   : 'pi-times text-gray-500'
               "
             ></i>
@@ -228,8 +257,8 @@
               [ngClass]="
                 account.permisos.cambiarAvatar
                   ? account.tipo === 'joven'
-                    ? 'pi-check text-yellow-500'
-                    : 'pi-check text-emerald-400'
+                    ? 'pi-check text-joven'
+                    : 'pi-check text-nino'
                   : 'pi-times text-gray-500'
               "
             ></i>
@@ -249,8 +278,29 @@
               [ngClass]="
                 account.permisos.verProgreso
                   ? account.tipo === 'joven'
-                    ? 'pi-check text-yellow-500'
-                    : 'pi-check text-emerald-400'
+                    ? 'pi-check text-joven'
+                    : 'pi-check text-nino'
+                  : 'pi-times text-gray-500'
+              "
+            ></i>
+          </button>
+        </div>
+
+        <!-- Ver certificado -->
+        <div class="flex justify-between items-center">
+          <span>Ver certificado</span>
+          <button
+            type="button"
+            (click)="togglePermiso('verCertificado')"
+            class="cursor-pointer hover:scale-110 transition select-none focus:outline-none"
+          >
+            <i
+              class="pi text-xs"
+              [ngClass]="
+                account.permisos.verCertificado
+                  ? account.tipo === 'joven'
+                    ? 'pi-check text-joven'
+                    : 'pi-check text-nino'
                   : 'pi-times text-gray-500'
               "
             ></i>
@@ -264,9 +314,7 @@
             *ngIf="account.permisos"
             [(ngModel)]="account.permisos.tiempoEnPantalla"
             [ngClass]="
-              account.tipo === 'joven'
-                ? 'border-yellow-500/40'
-                : 'border-emerald-400/40'
+              account.tipo === 'joven' ? 'border-joven' : 'border-nino'
             "
             class="bg-[#18181a] border text-xs rounded px-1 py-0.5 focus:outline-none transition cursor-pointer"
           >
@@ -284,10 +332,10 @@
 
     <!-- Sección: CONSENTIMIENTO INFORMADO -->
     <section
-      class="bg-[#121214] border rounded-xl pl-3 pr-2 py-2 flex items-center justify-between gap-2 w-full"
+      class="border rounded-xl pl-3 pr-2 py-2 flex items-center justify-between gap-2 w-full"
       [ngClass]="{
-        'border-yellow-500/40 bg-[#272412]': account.tipo === 'joven',
-        'border-emerald-500/40 bg-[#122718]': account.tipo === 'nino',
+        'border-joven bg-[#272412]': account.tipo === 'joven',
+        'border-nino bg-[#122718]': account.tipo === 'nino',
       }"
     >
       <div class="flex flex-col min-w-0">
@@ -315,8 +363,8 @@
         class="text-xs font-medium px-3 py-1.5 rounded-full transition"
         [ngClass]="
           account.tipo === 'joven'
-            ? 'bg-yellow-500 hover:bg-yellow-600 text-black'
-            : 'bg-emerald-400 hover:bg-emerald-500 text-black'
+            ? 'bg-joven hover:bg-yellow-600 text-black'
+            : 'bg-nino hover:bg-emerald-500 text-black'
         "
       >
         Revisar
@@ -337,8 +385,8 @@
             [(ngModel)]="account.email"
             placeholder="ejemplo@correo.com"
             [ngClass]="{
-              'border-yellow-500/40 bg-[#272412]': account.tipo === 'joven',
-              'border-emerald-500/40 bg-[#122718]': account.tipo === 'nino',
+              'border-joven bg-[#272412]': account.tipo === 'joven',
+              'border-nino bg-[#122718]': account.tipo === 'nino',
             }"
             class="w-full border text-xs rounded-xl px-3 py-2.5 pr-8 focus:outline-none transition min-w-0"
           />
@@ -353,8 +401,8 @@
           [ngClass]="[
             'w-full border-none rounded-xl py-2 text-xs font-bold text-black transition disabled:opacity-40 disabled:cursor-not-allowed',
             account.tipo === 'joven'
-              ? 'bg-yellow-500 hover:bg-yellow-600'
-              : 'bg-emerald-400 hover:bg-emerald-500',
+              ? 'bg-joven hover:bg-yellow-600'
+              : 'bg-nino hover:bg-emerald-500',
           ]"
         >
           Enviar invitación
@@ -366,8 +414,8 @@
         *ngIf="account.invitacionEstado === 'pendiente'"
         class="px-2.5 py-2 border rounded-xl space-y-1.5"
         [ngClass]="{
-          'border-yellow-500/40 bg-[#272412]': account.tipo === 'joven',
-          'border-emerald-500/40 bg-[#122718]': account.tipo === 'nino',
+          'border-joven bg-[#272412]': account.tipo === 'joven',
+          'border-nino bg-[#122718]': account.tipo === 'nino',
         }"
       >
         <div class="flex items-center justify-between">
@@ -380,7 +428,7 @@
         </div>
 
         <div
-          class="flex items-center justify-between bg-[#121214] px-2 rounded-lg border border-[#27272a]"
+          class="flex items-center justify-between bg-[#121214] px-2.5 rounded-lg border border-[#27272a]"
         >
           <span class="text-xs text-white truncate max-w-[180px]">{{
             account.email
@@ -402,8 +450,8 @@
             class="flex-1 py-1.5 px-2 text-xs rounded-lg font-medium transition flex items-center justify-center gap-1"
             [ngClass]="
               account.tipo === 'joven'
-                ? 'bg-yellow-500 hover:bg-yellow-600 text-black'
-                : 'bg-emerald-400 hover:bg-emerald-500 text-black'
+                ? 'bg-joven hover:bg-yellow-600 text-black'
+                : 'bg-nino hover:bg-emerald-500 text-black'
             "
           >
             <i class="pi pi-refresh font-bold text-[10px]"></i> Reenviar
@@ -421,12 +469,20 @@
       <!-- ESTADO 3: ACTIVA / ACEPTADA -->
       <div
         *ngIf="account.invitacionEstado === 'activa'"
-        class="px-3 py-2.5 bg-[#122718]/30 border border-emerald-500/30 rounded-xl space-y-1"
+        class="px-3 py-2.5 border rounded-xl space-y-1"
+        [ngClass]="{
+          'border-joven bg-[#272412]': account.tipo === 'joven',
+          'border-nino bg-[#122718]': account.tipo === 'nino',
+        }"
       >
         <div class="flex items-center justify-between">
-          <span class="text-xs text-gray-400">Cuenta vinculada</span>
+          <span class="text-xs font-bold">Cuenta vinculada</span>
           <span
-            class="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center gap-1"
+            class="text-[10px] px-2 py-0.5 rounded-full font-semibold border flex items-center gap-1"
+            [ngClass]="{
+              'border-joven bg-[#272412] text-joven': account.tipo === 'joven',
+              'border-nino bg-[#122718] text-nino': account.tipo === 'nino',
+            }"
           >
             <i class="pi pi-check-circle text-[9px]"></i> Activa
           </span>
@@ -435,7 +491,7 @@
         <p class="text-xs font-semibold text-white truncate">
           {{ account.email }}
         </p>
-        <p class="text-[10px] text-emerald-400/80">
+        <p class="text-[10px] text-nino/80">
           El usuario ya aceptó la invitación y tiene acceso a la LMS.
         </p>
       </div>
@@ -455,9 +511,7 @@
         <h4 class="font-bold flex items-center gap-2 text-white text-lg">
           <i
             class="pi pi-lock"
-            [ngClass]="
-              account.tipo === 'joven' ? 'text-yellow-500' : 'text-emerald-400'
-            "
+            [ngClass]="account.tipo === 'joven' ? 'text-joven' : 'text-nino'"
           ></i>
           Antes de continuar, necesitamos tu autorización
         </h4>
@@ -552,7 +606,7 @@
             <!-- Bloque Jurisdicción: COLOMBIA/LATAM -->
             <div
               [ngClass]="{
-                'border-l-2 border-emerald-400 pl-3':
+                'border-l-2 border-joven pl-3':
                   bloqueJurisdiccionPrincipal === 'latam',
               }"
             >
@@ -586,7 +640,7 @@
             <!-- Bloque Jurisdicción: ESTADOS UNIDOS -->
             <div
               [ngClass]="{
-                'border-l-2 border-emerald-400 pl-3':
+                'border-l-2 border-nino pl-3':
                   bloqueJurisdiccionPrincipal === 'usa',
               }"
             >
@@ -615,7 +669,7 @@
             <!-- Bloque Jurisdicción: UNIÓN EUROPEA -->
             <div
               [ngClass]="{
-                'border-l-2 border-emerald-400 pl-3':
+                'border-l-2 border-nino pl-3':
                   bloqueJurisdiccionPrincipal === 'ue',
               }"
             >
@@ -679,8 +733,8 @@
           class="px-5 py-2.5 rounded-xl font-bold transition disabled:opacity-50 disabled:cursor-not-allowed"
           [ngClass]="
             account.tipo === 'joven'
-              ? 'bg-yellow-500 hover:bg-yellow-600 text-black'
-              : 'bg-emerald-400 hover:bg-emerald-500 text-black'
+              ? 'bg-joven hover:bg-yellow-600 text-black'
+              : 'bg-nino hover:bg-emerald-500 text-black'
           "
         >
           Autorizar y Continuar
@@ -694,17 +748,15 @@
 <ng-template #emptyCard>
   <button
     type="button"
-    (click)="seleccionarTagYNavegar(fallback)"
+    [routerLink]="'/'"
     class="bg-[#232326] border border-[#27272a] rounded-2xl flex items-center justify-center max-w-[340px] w-full min-h-[480px] h-full cursor-pointer transition mx-auto focus:outline-none"
     [ngClass]="
-      fallback === 'joven'
-        ? 'hover:border-yellow-500/50'
-        : 'hover:border-emerald-400/50'
+      fallback === 'joven' ? 'hover:border-joven/50' : 'hover:border-nino/50'
     "
   >
     <i
       class="pi pi-plus text-4xl font-bold"
-      [ngClass]="fallback === 'joven' ? 'text-yellow-500' : 'text-emerald-400'"
+      [ngClass]="fallback === 'joven' ? 'text-joven' : 'text-nino'"
     ></i>
   </button>
 </ng-template>
