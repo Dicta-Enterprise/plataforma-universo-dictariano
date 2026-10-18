@@ -150,6 +150,111 @@
     </a>
   </section>
 
+  <!-- Sección de Categoría por Audiencia / Rol -->
+  <div class="px-4 sm:px-7 w-full">
+    <h2 class="text-xl font-bold mb-4 tracking-wide">
+      ¿Para quién buscas aprendizaje?
+    </h2>
+
+    <div class="grid grid-cols-3 gap-2 sm:gap-4">
+      <div *ngFor="let item of audiences">
+        <button
+          type="button"
+          (click)="selectAudience(item.id)"
+          pRipple
+          [class]="
+            'w-full group relative flex flex-col items-center justify-center h-24 sm:h-32 rounded-xl bg-gradient-to-b from-gray-800 to-gray-900 border shadow-lg cursor-pointer overflow-hidden transition-all duration-300 transform hover:scale-105 ' +
+            (selectedAudience === item.id
+              ? item.activeBorder +
+                ' ' +
+                item.activeShadow +
+                ' scale-105 ring-2 ring-offset-2 ring-offset-gray-900 ring-gray-700'
+              : 'border-gray-700/60 ' +
+                item.hoverBorder +
+                ' ' +
+                item.hoverShadow)
+          "
+        >
+          <!-- Gradiente de fondo (activo o al hacer hover) -->
+          <div
+            [class]="
+              'absolute inset-0 bg-gradient-to-tr via-transparent to-transparent transition-opacity duration-300 ' +
+              item.gradientFrom +
+              ' ' +
+              (selectedAudience === item.id
+                ? 'opacity-100'
+                : 'opacity-0 group-hover:opacity-100')
+            "
+          ></div>
+
+          <div
+            class="relative flex flex-col items-center gap-1 sm:gap-1.5 p-2 sm:p-3 text-center"
+          >
+            <i
+              [class]="
+                item.icon +
+                ' ' +
+                item.textColor +
+                ' text-2xl sm:text-4xl group-hover:scale-110 transition-transform duration-300'
+              "
+            ></i>
+            <span
+              class="text-sm sm:text-lg font-bold text-gray-100 group-hover:text-white tracking-wide leading-tight"
+            >
+              {{ item.title }}
+            </span>
+            <span
+              class="text-xs text-gray-400 group-hover:text-gray-200 hidden sm:block"
+            >
+              {{ item.subtitle }}
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categoría por Temas (Aparece solo tras seleccionar una audiencia) -->
+  <div
+    *ngIf="selectedAudience"
+    class="px-4 sm:px-7 w-full transition-all duration-300 animate-fade-in"
+  >
+    <h2 class="text-xl font-bold tracking-wide mb-4">
+      Selecciona una de nuestras galaxias
+    </h2>
+
+    <!-- Cuadrícula: 2 columnas en pantallas pequeñas, 4 columnas en sm o superior -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      <div *ngFor="let topic of topics">
+        <a
+          [routerLink]="['/courses']"
+          [queryParams]="{ target: selectedAudience, category: topic.id }"
+          pRipple
+          class="group relative flex flex-col items-center justify-center h-28 sm:h-32 rounded-xl bg-gradient-to-b from-slate-900 via-gray-900 to-slate-950 border border-gray-800 shadow-md cursor-pointer overflow-hidden transition-all duration-300 transform hover:scale-105 hover:border-joven hover:shadow-xl hover:shadow-amber-500/20"
+        >
+          <div
+            class="absolute -top-10 -right-10 w-20 h-20 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/30 transition-all duration-300"
+          ></div>
+          <div
+            class="relative z-10 flex flex-col items-center gap-2 p-3 text-center"
+          >
+            <i
+              [class]="
+                topic.icon +
+                ' text-2xl sm:text-3xl text-joven group-hover:scale-110 transition-transform duration-300'
+              "
+            ></i>
+            <span
+              class="text-sm sm:text-base font-semibold text-gray-200 group-hover:text-white leading-tight"
+            >
+              {{ topic.name }}
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- Seccion carruceles de cursos -->
   <section class="flex flex-col gap-5 justify-start px-3 sm:px-4 w-full">
     <div>

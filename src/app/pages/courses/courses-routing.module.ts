@@ -10,42 +10,28 @@ const routes: Routes = [
       {
         path: 'todos',
         loadChildren: () =>
-          import('./cursos-todos/cursos-todos.module')
-            .then(m => m.CursosTodosModule)
-      },
-      {
-        path: 'padres',
-        loadChildren: () =>
-          import('./cursos-padres/cursos-padres.module')
-            .then(m => m.CursosPadresModule)
-      },
-      {
-        path: 'jovenes',
-        loadChildren: () =>
-          import('./cursos-jovenes/cursos-jovenes.module')
-            .then(m => m.CursosJovenesModule)
-      },
-      {
-        path: 'ninos',
-        loadChildren: () =>
-          import('./cursos-ninos/cursos-ninos.module')
-            .then(m => m.CursosNinosModule)
+          import('./cursos-todos/cursos-todos.module').then(
+            (m) => m.CursosTodosModule,
+          ),
       },
       {
         path: '',
         redirectTo: 'todos',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
-      { 
-        path: 'detalle', 
-        loadChildren: () => import('./curso-detalle/curso-detalle.module').then(m => m.CursoDetalleModule) 
-      }
-    ]
-  }
+      {
+        path: 'detalle',
+        loadChildren: () =>
+          import('./curso-detalle/curso-detalle.module').then(
+            (m) => m.CursoDetalleModule,
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CoursesRoutingModule { }
+export class CoursesRoutingModule {}

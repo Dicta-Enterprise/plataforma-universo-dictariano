@@ -52,7 +52,8 @@ export class NavBarComponent implements OnInit {
     },
   ];
   userItems: MenuItem[];
-  count$: Observable<number>;
+  countCart$: Observable<number>;
+  countNotifications$: Observable<number>;
   searchQuery = '';
   searchVisible = false;
 
@@ -61,7 +62,9 @@ export class NavBarComponent implements OnInit {
     public auth: AuthService,
     public router: Router,
   ) {
-    this.count$ = cart.items$.pipe(map((items) => items.length));
+    this.countCart$ = cart.items$.pipe(map((items) => items.length));
+    //Falta implementar la lógica de notificaciones
+    this.countNotifications$ = cart.items$.pipe(map((items) => items.length));
   }
 
   buscar() {
