@@ -1,15 +1,11 @@
 :host {
-  background-image: url('https://images.pexels.com/photos/4497038/pexels-photo-4497038.jpeg');
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
   display: block;
-  padding: 2rem;
 }
 
 @media (width <= 600px) {
-  :host{
+  :host {
     padding: 0rem;
   }
-  
 }

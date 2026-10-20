@@ -2,7 +2,7 @@
 <header class="fixed top-0 left-0 w-full z-50 bg-[#272727]">
   <!-- BARRA DE CATEGORÍAS (Visible solo sin autenticar) -->
   <div
-    *ngIf="(auth.isLoggedIn$ | async) === false"
+    *ngIf="(auth.isLoggedIn$ | async) === false || searchVisible"
     class="flex items-center justify-center gap-3 h-12 bg-[#272727] border-b border-gray-700 w-full"
   >
     <!-- Padres -->
@@ -61,37 +61,68 @@
     </a>
   </div>
 
+  <!-- Modal Barrra de Búsqueda Móvil -->
+  <div
+    *ngIf="searchVisible"
+    class="flex items-center border-b border-gray-700 bg-[#272727] p-3 sm:hidden"
+  >
+    <!-- Contenedor del input con icono en posición absoluta -->
+    <div class="relative w-full">
+      <i
+        class="pi pi-search text-joven absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
+      ></i>
+      <input
+        type="text"
+        pInputText
+        placeholder="Buscar cursos..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="buscar(); searchVisible = false"
+        (blur)="searchVisible = false"
+        class="w-full rounded-[10px] border border-[#5c5c5c] bg-[#3a3a3a] pl-10 pr-3 py-1 placeholder-gray-400 focus:outline-none focus:border-[#e8002e]"
+      />
+    </div>
+
+    <!-- Botón de cerrar -->
+    <button
+      type="button"
+      (click)="searchVisible = false"
+      class="ml-2 cursor-pointer border-0 bg-transparent p-1 text-xl text-white focus:outline-none"
+      aria-label="Cerrar búsqueda"
+    >
+      <i class="pi pi-times"></i>
+    </button>
+  </div>
+
   <!-- NAVBAR de abajo -->
   <div
-    class="flex items-center justify-between px-4 gap-2 h-16 bg-[#272727] border-b border-gray-700"
+    class="flex items-center justify-between px-4 gap-3 sm:gap-4 h-16 bg-[#272727] border-b border-gray-700"
+    *ngIf="!searchVisible"
   >
-    <div class="flex items-center gap-3">
-      <!-- Logo -->
-      <a
-        routerLink="/"
-        routerLinkActive="border-b-2 border-yellow-400 rounded-b"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="inline-block transition-all border-b-2 border-transparent"
-      >
-        <img
-          src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
-          alt="Logo Mundo Dictariano"
-          class="h-10 w-auto object-contain"
-        />
-      </a>
+    <!-- Logo -->
+    <a
+      routerLink="/"
+      routerLinkActive="border-b-2 border-yellow-400 rounded-b"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="inline-block transition-all border-b-2 border-transparent"
+    >
+      <img
+        src="https://res.cloudinary.com/djwspay9f/image/upload/q_auto/f_auto/v1781305419/Mesa_de_trabajo_1_mvh0bi.svg"
+        alt="Logo Mundo Dictariano"
+        class="h-10 w-auto object-contain"
+      />
+    </a>
 
-      <!-- Link Mundo 3D -->
-      <a
-        *ngIf="(auth.isLoggedIn$ | async) === false"
-        pRipple
-        href="http://localhost:3000"
-        target="_blank"
-        class="hidden sm:flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-yellow-400 font-medium transition duration-200"
-      >
-        <i class="pi pi-globe"></i>
-        <span>Mundo 3D</span>
-      </a>
-    </div>
+    <!-- Link Mundo 3D -->
+    <a
+      *ngIf="(auth.isLoggedIn$ | async) === false"
+      pRipple
+      href="http://localhost:3000"
+      target="_blank"
+      class="hidden sm:flex items-center gap-2 px-3 py-2 text-gray-400 hover:text-yellow-400 font-medium transition duration-200"
+    >
+      <i class="pi pi-globe"></i>
+      <span>Mundo 3D</span>
+    </a>
 
     <!-- Barra de busqueda -->
     <div class="ml-auto flex items-center">
@@ -122,49 +153,75 @@
       </button>
     </div>
 
-    <!-- Derecha: Carrito + Login/Avatar -->
-    <div class="flex items-center gap-3">
-      <!-- Carrito -->
-      <a
-        pRipple
-        [routerLink]="['/cart']"
-        class="relative flex items-center text-gray-400 hover:text-joven cursor-pointer px-2"
-      >
-        <i class="pi pi-shopping-cart text-xl"></i>
-        <ng-container *ngIf="count$ | async as count">
-          <span
-            *ngIf="count > 0"
-            class="absolute -top-1.5 -right-1.5 bg-nino text-black text-xs rounded-full px-2 py-0.5 font-bold"
-          >
-            {{ count }}
-          </span>
-        </ng-container>
-      </a>
+    <!-- Carrito: Se muestra si NO está logueado O si está logueado y tiene items > 0 -->
+    <a
+      *ngIf="(auth.isLoggedIn$ | async) === false || (countCart$ | async)! > 0"
+      pRipple
+      [routerLink]="['/cart']"
+      class="relative flex items-center text-gray-400 hover:text-joven cursor-pointer"
+    >
+      <i class="pi pi-shopping-cart text-xl"></i>
 
-      <!-- Botón Login -->
-      <button
-        *ngIf="(auth.isLoggedIn$ | async) === false"
-        class="px-4 py-1.5 rounded-lg font-semibold text-black bg-joven transition duration-300 cursor-pointer"
-        routerLink="/auth/login"
+      <!-- El badge con número solo aparece si hay más de 0 items -->
+      <span
+        *ngIf="(countCart$ | async)! > 0"
+        class="absolute -top-1.5 -right-1.5 bg-nino text-black text-xs rounded-full px-2 py-0.5 font-bold"
       >
-        Login
-      </button>
+        {{ countCart$ | async }}
+      </span>
+    </a>
 
-      <!-- Botón Perfil / Avatar -->
-      <button
-        *ngIf="auth.isLoggedIn$ | async"
-        (click)="menu.toggle($event)"
-        class="w-auto h-10 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition duration-200 bg-gray-700 focus:outline-none"
-        aria-haspopup="true"
-        aria-controls="user_menu_popup"
-      >
-        <img
-          [src]="(auth.userImg$ | async) ?? ''"
-          alt="Avatar de usuario"
-          class="w-full h-full object-cover"
-        />
-      </button>
-    </div>
+    <!-- Notificaciones -->
+    <a
+      pRipple
+      [routerLink]="['/notificaciones']"
+      *ngIf="auth.isLoggedIn$ | async"
+      class="relative flex items-center text-gray-400 hover:text-joven cursor-pointer"
+    >
+      <i class="pi pi-bell text-xl"></i>
+      <ng-container *ngIf="countNotifications$ | async as countNotifications">
+        <span
+          *ngIf="countNotifications > 0"
+          class="absolute -top-1.5 -right-1.5 bg-nino text-black text-xs rounded-full px-2 py-0.5 font-bold"
+        >
+          {{ countNotifications }}
+        </span>
+      </ng-container>
+    </a>
+
+    <!-- Quejas / Reclamos -->
+    <a
+      pRipple
+      [routerLink]="['/quejas']"
+      *ngIf="auth.isLoggedIn$ | async"
+      class="relative flex items-center text-gray-400 hover:text-joven cursor-pointer"
+    >
+      <i class="pi pi-flag text-xl"></i>
+    </a>
+
+    <!-- Botón Login -->
+    <button
+      *ngIf="(auth.isLoggedIn$ | async) === false"
+      class="px-4 py-1.5 rounded-lg font-semibold text-black bg-joven transition duration-300 cursor-pointer"
+      routerLink="/auth/login"
+    >
+      Login
+    </button>
+
+    <!-- Botón Perfil / Avatar -->
+    <button
+      *ngIf="auth.isLoggedIn$ | async"
+      (click)="menu.toggle($event)"
+      class="w-auto ml-0.5 h-8 rounded-full overflow-hidden cursor-pointer hover:scale-105 transition duration-200 bg-gray-700 focus:outline-none"
+      aria-haspopup="true"
+      aria-controls="user_menu_popup"
+    >
+      <img
+        [src]="(auth.userImg$ | async) ?? ''"
+        alt="Avatar de usuario"
+        class="w-full h-full object-cover"
+      />
+    </button>
   </div>
 </header>
 
@@ -216,38 +273,6 @@
       </a>
     </div>
   </nav>
-</div>
-
-<!-- Modal Búsqueda Móvil -->
-<div
-  *ngIf="searchVisible"
-  class="fixed inset-x-0 top-0 z-50 flex items-center border-b border-gray-700 bg-[#272727] p-3 sm:hidden"
->
-  <!-- Contenedor del input con icono en posición absoluta -->
-  <div class="relative w-full">
-    <i
-      class="pi pi-search text-joven absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
-    ></i>
-    <input
-      type="text"
-      pInputText
-      placeholder="Buscar cursos..."
-      [(ngModel)]="searchQuery"
-      (keyup.enter)="buscar(); searchVisible = false"
-      (blur)="searchVisible = false"
-      class="w-full rounded-[10px] border border-[#5c5c5c] bg-[#3a3a3a] pl-10 pr-3 py-1 placeholder-gray-400 focus:outline-none focus:border-[#e8002e]"
-    />
-  </div>
-
-  <!-- Botón de cerrar -->
-  <button
-    type="button"
-    (click)="searchVisible = false"
-    class="ml-2 cursor-pointer border-0 bg-transparent p-1 text-xl text-white focus:outline-none"
-    aria-label="Cerrar búsqueda"
-  >
-    <i class="pi pi-times"></i>
-  </button>
 </div>
 
 <!-- Popups de PrimeNG -->
