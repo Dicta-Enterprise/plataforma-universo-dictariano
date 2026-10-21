@@ -4,5 +4,6 @@ export const environment = {
   URL_BACKEND: 'http://localhost:3000/api/',
   URL_BACKEND_AUTH: 'http://localhost:3002/api/',
   URL_BACKEND_CARRITO: 'http://localhost:3001/api/',
+  URL_BACKEND_CERTIFICADOS: 'http://localhost:3005/',
   mercadoPagoPublicKey: 'TEST-4c19b9d8-e61a-4372-afc7-f49757a16de0',
 };

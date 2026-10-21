@@ -1,0 +1,36 @@
+<section class="mx-auto max-w-xl px-4 py-10 text-white">
+  <h1 class="mb-1 text-2xl font-bold">Verificar certificado</h1>
+  <p class="mb-6 text-sm opacity-70">Mundo Dictariano · autenticidad anclada en blockchain</p>
+
+  <p *ngIf="cargando">Verificando…</p>
+  <p *ngIf="error" class="rounded bg-red-900/40 p-3">{{ error }}</p>
+
+  <!-- Resultado al llegar desde el QR -->
+  <div *ngIf="publico" class="mb-6 rounded-lg border p-4"
+       [ngClass]="publico.valido ? 'border-emerald-400 bg-emerald-900/20' : 'border-red-400 bg-red-900/20'">
+    <ng-container *ngIf="publico.valido && publico.certificado; else noValido">
+      <p class="mb-2 font-semibold">✅ Certificado registrado</p>
+      <p>Nombre: {{ publico.certificado.nombre }}</p>
+      <p>Curso: {{ publico.certificado.curso }}</p>
+      <p>Fecha: {{ publico.certificado.fecha }}</p>
+      <p>Código: {{ publico.certificado.codigo }}</p>
+      <p>Anclado en blockchain: {{ publico.anclado ? 'Sí' : 'Pendiente' }}</p>
+      <p class="mt-2 text-xs opacity-70">Para comprobar que tu PDF no fue alterado, súbelo abajo.</p>
+    </ng-container>
+    <ng-template #noValido>❌ {{ publico.motivo || 'Certificado no encontrado' }}</ng-template>
+  </div>
+
+  <!-- Verificación por archivo -->
+  <label class="mb-2 block text-sm font-semibold" for="pdf">Sube el PDF del certificado</label>
+  <input id="pdf" type="file" accept="application/pdf" (change)="alSeleccionarPdf($event)" />
+
+  <div *ngIf="resultadoPdf" class="mt-4 rounded-lg border p-4"
+       [ngClass]="resultadoPdf.valido ? 'border-emerald-400' : 'border-red-400'">
+    <ng-container *ngIf="resultadoPdf.valido && resultadoPdf.certificado; else pdfNoValido">
+      <p class="font-semibold">✅ Certificado auténtico</p>
+      <p>{{ resultadoPdf.certificado.nombre }} · {{ resultadoPdf.certificado.curso }}</p>
+      <p>Confirmado en blockchain: {{ resultadoPdf.confirmadoEnBlockchain ? 'Sí' : 'Aún no (puede tardar horas)' }}</p>
+    </ng-container>
+    <ng-template #pdfNoValido>❌ {{ resultadoPdf.motivo || 'No coincide con ningún certificado emitido' }}</ng-template>
+  </div>
+</section>

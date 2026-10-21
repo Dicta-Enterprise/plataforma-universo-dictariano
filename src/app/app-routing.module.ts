@@ -38,6 +38,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'verificar-certificado',
+        loadChildren: () =>
+          import('./pages/verify-certificate/verify-certificate.module').then(
+            (m) => m.VerifyCertificateModule,
+          ),
+      },
+      {
         path: 'my-family',
         loadChildren: () =>
           import('./pages/my-family/my-family.module').then(
