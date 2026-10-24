@@ -153,9 +153,9 @@
       </button>
     </div>
 
-    <!-- Carrito: Se muestra si NO está logueado O si está logueado y tiene items > 0 -->
+    <!-- Carrito: Solo se muestra si esta logeado y si tiene mas de un item -->
     <a
-      *ngIf="(auth.isLoggedIn$ | async) === false || (countCart$ | async)! > 0"
+      *ngIf="(auth.isLoggedIn$ | async) === true && (countCart$ | async)! > 0"
       pRipple
       [routerLink]="['/cart']"
       class="relative flex items-center text-gray-400 hover:text-joven cursor-pointer"

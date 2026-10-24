@@ -20,6 +20,13 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
+        path: 'short',
+        loadChildren: () =>
+          import('./curso-short/curso-short.module').then(
+            (m) => m.CursoShortModule,
+          ),
+      },
+      {
         path: 'detalle',
         loadChildren: () =>
           import('./curso-detalle/curso-detalle.module').then(

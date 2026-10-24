@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Cursos } from 'src/app/core/class/models';
 import { CartService } from 'src/app/core/services/cart/cart.service';
+import { AuthService } from 'src/app/pages/auth/services/auth.service';
 
 @Component({
   selector: 'app-card-curso',
@@ -10,7 +11,7 @@ import { CartService } from 'src/app/core/services/cart/cart.service';
 })
 export class CardCursoComponent {
   @Input() curso!: Cursos;
-  @Input() bg_color: string;
+  @Input() bg_color!: string;
   @Input() primary_color!: string;
   @Input() secondary_color!: string;
   cantidad_en_carrito = 0;
@@ -19,6 +20,7 @@ export class CardCursoComponent {
   constructor(
     private readonly router: Router,
     private readonly cart: CartService,
+    public auth: AuthService,
   ) {
     this.setIsPhone();
     window.addEventListener('resize', () => {
@@ -39,16 +41,22 @@ export class CardCursoComponent {
       this.router.navigate(['/courses/detalle', this.curso.id]);
     }
   }
-  agregarAlCarrito() {
+
+  agregarAlCarrito(): void {
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
     this.cart.addToCart(this.curso);
   }
-  getCursoCarrito() {
-    this.cantidad_en_carrito = 0;
-    this.cart.items.forEach((e) => {
-      if (e.id == this.curso.id) {
-        this.cantidad_en_carrito += 1;
-      }
-    });
-    return this.cantidad_en_carrito;
+
+  verShort(curso: Cursos): void {
+    if (!this.auth.isLoggedIn()) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+    if (curso?.id) {
+      this.router.navigate(['/courses/short', curso.id]);
+    }
   }
 }

@@ -25,8 +25,6 @@ import { SharedSpinnerModule } from './shared/components/spinners/shared-spinner
 import { ToastModule } from 'primeng/toast';
 import { CartPopupModule } from './shared/components/cart-popup/cart-popup.module';
 import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
-import { BlankLayoutComponent } from './shared/layouts/blank-layout/blank-layout.component';
-import { CheckoutNavbarComponent } from './shared/components/checkout-navbar/checkout-navbar.component';
 
 import { FormsModule } from '@angular/forms';
 import { ModalHostComponent } from './containers/host/app-modal-host.component';
@@ -34,11 +32,9 @@ import { ModalHostComponent } from './containers/host/app-modal-host.component';
 @NgModule({
   declarations: [
     AppComponent,
-    CheckoutNavbarComponent,
     FooterComponent,
     ActivoInactivoPipe,
     MainLayoutComponent,
-    BlankLayoutComponent,
     NavBarComponent,
   ],
   imports: [

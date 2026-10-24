@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/security/auth.guard';
 import { MainLayoutComponent } from './shared/layouts/main-layout/main-layout.component';
-import { BlankLayoutComponent } from './shared/layouts/blank-layout/blank-layout.component';
 
 const routes: Routes = [
   // Rutas CON navbar
@@ -47,10 +46,10 @@ const routes: Routes = [
     ],
   },
 
-  // Rutas SIN navbar (flujo de pago)
+  // Rutas mas seguras (flujo de pago)
   {
     path: '',
-    component: BlankLayoutComponent,
+    component: MainLayoutComponent,
     children: [
       {
         path: 'cart',
