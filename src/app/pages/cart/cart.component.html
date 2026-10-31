@@ -1,6 +1,5 @@
 <div class="cart-page-wrapper">
   <div class="cart-inner">
-
     <!-- TÍTULO -->
     <div class="mb-5">
       <h2 class="cart-title text-white flex align-items-center gap-2 m-0">
@@ -14,36 +13,43 @@
 
     <!-- CONTENIDO - dos columnas -->
     <div class="contenido-layout">
-
       <!-- 65% -->
       <div>
         <p class="cart-count">
-          {{ cart.items.length }} {{ cart.items.length === 1 ? 'curso' : 'cursos' }} en el carrito
+          {{ cart.items.length }}
+          {{ cart.items.length === 1 ? "curso" : "cursos" }} en el carrito
         </p>
 
         <p-dataView [value]="cart.items" layout="list">
-
           <ng-template pTemplate="listItem" let-curso>
             <div class="flex align-items-start gap-3 p-3 cart-item">
-              <img [src]="curso.imagen" [alt]="curso.nombre" class="cart-item-img border-round flex-shrink-0"/>
+              <img
+                [src]="curso.imagen"
+                [alt]="curso.nombre"
+                class="cart-item-img border-round flex-shrink-0"
+              />
               <div class="flex flex-column flex-1 gap-1">
-
                 <!-- FILA 1: nombre + precio -->
                 <div class="cart-item-datos">
-                  <span class="cart-item-nombre"
-                        [style.color]="getCategory(curso.categoriaId).color"
-                        [routerLink]="['/courses/detalle', curso.id]"
-                        style="cursor: pointer;">
+                  <span
+                    class="cart-item-nombre"
+                    [style.color]="getCategory(curso.categoriaId).color"
+                    [routerLink]="['/courses/detalle', curso.id]"
+                    style="cursor: pointer"
+                  >
                     {{ curso.nombre }}
                   </span>
 
                   <!-- BOTÓN DESKTOP -->
-                  <p-button class="btn-eliminar btn-desktop"
+                  <p-button
+                    class="btn-eliminar btn-desktop"
                     styleClass="btn-eliminar"
-                    (onClick)="remove(curso.id)" label="Eliminar"/>
+                    (onClick)="remove(curso.id)"
+                    label="Eliminar"
+                  />
 
                   <span class="cart-item-precio">
-                    Col$ {{ curso.precio | number:'1.0-0' }}
+                    Col$ {{ curso.precio | number: "1.0-0" }}
                   </span>
                 </div>
 
@@ -63,13 +69,17 @@
                   <ng-container *ngFor="let star of stars">
                     <i [ngClass]="getStarClass(curso.rating, star)"></i>
                   </ng-container>
-                  <span class="rating-value">{{ curso.rating | number:'1.1-1' }}</span>
+                  <span class="rating-value">{{
+                    curso.rating | number: "1.1-1"
+                  }}</span>
                 </div>
 
                 <!-- Tags -->
                 <div class="flex gap-2 flex-wrap">
-                  <span class="cart-tag"
-                        [style.border-color]="getCategory(curso.categoriaId).color">
+                  <span
+                    class="cart-tag"
+                    [style.border-color]="getCategory(curso.categoriaId).color"
+                  >
                     {{ getCategory(curso.categoriaId).label }}
                   </span>
                   <span class="cart-tag">Galaxia</span>
@@ -77,22 +87,25 @@
 
                 <!-- BOTÓN MOBILE -->
                 <div class="cart-item-actions btn-mobile">
-                  <p-button class="btn-eliminar"
+                  <p-button
+                    class="btn-eliminar"
                     styleClass="btn-eliminar"
-                    (onClick)="remove(curso.id)" label="Eliminar" />
+                    (onClick)="remove(curso.id)"
+                    label="Eliminar"
+                  />
                 </div>
-
               </div>
             </div>
           </ng-template>
 
           <ng-template pTemplate="empty">
-            <div class="flex flex-column align-items-center justify-content-center p-5 gap-3">
+            <div
+              class="flex flex-column align-items-center justify-content-center p-5 gap-3"
+            >
               <i class="pi pi-shopping-cart empty-cart-icon"></i>
               <span class="empty-cart-text">Tu carrito está vacío</span>
             </div>
           </ng-template>
-
         </p-dataView>
       </div>
 
@@ -103,17 +116,20 @@
             <h3 class="cart-summary-title text-white m-0">Total de compra</h3>
             <div class="flex justify-content-between w-full">
               <span class="cart-summary-total text-white">
-                Col$ {{ cart.getTotal() | number:'1.0-0' }}
+                Col$ {{ cart.getTotal() | number: "1.0-0" }}
               </span>
             </div>
-            <p-button icon="pi pi-credit-card" label="Ir a pagar"
-          class="w-full" styleClass="w-full btn-pay"
-          [disabled]="cart.items.length === 0"
-          (onClick)="onCheckout()"/>
+            <p-button
+              icon="pi pi-credit-card"
+              label="Ir a pagar"
+              class="w-full"
+              styleClass="w-full btn-pay"
+              [disabled]="cart.items.length === 0"
+              (onClick)="onCheckout()"
+            />
           </div>
         </p-card>
       </div>
-
     </div>
   </div>
 </div>

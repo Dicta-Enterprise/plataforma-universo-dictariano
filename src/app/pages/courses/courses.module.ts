@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { CardModule } from 'primeng/card';
@@ -13,22 +12,16 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
-  declarations: [
-    CoursesComponent,
-
-  ],
+  declarations: [CoursesComponent],
   imports: [
     CommonModule,
     CoursesRoutingModule,
     CardModule,
     ButtonModule,
     HttpClientModule,
-    SharedModule
+    SharedModule,
   ],
-  providers: [
-    CursosService, MessageService, ConfirmationService, AlertService
-  ]
+  providers: [CursosService, MessageService, ConfirmationService, AlertService],
 })
-export class CoursesModule { }
+export class CoursesModule {}

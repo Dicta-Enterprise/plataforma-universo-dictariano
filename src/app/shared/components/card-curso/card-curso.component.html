@@ -156,13 +156,25 @@
         </div>
       </div>
 
-      <button
-        class="w-full py-2 px-3 rounded-xl bg-[var(--dynamic-hover-color)] border border-[var(--dynamic-hover-color-sec)] text-black font-bold text-xs sm:text-sm flex items-center justify-center gap-2 hover:bg-[var(--dynamic-hover-color-sec)] cursor-pointer transition-all duration-300 shadow-md"
-        (click)="agregarAlCarrito()"
-      >
-        <i class="pi pi-shopping-cart text-xs sm:text-sm"></i>
-        <span class="line-clamp-1">Agregar al carrito</span>
-      </button>
+      <div class="w-full flex flex-col gap-2">
+        <!-- Botón Agregar al Carrito -->
+        <button
+          class="w-full py-2 px-3 rounded-xl bg-[var(--dynamic-hover-color)] border border-[var(--dynamic-hover-color-sec)] text-black font-bold text-xs sm:text-sm flex items-center justify-center gap-2 hover:bg-[var(--dynamic-hover-color-sec)] cursor-pointer transition-all duration-300 shadow-md"
+          (click)="agregarAlCarrito()"
+        >
+          <i class="pi pi-shopping-cart text-xs sm:text-sm"></i>
+          <span class="line-clamp-1">Agregar al carrito</span>
+        </button>
+
+        <!-- Botón Dale Play / Ver Short -->
+        <button
+          class="w-full py-2 px-3 rounded-xl bg-[var(--dynamic-hover-color)] border border-[var(--dynamic-hover-color-sec)] text-black font-bold text-xs sm:text-sm flex items-center justify-center gap-2 hover:bg-[var(--dynamic-hover-color-sec)] cursor-pointer transition-all duration-300 shadow-md text-center no-underline"
+          (click)="verShort(curso)"
+        >
+          <i class="pi pi-play text-xs sm:text-sm"></i>
+          <span class="line-clamp-1">Dale play</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
