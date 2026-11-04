@@ -50,7 +50,7 @@ export class CursoShortComponent implements OnInit, AfterViewInit {
   showLockedModal = false;
   selectedLockedLesson: Lesson | null = null;
 
-  lessons: Lesson[] = Array.from({ length: 30 }, (_, i) => ({
+  lessons: Lesson[] = Array.from({ length: 12 }, (_, i) => ({
     id: i + 1,
     number: i + 1,
     title: i === 0 ? 'Introducción al curso' : `Clase ${i + 1}`,
