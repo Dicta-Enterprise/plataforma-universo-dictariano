@@ -1,0 +1,170 @@
+<!-- Spinner si no hay videos cargados aún -->
+<div
+  *ngIf="videos.length === 0"
+  class="flex flex-col items-center justify-center my-8 w-full"
+>
+  <p-progressSpinner
+    styleClass="w-4rem h-4rem"
+    strokeWidth="4"
+    animationDuration="1.6s"
+    aria-label="Cargando"
+  ></p-progressSpinner>
+</div>
+
+<!-- Carrusel de videos -->
+<div
+  *ngIf="videos.length > 0"
+  class="flex items-center relative w-full gap-2 my-[-48px] md:ml-[-12px]"
+>
+  <!-- Botón Anterior -->
+  <button
+    (click)="scrollTo(false)"
+    type="button"
+    class="hidden md:flex items-center justify-center !w-10 !h-10 rounded-full bg-stone-900/80 hover:bg-stone-800 border border-white/10 transition-transform duration-200 hover:scale-110"
+    aria-label="Anterior"
+  >
+    <i class="pi pi-chevron-left text-lg"></i>
+  </button>
+
+  <!-- Contenedor de tarjetas estilo carrusel -->
+  <div
+    #sliderContainer
+    class="relative flex gap-2.5 sm:gap-3 overflow-x-auto w-full py-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+  >
+    <div
+      *ngFor="let video of videos; trackBy: trackById"
+      [attr.data-id]="video.id"
+      class="group shrink-0 flex flex-col gap-3 origin-center transition-transform duration-300 ease-out w-[200px] sm:w-[300px]"
+    >
+      <!-- Tarjeta Estilo Reel / Vertical -->
+      <div
+        class="relative w-full aspect-[9/16] bg-neutral-900 rounded-3xl overflow-hidden shadow-2xl border border-neutral-800"
+      >
+        <!-- Miniatura (Se muestra cuando no está reproduciéndose) -->
+        <img
+          *ngIf="playingId !== video.id"
+          [src]="video.thumbnail"
+          [alt]="video.titulo"
+          loading="lazy"
+          class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+
+        <!-- Video Activo -->
+        <video
+          *ngIf="playingId === video.id"
+          #player
+          [src]="video.src"
+          class="w-full h-full object-cover"
+          [muted]="isMuted"
+          autoplay
+          playsinline
+          loop
+          (click)="$event.stopPropagation(); togglePlay()"
+          (timeupdate)="onTimeUpdate()"
+          (pause)="onPause()"
+          (playing)="onPlaying()"
+        ></video>
+
+        <!-- Gradiente de fondo para mejorar lectura de textos (solo si no reproduce o como refuerzo) -->
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80 pointer-events-none"
+        ></div>
+
+        <!-- Botón Silenciar (Superior Izquierda) -->
+        <button
+          (click)="$event.stopPropagation(); toggleMute()"
+          class="absolute top-4 left-4 z-10 flex items-center gap-1.5 px-3 py-1.5 bg-black/50 hover:bg-black/70 text-white text-xs rounded-full backdrop-blur-sm transition-all cursor-pointer"
+        >
+          <i [class]="isMuted ? 'pi pi-volume-off' : 'pi pi-volume-up'"></i>
+          <span>{{ isMuted ? "Desactivar silencio" : "Silenciar" }}</span>
+        </button>
+
+        <!-- Botón Play/Pausa Central (Al pasar el mouse o al pausar) -->
+        <div
+          class="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+        >
+          <button
+            *ngIf="playingId !== video.id || isPaused"
+            (click)="$event.stopPropagation(); onPlay(video)"
+            class="pointer-events-auto w-16 h-16 bg-black/40 hover:bg-black/60 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-all transform hover:scale-110 cursor-pointer shadow-xl"
+          >
+            <i class="pi pi-play text-2xl ml-1"></i>
+          </button>
+        </div>
+
+        <!-- Info Dinámica del Curso y Clase (Inferior Izquierda) -->
+        <div
+          class="absolute bottom-6 left-4 right-16 text-white space-y-1 z-10 pointer-events-none"
+        >
+          <h3 class="font-bold text-base line-clamp-1 leading-snug">
+            {{ video.titulo }}
+          </h3>
+          <p class="text-xs text-gray-300 line-clamp-1">
+            {{ video.subtitulo || "Introducción al curso" }}
+          </p>
+
+          <!-- Indicadores Sociales / Duración -->
+          <div class="flex items-center gap-4 text-xs text-gray-300 pt-1">
+            <span class="flex items-center gap-1">
+              <i class="pi pi-clock"></i>
+              {{ video.duracionSemanas || 4 }} semanas
+            </span>
+            <span class="flex items-center gap-1">
+              <i class="pi pi-star text-amber-400"></i>
+              {{ video.valoracion || "5.0" }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Acciones Laterales (Inferior Derecha) -->
+        <div
+          class="absolute bottom-6 right-3 z-10 flex flex-col items-center gap-3 text-white"
+        >
+          <div class="flex flex-col items-center gap-1">
+            <div
+              class="px-2.5 py-1.5 shrink-0 bg-black/40 backdrop-blur-sm rounded-full flex flex-col items-center justify-center"
+            >
+              <i class="pi pi-heart-fill text-rose-500 text-lg"></i>
+            </div>
+            <span class="text-[10px] font-medium text-white">{{
+              video.likesCount || 0
+            }}</span>
+          </div>
+
+          <!-- Botón Compartir (Compartir) -->
+          <button
+            (click)="$event.stopPropagation(); shareVideo(video)"
+            class="flex flex-col items-center gap-1 hover:text-sky-400 transition-colors cursor-pointer"
+          >
+            <div
+              class="w-10 h-10 bg-black/40 rounded-full flex items-center justify-center backdrop-blur-sm"
+            >
+              <i class="pi pi-share-alt text-lg"></i>
+            </div>
+            <span class="text-[10px]">Compartir</span>
+          </button>
+        </div>
+
+        <!-- Barra de Progreso Dinámica (Inferior) -->
+        <div
+          class="absolute bottom-1 left-4 right-4 h-1 bg-white/20 rounded-full overflow-hidden z-10"
+        >
+          <div
+            class="h-full bg-sky-400 transition-all duration-100"
+            [style.width.%]="playingId === video.id ? progreso : 0"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón Siguiente -->
+  <button
+    (click)="scrollTo(true)"
+    type="button"
+    class="hidden md:flex items-center justify-center !w-10 !h-10 rounded-full bg-stone-900/80 hover:bg-stone-800 border border-white/10 transition-transform duration-200 hover:scale-110"
+    aria-label="Siguiente"
+  >
+    <i class="pi pi-chevron-right text-lg"></i>
+  </button>
+</div>

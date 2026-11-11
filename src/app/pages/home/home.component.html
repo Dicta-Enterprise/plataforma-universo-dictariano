@@ -82,7 +82,7 @@
           routerLink="/courses"
           pButton
           pRipple
-          class="px-6 py-3 rounded font-semibold text-black bg-joven shadow-[0_0_10px_2px_var(--color-joven)] transition duration-300 home-btn-cta"
+          class="px-6 py-3 rounded-2xl font-semibold text-black bg-joven shadow-[0_0_10px_2px_var(--color-joven)] transition duration-300 home-btn-cta"
         >
           Explorar Cursos
         </button>
@@ -98,6 +98,14 @@
       />
     </div>
   </div>
+
+  <!-- Carrusel de videos -->
+  <section class="flex flex-col gap-5 justify-start px-3 sm:px-4 w-full mt-7">
+    <div>
+      <h2 class="text-xl font-bold sm:ml-5 mb-2">Videos destacados</h2>
+      <app-video-carousel></app-video-carousel>
+    </div>
+  </section>
 
   <!-- Carruceles de cursos -->
   <section class="flex flex-col gap-5 justify-start px-3 sm:px-4 w-full mt-7">

@@ -44,7 +44,7 @@ export class CardCursoComponent {
 
   agregarAlCarrito(): void {
     if (!this.auth.isLoggedIn()) {
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/auth/register']);
       return;
     }
     this.cart.addToCart(this.curso);
@@ -52,7 +52,7 @@ export class CardCursoComponent {
 
   verShort(curso: Cursos): void {
     if (!this.auth.isLoggedIn()) {
-      this.router.navigate(['/auth/login']);
+      this.router.navigate(['/auth/register']);
       return;
     }
     if (curso?.id) {

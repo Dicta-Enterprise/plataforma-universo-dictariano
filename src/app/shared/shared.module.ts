@@ -14,6 +14,7 @@ import { AssociatedAccountCardComponent } from './components/associated-account-
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SliderCoursesComponent } from './components/slider-courses/slider-courses.component';
+import { VideoCarouselComponent } from './components/video-carousel/video-carousel.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SliderCoursesComponent } from './components/slider-courses/slider-cours
     MonthDayPickerComponent,
     AssociatedAccountCardComponent,
     SliderCoursesComponent,
+    VideoCarouselComponent,
   ],
   imports: [
     CheckboxModule,
@@ -42,6 +44,7 @@ import { SliderCoursesComponent } from './components/slider-courses/slider-cours
     MonthDayPickerComponent,
     AssociatedAccountCardComponent,
     SliderCoursesComponent,
+    VideoCarouselComponent,
   ],
 })
 export class SharedModule {}
