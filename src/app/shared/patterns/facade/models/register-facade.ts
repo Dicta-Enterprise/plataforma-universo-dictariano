@@ -10,18 +10,19 @@ import { MessageService } from 'primeng/api';
 })
 export class RegisterFacade {
   register$ = new BehaviorSubject<Register>(new Register());
-  private emailSubject = new BehaviorSubject<string>(''); 
+  private emailSubject = new BehaviorSubject<string>('');
   public email$ = this.emailSubject.asObservable();
   private destroy$ = new Subject<void>();
 
   constructor(
     private readonly registerService: RegisterService,
     private readonly messageService: MessageService,
-    private readonly router: Router
+    private readonly router: Router,
   ) {}
 
   registrarUsuario(register: Register): void {
-    this.registerService.registrarUsuario(register)
+    this.registerService
+      .registrarUsuario(register)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
@@ -29,6 +30,7 @@ export class RegisterFacade {
           this.emailSubject.next(register.email);
           sessionStorage.setItem('pendingVerifyEmail', register.email);
           sessionStorage.setItem('verifyCodeSentAt', Date.now().toString());
+          sessionStorage.setItem('pendingRegisterPassword', register.password);
           this.messageService.add({
             key: 'global',
             severity: 'success',
@@ -62,13 +64,18 @@ export class RegisterFacade {
   }
 
   getEmail(): string {
-    return this.emailSubject.value || sessionStorage.getItem('pendingVerifyEmail') || '';
+    return (
+      this.emailSubject.value ||
+      sessionStorage.getItem('pendingVerifyEmail') ||
+      ''
+    );
   }
 
   clearEmail(): void {
     this.emailSubject.next('');
     sessionStorage.removeItem('pendingVerifyEmail');
     sessionStorage.removeItem('verifyCodeSentAt');
+    sessionStorage.removeItem('pendingRegisterPassword');
   }
 
   destroy(): void {

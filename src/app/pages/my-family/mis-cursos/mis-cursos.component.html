@@ -1,0 +1,151 @@
+<div class="flex flex-col w-full">
+  <!-- Selector de Pestañas (Tabs) unificado con el estilo de la plataforma -->
+  <div
+    class="flex bg-[#1c1f26] p-1 rounded-t-3xl rounded-b-none border border-gray-800/60 font-bold w-full"
+  >
+    <!-- Tab 1: Mi cuenta / General -->
+    <button
+      (click)="activeTab = 'mi-cuenta'"
+      [ngClass]="{
+        'bg-padre text-black font-bold shadow-md': activeTab === 'mi-cuenta',
+        'text-gray-400 hover:text-white font-bold': activeTab !== 'mi-cuenta',
+      }"
+      class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full cursor-pointer"
+    >
+      Mi cuenta
+    </button>
+
+    <!-- Tab 2: Cuenta Joven -->
+    <button
+      (click)="activeTab = 'joven'"
+      [ngClass]="{
+        'bg-joven text-black font-bold shadow-md': activeTab === 'joven',
+        'text-gray-400 hover:text-white font-bold': activeTab !== 'joven',
+      }"
+      class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full cursor-pointer"
+    >
+      Cuenta Joven
+    </button>
+
+    <!-- Tab 3: Cuenta Niño -->
+    <button
+      (click)="activeTab = 'nino'"
+      [ngClass]="{
+        'bg-nino text-black font-bold shadow-md': activeTab === 'nino',
+        'text-gray-400 hover:text-white font-bold': activeTab !== 'nino',
+      }"
+      class="flex-1 py-2.5 px-4 text-center text-sm transition-all rounded-full cursor-pointer"
+    >
+      Cuenta Niño
+    </button>
+  </div>
+
+  <!-- Contenedor Principal de Cursos -->
+  <main class="w-full bg-[#18181a] rounded-b-2xl p-5 min-h-[360px]">
+    <!-- Grid de Tarjetas de Cursos -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 justify-items-center w-full"
+      *ngIf="cursosActuales.length > 0; else noCursos"
+    >
+      <div
+        *ngFor="let curso of cursosActuales"
+        class="bg-[#121214] border border-[#2b2b2e] rounded-2xl overflow-hidden shadow-lg flex flex-col w-full max-w-sm hover:border-gray-500 transition-all duration-300"
+      >
+        <!-- Imagen del Curso -->
+        <div class="relative h-48 w-full overflow-hidden bg-gray-900">
+          <img
+            [src]="curso.imagen"
+            [alt]="curso.titulo"
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Información del Curso -->
+        <div class="p-4 flex flex-col justify-between flex-1 gap-3">
+          <h3 class="text-gray-100 font-bold text-base tracking-wide">
+            {{ curso.titulo }}
+          </h3>
+
+          <!-- Badge o Etiqueta inferior -->
+          <div class="flex items-center justify-between gap-3 mt-auto pt-3">
+            <span
+              class="text-[10px] font-extrabold px-2.5 py-1 rounded-md bg-[#1c1f26] border border-gray-800 shrink-0"
+              [ngClass]="{
+                'text-padre': curso.nombre === 'TOTIS',
+                'text-joven': curso.nombre === 'JOVEN',
+                'text-nino': curso.nombre === 'NIÑO',
+              }"
+            >
+              {{ curso.nombre }}
+            </span>
+
+            <!-- Barra de progreso -->
+            <div class="flex flex-col flex-1 max-w-[140px] gap-1">
+              <div
+                class="flex justify-between items-center text-[10px] font-semibold"
+              >
+                <span class="text-gray-400">Progreso</span>
+                <span
+                  [ngClass]="{
+                    'text-padre': curso.nombre === 'TOTIS',
+                    'text-joven': curso.nombre === 'JOVEN',
+                    'text-nino': curso.nombre === 'NIÑO',
+                  }"
+                >
+                  {{ curso.progreso }}%
+                </span>
+              </div>
+
+              <div
+                class="w-full h-1.5 bg-[#1c1f26] rounded-full overflow-hidden border border-gray-800/80"
+              >
+                <div
+                  class="h-full rounded-full transition-all duration-500 ease-out"
+                  [style.width.%]="curso.progreso"
+                  [ngClass]="{
+                    'bg-padre': curso.nombre === 'TOTIS',
+                    'bg-joven': curso.nombre === 'JOVEN',
+                    'bg-nino': curso.nombre === 'NIÑO',
+                  }"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas de relleno con el botón de más (+) -->
+      <a
+        *ngFor="let empty of rellenosCards"
+        routerLink="/courses/todos"
+        class="bg-[#121214]/50 border border-dashed border-[#2b2b2e] hover:border-gray-400 rounded-2xl flex flex-col items-center justify-center w-full max-w-sm h-full min-h-[320px] transition-all duration-300 group cursor-pointer"
+      >
+        <i
+          class="pi pi-plus text-3xl font-black"
+          [ngClass]="{
+            'text-padre': activeTab === 'mi-cuenta',
+            'text-joven': activeTab === 'joven',
+            'text-nino': activeTab === 'nino',
+          }"
+        ></i>
+        <span
+          class="text-xs text-gray-400 font-medium mt-3 group-hover:text-gray-200 transition-colors"
+        >
+          Explorar más cursos
+        </span>
+      </a>
+    </div>
+
+    <!-- Template en caso de no haber cursos -->
+    <ng-template #noCursos>
+      <div
+        class="flex flex-col items-center justify-center py-16 text-gray-400 gap-2"
+      >
+        <i class="pi pi-folder-open text-4xl text-gray-500"></i>
+        <p class="text-sm font-medium">
+          No hay cursos disponibles para esta sección actualmente.
+        </p>
+      </div>
+    </ng-template>
+  </main>
+</div>

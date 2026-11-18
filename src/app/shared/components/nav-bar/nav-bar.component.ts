@@ -28,7 +28,7 @@ export class NavBarComponent implements OnInit {
     {
       label: 'Mis cursos',
       icon: 'pi-desktop',
-      routerLink: 'my-family/my-courses',
+      routerLink: 'my-family/mis-cursos',
     },
     {
       label: 'Mi progreso',
