@@ -25,7 +25,8 @@ export class ForgotPasswordFacade {
 
   solicitarCodigo(email: string): void {
     this.loading$.next(true);
-    this.forgotPasswordService.solicitarCodigo(email)
+    this.forgotPasswordService
+      .solicitarCodigo(email)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
@@ -54,7 +55,8 @@ export class ForgotPasswordFacade {
   verificarCodigo(code: string): void {
     const email = this.emailSubject.value;
     this.loading$.next(true);
-    this.forgotPasswordService.verificarCodigo(email, code)
+    this.forgotPasswordService
+      .verificarCodigo(email, code)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
@@ -85,7 +87,8 @@ export class ForgotPasswordFacade {
     const email = this.emailSubject.value;
     const code = this.codeSubject.value;
     this.loading$.next(true);
-    this.forgotPasswordService.resetPassword(email, code, newPassword, confirmPassword)
+    this.forgotPasswordService
+      .resetPassword(email, code, newPassword, confirmPassword)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
@@ -106,7 +109,8 @@ export class ForgotPasswordFacade {
             key: 'global',
             severity: 'error',
             summary: 'Error',
-            detail: error?.error?.message || 'No se pudo actualizar la contraseña',
+            detail:
+              error?.error?.message || 'No se pudo actualizar la contraseña',
           });
         },
       });

@@ -13,7 +13,6 @@ import { IGeneric } from '../../interfaces/genericas/IGeneric.interface';
   providedIn: 'root',
 })
 export class AuthRepositoryImpl implements AuthRepository {
-
   private base_url = environment.URL_BACKEND_AUTH;
 
   constructor(private httpClient: HttpClient) {}
@@ -21,24 +20,23 @@ export class AuthRepositoryImpl implements AuthRepository {
   login(credentials: AuthCredentials): Observable<LoginResponse> {
     const url = `${this.base_url}auth/login`;
 
-    return this.httpClient
-      .post<LoginResponse>(url, credentials)
-      .pipe(
-        map((response) => {
-          return LoginResponse.fromJson(response);
-        })
-      );
+    return this.httpClient.post<LoginResponse>(url, credentials).pipe(
+      map((response) => {
+        return LoginResponse.fromJson(response);
+      }),
+    );
   }
 
   register(credentials: AuthCredentials): Observable<Register> {
     const url = `${this.base_url}auth/register`;
 
-    return this.httpClient
-      .post<IGeneric<Register>>(url, credentials)
-      .pipe(
-        map((response) => {
-          return Register.fromJson(response.data);
-        })
-      );
+    // Convertimos las propiedades de la clase al formato que espera el backend (nombre, apellido, terminos_condiciones)
+    const body = Register.toJson(credentials as Register);
+
+    return this.httpClient.post<IGeneric<Register>>(url, body).pipe(
+      map((response) => {
+        return Register.fromJson(response.data);
+      }),
+    );
   }
 }

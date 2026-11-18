@@ -19,6 +19,13 @@ const routes: Routes = [
             (m) => m.MyAccountModule,
           ),
       },
+      {
+        path: 'mis-cursos',
+        loadChildren: () =>
+          import('./mis-cursos/mis-cursos.module').then(
+            (m) => m.MisCursosModule,
+          ),
+      },
     ],
   },
 ];

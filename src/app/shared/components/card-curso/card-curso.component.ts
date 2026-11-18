@@ -44,6 +44,8 @@ export class CardCursoComponent {
 
   agregarAlCarrito(): void {
     if (!this.auth.isLoggedIn()) {
+      sessionStorage.setItem('isCarrito', 'true');
+      sessionStorage.setItem('pendingCursoId', String(this.curso.id));
       this.router.navigate(['/auth/register']);
       return;
     }
